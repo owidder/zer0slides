@@ -2,7 +2,9 @@
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "rules": {
     "jsx-self-close": false,
-    "interface-name": false
+    "interface-name": false,
+    "no-empty": false,
+    "ordered-imports": false
   },
   "linterOptions": {
     "exclude": [
