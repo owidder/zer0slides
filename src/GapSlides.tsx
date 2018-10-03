@@ -1,9 +1,9 @@
 import * as React from 'react';
-import './App.css';
+import './GapSlides.css';
 
 import logo from './logo.svg';
 
-class App extends React.Component {
+class GapSlides extends React.Component {
   public render() {
     return (
       <div className="App">
@@ -19,4 +19,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default GapSlides;
