@@ -1,4 +1,4 @@
-import {SlideControl} from './control/SlideControl';
+import {SlideControl} from './core/SlideControl';
 
 export const slidarGlobal = {
     control: new SlideControl(),
