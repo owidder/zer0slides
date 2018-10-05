@@ -1,5 +1,5 @@
-import {SlideControl} from './core/SlideControl';
+import {SlideCore} from './core/SlideCore';
 
 export const slidarGlobal = {
-    control: new SlideControl(),
+    core: new SlideCore(),
 }

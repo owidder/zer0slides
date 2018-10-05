@@ -1,7 +1,7 @@
 import {Slide} from './Slide';
 import {Step} from './Step';
 
-export class SlideControl {
+export class SlideCore {
 
     private currentSlideName: string
 
