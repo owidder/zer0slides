@@ -6,7 +6,8 @@ export class Slide {
 
     public nextStep() {
         if(this.currentStepNo < this.steps.length - 1) {
-
+            this.currentStepNo++;
+            this.steps[this.currentStepNo].perform();
         }
     }
 }
