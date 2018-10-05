@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {HtmlSlide} from './HtmlSlide';
+import {HtmlSlide} from './slidar2/html/HtmlSlide';
 
 export class GapSlides extends React.Component {
     public render() {
