@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {GapSlides} from './GapSlides';
 
-import {slidAR} from './slidarClassic/slidAR';
+import {init} from './initGapslides';
 
-(window as any).slidAR = slidAR;
+init();
 
 ReactDOM.render(
     <GapSlides/>,
