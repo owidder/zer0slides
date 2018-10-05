@@ -8,7 +8,9 @@
     "jsx-self-close": false,
     "interface-name": false,
     "no-empty": false,
-    "ordered-imports": false
+    "ordered-imports": false,
+    "no-empty-interface": false,
+    "variable-name": false
   },
   "linterOptions": {
     "exclude": [
