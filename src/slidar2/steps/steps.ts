@@ -8,6 +8,12 @@ const setSteps = (slideName: string, _steps: Step[]) => {
     slide.steps = _steps;
 }
 
+const createReverseStep = (step: Step) => {
+    const reverseStep = {f: step.b, b: step.f}
+    return {step, reverseStep}
+}
+
 export const steps = {
+    createReverseStep,
     setSteps,
 }

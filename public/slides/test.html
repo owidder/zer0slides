@@ -1,13 +1,32 @@
 <style>
 
+    #test .code {
+        font-size: 3em;
+    }
+
+    #test .code pre {
+        background-color: white;
+    }
+
+    #test .line-highlight {
+        border: solid black 2px;
+    }
+
 </style>
 
 <div class="title"></div>
+<div class="code"></div>
 
 <script>
 
     const ID = "test";
 
-    gapslides.glowText.create("#" + ID + " .title", ["Bye!"], "larger glow");
+    const codeSelector = "#" + ID + " .code";
+    gapslides.showCode.js(codeSelector, "function() {\n" +
+        "    const x = 1;\n" +
+        "}");
+
+    const steps = [];
+    steps.push(gapslides.showCode.highlightLinesStep(codeSelector, "1"))
 
 </script>
