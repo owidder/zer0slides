@@ -3,7 +3,7 @@ import {Step} from './Step';
 
 export class SlideCore {
 
-    private currentSlideName: string
+    private currentSlide: Slide
 
     private slides: {
         [key: string]: Slide
@@ -11,8 +11,8 @@ export class SlideCore {
 
     private slideNames: string[]
 
-    public addSlide(name: string): Slide {
-        const slide = new Slide();
+    public addSlide(name: string) {
+        const slide = new Slide(name)
         this.slides[name] = slide;
 
         return slide
@@ -22,16 +22,20 @@ export class SlideCore {
         return this.slides[slideName]
     }
 
-    public getSlideName(index: number) {
-        return this.slideNames[index]
+    public getSlideWithName(index: number) {
+        const name = this.slideNames[index];
+        return this.slides[name]
     }
 
-    public setSteps(slideName: string, steps: Step[]) {
-        const slide = this.getSlide(slideName);
-        slide.steps = steps;
+    public setCurrentSlideWithName(name: string) {
+        this.currentSlide = this.slides[name]
+    }
+
+    public setCurrentSlideWithIndex(index: number) {
+        this.setCurrentSlideWithName(this.slideNames[index]);
     }
 
     public getCurrentSlide() {
-        return this.slides[this.currentSlideName]
+        return this.currentSlide
     }
 }

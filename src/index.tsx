@@ -7,6 +7,6 @@ import {init} from './initGapslides';
 init();
 
 ReactDOM.render(
-    <GapSlides/>,
+    <GapSlides slideName={"test"}/>,
     document.getElementById('root') as HTMLElement
 );

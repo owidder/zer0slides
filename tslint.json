@@ -10,7 +10,8 @@
     "no-empty": false,
     "ordered-imports": false,
     "no-empty-interface": false,
-    "variable-name": false
+    "variable-name": false,
+    "no-var-requires": false
   },
   "linterOptions": {
     "exclude": [
