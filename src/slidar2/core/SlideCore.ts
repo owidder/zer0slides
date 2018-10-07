@@ -9,7 +9,8 @@ export class SlideCore {
     private slideNames: string[] = []
 
     public addSlide(name: string) {
-        const slide = new Slide(name)
+        const slide = new Slide(name);
+        this.slideNames.push(name);
         this.slides[name] = slide;
 
         return slide

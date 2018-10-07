@@ -1,7 +1,5 @@
 import {bind} from 'keyboardjs';
 
-const usLocale = require('keyboardjs/locales/us');
-
-bind("right", () => {
-
-})
+export const bindKeyToFunction = (key: string, func: () => void) => {
+    bind(key, func);
+}

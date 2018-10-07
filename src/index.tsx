@@ -21,5 +21,6 @@ renderSlide(initialSlide)
 
 initReadyPromise.then((startIndex) => {
     slideCore.setCurrentSlideWithIndex(startIndex);
-    renderSlide(slideCore.getCurrentSlide());
+    const currentSlide = slideCore.getCurrentSlide();
+    renderSlide(currentSlide);
 });

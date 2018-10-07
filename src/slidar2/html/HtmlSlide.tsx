@@ -11,6 +11,14 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
     private container = React.createRef<HTMLDivElement>();
 
     public componentDidMount() {
+        this.loadHtml();
+    }
+
+    public componentDidUpdate() {
+        this.loadHtml();
+    }
+
+    private loadHtml() {
         $(this.container.current as any).load(this.props.pathToHtml);
     }
 

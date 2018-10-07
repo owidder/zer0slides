@@ -19,14 +19,16 @@
 
 <script>
 
-    const ID = "test";
+    (function () {
+        const ID = "test";
 
-    const codeSelector = "#" + ID + " .code";
-    gapslides.showCode.js(codeSelector, "function() {\n" +
-        "    const x = 1;\n" +
-        "}");
+        const codeSelector = "#" + ID + " .code";
+        gapslides.showCode.js(codeSelector, "function() {\n" +
+            "    const x = 1;\n" +
+            "}");
 
-    const steps = [];
-    steps.push(gapslides.showCode.highlightLinesStep(codeSelector, "1"))
+        const steps = [];
+        steps.push(gapslides.showCode.highlightLinesStep(codeSelector, "1"))
+    })()
 
 </script>
