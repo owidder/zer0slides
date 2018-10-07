@@ -6,6 +6,7 @@ import {init} from './initGapslides';
 import {initReadyPromise} from './slidar2/lifecycle/lifecycle';
 import {slideCore} from './slidar2/core/core';
 import {Slide} from './slidar2/core/Slide';
+import {bindKeyToFunction} from './slidar2/core/keys';
 
 const renderSlide = (slide: Slide) => {
     ReactDOM.render(
@@ -23,4 +24,7 @@ initReadyPromise.then((startIndex) => {
     slideCore.setCurrentSlideWithIndex(startIndex);
     const currentSlide = slideCore.getCurrentSlide();
     renderSlide(currentSlide);
+
+    bindKeyToFunction("right", () => slideCore.nextSlide())
+    bindKeyToFunction("left", () => slideCore.prevSlide())
 });

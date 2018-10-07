@@ -36,4 +36,29 @@ export class SlideCore {
     public getCurrentSlide() {
         return this.currentSlide
     }
+
+    public getCurrentIndex() {
+        const currentName = this.currentSlide.name;
+        return this.slideNames.indexOf(currentName);
+    }
+
+    public nextSlide() {
+        const currentIndex = this.getCurrentIndex();
+        if(currentIndex < (this.slideNames.length - 1)) {
+            this.setCurrentSlideWithIndex(currentIndex + 1);
+        }
+        else {
+            this.setCurrentSlideWithIndex(0);
+        }
+    }
+
+    public prevSlide() {
+        const currentIndex = this.getCurrentIndex();
+        if(currentIndex > 0) {
+            this.setCurrentSlideWithIndex(currentIndex - 1);
+        }
+        else {
+            this.setCurrentSlideWithIndex(this.slideNames.length - 1);
+        }
+    }
 }
