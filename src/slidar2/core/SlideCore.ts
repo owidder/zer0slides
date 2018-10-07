@@ -1,15 +1,12 @@
 import {Slide} from './Slide';
-import {Step} from './Step';
 
 export class SlideCore {
 
     private currentSlide: Slide
 
-    private slides: {
-        [key: string]: Slide
-    }
+    private slides: {[key: string]: Slide} = {}
 
-    private slideNames: string[]
+    private slideNames: string[] = []
 
     public addSlide(name: string) {
         const slide = new Slide(name)

@@ -1,6 +1,6 @@
 export class SimplePromise<T> {
     private _promise: Promise<T>
-    private _resolve: (data: T) => void
+    private _resolve: (data?: T) => void
 
     constructor() {
         this._promise = new Promise<T>(resolve => {
@@ -8,7 +8,7 @@ export class SimplePromise<T> {
         })
     }
 
-    public resolve(data: T) {
+    public resolve(data?: T) {
         this._resolve(data)
     }
 

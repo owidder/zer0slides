@@ -1,23 +1,17 @@
 import * as React from 'react';
 import {HtmlSlide} from './slidar2/html/HtmlSlide';
-import {pathToHtml} from './slidar2/html/pathToHtml';
+import {Slide} from './slidar2/core/Slide';
 
 interface GapSlidesProps {
-    slideName: string
+    slide: Slide
 }
 
 export class GapSlides extends React.Component<GapSlidesProps> {
-    constructor(props: GapSlidesProps) {
-        super(props);
-        this.state = {}
-    }
 
     public render() {
-        const _pathToHtml = pathToHtml(this.props.slideName);
-
         return (
             <div>
-                <HtmlSlide pathToHtml={_pathToHtml} name={"test"}/>
+                <HtmlSlide pathToHtml={this.props.slide.getPathToHtml()} name={"test"}/>
             </div>
         );
     }

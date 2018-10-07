@@ -1,0 +1,31 @@
+<style>
+
+    #test .code {
+        font-size: 3em;
+    }
+
+    #test .code pre {
+        background-color: white;
+    }
+
+    #test .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    const ID = "init";
+
+    const codeSelector = "#" + ID + " .code";
+    gapslides.showCode.js(codeSelector, "const loading = true");
+
+    gapslides.core.addSlide("test");
+
+    gapslides.lifecycle.initReady(0);
+
+</script>

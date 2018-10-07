@@ -1,4 +1,5 @@
 import {Step} from './Step';
+import {pathToHtml} from '../html/pathToHtml';
 
 export class Slide {
     public steps: Step[] = []
@@ -8,6 +9,10 @@ export class Slide {
     constructor(name: string) {
         this.name = name;
 
+    }
+
+    public getPathToHtml() {
+        return pathToHtml(this.name);
     }
 
     public nextStep() {

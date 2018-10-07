@@ -1,7 +1,11 @@
 import {SimplePromise} from '../core/SimplePromise';
 
-const initReadyPromise = new SimplePromise();
+export const initReadyPromise = new SimplePromise<number>();
+
+const initReady = (startIndex: number) => {
+    initReadyPromise.resolve(startIndex);
+}
 
 export const lifecycle = {
-    initReadyPromise,
+    initReady,
 }
