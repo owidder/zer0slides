@@ -11,7 +11,7 @@ export class GapSlides extends React.Component<GapSlidesProps> {
     public render() {
         return (
             <div>
-                <HtmlSlide pathToHtml={this.props.slide.getPathToHtml()} name={"test"}/>
+                <HtmlSlide pathToHtml={this.props.slide.getPathToHtml()} name={this.props.slide.name}/>
             </div>
         );
     }

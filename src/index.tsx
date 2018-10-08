@@ -15,16 +15,20 @@ const renderSlide = (slide: Slide) => {
     );
 }
 
+const setAndRenderSlide = (setSlideFunc: () => void) => {
+    setSlideFunc();
+    const currentSlide = slideCore.getCurrentSlide();
+    renderSlide(currentSlide);
+}
+
 init();
 
 const initialSlide = new Slide("init");
 renderSlide(initialSlide)
 
 initReadyPromise.then((startIndex) => {
-    slideCore.setCurrentSlideWithIndex(startIndex);
-    const currentSlide = slideCore.getCurrentSlide();
-    renderSlide(currentSlide);
+    setAndRenderSlide(() => slideCore.setCurrentSlideWithIndex(startIndex));
 
-    bindKeyToFunction("right", () => slideCore.nextSlide())
-    bindKeyToFunction("left", () => slideCore.prevSlide())
+    bindKeyToFunction("right", () => setAndRenderSlide(() => slideCore.nextSlide()))
+    bindKeyToFunction("left", () => setAndRenderSlide(() => slideCore.prevSlide()))
 });
