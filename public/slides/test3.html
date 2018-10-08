@@ -1,0 +1,33 @@
+<style>
+
+    #test3 .code {
+        font-size: 3em;
+    }
+
+    #test3 .code pre {
+        background-color: white;
+    }
+
+    #test3 .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        const NAME = "test3";
+
+        const codeSelector = "#" + NAME + " .code";
+        gapslides.showCode.js(codeSelector, "function() {\n" +
+            "    const x = 3;\n" +
+            "}");
+
+        gapslides.lifecycle.slideReady(NAME);
+        })()
+
+</script>

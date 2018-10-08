@@ -1,6 +1,6 @@
 import {Step} from './Step';
 import {pathToHtml} from '../html/pathToHtml';
-import {setStepCtr} from '../html/controlElements';
+import {setStepCtr, showHideUp, showHideDown} from '../html/controlElements';
 
 export class Slide {
     public steps: Step[] = []
@@ -14,6 +14,8 @@ export class Slide {
 
     public showStepCtr() {
         setStepCtr(this.currentStepNo, this.steps.length);
+        showHideUp(this.currentStepNo > -1);
+        showHideDown(this.currentStepNo < this.steps.length - 1);
     }
 
     public getPathToHtml() {
