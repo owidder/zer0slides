@@ -1,15 +1,13 @@
-import {slidarGlobal} from '../slidarGlobal';
 import {Step} from "../core/Step";
-
-const {core} = slidarGlobal;
+import {slideCore} from '../core/core';
 
 const setSteps = (slideName: string, _steps: Step[]) => {
-    const slide = core.getSlide(slideName);
+    const slide = slideCore.getSlide(slideName);
     slide.steps = _steps;
 }
 
 const createReverseStep = (step: Step) => {
-    const reverseStep = {f: step.b, b: step.f}
+    const reverseStep = new Step(step.b, step.f);
     return {step, reverseStep}
 }
 

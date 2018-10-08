@@ -3,7 +3,7 @@ import {pathToHtml} from '../html/pathToHtml';
 
 export class Slide {
     public steps: Step[] = []
-    public currentStepNo: number
+    public currentStepNo: number = -1
     public name: string
 
     constructor(name: string) {
@@ -19,6 +19,13 @@ export class Slide {
         if(this.currentStepNo < this.steps.length - 1) {
             this.currentStepNo++;
             this.steps[this.currentStepNo].perform();
+        }
+    }
+
+    public prevStep() {
+        if(this.currentStepNo > -1) {
+            this.steps[this.currentStepNo].unperform();
+            this.currentStepNo--;
         }
     }
 }

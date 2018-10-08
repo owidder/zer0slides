@@ -3,6 +3,7 @@ import * as $ from 'jquery';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 
 import {steps} from '../../slidar2/steps/steps';
+import {Step} from '../../slidar2/core/Step';
 
 const {createReverseStep} = steps;
 
@@ -54,24 +55,15 @@ export const highlightLines = (selector, lineString) => {
 
 export const highlightLinesStep = (selector, linesString) => {
     let old;
-    return {
-        f: () => old = highlightLines(selector, linesString),
-        b: () => highlightLines(selector, old),
-    }
+    return new Step(() => old = highlightLines(selector, linesString), () => highlightLines(selector, old))
 }
 
 export const cssStep = (selector, cssString) => {
-    return {
-        f: () => css(selector, cssString),
-        b: () => remove(selector)
-    }
+    return new Step(() => css(selector, cssString), () => remove(selector))
 }
 
 export const jsStep = (selector, jsString) => {
-    return {
-        f: () => js(selector, jsString),
-        b: () => remove(selector)
-    }
+    return new Step(() => js(selector, jsString), () => remove(selector))
 }
 
 export const cssStepWithReverse = (selector, cssString) => {
