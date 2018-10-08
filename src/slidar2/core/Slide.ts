@@ -1,5 +1,6 @@
 import {Step} from './Step';
 import {pathToHtml} from '../html/pathToHtml';
+import {setStepCtr} from '../html/controlElements';
 
 export class Slide {
     public steps: Step[] = []
@@ -11,6 +12,10 @@ export class Slide {
 
     }
 
+    public showStepCtr() {
+        setStepCtr(this.currentStepNo, this.steps.length);
+    }
+
     public getPathToHtml() {
         return pathToHtml(this.name);
     }
@@ -19,6 +24,7 @@ export class Slide {
         if(this.currentStepNo < this.steps.length - 1) {
             this.currentStepNo++;
             this.steps[this.currentStepNo].perform();
+            this.showStepCtr()
         }
     }
 
@@ -26,6 +32,7 @@ export class Slide {
         if(this.currentStepNo > -1) {
             this.steps[this.currentStepNo].unperform();
             this.currentStepNo--;
+            this.showStepCtr();
         }
     }
 
@@ -34,6 +41,7 @@ export class Slide {
             for(let i = 0; i <= this.currentStepNo; i++) {
                 this.steps[i].perform();
             }
+            this.showStepCtr();
         }
     }
 }
