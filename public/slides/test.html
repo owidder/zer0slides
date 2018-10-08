@@ -20,9 +20,9 @@
 <script>
 
     (function () {
-        const ID = "test";
+        const NAME = "test";
 
-        const codeSelector = "#" + ID + " .code";
+        const codeSelector = "#" + NAME + " .code";
         gapslides.showCode.js(codeSelector, "function() {\n" +
             "    const x = 1;\n" +
             "}");
@@ -31,7 +31,9 @@
         steps.push(gapslides.showCode.highlightLinesStep(codeSelector, "1"))
         steps.push(gapslides.showCode.highlightLinesStep(codeSelector, "2"))
         steps.push(gapslides.showCode.highlightLinesStep(codeSelector, "3"))
-        gapslides.steps.setSteps(ID, steps);
+        gapslides.steps.setSteps(NAME, steps);
+
+        gapslides.lifecycle.slideReady(NAME);
     })()
 
 </script>

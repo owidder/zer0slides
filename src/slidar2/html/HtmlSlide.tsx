@@ -1,9 +1,11 @@
 import * as React from 'react';
 import * as $ from 'jquery';
 
+import {Slide} from '../core/Slide';
+import {resetSlideReadyPromise, slideReadyPromise} from '../lifecycle/lifecycle';
+
 interface HtmlSlideProps {
-    pathToHtml: string,
-    name: string,
+    slide: Slide
 }
 
 export class HtmlSlide extends React.Component<HtmlSlideProps> {
@@ -19,13 +21,20 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
     }
 
     private loadHtml() {
+        const {slide} = this.props;
+
+        resetSlideReadyPromise(slide.name);
         $(this.container.current as any).empty();
-        $(this.container.current as any).load(this.props.pathToHtml);
+        $(this.container.current as any).load(slide.getPathToHtml());
+
+        slideReadyPromise(slide.name).then(() => {
+            slide.performToCurrentStep();
+        })
     }
 
     public render() {
         return (
-            <div id={this.props.name} ref={this.container} className="html-slide"></div>
+            <div id={this.props.slide.name} ref={this.container} className="html-slide"></div>
         );
     }
 }

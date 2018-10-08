@@ -28,4 +28,12 @@ export class Slide {
             this.currentStepNo--;
         }
     }
+
+    public performToCurrentStep() {
+        if(this.currentStepNo > -1) {
+            for(let i = 0; i <= this.currentStepNo; i++) {
+                this.steps[i].perform();
+            }
+        }
+    }
 }
