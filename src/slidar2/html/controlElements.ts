@@ -1,5 +1,7 @@
 import * as d3 from 'd3';
 
+import {slideCore} from '../core/core';
+
 const STEPCTR_SELECTOR = "#control-elements .stepctr";
 const UP_SELECTOR = "#control-elements .up";
 const DOWN_SELECTOR = "#control-elements .down";
@@ -23,4 +25,27 @@ export const showHideUp = (trueIfShow: boolean) => {
 export const showHideDown = (trueIfShow: boolean) => {
     d3.selectAll(DOWN_SELECTOR)
         .style("visibility", trueIfShow ? "visible" : "hidden");
+}
+
+const upArrowClicked = () => {
+    slideCore.getCurrentSlide().prevStep();
+}
+
+const downArrowClicked = () => {
+    slideCore.getCurrentSlide().nextStep();
+}
+
+const rightArrowClicked = () => {
+    slideCore.nextSlide();
+}
+
+const leftArrowClicked = () => {
+    slideCore.prevSlide();
+}
+
+export const controlElements = {
+    downArrowClicked,
+    leftArrowClicked,
+    rightArrowClicked,
+    upArrowClicked,
 }
