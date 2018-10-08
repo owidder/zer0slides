@@ -41,7 +41,7 @@ export class Slide {
             for(let i = 0; i <= this.currentStepNo; i++) {
                 this.steps[i].perform();
             }
-            this.showStepCtr();
         }
+        this.showStepCtr();
     }
 }
