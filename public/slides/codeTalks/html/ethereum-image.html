@@ -1,0 +1,23 @@
+<style>
+
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="image">
+    <div class="title"></div>
+    <img height="600" src="./slides/codeTalks/img/ethviewer.png">
+    <h1><a target="_blank" href="http://www.ethviewer.live/">http://www.ethviewer.live/</a></h1>
+
+</div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "ethereum-image";
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Ethereum",], "normal glow");
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

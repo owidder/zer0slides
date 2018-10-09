@@ -1,0 +1,27 @@
+<style>
+
+    #deploy-via-infura .code {
+        font-size: 4em;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "deploy-via-infura";
+
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Deploy via Infura",], "middle-large glow");
+
+        slidAR.showCode.bash("#" + ID + " .code",
+            "truffle migrate --network infura");
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

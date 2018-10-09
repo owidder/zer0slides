@@ -1,0 +1,20 @@
+<style>
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="image">
+    <div class="title"></div>
+    <img width="1000" src="./slides/codeTalks/img/web3-injected.png">
+</div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "web3-injected";
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["With Metamask plug-in",], "normal glow");
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

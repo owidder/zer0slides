@@ -9,7 +9,6 @@ export class Slide {
 
     constructor(name: string) {
         this.name = name;
-
     }
 
     public showStepCtr() {

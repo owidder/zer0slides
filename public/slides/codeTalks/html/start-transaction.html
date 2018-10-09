@@ -1,0 +1,64 @@
+<style>
+
+    #start-transaction .code {
+        font-size: 1.2em;
+    }
+
+    #start-transaction .code pre {
+        background-color: white;
+    }
+
+    #start-transaction .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "start-transaction";
+
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Step 4: Start transaction",], "small glow");
+
+        const codeSelector = "#" + ID + " .code";
+
+        slidAR.showCode.js(codeSelector,
+            "...\n" +
+            "import {hashSHA256FromUtf8} from './hash';\n" +
+            "...\n" +
+            "export class HashStore extends React.Component {\n" +
+            "...\n" +
+            "    async storeHashedText() {\n" +
+            "        const contract = this.drizzle.contracts.HashStore;\n" +
+            "        const hashedText = await hashSHA256FromUtf8(this.text);\n" +
+            "\n" +
+            "        const txKey = contract.methods[\"storeHash\"].cacheSend(hashedText, {\n" +
+            "            from: this.state.drizzleState.accounts[0]\n" +
+            "        });\n" +
+            "\n" +
+            "        this.setState({txKey, hashedText});\n" +
+            "    };\n" +
+            "...\n" +
+            "}\n"
+        );
+
+        const steps = [];
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "2"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "6-15"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "7"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "8"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "10-12"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "14"));
+
+        slidAR.steps.set(ID, steps);
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

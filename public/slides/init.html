@@ -1,28 +1,9 @@
-<style>
-
-    #test .code {
-        font-size: 3em;
-    }
-
-    #test .code pre {
-        background-color: white;
-    }
-
-    #test .line-highlight {
-        border: solid black 2px;
-    }
-
-</style>
-
-<div class="title"></div>
-<div class="code"></div>
-
 <script>
 
     (function () {
-        gapslides.core.addSlide("test");
-        gapslides.core.addSlide("test2");
-        gapslides.core.addSlide("test3");
+        gapslides.core.setFolderName("codeTalks");
+
+        gapslides.core.addSlide("title-cube");
 
         gapslides.lifecycle.initReady(0);
     })()

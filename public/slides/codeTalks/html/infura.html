@@ -1,0 +1,25 @@
+<style>
+
+    #rinkeby img {
+        border: 10px solid gray;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="image">
+    <div class="title"></div>
+    <img width="800" src="./slides/codeTalks/img/infura.png">
+    <p><a target="_blank" href="https://infura.io/">https://infura.io/</a></p>
+</div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "infura";
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Option 2: INFURA",], "normal glow");
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

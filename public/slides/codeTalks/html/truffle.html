@@ -1,0 +1,32 @@
+<style>
+
+    #truffle .code {
+        font-size: 4em;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="title"></div>
+<img src="./slides/codeTalks/img/truffle.png">
+<img src="./slides/codeTalks/img/ganache.png">
+
+<div class="code"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "truffle";
+
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Truffle + Ganache",], "middle-large glow");
+
+        slidAR.showCode.bash("#" + ID + " .code",
+            "npm i -g truffle\n" +
+            "npm i -g ganache-cli"
+        );
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

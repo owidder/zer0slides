@@ -1,0 +1,20 @@
+<style>
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="image">
+    <div class="title"></div>
+    <img width="1000" src="./slides/codeTalks/img/client.png">
+</div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "client";
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Hash store client",], "normal glow");
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

@@ -1,1 +1,11 @@
-export const pathToHtml = (name: string) => `slides/${name}.html`;
+import {getFolderName} from '../core/core';
+
+export const pathToHtml = (name: string) => {
+    const folderName = getFolderName();
+
+    if(!folderName) {
+        return `slides/${name}.html`;
+    }
+
+    return `slides/${folderName}/${name}.html`
+}

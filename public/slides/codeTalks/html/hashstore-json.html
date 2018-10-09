@@ -1,0 +1,20 @@
+<style>
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="image">
+    <div class="title"></div>
+    <img width="1000" src="./slides/codeTalks/img/hashstore-json.png">
+</div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "hashstore-json";
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["HashStore.json",], "normal glow");
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

@@ -1,0 +1,19 @@
+<style>
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="title"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "the-end";
+
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["The end"], "larger glow");
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

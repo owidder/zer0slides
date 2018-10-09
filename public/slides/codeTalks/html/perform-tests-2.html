@@ -1,0 +1,58 @@
+<style>
+
+    #perform-tests-2 .code {
+        font-size: 1.2em;
+    }
+
+    #perform-tests-2 .code pre {
+        background-color: white;
+    }
+
+    #perform-tests-2 .line-highlight {
+        border: solid black 2px;
+    }
+
+    #perform-tests-2 .token {
+        color: black;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "perform-tests-2";
+
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Perform the tests",], "small glow");
+
+        const codeSelector = "#" + ID + " .code";
+
+        slidAR.showCode.js(codeSelector,
+            "Olivers-MacBook-2:truffle oliver$ truffle test\n" +
+            "Using network 'development'.\n" +
+            "\n" +
+            "\n" +
+            "\n" +
+            "  Contract: HashStore\n" +
+            "    ✓ It should get the correct account as source when asked for stored hash (71ms)\n" +
+            "    ✓ It should get zero as source when ask for not stored hash\n" +
+            "    ✓ It should throw exception when store hash twice (295ms)\n" +
+            "\n" +
+            "\n" +
+            "  3 passing (415ms)",
+        );
+
+        const hlStep_1 = slidAR.showCode.highlightLinesStep(codeSelector, "1");
+        const hlStep_6_9 = slidAR.showCode.highlightLinesStep(codeSelector, "6-9");
+
+        slidAR.steps.set(ID, [hlStep_1, hlStep_6_9]);
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

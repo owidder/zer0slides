@@ -1,0 +1,28 @@
+<style>
+
+    #truffle .code {
+        font-size: 4em;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="title"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "step2";
+
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Step2: A simple React component",], "large glow");
+
+        slidAR.showCode.bash("#" + ID + " .code",
+            "npm i -g truffle\n" +
+            "npm i -g ganache-cli"
+        );
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

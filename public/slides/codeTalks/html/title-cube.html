@@ -1,0 +1,103 @@
+<style>
+
+    @keyframes graph-animate-cube {
+        33% {transform: rotateX(360deg) rotateY(0deg) rotateZ(0deg)}
+        66% {transform: rotateX(360deg) rotateY(360deg) rotateZ(0deg)}
+        66% {transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg)}
+    }
+
+    #title-cube .animate-cube {
+        animation: graph-animate-cube 100s infinite ease-in-out;
+    }
+
+    #title-cube .with-etherscan {
+        background-image: url("./slides/codeTalks/img/etherscan.png");
+        background-size: cover;
+        background-position: left top;
+    }
+
+    #title-cube .with-ethereum {
+        background-image: url("./slides/codeTalks/img/Ethereum.png");
+        background-size: cover;
+        background-position: left top;
+    }
+
+    #title-cube .with-metamask {
+        background-image: url("./slides/codeTalks/img/metamask.png");
+        background-size: cover;
+        background-position: left top;
+    }
+
+    #title-cube .with-rinkeby-faucet {
+        background-image: url("./slides/codeTalks/img/rinkeby-faucet-2.png");
+        background-size: cover;
+        background-position: left top;
+    }
+
+    #title-cube .with-javascript {
+        background-image: url("./slides/codeTalks/img/javascript.png");
+        background-size: cover;
+        background-position: left top;
+    }
+
+    #title-cube .with-truffle {
+        background-image: url("./slides/codeTalks/img/truffle.png");
+        background-size: cover;
+        background-position: left top;
+    }
+
+    #title-cube .with-ganache {
+        background-image: url("./slides/codeTalks/img/ganache.png");
+        background-size: cover;
+        background-position: left top;
+    }
+
+    #title-cube .with-drizzle {
+        background-image: url("./slides/codeTalks/img/drizzle.png");
+        background-size: cover;
+        background-position: left top;
+    }
+
+    #title-cube .with-infura {
+        background-image: url("./slides/codeTalks/img/infura.jpg");
+        background-size: cover;
+        background-position: left top;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+
+<div id="_titlecube"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+
+        const ID = "title-cube";
+
+        slidAR.cube.create("#_titlecube", 350);
+
+        slidAR.classUtil.setClass("#_titlecube .cube-top", "with-ethereum");
+
+        slidAR.classUtil.setClass("#_titlecube .cube-bottom", "with-metamask");
+
+        slidAR.classUtil.switchBetweenClasses("#_titlecube .cube-right",
+            ["with-rinkeby-faucet", "with-infura"], 2000)
+
+        slidAR.classUtil.switchBetweenClasses("#_titlecube .cube-back",
+            ["with-etherscan", "with-ganache", "with-drizzle"], 2000)
+
+        slidAR.classUtil.switchBetweenClasses("#_titlecube .cube-left",
+            ["with-truffle", "with-javascript"], 2500)
+
+        slidAR.coolText.glowText.create("#" + ID + " .cube-front", ["Block-", "chain", "Clients",], "middle-large glow");
+
+        slidAR.cube.startStopAnimation(true);
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+
+</script>

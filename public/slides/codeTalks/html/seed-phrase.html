@@ -1,0 +1,25 @@
+<style>
+
+    #seed-phrase img {
+        border: 10px solid gray;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="image">
+    <div class="title"></div>
+    <img height="800" src="./slides/codeTalks/img/seed-phrase.png">
+    <p><a target="_blank" href="https://infura.io/">https://infura.io/</a></p>
+</div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "seed-phrase";
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Seed phrase",], "normal glow");
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

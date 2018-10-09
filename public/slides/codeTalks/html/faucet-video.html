@@ -1,0 +1,27 @@
+<style>
+
+    #faucet-video a {
+        font-size: 2em;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="video">
+    <div class="title"></div>
+    <video controls muted width="1000" src="./slides/codeTalks/video/faucet.mp4"></video>
+    <p><a target="_blank" href="https://plus.google.com/114467025544506207754/posts/QhAFeqpSgzb">Google+</a></p>
+    <p><a target="_blank" href="https://faucet.rinkeby.io/">Rinkeby Faucet</a></p>
+
+</div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "faucet-video";
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Rinkeby Faucet",], "normal glow");
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

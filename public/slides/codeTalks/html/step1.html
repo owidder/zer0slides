@@ -1,0 +1,19 @@
+<style>
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="title"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "step1";
+
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Step1: Deploy the contract", "to the local blockchain"], "large glow");
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

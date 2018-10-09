@@ -1,0 +1,29 @@
+<style>
+
+    #drizzle .code {
+        font-size: 4em;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="title"></div>
+<img src="./slides/codeTalks/img/drizzle.png">
+<div class="code"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "drizzle";
+
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Drizzle",], "middle-large glow");
+
+        slidAR.showCode.bash("#" + ID + " .code",
+            "npm i --save drizzle"
+        );
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

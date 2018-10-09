@@ -1,0 +1,75 @@
+<style>
+
+    #init-drizzle .code {
+        font-size: 1.2em;
+    }
+
+    #init-drizzle .code pre {
+        background-color: white;
+    }
+
+    #init-drizzle .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "init-drizzle";
+
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["Step 3: Init Drizzle",], "small glow");
+
+        const codeSelector = "#" + ID + " .code";
+
+        slidAR.showCode.js(codeSelector,
+            "...\n" +
+            "import {Drizzle, generateStore} from \"drizzle\";\n" +
+            "import HashStoreContract from \"./contracts/HashStore.json\";\n" +
+            "...\n" +
+            "export class HashStore extends React.Component {\n" +
+            "...\n" +
+            "    componentDidMount() {\n" +
+            "        const options = {contracts: [HashStoreContract]};\n" +
+            "        this.drizzle = new Drizzle(options, generateStore(options));\n" +
+            "\n" +
+            "        this.unsubscribe = this.drizzle.store.subscribe(() => {\n" +
+            "            const drizzleState = this.drizzle.store.getState();\n" +
+            "\n" +
+            "            if (drizzleState.drizzleStatus.initialized) {\n" +
+            "                this.setState({loaded: true, drizzleState});\n" +
+            "            }\n" +
+            "        });\n" +
+            "    }\n" +
+            "\n" +
+            "    compomentWillUnmount() {\n" +
+            "        this.unsubscribe();\n" +
+            "    }\n" +
+            "...\n" +
+            "}\n"
+        );
+
+        const steps = [];
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "2"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "3"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "7-18"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "8"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "9"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "11-17"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "12"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "14"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "15"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "20-22"));
+
+        slidAR.steps.set(ID, steps);
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

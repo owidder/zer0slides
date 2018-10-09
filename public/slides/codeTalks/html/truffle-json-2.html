@@ -1,0 +1,62 @@
+<style>
+
+    #truffle-json-2 .code {
+        font-size: 1.2em;
+    }
+
+    #truffle-json-2 .code pre {
+        background-color: white;
+    }
+
+    #truffle-json-2 .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "truffle-json-2";
+
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["truffle.json",], "small glow");
+
+        const codeSelector = "#" + ID + " .code";
+
+        slidAR.showCode.js(codeSelector,
+            "var HDWalletProvider = require(\"truffle-hdwallet-provider\");\n" +
+            "var mnemonic = \"season divert corn exchange harbor book boat allow vivid error apple process\";\n" +
+            "\n" +
+            "module.exports = {\n" +
+            "    networks: {\n" +
+            "        development: {\n" +
+            "            host: \"localhost\",\n" +
+            "            port: 8545,\n" +
+            "            network_id: \"*\" // Match any network id\n" +
+            "        },\n" +
+            "        infura: {\n" +
+            "            provider: function () {\n" +
+            "                return new HDWalletProvider(mnemonic, \"https://rinkeby.infura.io/v3/6b901e50131a4b69a46c6aad0294cb1d\")\n" +
+            "            },\n" +
+            "            network_id: 4,\n" +
+            "        },\n" +
+            "    },\n" +
+            "};\n",
+        );
+
+        const steps = [];
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "2"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "1"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "11-16"));
+
+        slidAR.steps.set(ID, steps);
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

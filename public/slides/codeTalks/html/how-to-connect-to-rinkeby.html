@@ -1,0 +1,21 @@
+<style>
+
+    #rinkeby img {
+        border: 10px solid gray;
+    }
+
+</style>
+
+<div class="slidecounter"></div>
+<div class="title"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "how-to-connect-to-rinkeby";
+        slidAR.coolText.glowText.create("#" + ID + " .title", ["How to", "connect to", "Rinkeby?"], "large glow");
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>
