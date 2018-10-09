@@ -23,4 +23,5 @@ initReadyPromise.then((startIndex) => {
     bindKeyToFunction("left", () => slideCore.prevSlide())
     bindKeyToFunction("down", () => slideCore.getCurrentSlide().nextStep())
     bindKeyToFunction("up", () => slideCore.getCurrentSlide().prevStep())
+    bindKeyToFunction("r", () => slideCore.refreshSlide())
 });

@@ -6,7 +6,8 @@ import {resetSlideReadyPromise, slideReadyPromise} from '../lifecycle/lifecycle'
 import {showHideDown, showHideStepCtr, showHideUp} from './controlElements';
 
 interface HtmlSlideProps {
-    slide: Slide
+    slide: Slide,
+    safeMode: boolean
 }
 
 export class HtmlSlide extends React.Component<HtmlSlideProps> {
@@ -33,7 +34,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
             setTimeout(() => {
                 showHideStepCtr(slide.steps.length > 0);
                 slide.performToCurrentStep();
-            }, 100)
+            }, this.props.safeMode ? 3000 : 100)
         })
     }
 
