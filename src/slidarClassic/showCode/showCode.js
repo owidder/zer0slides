@@ -10,27 +10,30 @@ const {createReverseStep} = steps;
 const Prism = window.Prism;
 
 const refresh = () => {
-    setTimeout(() => {
-        Prism.highlightAll();
-    }, 0);
+    return new Promise(resolve => {
+        setTimeout(() => {
+            Prism.highlightAll();
+            resolve();
+        }, 0);
+    })
 }
 
 const render = (selector, language, _string) => {
     const html = Prism.highlight(_string, Prism.languages[language]);
     $(selector).html(`<pre class="language-${language} line-numbers"><code>${html}</code></pre>`);
-    refresh();
+    return refresh();
 }
 
 export const css = (selector, cssString) => {
-    render(selector, "css", cssString);
+    return render(selector, "css", cssString);
 }
 
 export const js = (selector, jsString) => {
-    render(selector, "javascript", jsString);
+    return render(selector, "javascript", jsString);
 }
 
 export const bash = (selector, jsString) => {
-    render(selector, "clike", jsString);
+    return render(selector, "clike", jsString);
 }
 
 export const remove = (selector) => {

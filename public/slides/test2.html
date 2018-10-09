@@ -23,7 +23,7 @@
         const NAME = "test2";
 
         const codeSelector = "#" + NAME + " .code";
-        gapslides.showCode.js(codeSelector, "function() {\n" +
+        const promise = gapslides.showCode.js(codeSelector, "function() {\n" +
             "    const x = 2;\n" +
             "}");
 
@@ -31,7 +31,9 @@
         steps.push(gapslides.showCode.highlightLinesStep(codeSelector, "1-3"))
         gapslides.steps.setSteps(NAME, steps);
 
-        gapslides.lifecycle.slideReady(NAME);
-        })()
+        promise.then(function () {
+            gapslides.lifecycle.slideReady(NAME);
+        })
+    })()
 
 </script>

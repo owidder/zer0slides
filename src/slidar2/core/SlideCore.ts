@@ -1,4 +1,5 @@
 import {Slide} from './Slide';
+import {renderSlide} from './render';
 
 export class SlideCore {
 
@@ -31,6 +32,7 @@ export class SlideCore {
 
     public setCurrentSlideWithIndex(index: number) {
         this.setCurrentSlideWithName(this.slideNames[index]);
+        renderSlide(this.getCurrentSlide());
     }
 
     public getCurrentSlide() {
@@ -50,6 +52,7 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(0);
         }
+        renderSlide(this.getCurrentSlide());
     }
 
     public prevSlide() {
@@ -60,5 +63,6 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(this.slideNames.length - 1);
         }
+        renderSlide(this.getCurrentSlide());
     }
 }

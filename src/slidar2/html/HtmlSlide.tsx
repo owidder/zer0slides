@@ -30,8 +30,10 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         $(this.container.current as any).load(slide.getPathToHtml());
 
         slideReadyPromise(slide.name).then(() => {
-            showHideStepCtr(slide.steps.length > 0);
-            slide.performToCurrentStep();
+            setTimeout(() => {
+                showHideStepCtr(slide.steps.length > 0);
+                slide.performToCurrentStep();
+            }, 100)
         })
     }
 

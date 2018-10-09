@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {HtmlSlide} from './slidar2/html/HtmlSlide';
-import {Slide} from './slidar2/core/Slide';
+import {HtmlSlide} from '../html/HtmlSlide';
+import {Slide} from './Slide';
 
 interface GapSlidesProps {
     slide: Slide
