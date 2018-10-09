@@ -7,5 +7,5 @@ export const pathToHtml = (name: string) => {
         return `slides/${name}.html`;
     }
 
-    return `slides/${folderName}/${name}.html`
+    return `slides/${folderName}/html/${name}.html`
 }
