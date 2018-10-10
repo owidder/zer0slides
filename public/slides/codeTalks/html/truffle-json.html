@@ -50,9 +50,9 @@
             "};\n",
         );
 
-        const hlStep_6_9 = slidAR.showCode.highlightLinesStep(codeSelector, "6-9");
+        const steps = [slidAR.showCode.highlightLinesStep(codeSelector, "6-9")];
 
-        slidAR.steps.set(ID, [hlStep_6_9]);
+        slidAR.steps.set(ID, steps);
 
         slidAR.initPhase.markSlideAsReady(ID);
     })()
