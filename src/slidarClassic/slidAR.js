@@ -5,6 +5,7 @@ import {cube} from './cube/cube';
 import {lifecycle} from '../slidar2/lifecycle/lifecycle';
 import {steps} from '../slidar2/steps/steps';
 import {metamaskLogo} from './metamask/metamaskLogo';
+import {qrUtil} from './qr/qrutil';
 
 const coolText = {glowText};
 const initPhase = {markSlideAsReady: lifecycle.slideReady};
@@ -19,6 +20,7 @@ export const slidAR = {
     glowText,
     initPhase,
     metamaskLogo,
+    qrUtil,
     showCode,
     steps: _steps,
 };
