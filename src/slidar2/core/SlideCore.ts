@@ -1,6 +1,7 @@
 import {Slide} from './Slide';
 import {renderSlide} from './render';
 import {setSlideNo} from '../html/controlElements';
+import {setHashValue} from '../url/queryUtil';
 
 export class SlideCore {
 
@@ -32,6 +33,7 @@ export class SlideCore {
     }
 
     public setCurrentSlideWithIndex(index: number) {
+        setHashValue("slide", index);
         this.setCurrentSlideWithName(this.slideNames[index]);
         renderSlide(this.getCurrentSlide());
     }

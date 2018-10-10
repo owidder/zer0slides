@@ -10,6 +10,7 @@ import {slideCore} from './slidar2/core/core';
 import {Slide} from './slidar2/core/Slide';
 import {bindKeyToFunction} from './slidar2/core/keys';
 import {renderSlide} from './slidar2/core/render';
+import {paramValue} from './slidar2/url/queryUtil';
 
 init();
 
@@ -17,7 +18,13 @@ const initialSlide = new Slide("init");
 renderSlide(initialSlide)
 
 initReadyPromise.then((startIndex) => {
-    slideCore.setCurrentSlideWithIndex(startIndex)
+    const slideNo = paramValue("slide");
+    if(slideNo != null && Number(slideNo) > -1) {
+        slideCore.setCurrentSlideWithIndex(Number(slideNo));
+    }
+    else {
+        slideCore.setCurrentSlideWithIndex(startIndex)
+    }
 
     bindKeyToFunction("right", () => slideCore.nextSlide())
     bindKeyToFunction("left", () => slideCore.prevSlide())
@@ -26,4 +33,7 @@ initReadyPromise.then((startIndex) => {
     bindKeyToFunction("m", () => slideCore.getCurrentSlide().nextStep())
     bindKeyToFunction("i", () => slideCore.getCurrentSlide().prevStep())
     bindKeyToFunction("r", () => slideCore.refreshSlide())
+    bindKeyToFunction("f", () => slideCore.setCurrentSlideWithIndex(0))
+
 });
+
