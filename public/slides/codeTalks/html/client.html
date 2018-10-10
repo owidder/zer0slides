@@ -1,11 +1,24 @@
 <style>
+    #client .flex {
+        display: flex;
+        justify-content: center;
+    }
 
+    #client img {
+        height: 80vh;
+    }
+
+    #client .innerflex {
+        display: flex;
+        flex-direction: column;
+    }
 </style>
 
-<div class="slidecounter"></div>
-<div class="image">
-    <div class="title"></div>
-    <img width="1000" src="./slides/codeTalks/img/client.png">
+<div class="flex">
+    <div class="innerflex">
+        <div class="title"></div>
+        <img src="./slides/codeTalks/img/client.png">
+    </div>
 </div>
 
 <script>

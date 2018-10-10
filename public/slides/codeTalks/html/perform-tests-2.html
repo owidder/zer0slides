@@ -48,10 +48,11 @@
             "  3 passing (415ms)",
         );
 
-        const hlStep_1 = slidAR.showCode.highlightLinesStep(codeSelector, "1");
-        const hlStep_6_9 = slidAR.showCode.highlightLinesStep(codeSelector, "6-9");
+        const steps = [];
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "1"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "6-9"));
 
-        slidAR.steps.set(ID, [hlStep_1, hlStep_6_9]);
+        slidAR.steps.set(ID, steps);
 
         slidAR.initPhase.markSlideAsReady(ID);
     })()
