@@ -18,7 +18,6 @@
 
 </style>
 
-<div class="slidecounter"></div>
 <div class="title"></div>
 <div class="code"></div>
 
@@ -61,11 +60,12 @@
             "Listening on localhost:8545",
         );
 
-        const hlStep_1 = slidAR.showCode.highlightLinesStep(codeSelector, "1");
-        const hlStep_4_10 = slidAR.showCode.highlightLinesStep(codeSelector, "4-10");
-        const hlStep_25 = slidAR.showCode.highlightLinesStep(codeSelector, "25");
+        const steps = [];
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "1"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "4-10"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "25"));
 
-        slidAR.steps.set(ID, [hlStep_1, hlStep_4_10, hlStep_25]);
+        slidAR.steps.set(ID, steps);
 
         slidAR.initPhase.markSlideAsReady(ID);
     })()
