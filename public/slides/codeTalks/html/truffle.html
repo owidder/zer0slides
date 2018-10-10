@@ -4,12 +4,27 @@
         font-size: 4em;
     }
 
+    #truffle .flex {
+        display: flex;
+        justify-content: center;
+    }
+
+    #truffle .innerflex {
+        display: flex;
+        flex-direction: column;
+    }
+
 </style>
 
-<div class="slidecounter"></div>
-<div class="title"></div>
-<img src="./slides/codeTalks/img/truffle.png">
-<img src="./slides/codeTalks/img/ganache.png">
+<div class="flex">
+    <div class="innerflex">
+        <div class="title"></div>
+        <div>
+            <img src="./slides/codeTalks/img/truffle.png">
+            <img src="./slides/codeTalks/img/ganache.png">
+        </div>
+    </div>
+</div>
 
 <div class="code"></div>
 
