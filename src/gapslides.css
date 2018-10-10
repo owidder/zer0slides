@@ -3,6 +3,10 @@
     justify-content: center;
 }
 
-.imgcontainer img._95 {
+img._95 {
     height: 95vh;
+}
+
+img._80 {
+    height: 80vh;
 }
