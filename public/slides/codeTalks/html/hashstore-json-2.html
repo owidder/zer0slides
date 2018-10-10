@@ -14,7 +14,6 @@
 
 </style>
 
-<div class="slidecounter"></div>
 <div class="title"></div>
 <div class="code"></div>
 
@@ -65,11 +64,12 @@
             "}",
         );
 
-        const hlStep_2 = slidAR.showCode.highlightLinesStep(codeSelector, "2");
-        const hlStep_3_19 = slidAR.showCode.highlightLinesStep(codeSelector, "3-19");
-        const hlStep_24_30 = slidAR.showCode.highlightLinesStep(codeSelector, "24-30");
+        const steps = [];
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "2"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "3-19"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "24-30"));
 
-        slidAR.steps.set(ID, [hlStep_2, hlStep_3_19, hlStep_24_30]);
+        slidAR.steps.set(ID, steps);
 
         slidAR.initPhase.markSlideAsReady(ID);
     })()

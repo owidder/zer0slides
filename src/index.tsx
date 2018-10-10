@@ -12,6 +12,8 @@ import {bindKeyToFunction} from './slidar2/core/keys';
 import {renderSlide} from './slidar2/core/render';
 import {paramValue} from './slidar2/url/queryUtil';
 
+import './gapslides.css';
+
 init();
 
 const initialSlide = new Slide("init");

@@ -18,7 +18,6 @@
 
 </style>
 
-<div class="slidecounter"></div>
 <div class="title"></div>
 <div class="code"></div>
 
@@ -57,14 +56,15 @@
             "Saving artifacts...",
         );
 
-        const hlStep_1 = slidAR.showCode.highlightLinesStep(codeSelector, "1");
-        const hlStep_2_3 = slidAR.showCode.highlightLinesStep(codeSelector, "2-3");
-        const hlStep_4 = slidAR.showCode.highlightLinesStep(codeSelector, "4");
-        const hlStep_6 = slidAR.showCode.highlightLinesStep(codeSelector, "6");
-        const hlStep_8_14 = slidAR.showCode.highlightLinesStep(codeSelector, "8-14");
-        const hlStep_15_21 = slidAR.showCode.highlightLinesStep(codeSelector, "15-21");
+        const steps = [];
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "1"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "2-3"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "4"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "6"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "8-14"));
+        steps.push(slidAR.showCode.highlightLinesStep(codeSelector, "15-21"));
 
-        slidAR.steps.set(ID, [hlStep_1, hlStep_2_3, hlStep_4, hlStep_6, hlStep_8_14, hlStep_15_21]);
+        slidAR.steps.set(ID, steps);
 
         slidAR.initPhase.markSlideAsReady(ID);
     })()

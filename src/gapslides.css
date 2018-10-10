@@ -1,0 +1,8 @@
+.imgcontainer {
+    display: flex;
+    justify-content: center;
+}
+
+.imgcontainer img._95 {
+    height: 95vh;
+}
