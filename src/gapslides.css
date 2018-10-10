@@ -10,3 +10,13 @@ img._95 {
 img._80 {
     height: 80vh;
 }
+
+img._70 {
+    height: 70vh;
+}
+
+.centerflexcol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
