@@ -3,7 +3,6 @@
 
 </style>
 
-<div class="slidecounter"></div>
 <div class="title"></div>
 <div class="row">
     <div class="col s6">
@@ -11,7 +10,7 @@
         From <a href="https://github.com/MetaMask/metamask-logo">https://github.com/MetaMask/metamask-logo</a>
     </div>
     <div class="col s6">
-        <img height="800" src="./slides/codeTalks/img/metamask-account.png">
+        <img class="_80" src="./slides/codeTalks/img/metamask-account.png">
     </div>
 </div>
 
@@ -25,9 +24,7 @@
         slidAR.coolText.glowText.create("#" + ID + " .title", ["Metamask",], "normal glow");
         const viewer = slidAR.metamaskLogo.create("#" + ID + " .logo");
 
-        slidAR.scripts.slideEnter(ID, () => slidAR.metamaskLogo.start(viewer));
-        slidAR.scripts.slideExit(ID, () => slidAR.metamaskLogo.stop(viewer));
-
+        slidAR.metamaskLogo.start(viewer)
         slidAR.initPhase.markSlideAsReady(ID);
     })()
 </script>
