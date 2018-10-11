@@ -35,7 +35,6 @@ export class SlideCore {
     public setCurrentSlideWithIndex(index: number) {
         setHashValue("slide", index);
         this.setCurrentSlideWithName(this.slideNames[index]);
-        renderSlide(this.getCurrentSlide());
     }
 
     public getCurrentSlide() {
@@ -52,10 +51,11 @@ export class SlideCore {
     }
 
     public refreshSlide() {
-        renderSlide(this.getCurrentSlide(), true);
+        renderSlide(this.getCurrentSlide(), undefined, true);
     }
 
     public nextSlide() {
+        const oldSlide = this.getCurrentSlide();
         const currentIndex = this.getCurrentIndex();
         if(currentIndex < (this.slideNames.length - 1)) {
             this.setCurrentSlideWithIndex(currentIndex + 1);
@@ -63,11 +63,12 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(0);
         }
-        renderSlide(this.getCurrentSlide());
+        renderSlide(this.getCurrentSlide(), oldSlide);
         this.showCurrentIndex();
     }
 
     public prevSlide() {
+        const oldSlide = this.getCurrentSlide();
         const currentIndex = this.getCurrentIndex();
         if(currentIndex > 0) {
             this.setCurrentSlideWithIndex(currentIndex - 1);
@@ -75,7 +76,7 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(this.slideNames.length - 1);
         }
-        renderSlide(this.getCurrentSlide());
+        renderSlide(this.getCurrentSlide(), oldSlide);
         this.showCurrentIndex();
     }
 }

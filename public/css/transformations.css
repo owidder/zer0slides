@@ -1,0 +1,8 @@
+@keyframes kfMoveAwayAlongZ {
+    100% { transform: translateZ(10000px)}
+}
+
+.moveAwayAlongZ {
+    transform: rotateX(180deg)
+    /*animation: kfMoveAwayAlongZ 1s ease-in-out;*/
+}

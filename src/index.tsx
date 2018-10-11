@@ -1,8 +1,6 @@
 import 'materialize-css/dist/css/materialize.css';
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import {GapSlides} from './slidar2/core/GapSlides';
 
 import {init} from './initGapslides';
 import {initReadyPromise} from './slidar2/lifecycle/lifecycle';
@@ -23,9 +21,11 @@ initReadyPromise.then((startIndex) => {
     const slideNo = paramValue("slide");
     if(slideNo != null && Number(slideNo) > -1) {
         slideCore.setCurrentSlideWithIndex(Number(slideNo));
+        renderSlide(slideCore.getCurrentSlide());
     }
     else {
         slideCore.setCurrentSlideWithIndex(startIndex)
+        renderSlide(slideCore.getCurrentSlide());
     }
 
     bindKeyToFunction("right", () => slideCore.nextSlide())
