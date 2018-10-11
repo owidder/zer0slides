@@ -10,7 +10,10 @@ interface HtmlSlideProps {
     safeMode: boolean,
     action: "transform-out" | "transform-in" | "show",
     transformReadyCallback?: () => void
- }
+}
+
+const TRANSFORM_IN = "showUpAlongZ";
+const TRANSFORM_OUT = "moveAwayAlongZ";
 
 export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
@@ -48,17 +51,17 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
             if(this.props.transformReadyCallback) {
                 this.props.transformReadyCallback();
             }
-        }, 1000)
+        }, 400)
     }
 
     public async transformIn() {
-        this.addClass("showUpAlongZInit");
+        this.addClass(`${TRANSFORM_IN}init`);
         await this.show();
-        this.addClass("showUpAlongZ");
-        this.removeClass("showUpAlongZInit");
+        this.addClass(TRANSFORM_IN);
+        this.removeClass(`${TRANSFORM_IN}init`);
         setTimeout(() => {
-            this.removeClass("showUpAlongZ");
-        }, 1000)
+            this.removeClass(TRANSFORM_IN);
+        }, 400)
     }
 
     public componentDidUpdate() {

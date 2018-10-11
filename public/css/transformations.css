@@ -8,7 +8,7 @@
 }
 
 .moveAwayAlongZ {
-    animation: kfMoveAwayAlongZ 1s ease-in-out;
+    animation: kfMoveAwayAlongZ .5s ease-in-out;
 }
 
 @keyframes kfShowUpAlongZ {
@@ -21,6 +21,19 @@
 }
 
 .showUpAlongZ {
-    animation: kfShowUpAlongZ 1s ease-in-out;
+    animation: kfShowUpAlongZ .5s ease-in-out;
+}
+
+@keyframes kfShowUpFromLeft {
+    0% {transform: translateX(-100000px)}
+    100% { transform: translateX(0)}
+}
+
+.showUpFromLeftInit {
+    transform: translateX(-100000px);
+}
+
+.showFromLeft {
+    animation: kfShowUpFromLeft 2s ease-in-out;
 }
 
