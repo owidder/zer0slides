@@ -1,8 +1,12 @@
+#root {
+    transform-style: preserve-3d;
+    perspective: 800px;
+}
+
 @keyframes kfMoveAwayAlongZ {
-    100% { transform: translateZ(10000px)}
+    100% { transform: translateZ(-100000px)}
 }
 
 .moveAwayAlongZ {
-    transform: rotateX(180deg)
-    /*animation: kfMoveAwayAlongZ 1s ease-in-out;*/
+    animation: kfMoveAwayAlongZ 1s ease-in-out;
 }
