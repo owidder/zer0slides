@@ -24,6 +24,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
                 break;
 
             case "transform-in":
+                this.transformIn();
                 break;
 
             default:
@@ -31,14 +32,32 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         }
     }
 
+    private addClass(className) {
+        $(this.container.current as any).addClass(className);
+    }
+
+    private removeClass(className) {
+        $(this.container.current as any).removeClass(className);
+    }
+
     public transformOut() {
-        $(this.container.current as any).addClass("moveAwayAlongZ");
+        this.addClass("moveAwayAlongZ");
         setTimeout(() => {
             this.clear();
-            $(this.container.current as any).removeClass("moveAwayAlongZ");
+            this.removeClass("moveAwayAlongZ");
             if(this.props.transformReadyCallback) {
                 this.props.transformReadyCallback();
             }
+        }, 1000)
+    }
+
+    public async transformIn() {
+        this.addClass("showUpAlongZInit");
+        await this.show();
+        this.addClass("showUpAlongZ");
+        this.removeClass("showUpAlongZInit");
+        setTimeout(() => {
+            this.removeClass("showUpAlongZ");
         }, 1000)
     }
 
@@ -49,6 +68,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
                 break;
 
             case "transform-in":
+                this.transformIn();
                 break;
 
             default:

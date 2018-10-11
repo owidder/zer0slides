@@ -10,3 +10,17 @@
 .moveAwayAlongZ {
     animation: kfMoveAwayAlongZ 1s ease-in-out;
 }
+
+@keyframes kfShowUpAlongZ {
+    0% {transform: translateZ(-100000px)}
+    100% { transform: translateZ(0px)}
+}
+
+.showUpAlongZInit {
+    transform: translateZ(-100000px);
+}
+
+.showUpAlongZ {
+    animation: kfShowUpAlongZ 1s ease-in-out;
+}
+

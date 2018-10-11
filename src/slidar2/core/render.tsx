@@ -5,20 +5,22 @@ import {Slide} from "./Slide";
 import {HtmlSlide} from '../html/HtmlSlide';
 
 export const renderSlide = (slide: Slide, oldSlide?: Slide, safeMode: boolean = false) => {
-    const transformOutReady = new Promise(resolve => {
-        if(oldSlide) {
+    if(oldSlide) {
+        const transformOutReady = new Promise(resolve => {
             ReactDOM.render(<HtmlSlide slide={oldSlide}
                                        safeMode={safeMode}
                                        action="transform-out"
                                        transformReadyCallback={resolve}
             />, document.getElementById('root') as HTMLElement);
-        }
-        else {
-            resolve();
-        }
-    })
+        })
 
-    transformOutReady.then(() => {
-        ReactDOM.render(<HtmlSlide slide={slide} safeMode={safeMode} action="show"/>, document.getElementById('root') as HTMLElement);
-    })
+        transformOutReady.then(() => {
+            ReactDOM.render(<HtmlSlide slide={slide} safeMode={safeMode} action="transform-in"/>,
+                document.getElementById('root') as HTMLElement);
+        })
+    }
+    else {
+        ReactDOM.render(<HtmlSlide slide={slide} safeMode={safeMode} action="show"/>,
+            document.getElementById('root') as HTMLElement);
+    }
 }
