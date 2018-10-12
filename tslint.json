@@ -14,7 +14,8 @@
     "no-var-requires": false,
     "member-ordering": false,
     "no-debugger": false,
-    "no-console": false
+    "no-console": false,
+    "no-unused-expression": false
   },
   "linterOptions": {
     "exclude": [

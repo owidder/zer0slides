@@ -25,7 +25,8 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         switch(this.props.action) {
             case "transform-out":
                 await this.show(this.container.current, this.props.slide);
-                this.transformOut(this.container.current);
+                await this.transformOut(this.container.current);
+                this.props.transformReadyCallback && this.props.transformReadyCallback();
                 break;
 
             case "transform-in":
@@ -37,10 +38,11 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         }
     }
 
-    public componentDidUpdate() {
+    public async componentDidUpdate() {
         switch(this.props.action) {
             case "transform-out":
-                this.transformOut(this.container.current);
+                await this.transformOut(this.container.current);
+                this.props.transformReadyCallback && this.props.transformReadyCallback();
                 break;
 
             case "transform-in":
@@ -61,26 +63,27 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
     }
 
     public transformOut(container: any) {
-        const _container = container ? container : this.container.current;
-
-        this.addClass(this.createTransformClassName(), _container);
-        setTimeout(() => {
-            this.clear(_container);
-            this.removeClass(this.createTransformClassName(), _container);
-            if(this.props.transformReadyCallback) {
-                this.props.transformReadyCallback();
-            }
-        }, 400)
+        return new Promise(resolve => {
+            this.addClass(this.createTransformClassName(), container);
+            setTimeout(() => {
+                this.clear(container);
+                this.removeClass(this.createTransformClassName(), container);
+                resolve();
+            }, 400)
+        })
     }
 
-    public async transformIn(container: any, slide: Slide) {
-        this.addClass(this.createTransformInitClassName(), container);
-        await this.show(container, slide);
-        this.addClass(this.createTransformClassName(), container);
-        this.removeClass(this.createTransformInitClassName(), container);
-        setTimeout(() => {
-            this.removeClass(this.createTransformClassName(), container);
-        }, 400)
+    public transformIn(container: any, slide: Slide) {
+        return new Promise(async resolve => {
+            this.addClass(this.createTransformInitClassName(), container);
+            await this.show(container, slide);
+            this.addClass(this.createTransformClassName(), container);
+            this.removeClass(this.createTransformInitClassName(), container);
+            setTimeout(() => {
+                this.removeClass(this.createTransformClassName(), container);
+                resolve();
+            }, 400)
+        })
     }
 
     private clear(container: any) {
