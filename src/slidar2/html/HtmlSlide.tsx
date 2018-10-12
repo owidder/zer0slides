@@ -8,7 +8,7 @@ import {showHideDown, showHideStepCtr, showHideUp} from './controlElements';
 interface HtmlSlideProps {
     slide: Slide,
     safeMode: boolean,
-    action: "transform-out" | "transform-in" | "show",
+    action: "transform-out" | "transform-in" | "show" | "transform-in-out",
     transformReadyCallback?: () => void,
     transformType?: string
 }
@@ -16,6 +16,8 @@ interface HtmlSlideProps {
 export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
     private container = React.createRef<HTMLDivElement>();
+    private containerOut = React.createRef<HTMLDivElement>();
+    private containerIn = React.createRef<HTMLDivElement>();
 
     public async componentDidMount() {
         switch(this.props.action) {
@@ -33,19 +35,21 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         }
     }
 
-    private addClass(className) {
-        $(this.container.current as any).addClass(className);
+    private addClass(className, container: any) {
+        $(container).addClass(className);
     }
 
-    private removeClass(className) {
-        $(this.container.current as any).removeClass(className);
+    private removeClass(className, container: any) {
+        $(container).removeClass(className);
     }
 
-    public transformOut() {
-        this.addClass(this.transformClassName());
+    public transformOut(container?: any) {
+        const _container = container ? container : this.container.current;
+
+        this.addClass(this.transformClassName(), _container);
         setTimeout(() => {
-            this.clear();
-            this.removeClass(this.transformClassName());
+            this.clear(_container);
+            this.removeClass(this.transformClassName(), _container);
             if(this.props.transformReadyCallback) {
                 this.props.transformReadyCallback();
             }
@@ -63,13 +67,15 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         return `${this.transformClassName}Init`;
     }
 
-    public async transformIn() {
-        this.addClass(this.transformInitClassName());
-        await this.show();
-        this.addClass(this.transformClassName());
-        this.removeClass(this.transformInitClassName());
+    public async transformIn(container?: any) {
+        const _container = container ? container : this.container.current;
+
+        this.addClass(this.transformInitClassName(), _container);
+        await this.show(_container);
+        this.addClass(this.transformClassName(), _container);
+        this.removeClass(this.transformInitClassName(), _container);
         setTimeout(() => {
-            this.removeClass(this.transformClassName());
+            this.removeClass(this.transformClassName(), _container);
         }, 400)
     }
 
@@ -88,18 +94,20 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         }
     }
 
-    private clear() {
-        $(this.container.current as any).empty();
+    private clear(container?: any) {
+        $(container ? container : this.container.current).empty();
     }
 
-    private show() {
+    private show(container?: any) {
+        const _container = container ? container : this.container.current;
+
         return new Promise(resolve => {
             const {slide} = this.props;
 
             resetSlideReadyPromise(slide.name);
 
-            this.clear();
-            $(this.container.current as any).load(slide.getPathToHtml());
+            this.clear(_container);
+            $(_container).load(slide.getPathToHtml());
 
             slideReadyPromise(slide.name).then(() => {
                 resolve();
@@ -111,7 +119,18 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         })
     }
 
+
+
     public render() {
+        if(this.props.action === "transform-in-out") {
+            return (
+                <div>
+                    <div id={`${this.props.slide.name}-in`} ref={this.containerIn} className="html-slide"></div>
+                    <div id={`${this.props.slide.name}-out`} ref={this.containerOut} className="html-slide"></div>
+                </div>
+            );
+        }
+
         return (
             <div id={this.props.slide.name} ref={this.container} className="html-slide"></div>
         );

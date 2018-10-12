@@ -3,6 +3,8 @@
     perspective: 800px;
 }
 
+/*----------*/
+
 @keyframes kfMoveOutZ {
     100% { transform: translateZ(-100000px)}
 }
