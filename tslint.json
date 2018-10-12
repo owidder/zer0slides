@@ -13,7 +13,8 @@
     "variable-name": false,
     "no-var-requires": false,
     "member-ordering": false,
-    "no-debugger": false
+    "no-debugger": false,
+    "no-console": false
   },
   "linterOptions": {
     "exclude": [

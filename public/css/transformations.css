@@ -3,37 +3,40 @@
     perspective: 800px;
 }
 
-@keyframes kfMoveAwayAlongZ {
+@keyframes kfMoveOutZ {
     100% { transform: translateZ(-100000px)}
 }
 
-.moveAwayAlongZ {
-    animation: kfMoveAwayAlongZ .5s ease-in-out;
+.moveOutZ {
+    animation: kfMoveOutZ .5s ease-in-out;
 }
 
-@keyframes kfShowUpAlongZ {
+/*----------*/
+
+@keyframes kfMoveInZ {
     0% {transform: translateZ(-100000px)}
     100% { transform: translateZ(0px)}
 }
 
-.showUpAlongZInit {
+.moveInZInit {
     transform: translateZ(-100000px);
 }
 
-.showUpAlongZ {
-    animation: kfShowUpAlongZ .5s ease-in-out;
+.moveInZ {
+    animation: kfMoveInZ .5s ease-in-out;
 }
 
-@keyframes kfShowUpFromLeft {
-    0% {transform: translateX(-100000px)}
+/*----------*/
+
+@keyframes kfMoveInLeft {
+    0% {transform: translateX(-100vw)}
     100% { transform: translateX(0)}
 }
 
-.showUpFromLeftInit {
-    transform: translateX(-100000px);
+.moveInLeftInit {
+    transform: translateX(-100vw);
 }
 
-.showFromLeft {
-    animation: kfShowUpFromLeft 2s ease-in-out;
+.moveInLeft {
+    animation: kfMoveInLeft .5s ease-in-out;
 }
-

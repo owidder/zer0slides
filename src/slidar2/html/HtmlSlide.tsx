@@ -9,11 +9,9 @@ interface HtmlSlideProps {
     slide: Slide,
     safeMode: boolean,
     action: "transform-out" | "transform-in" | "show",
-    transformReadyCallback?: () => void
+    transformReadyCallback?: () => void,
+    transformType?: string
 }
-
-const TRANSFORM_IN = "showUpAlongZ";
-const TRANSFORM_OUT = "moveAwayAlongZ";
 
 export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
@@ -44,23 +42,34 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
     }
 
     public transformOut() {
-        this.addClass("moveAwayAlongZ");
+        this.addClass(this.transformClassName());
         setTimeout(() => {
             this.clear();
-            this.removeClass("moveAwayAlongZ");
+            this.removeClass(this.transformClassName());
             if(this.props.transformReadyCallback) {
                 this.props.transformReadyCallback();
             }
         }, 400)
     }
 
+    private transformClassName = () => {
+        const inOut = this.props.action === "transform-out" ? "Out" : "In";
+        const className = `move${inOut}${this.props.transformType}`;
+        console.log(className);
+        return className;
+    }
+
+    private transformInitClassName = () => {
+        return `${this.transformClassName}Init`;
+    }
+
     public async transformIn() {
-        this.addClass(`${TRANSFORM_IN}init`);
+        this.addClass(this.transformInitClassName());
         await this.show();
-        this.addClass(TRANSFORM_IN);
-        this.removeClass(`${TRANSFORM_IN}init`);
+        this.addClass(this.transformClassName());
+        this.removeClass(this.transformInitClassName());
         setTimeout(() => {
-            this.removeClass(TRANSFORM_IN);
+            this.removeClass(this.transformClassName());
         }, 400)
     }
 

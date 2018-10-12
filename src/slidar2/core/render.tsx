@@ -11,11 +11,12 @@ export const renderSlide = (slide: Slide, oldSlide?: Slide, safeMode: boolean = 
                                        safeMode={safeMode}
                                        action="transform-out"
                                        transformReadyCallback={resolve}
+                                       transformType="Z"
             />, document.getElementById('root') as HTMLElement);
         })
 
         transformOutReady.then(() => {
-            ReactDOM.render(<HtmlSlide slide={slide} safeMode={safeMode} action="transform-in"/>,
+            ReactDOM.render(<HtmlSlide slide={slide} safeMode={safeMode} action="transform-in" transformType="Left"/>,
                 document.getElementById('root') as HTMLElement);
         })
     }
