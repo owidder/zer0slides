@@ -7,6 +7,8 @@ import {showHideDown, showHideStepCtr, showHideUp} from './controlElements';
 
 interface HtmlSlideProps {
     slide: Slide,
+    slideIn?: Slide,
+    slideOut?: Slide,
     safeMode: boolean,
     action: "transform-out" | "transform-in" | "show" | "transform-in-out",
     transformReadyCallback?: () => void,
@@ -22,16 +24,31 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
     public async componentDidMount() {
         switch(this.props.action) {
             case "transform-out":
-                await this.show();
-                this.transformOut();
+                await this.show(this.container.current, this.props.slide);
+                this.transformOut(this.container.current);
                 break;
 
             case "transform-in":
-                this.transformIn();
+                this.transformIn(this.container.current, this.props.slide);
                 break;
 
             default:
-                this.show();
+                this.show(this.container.current, this.props.slide);
+        }
+    }
+
+    public componentDidUpdate() {
+        switch(this.props.action) {
+            case "transform-out":
+                this.transformOut(this.container.current);
+                break;
+
+            case "transform-in":
+                this.transformIn(this.container.current, this.props.slide);
+                break;
+
+            default:
+                this.show(this.container.current, this.props.slide);
         }
     }
 
@@ -43,71 +60,39 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         $(container).removeClass(className);
     }
 
-    public transformOut(container?: any) {
+    public transformOut(container: any) {
         const _container = container ? container : this.container.current;
 
-        this.addClass(this.transformClassName(), _container);
+        this.addClass(this.createTransformClassName(), _container);
         setTimeout(() => {
             this.clear(_container);
-            this.removeClass(this.transformClassName(), _container);
+            this.removeClass(this.createTransformClassName(), _container);
             if(this.props.transformReadyCallback) {
                 this.props.transformReadyCallback();
             }
         }, 400)
     }
 
-    private transformClassName = () => {
-        const inOut = this.props.action === "transform-out" ? "Out" : "In";
-        const className = `move${inOut}${this.props.transformType}`;
-        console.log(className);
-        return className;
-    }
-
-    private transformInitClassName = () => {
-        return `${this.transformClassName}Init`;
-    }
-
-    public async transformIn(container?: any) {
-        const _container = container ? container : this.container.current;
-
-        this.addClass(this.transformInitClassName(), _container);
-        await this.show(_container);
-        this.addClass(this.transformClassName(), _container);
-        this.removeClass(this.transformInitClassName(), _container);
+    public async transformIn(container: any, slide: Slide) {
+        this.addClass(this.createTransformInitClassName(), container);
+        await this.show(container, slide);
+        this.addClass(this.createTransformClassName(), container);
+        this.removeClass(this.createTransformInitClassName(), container);
         setTimeout(() => {
-            this.removeClass(this.transformClassName(), _container);
+            this.removeClass(this.createTransformClassName(), container);
         }, 400)
     }
 
-    public componentDidUpdate() {
-        switch(this.props.action) {
-            case "transform-out":
-                this.transformOut();
-                break;
-
-            case "transform-in":
-                this.transformIn();
-                break;
-
-            default:
-                this.show();
-        }
+    private clear(container: any) {
+        $(container).empty();
     }
 
-    private clear(container?: any) {
-        $(container ? container : this.container.current).empty();
-    }
-
-    private show(container?: any) {
-        const _container = container ? container : this.container.current;
-
+    private show(container: any, slide: Slide) {
         return new Promise(resolve => {
-            const {slide} = this.props;
-
             resetSlideReadyPromise(slide.name);
 
-            this.clear(_container);
-            $(_container).load(slide.getPathToHtml());
+            this.clear(container);
+            $(container).load(slide.getPathToHtml());
 
             slideReadyPromise(slide.name).then(() => {
                 resolve();
@@ -119,7 +104,20 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         })
     }
 
+    private createTransformClassName = () => {
+        const inOut = this.props.action === "transform-out" ? "Out" : "In";
+        const className = `move${inOut}${this.props.transformType}`;
+        console.log(className);
+        return className;
+    }
 
+    private createTransformInitClassName = () => {
+        return `${this.createTransformClassName}Init`;
+    }
+
+    private transformInOut() {
+
+    }
 
     public render() {
         if(this.props.action === "transform-in-out") {
