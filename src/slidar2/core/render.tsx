@@ -14,7 +14,6 @@ export interface RenderOptions {
 
 const firstOutThenIn = (options: RenderOptions) => {
     const transformOutReady = new Promise(resolve => {
-        // @ts-ignore
         ReactDOM.render(<HtmlSlide slide={options.oldSlide}
                                    safeMode={options.safeMode === true}
                                    action="transform-out"
@@ -31,12 +30,12 @@ const firstOutThenIn = (options: RenderOptions) => {
 
 const outAndInAtOnce = (options: RenderOptions) => {
     const transformInOutReady = new Promise(resolve => {
-        // @ts-ignore
         ReactDOM.render(<HtmlSlide slideOut={options.oldSlide} slideIn={options.slide}
                                    safeMode={options.safeMode === true}
                                    action="transform-in-out"
                                    transformReadyCallback={resolve}
-                                   transformType="Z"
+                                   transformOutType="Z"
+                                   transformInType="Left"
         />, document.getElementById('root') as HTMLElement);
     })
 
@@ -49,14 +48,14 @@ const outAndInAtOnce = (options: RenderOptions) => {
 export const renderSlide = (options: RenderOptions) => {
     if(options.oldSlide) {
         if(options.inOut) {
-
+            outAndInAtOnce(options);
         }
         else {
             firstOutThenIn(options);
         }
     }
     else {
-        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode || false} action="show"/>,
+        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode === true} action="show"/>,
             document.getElementById('root') as HTMLElement);
     }
 }

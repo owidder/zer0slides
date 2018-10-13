@@ -6,7 +6,7 @@ import {resetSlideReadyPromise, slideReadyPromise} from '../lifecycle/lifecycle'
 import {showHideDown, showHideStepCtr, showHideUp} from './controlElements';
 
 interface HtmlSlideProps {
-    slide: Slide,
+    slide?: Slide,
     slideIn?: Slide,
     slideOut?: Slide,
     safeMode: boolean,
@@ -89,7 +89,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
     }
 
     private clear(container: any) {
-        $(container).empty();
+        container && $(container).empty();
     }
 
     private show(container: any, slide: Slide) {
@@ -122,7 +122,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
     private async transformInOut(transformInType: string | undefined, transformOutType: string | undefined) {
         const {slideIn, slideOut, transformReadyCallback} = this.props;
         if(slideIn && slideOut) {
-            this.clear(this.container.current);
+            this.container && this.clear(this.container.current);
             await this.show(this.containerOut.current, slideOut);
             await Promise.all([
                 this.transformIn(this.containerIn.current, slideIn, transformInType),
@@ -141,8 +141,8 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         if(this.props.action === "transform-in-out") {
             return (
                 <div>
-                    <div id={`${this.props.slide.name}-in`} ref={this.containerIn} className="html-slide"></div>
-                    <div id={`${this.props.slide.name}-out`} ref={this.containerOut} className="html-slide"></div>
+                    <div id={`${this.props.slideIn.name}`} ref={this.containerIn} className="html-slide"></div>
+                    <div id={`${this.props.slideOut.name}`} ref={this.containerOut} className="html-slide"></div>
                 </div>
             );
         }
