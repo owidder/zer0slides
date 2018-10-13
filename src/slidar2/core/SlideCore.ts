@@ -51,7 +51,7 @@ export class SlideCore {
     }
 
     public refreshSlide() {
-        renderSlide(this.getCurrentSlide(), undefined, true);
+        renderSlide({slide: this.getCurrentSlide(), safeMode: true});
     }
 
     public nextSlide() {
@@ -63,7 +63,7 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(0);
         }
-        renderSlide(this.getCurrentSlide(), oldSlide);
+        renderSlide({slide: this.getCurrentSlide(), oldSlide});
         this.showCurrentIndex();
     }
 
@@ -76,7 +76,7 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(this.slideNames.length - 1);
         }
-        renderSlide(this.getCurrentSlide(), oldSlide);
+        renderSlide({slide: this.getCurrentSlide(), oldSlide});
         this.showCurrentIndex();
     }
 }

@@ -4,24 +4,59 @@ import * as ReactDOM from "react-dom";
 import {Slide} from "./Slide";
 import {HtmlSlide} from '../html/HtmlSlide';
 
-export const renderSlide = (slide: Slide, oldSlide?: Slide, safeMode: boolean = false) => {
-    if(oldSlide) {
-        const transformOutReady = new Promise(resolve => {
-            ReactDOM.render(<HtmlSlide slide={oldSlide}
-                                       safeMode={safeMode}
-                                       action="transform-out"
-                                       transformReadyCallback={resolve}
-                                       transformType="Z"
-            />, document.getElementById('root') as HTMLElement);
-        })
+export interface RenderOptions {
+    slide: Slide,
+    oldSlide?: Slide,
+    safeMode?: boolean,
+    inOut?: boolean,
+    type?: string,
+}
 
-        transformOutReady.then(() => {
-            ReactDOM.render(<HtmlSlide slide={slide} safeMode={safeMode} action="transform-in" transformType="Left"/>,
-                document.getElementById('root') as HTMLElement);
-        })
+const firstOutThenIn = (options: RenderOptions) => {
+    const transformOutReady = new Promise(resolve => {
+        // @ts-ignore
+        ReactDOM.render(<HtmlSlide slide={options.oldSlide}
+                                   safeMode={options.safeMode === true}
+                                   action="transform-out"
+                                   transformReadyCallback={resolve}
+                                   transformType="Z"
+        />, document.getElementById('root') as HTMLElement);
+    })
+
+    transformOutReady.then(() => {
+        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode === true} action="transform-in" transformType="Left"/>,
+            document.getElementById('root') as HTMLElement);
+    })
+}
+
+const outAndInAtOnce = (options: RenderOptions) => {
+    const transformInOutReady = new Promise(resolve => {
+        // @ts-ignore
+        ReactDOM.render(<HtmlSlide slideOut={options.oldSlide} slideIn={options.slide}
+                                   safeMode={options.safeMode === true}
+                                   action="transform-in-out"
+                                   transformReadyCallback={resolve}
+                                   transformType="Z"
+        />, document.getElementById('root') as HTMLElement);
+    })
+
+    transformInOutReady.then(() => {
+        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode === true} action="transform-in" transformType="Left"/>,
+            document.getElementById('root') as HTMLElement);
+    })
+}
+
+export const renderSlide = (options: RenderOptions) => {
+    if(options.oldSlide) {
+        if(options.inOut) {
+
+        }
+        else {
+            firstOutThenIn(options);
+        }
     }
     else {
-        ReactDOM.render(<HtmlSlide slide={slide} safeMode={safeMode} action="show"/>,
+        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode || false} action="show"/>,
             document.getElementById('root') as HTMLElement);
     }
 }

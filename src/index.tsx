@@ -12,22 +12,19 @@ import {paramValue} from './slidar2/url/queryUtil';
 
 import './gapslides.css';
 
-init();
-
-const initialSlide = new Slide("init");
-renderSlide(initialSlide)
-
-initReadyPromise.then((startIndex) => {
+const renderFirstSlide = (startIndex) => {
     const slideNo = paramValue("slide");
     if(slideNo != null && Number(slideNo) > -1) {
         slideCore.setCurrentSlideWithIndex(Number(slideNo));
-        renderSlide(slideCore.getCurrentSlide());
+        renderSlide({slide: slideCore.getCurrentSlide()});
     }
     else {
         slideCore.setCurrentSlideWithIndex(startIndex)
-        renderSlide(slideCore.getCurrentSlide());
+        renderSlide({slide: slideCore.getCurrentSlide()});
     }
+}
 
+const bindKeys = () => {
     bindKeyToFunction("right", () => slideCore.nextSlide())
     bindKeyToFunction("left", () => slideCore.prevSlide())
     bindKeyToFunction("down", () => slideCore.getCurrentSlide().nextStep())
@@ -36,6 +33,14 @@ initReadyPromise.then((startIndex) => {
     bindKeyToFunction("i", () => slideCore.getCurrentSlide().prevStep())
     bindKeyToFunction("r", () => slideCore.refreshSlide())
     bindKeyToFunction("f", () => slideCore.setCurrentSlideWithIndex(0))
+}
 
+init();
+
+renderSlide({slide: new Slide("init")});
+
+initReadyPromise.then((startIndex) => {
+    renderFirstSlide(startIndex);
+    bindKeys();
 });
 
