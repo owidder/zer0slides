@@ -15,7 +15,8 @@
     "member-ordering": false,
     "no-debugger": false,
     "no-console": false,
-    "no-unused-expression": false
+    "no-unused-expression": false,
+    "comment-format": false
   },
   "linterOptions": {
     "exclude": [

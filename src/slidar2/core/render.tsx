@@ -40,7 +40,7 @@ const outAndInAtOnce = (options: RenderOptions) => {
     })
 
     transformInOutReady.then(() => {
-        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode === true} action="transform-in" transformType="Left"/>,
+        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode === true} action="show"/>,
             document.getElementById('root') as HTMLElement);
     })
 }
