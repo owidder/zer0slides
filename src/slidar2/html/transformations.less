@@ -1,37 +1,83 @@
-@keyframes kfMoveOutZ {
-  100% { transform: translateZ(-100000px)}
-}
+@defaultDuration: .5s;
+@defaultTimingFunction: ease-in-out;
 
-.moveOutZ {
-  animation: kfMoveOutZ .5s ease-in-out;
-}
+/* --- Z --- */
 
-/*----------*/
+@awayTransformZ: translateZ(-100000px);
+@hereTransformZ: translateZ(0);
+
+/* --- In --- */
 
 @keyframes kfMoveInZ {
-  0% {transform: translateZ(-100000px)}
-  100% { transform: translateZ(0px)}
+  0% {transform: @awayTransformZ}
+  100% { transform: @hereTransformZ}
 }
 
 .moveInZInit {
-  transform: translateZ(-100000px);
+  transform: @awayTransformZ;
 }
 
 .moveInZ {
-  animation: kfMoveInZ .5s ease-in-out;
+  animation: kfMoveInZ @defaultDuration @defaultTimingFunction;
 }
 
-/*----------*/
+/* --- Out --- */
+
+@keyframes kfMoveOutZ {
+  100% {transform: @awayTransformZ}
+}
+
+.moveOutZ {
+  animation: kfMoveOutZ @defaultDuration @defaultTimingFunction;
+}
+
+/* --- Left --- */
+
+@awayTransformLeft: translateX(-100vw);
+@hereTransformLeft: translateX(0);
+
+/* --- In --- */
 
 @keyframes kfMoveInLeft {
-  0% {transform: translateX(-100vw)}
-  100% { transform: translateX(0)}
+  0% {transform: @awayTransformLeft}
+  100% { transform: @hereTransformLeft}
 }
 
 .moveInLeftInit {
-  transform: translateX(-100vw);
+  transform: @awayTransformLeft;
 }
 
 .moveInLeft {
-  animation: kfMoveInLeft .5s ease-in-out;
+  animation: kfMoveInLeft @defaultDuration @defaultTimingFunction;
 }
+
+/* --- Right --- */
+
+@awayTransformRight: translateX(100vw);
+@hereTransformRight: translateX(0);
+
+/* --- In --- */
+
+@keyframes kfMoveInRight {
+  0% {transform: @awayTransformRight}
+  100% { transform: @hereTransformRight}
+}
+
+.moveInRightInit {
+  transform: @awayTransformRight;
+}
+
+.moveInRight {
+  animation: kfMoveInRight @defaultDuration @defaultTimingFunction;
+}
+
+/* --- Out --- */
+
+@keyframes kfMoveOutRight {
+  100% {transform: @awayTransformRight}
+}
+
+.moveOutRight {
+  animation: kfMoveOutRight @defaultDuration @defaultTimingFunction;
+}
+

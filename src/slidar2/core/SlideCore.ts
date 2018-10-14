@@ -63,7 +63,11 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(0);
         }
-        renderSlide({slide: this.getCurrentSlide(), oldSlide, inOut: false});
+        renderSlide({
+            slide: this.getCurrentSlide(),
+            oldSlide,
+            inOut: false
+        });
         this.showCurrentIndex();
     }
 

@@ -18,7 +18,7 @@ const firstOutThenIn = (options: RenderOptions) => {
                                    safeMode={options.safeMode === true}
                                    action="transform-out"
                                    transformReadyCallback={resolve}
-                                   transformType="Z"
+                                   transformType="Right"
         />, document.getElementById('root') as HTMLElement);
     })
 
@@ -34,7 +34,7 @@ const outAndInAtOnce = (options: RenderOptions) => {
                                    safeMode={options.safeMode === true}
                                    action="transform-in-out"
                                    transformReadyCallback={resolve}
-                                   transformOutType="Z"
+                                   transformOutType="Right"
                                    transformType="Left"
         />, document.getElementById('root') as HTMLElement);
     })
