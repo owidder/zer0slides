@@ -1,0 +1,37 @@
+@keyframes kfMoveOutZ {
+  100% { transform: translateZ(-100000px)}
+}
+
+.moveOutZ {
+  animation: kfMoveOutZ .5s ease-in-out;
+}
+
+/*----------*/
+
+@keyframes kfMoveInZ {
+  0% {transform: translateZ(-100000px)}
+  100% { transform: translateZ(0px)}
+}
+
+.moveInZInit {
+  transform: translateZ(-100000px);
+}
+
+.moveInZ {
+  animation: kfMoveInZ .5s ease-in-out;
+}
+
+/*----------*/
+
+@keyframes kfMoveInLeft {
+  0% {transform: translateX(-100vw)}
+  100% { transform: translateX(0)}
+}
+
+.moveInLeftInit {
+  transform: translateX(-100vw);
+}
+
+.moveInLeft {
+  animation: kfMoveInLeft .5s ease-in-out;
+}
