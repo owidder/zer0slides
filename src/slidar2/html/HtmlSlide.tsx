@@ -6,103 +6,141 @@ import {resetSlideReadyPromise, slideReadyPromise} from '../lifecycle/lifecycle'
 import {showHideDown, showHideStepCtr, showHideUp} from './controlElements';
 
 interface HtmlSlideProps {
-    slide?: Slide,
-    slideIn?: Slide,
+    slide: Slide,
     slideOut?: Slide,
     safeMode: boolean,
     action: "transform-out" | "transform-in" | "show" | "transform-in-out",
     transformReadyCallback?: () => void,
     transformType?: string,
     transformOutType?: string,
-    transformInType?: string,
+}
+
+type OneOrTwo = "1" | "2";
+
+const SLIDECONTAINER_ID = "slidecontainer";
+const SLIDE_CLASS = "_slide"
+
+const selector = (container: OneOrTwo) => {
+    return `#${SLIDECONTAINER_ID} ._${container}`;
+}
+
+const slideSelector = (container: OneOrTwo, slide: Slide) => {
+    return `${selector(container)} .${slide.name}`;
+}
+
+const createTransformClassName = (transformType: string, inOut: "In" | "Out") => {
+    const className = `move${inOut}${transformType}`;
+    return className;
+}
+
+const createTransformInitClassName = (transformType: string, inOut: "In" | "Out") => {
+    return `${createTransformClassName(transformType, inOut)}Init`;
+}
+
+const addClass = (container: OneOrTwo, className: string) => {
+    $(selector(container)).addClass(className);
+}
+
+const removeClass = (container: OneOrTwo, className: string) => {
+    $(selector(container)).removeClass(className);
+}
+
+const checkIfContentAlreadyExists = (container: OneOrTwo, slide: Slide) => {
+    return $(slideSelector(container, slide)).length > 0;
+}
+
+const removeSlide = (container: OneOrTwo, slide: Slide) => {
+    $(slideSelector(container, slide)).remove();
+}
+
+const clean = (container: OneOrTwo) => {
+    $(`${selector(container)} .${SLIDE_CLASS}`).remove();
 }
 
 export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
-    private container = React.createRef<HTMLDivElement>();
-    private containerOut = React.createRef<HTMLDivElement>();
-    private containerIn = React.createRef<HTMLDivElement>();
+    private currentContainer: OneOrTwo = "1";
+
+    private otherContainer(): OneOrTwo {
+        if(this.currentContainer === "1") {
+            return "2";
+        }
+
+        return "1";
+    }
+
+    private switchContainers() {
+        this.currentContainer = this.otherContainer();
+    }
 
     public async componentDidMount() {
-        this.mountedOrUpdated(true);
+        this.mountedOrUpdated();
     }
 
     public async componentDidUpdate() {
         this.mountedOrUpdated();
     }
 
-    private async mountedOrUpdated(withShow = false) {
-        const {transformType, transformInType, transformOutType, slide, slideIn, slideOut, transformReadyCallback} = this.props;
+    private async mountedOrUpdated() {
+        const {transformType, transformOutType, slide, transformReadyCallback} = this.props;
         switch(this.props.action) {
             case "transform-out":
-                withShow && await this.show(this.container.current, slide);
-                await this.transformOut(this.container.current, slide, transformType);
+                await this.transformOut(this.currentContainer, slide, transformType);
                 transformReadyCallback && transformReadyCallback();
                 break;
 
             case "transform-in":
-                await this.transformIn(this.container.current, slide, transformType);
+                await this.transformIn(this.currentContainer, slide, transformType);
                 transformReadyCallback && transformReadyCallback();
                 break;
 
             case "transform-in-out":
-                this.transformInOut(transformInType, transformOutType);
+                this.transformInOut(transformType, transformOutType);
                 break;
 
             default:
-                this.show(this.container.current, slide);
+                this.show(this.currentContainer, slide);
         }
     }
 
-    private addClass(className, container: any) {
-        $(container).addClass(className);
-    }
-
-    private removeClass(className, container: any) {
-        $(container).removeClass(className);
-    }
-
-    private transformOut(container: any, slide: Slide, transformType: string | undefined) {
+    private transformOut(container: OneOrTwo, slide: Slide, transformType: string | undefined) {
         const _transformType = transformType || "Z";
-        return new Promise(resolve => {
-            this.addClass(this.createTransformClassName(_transformType, "Out"), container);
+        return new Promise(async resolve => {
+            await this.show(container, slide);
+            addClass(container, createTransformClassName(_transformType, "Out"));
             setTimeout(() => {
-                this.removeSlideContent(slide);
-                this.removeClass(this.createTransformClassName(_transformType, "Out"), container);
+                removeSlide(container, slide);
+                removeClass(container, createTransformClassName(_transformType, "Out"));
                 resolve();
             }, 400)
         })
     }
 
-    private transformIn(container: any, slide: Slide, transformType: string | undefined) {
+    private transformIn(container: OneOrTwo, slide: Slide, transformType: string | undefined) {
         const _transformType = transformType || "Left";
         return new Promise(async resolve => {
-            this.addClass(this.createTransformInitClassName(_transformType, "In"), container);
+            addClass(container, createTransformInitClassName(_transformType, "In"));
             await this.show(container, slide);
-            this.addClass(this.createTransformClassName(_transformType, "In"), container);
-            this.removeClass(this.createTransformInitClassName(_transformType, "In"), container);
+            addClass(container, createTransformClassName(_transformType, "In"));
+            removeClass(container, createTransformInitClassName(_transformType, "In"));
             setTimeout(() => {
-                this.removeClass(this.createTransformClassName(_transformType, "In"), container);
+                removeClass(container, createTransformClassName(_transformType, "In"));
                 resolve();
             }, 400)
         })
     }
 
-    private clear(container: any) {
-        container && $(container).empty();
-    }
+    private show(container: OneOrTwo, slide: Slide) {
+        if(checkIfContentAlreadyExists(container, slide)) {
+            return Promise.resolve();
+        }
 
-    private removeSlideContent(slide: Slide) {
-        $(`.slidediv.${slide.name}`).remove();
-    }
-
-    private show(container: any, slide: Slide) {
         return new Promise(resolve => {
             resetSlideReadyPromise(slide.name);
 
-            this.removeSlideContent(slide);
-            const slidediv = $(container).append(`<div class="${slide.name} slidediv"></div>`);
-            $(`.${slide.name}.slidediv`).load(slide.getPathToHtml());
+            clean(container);
+            $(selector(container)).append(`<div id="${slide.name}" class="${slide.name} ${SLIDE_CLASS}"></div>`);
+            $(`${selector(container)} .${slide.name}`).load(slide.getPathToHtml());
 
             slideReadyPromise(slide.name).then(() => {
                 resolve();
@@ -114,44 +152,25 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         })
     }
 
-    private createTransformClassName = (transformType: string, inOut: "In" | "Out") => {
-        const className = `move${inOut}${transformType}`;
-        return className;
-    }
-
-    private createTransformInitClassName = (transformType: string, inOut: "In" | "Out") => {
-        return `${this.createTransformClassName(transformType, inOut)}Init`;
-    }
-
-    private async transformInOut(transformInType: string | undefined, transformOutType: string | undefined) {
-        const {slideIn, slideOut, transformReadyCallback} = this.props;
-        if(slideIn && slideOut) {
-            await this.show(this.containerOut.current, slideOut);
-            await Promise.all([
-                this.transformIn(this.containerIn.current, slideIn, transformInType),
-                this.transformOut(this.containerOut.current, slideOut, transformOutType)
-            ]);
-            this.removeSlideContent(slideIn);
-            this.removeSlideContent(slideOut);
+    private transformInOut(transformInType: string | undefined, transformOutType: string | undefined) {
+        const {slide, slideOut, transformReadyCallback} = this.props;
+        Promise.all([
+            this.transformIn(this.otherContainer(), slide, transformInType),
+            this.transformOut(this.currentContainer, slideOut, transformOutType)
+        ]).then(() => {
             transformReadyCallback && transformReadyCallback();
-        }
-        else {
-            throw new Error("props 'slideIn' or 'slideOut' not set");
-        }
+        })
+        this.switchContainers();
     }
 
     public render() {
-        if(this.props.action === "transform-in-out") {
-            return (
-                <div id={`${this.props.slideIn.name}---${this.props.slideOut.name}`}>
-                    <div id={this.props.slideIn.name} ref={this.containerIn} className="html-slide in"></div>
-                    <div id={this.props.slideOut.name} ref={this.containerOut} className="html-slide out"></div>
-                </div>
-            );
-        }
-
+        const {slide, slideOut} = this.props;
+        const className = `__${slide.name}` + (slideOut ? `__${slideOut.name}` : "");
         return (
-            <div id={this.props.slide.name} ref={this.container} className="html-slide inout"></div>
+            <div id={SLIDECONTAINER_ID} className={className}>
+                <div className="html-slide _1"></div>
+                <div className="html-slide _2"></div>
+            </div>
         );
     }
 }

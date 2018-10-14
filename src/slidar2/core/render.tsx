@@ -30,12 +30,12 @@ const firstOutThenIn = (options: RenderOptions) => {
 
 const outAndInAtOnce = (options: RenderOptions) => {
     const transformInOutReady = new Promise(resolve => {
-        ReactDOM.render(<HtmlSlide slideOut={options.oldSlide} slideIn={options.slide}
+        ReactDOM.render(<HtmlSlide slideOut={options.oldSlide} slide={options.slide}
                                    safeMode={options.safeMode === true}
                                    action="transform-in-out"
                                    transformReadyCallback={resolve}
                                    transformOutType="Z"
-                                   transformInType="Left"
+                                   transformType="Left"
         />, document.getElementById('root') as HTMLElement);
     })
 
