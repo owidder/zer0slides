@@ -2,3 +2,9 @@
     transform-style: preserve-3d;
     perspective: 800px;
 }
+
+#slidecontainer .html-slide {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
