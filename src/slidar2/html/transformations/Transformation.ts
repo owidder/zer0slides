@@ -1,1 +1,5 @@
-export type Transformation = "Left" | "Right" | "Z";
+export type Transformation =
+    "Left"
+    | "Right"
+    | "Z"
+    | "RotateX"

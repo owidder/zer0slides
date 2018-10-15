@@ -27,14 +27,24 @@ const renderFirstSlide = (startIndex) => {
 const bindKeys = () => {
     bindKeyToFunction("right", () => slideCore.nextSlide())
     bindKeyToFunction("left", () => slideCore.prevSlide())
+
     bindKeyToFunction("k", () => slideCore.nextSlide(false))
     bindKeyToFunction("j", () => slideCore.prevSlide(false))
+
+    bindKeyToFunction("s", () => slideCore.nextSlide(true, "RotateX", "RotateX", true))
+    bindKeyToFunction("a", () => slideCore.prevSlide(true, "RotateX", "RotateX", true))
+
+    bindKeyToFunction("f", () => slideCore.nextSlide(true, "Z", "Z", false))
+    bindKeyToFunction("d", () => slideCore.prevSlide(true, "Z", "Z", false))
+
     bindKeyToFunction("down", () => slideCore.getCurrentSlide().nextStep())
     bindKeyToFunction("up", () => slideCore.getCurrentSlide().prevStep())
+
     bindKeyToFunction("m", () => slideCore.getCurrentSlide().nextStep())
     bindKeyToFunction("i", () => slideCore.getCurrentSlide().prevStep())
+
     bindKeyToFunction("r", () => slideCore.refreshSlide())
-    bindKeyToFunction("f", () => slideCore.setCurrentSlideWithIndex(0))
+    bindKeyToFunction("0", () => slideCore.setCurrentSlideWithIndex(0))
 }
 
 init();

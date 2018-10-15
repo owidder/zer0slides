@@ -7,8 +7,8 @@
 
 /* --- In --- */
 
-kfMoveInRotateX {
-  0% {transform: @awayTransformRotateX}
+@keyframes kfMoveInRotateX {
+  0% {transform: rotateX(-180deg) translateZ(1px)};
   100% {transform: @hereTransformRotateX}
 }
 
@@ -17,13 +17,13 @@ kfMoveInRotateX {
 }
 
 .moveInRotateX {
-  animation: kfMoveInRotateY @defaultDuration @defaultTimingFunction;
+  animation: kfMoveInRotateX @defaultDuration @defaultTimingFunction;
 }
 
 /* --- Out --- */
 
-kfMoveOutRotateX {
-  100% {transform: @awayTransformRotateX}
+@keyframes kfMoveOutRotateX {
+  100% {transform: rotateX(180deg) translateZ(1px);}
 }
 
 .moveOutRotateX {
