@@ -67,6 +67,8 @@ export class SlideCore {
             slide: this.getCurrentSlide(),
             oldSlide,
             inOut: true,
+            transformInType: "Left",
+            transformOutType: "Right"
         });
         this.showCurrentIndex();
     }
@@ -80,7 +82,12 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(this.slideNames.length - 1);
         }
-        renderSlide({slide: this.getCurrentSlide(), oldSlide});
+        renderSlide({slide: this.getCurrentSlide(),
+            oldSlide,
+            inOut: true,
+            transformInType: "Right",
+            transformOutType: "Left"
+        });
         this.showCurrentIndex();
     }
 }

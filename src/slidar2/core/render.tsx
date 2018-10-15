@@ -10,6 +10,8 @@ export interface RenderOptions {
     safeMode?: boolean,
     inOut?: boolean,
     type?: string,
+    transformInType?: string,
+    transformOutType?: string,
 }
 
 const firstOutThenIn = (options: RenderOptions) => {
@@ -18,12 +20,15 @@ const firstOutThenIn = (options: RenderOptions) => {
                                    safeMode={options.safeMode === true}
                                    action="transform-out"
                                    transformReadyCallback={resolve}
-                                   transformType="Right"
+                                   transformType={options.transformOutType || "Right"}
         />, document.getElementById('root') as HTMLElement);
     })
 
     transformOutReady.then(() => {
-        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode === true} action="transform-in" transformType="Left"/>,
+        ReactDOM.render(<HtmlSlide slide={options.slide}
+                                   safeMode={options.safeMode === true}
+                                   action="transform-in"
+                                   transformType={options.transformInType || "Left"}/>,
             document.getElementById('root') as HTMLElement);
     })
 }
@@ -34,8 +39,8 @@ const outAndInAtOnce = (options: RenderOptions) => {
                                    safeMode={options.safeMode === true}
                                    action="transform-in-out"
                                    transformReadyCallback={resolve}
-                                   transformOutType="Right"
-                                   transformType="Left"
+                                   transformOutType={options.transformOutType || "Right"}
+                                   transformType={options.transformInType || "Left"}
         />, document.getElementById('root') as HTMLElement);
     })
 

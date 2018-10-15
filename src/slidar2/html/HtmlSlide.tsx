@@ -5,7 +5,7 @@ import {Slide} from '../core/Slide';
 import {resetSlideReadyPromise, slideReadyPromise} from '../lifecycle/lifecycle';
 import {showHideDown, showHideStepCtr, showHideUp} from './controlElements';
 
-import "./transformations.less";
+import "./transformations/transformations.less";
 
 interface HtmlSlideProps {
     slide: Slide,

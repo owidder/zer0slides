@@ -1,35 +1,4 @@
-@defaultDuration: .5s;
-@defaultTimingFunction: ease-in-out;
-
-/* --- Z --- */
-
-@awayTransformZ: translateZ(-100000px);
-@hereTransformZ: translateZ(0);
-
-/* --- In --- */
-
-@keyframes kfMoveInZ {
-  0% {transform: @awayTransformZ}
-  100% { transform: @hereTransformZ}
-}
-
-.moveInZInit {
-  transform: @awayTransformZ;
-}
-
-.moveInZ {
-  animation: kfMoveInZ @defaultDuration @defaultTimingFunction;
-}
-
-/* --- Out --- */
-
-@keyframes kfMoveOutZ {
-  100% {transform: @awayTransformZ}
-}
-
-.moveOutZ {
-  animation: kfMoveOutZ @defaultDuration @defaultTimingFunction;
-}
+@import "default";
 
 /* --- Left --- */
 
@@ -49,6 +18,16 @@
 
 .moveInLeft {
   animation: kfMoveInLeft @defaultDuration @defaultTimingFunction;
+}
+
+/* --- Out --- */
+
+@keyframes kfMoveOutLeft {
+  100% { transform: @awayTransformLeft}
+}
+
+.moveOutLeft {
+  animation: kfMoveOutLeft @defaultDuration @defaultTimingFunction;
 }
 
 /* --- Right --- */
