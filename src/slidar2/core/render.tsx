@@ -5,11 +5,13 @@ import {Slide} from "./Slide";
 import {HtmlSlide} from '../html/HtmlSlide';
 import {Transformation} from '../html/transformations/Transformation';
 
+export type InOut = "outAndInAtOnce" | "twin" | "firstOutThenIn";
+
 export interface RenderOptions {
     slide: Slide,
     oldSlide?: Slide,
     safeMode?: boolean,
-    inOut?: boolean,
+    inOut?: InOut,
     type?: string,
     transformInType?: Transformation,
     transformOutType?: Transformation,
@@ -51,13 +53,35 @@ const outAndInAtOnce = (options: RenderOptions) => {
     })
 }
 
+const twin = (options: RenderOptions) => {
+    const twinReady = new Promise(resolve => {
+        ReactDOM.render(<HtmlSlide slideOut={options.oldSlide} slide={options.slide}
+                                   safeMode={options.safeMode === true}
+                                   action="twinMove"
+                                   transformReadyCallback={resolve}
+                                   transformType={options.transformInType || "RotateX"}
+        />, document.getElementById('root') as HTMLElement);
+    })
+
+    twinReady.then(() => {
+        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode === true} action="show"/>,
+            document.getElementById('root') as HTMLElement);
+    })
+}
+
 export const renderSlide = (options: RenderOptions) => {
     if(options.oldSlide) {
-        if(options.inOut) {
-            outAndInAtOnce(options);
-        }
-        else {
-            firstOutThenIn(options);
+        switch (options.inOut) {
+            case "outAndInAtOnce":
+                outAndInAtOnce(options);
+                break;
+
+            case "twin":
+                twin(options);
+                break;
+
+            default:
+                firstOutThenIn(options);
         }
     }
     else {

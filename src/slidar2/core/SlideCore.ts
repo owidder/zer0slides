@@ -1,5 +1,5 @@
 import {Slide} from './Slide';
-import {renderSlide, refreshSlide} from './render';
+import {renderSlide, refreshSlide, InOut} from './render';
 import {setSlideNo} from '../html/controlElements';
 import {setHashValue} from '../url/queryUtil';
 import {Transformation} from '../html/transformations/Transformation';
@@ -55,7 +55,7 @@ export class SlideCore {
         refreshSlide(this.getCurrentSlide());
     }
 
-    public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut = true) {
+    public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
         const oldSlide = this.getCurrentSlide();
         const currentIndex = this.getCurrentIndex();
         if(currentIndex < (this.slideNames.length - 1)) {
@@ -74,7 +74,7 @@ export class SlideCore {
         this.showCurrentIndex();
     }
 
-    public prevSlide(withTransformation = true, transformInType: Transformation = "Right", transformOutType: Transformation = "Left", inOut = true) {
+    public prevSlide(withTransformation = true, transformInType: Transformation = "Right", transformOutType: Transformation = "Left", inOut: InOut = "outAndInAtOnce") {
         const oldSlide = this.getCurrentSlide();
         const currentIndex = this.getCurrentIndex();
         if(currentIndex > 0) {

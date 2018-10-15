@@ -2,30 +2,18 @@
 
 /* --- RotateX --- */
 
-@awayTransformRotateX: rotateX(180deg) translateZ(1px);
-@hereTransformRotateX: rotateX(0) translateZ(1px);
-
-/* --- In --- */
-
-@keyframes kfMoveInRotateX {
-  0% {transform: rotateX(-180deg) translateZ(1px)};
-  100% {transform: @hereTransformRotateX}
+.twinInRotateXInit {
+  transform: translateZ(1px);
 }
 
-.moveInRotateXInit {
-  transform: @awayTransformRotateX;
+.twinOutRotateXInit {
+  transform: rotateX(180deg) translateZ(1px);
 }
 
-.moveInRotateX {
-  animation: kfMoveInRotateX @defaultDuration @defaultTimingFunction;
+@keyframes kfTwinMoveRotateX {
+  100% {transform: rotateX(180deg)}
 }
 
-/* --- Out --- */
-
-@keyframes kfMoveOutRotateX {
-  100% {transform: rotateX(180deg) translateZ(1px);}
-}
-
-.moveOutRotateX {
-  animation: kfMoveOutRotateX @defaultDuration @defaultTimingFunction;
+.twinMoveRotateX {
+  animation: kfTwinMoveRotateX @defaultDuration @defaultTimingFunction;
 }

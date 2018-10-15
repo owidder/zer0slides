@@ -12,7 +12,7 @@ interface HtmlSlideProps {
     slide: Slide,
     slideOut?: Slide,
     safeMode: boolean,
-    action: "transform-out" | "transform-in" | "show" | "transform-in-out" | "refresh",
+    action: "transform-out" | "transform-in" | "show" | "transform-in-out" | "refresh" | "twinMove",
     transformReadyCallback?: () => void,
     transformType?: Transformation,
     transformOutType?: Transformation,
@@ -106,6 +106,10 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
                 this.show(this.currentContainer, slide);
                 break;
 
+            case "twinMove":
+                this.twinMove(transformType);
+                break;
+
             default:
                 this.show(this.currentContainer, slide);
         }
@@ -114,11 +118,13 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
     private transformOut(container: OneOrTwo, slide: Slide, transformType: Transformation | undefined) {
         const _transformType = transformType || "Z";
         return new Promise(async resolve => {
+            const transformClassName = createTransformClassName(_transformType, "Out");
+
             await this.show(container, slide);
-            addClass(container, createTransformClassName(_transformType, "Out"));
+            addClass(container, transformClassName);
             setTimeout(() => {
                 removeSlide(container, slide);
-                removeClass(container, createTransformClassName(_transformType, "Out"));
+                removeClass(container, transformClassName);
                 resolve();
             }, 400)
         })
@@ -127,12 +133,15 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
     private transformIn(container: OneOrTwo, slide: Slide, transformType: Transformation| undefined) {
         const _transformType = transformType || "Left";
         return new Promise(async resolve => {
-            addClass(container, createTransformInitClassName(_transformType, "In"));
+            const transformClassName = createTransformClassName(_transformType, "In");
+            const tramsformInitClassName = createTransformInitClassName(_transformType, "In");
+
+            addClass(container, tramsformInitClassName);
             await this.show(container, slide);
-            addClass(container, createTransformClassName(_transformType, "In"));
-            removeClass(container, createTransformInitClassName(_transformType, "In"));
+            addClass(container, transformClassName);
+            removeClass(container, tramsformInitClassName);
             setTimeout(() => {
-                removeClass(container, createTransformClassName(_transformType, "In"));
+                removeClass(container, transformClassName);
                 resolve();
             }, 400)
         })
@@ -169,6 +178,30 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
             transformReadyCallback && transformReadyCallback();
         })
         this.switchContainers();
+    }
+
+    private twinMove(transformType: Transformation) {
+        return new Promise(async resolve => {
+            const {slide, slideOut, transformReadyCallback} = this.props;
+
+            const twinInInitClassName = `twinIn${transformType}Init`;
+            const twinOutInitClassName = `twinOut${transformType}Init`;
+            const twinMoveClassName = `twinMove${transformType}`;
+
+            addClass(this.otherContainer(), twinInInitClassName);
+            addClass(this.currentContainer, twinOutInitClassName);
+            await this.show(this.otherContainer(), slide);
+            await this.show(this.currentContainer, slideOut);
+            $(`#${SLIDECONTAINER_ID}`).addClass(twinMoveClassName);
+            setTimeout(() => {
+                removeSlide(this.otherContainer(), slideOut);
+                removeClass(this.otherContainer(), twinInInitClassName);
+                removeClass(this.currentContainer, twinOutInitClassName);
+                $(`#${SLIDECONTAINER_ID}`).removeClass(twinMoveClassName);
+                transformReadyCallback && transformReadyCallback();
+                resolve();
+            }, 400)
+        })
     }
 
     public render() {
