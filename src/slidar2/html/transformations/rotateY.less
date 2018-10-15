@@ -1,0 +1,31 @@
+@import "default";
+
+/* --- RotateX --- */
+
+@awayTransformRotateX: rotateX(180deg) translateZ(1px);
+@hereTransformRotateX: rotateX(0) translateZ(1px);
+
+/* --- In --- */
+
+kfMoveInRotateX {
+  0% {transform: @awayTransformRotateX}
+  100% {transform: @hereTransformRotateX}
+}
+
+.moveInRotateXInit {
+  transform: @awayTransformRotateX;
+}
+
+.moveInRotateX {
+  animation: kfMoveInRotateY @defaultDuration @defaultTimingFunction;
+}
+
+/* --- Out --- */
+
+kfMoveOutRotateX {
+  100% {transform: @awayTransformRotateX}
+}
+
+.moveOutRotateX {
+  animation: kfMoveOutRotateX @defaultDuration @defaultTimingFunction;
+}

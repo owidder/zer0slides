@@ -4,6 +4,7 @@ import * as $ from 'jquery';
 import {Slide} from '../core/Slide';
 import {resetSlideReadyPromise, slideReadyPromise} from '../lifecycle/lifecycle';
 import {showHideDown, showHideStepCtr, showHideUp} from './controlElements';
+import {Transformation} from './transformations/Transformation';
 
 import "./transformations/transformations.less";
 
@@ -13,8 +14,8 @@ interface HtmlSlideProps {
     safeMode: boolean,
     action: "transform-out" | "transform-in" | "show" | "transform-in-out",
     transformReadyCallback?: () => void,
-    transformType?: string,
-    transformOutType?: string,
+    transformType?: Transformation,
+    transformOutType?: Transformation,
 }
 
 type OneOrTwo = "1" | "2";
@@ -30,12 +31,12 @@ const slideSelector = (container: OneOrTwo, slide: Slide) => {
     return `${selector(container)} .${slide.name}`;
 }
 
-const createTransformClassName = (transformType: string, inOut: "In" | "Out") => {
+const createTransformClassName = (transformType: Transformation, inOut: "In" | "Out") => {
     const className = `move${inOut}${transformType}`;
     return className;
 }
 
-const createTransformInitClassName = (transformType: string, inOut: "In" | "Out") => {
+const createTransformInitClassName = (transformType: Transformation, inOut: "In" | "Out") => {
     return `${createTransformClassName(transformType, inOut)}Init`;
 }
 
@@ -105,7 +106,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         }
     }
 
-    private transformOut(container: OneOrTwo, slide: Slide, transformType: string | undefined) {
+    private transformOut(container: OneOrTwo, slide: Slide, transformType: Transformation | undefined) {
         const _transformType = transformType || "Z";
         return new Promise(async resolve => {
             await this.show(container, slide);
@@ -118,7 +119,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         })
     }
 
-    private transformIn(container: OneOrTwo, slide: Slide, transformType: string | undefined) {
+    private transformIn(container: OneOrTwo, slide: Slide, transformType: Transformation| undefined) {
         const _transformType = transformType || "Left";
         return new Promise(async resolve => {
             addClass(container, createTransformInitClassName(_transformType, "In"));
@@ -154,7 +155,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         })
     }
 
-    private transformInOut(transformInType: string | undefined, transformOutType: string | undefined) {
+    private transformInOut(transformInType: Transformation | undefined, transformOutType: Transformation | undefined) {
         const {slide, slideOut, transformReadyCallback} = this.props;
         Promise.all([
             this.transformIn(this.otherContainer(), slide, transformInType),

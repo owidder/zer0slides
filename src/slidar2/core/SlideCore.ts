@@ -2,6 +2,7 @@ import {Slide} from './Slide';
 import {renderSlide} from './render';
 import {setSlideNo} from '../html/controlElements';
 import {setHashValue} from '../url/queryUtil';
+import {Transformation} from '../html/transformations/Transformation';
 
 export class SlideCore {
 
@@ -54,7 +55,7 @@ export class SlideCore {
         renderSlide({slide: this.getCurrentSlide(), safeMode: true});
     }
 
-    public nextSlide() {
+    public nextSlide(transformInType: Transformation = "Left", transformOutType: Transformation = "Right") {
         const oldSlide = this.getCurrentSlide();
         const currentIndex = this.getCurrentIndex();
         if(currentIndex < (this.slideNames.length - 1)) {
@@ -73,7 +74,7 @@ export class SlideCore {
         this.showCurrentIndex();
     }
 
-    public prevSlide() {
+    public prevSlide(transformInType: Transformation = "Right", transformOutType: Transformation = "Left") {
         const oldSlide = this.getCurrentSlide();
         const currentIndex = this.getCurrentIndex();
         if(currentIndex > 0) {

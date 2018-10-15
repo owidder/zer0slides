@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 
 import {Slide} from "./Slide";
 import {HtmlSlide} from '../html/HtmlSlide';
+import {Transformation} from '../html/transformations/Transformation';
 
 export interface RenderOptions {
     slide: Slide,
@@ -10,8 +11,8 @@ export interface RenderOptions {
     safeMode?: boolean,
     inOut?: boolean,
     type?: string,
-    transformInType?: string,
-    transformOutType?: string,
+    transformInType?: Transformation,
+    transformOutType?: Transformation,
 }
 
 const firstOutThenIn = (options: RenderOptions) => {
