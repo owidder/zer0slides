@@ -12,7 +12,7 @@ interface HtmlSlideProps {
     slide: Slide,
     slideOut?: Slide,
     safeMode: boolean,
-    action: "transform-out" | "transform-in" | "show" | "transform-in-out",
+    action: "transform-out" | "transform-in" | "show" | "transform-in-out" | "refresh",
     transformReadyCallback?: () => void,
     transformType?: Transformation,
     transformOutType?: Transformation,
@@ -99,6 +99,11 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
             case "transform-in-out":
                 this.transformInOut(transformType, transformOutType);
+                break;
+
+            case "refresh":
+                clean(this.currentContainer);
+                this.show(this.currentContainer, slide);
                 break;
 
             default:

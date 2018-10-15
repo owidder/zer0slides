@@ -1,5 +1,5 @@
 import {Slide} from './Slide';
-import {renderSlide} from './render';
+import {renderSlide, refreshSlide} from './render';
 import {setSlideNo} from '../html/controlElements';
 import {setHashValue} from '../url/queryUtil';
 import {Transformation} from '../html/transformations/Transformation';
@@ -52,7 +52,7 @@ export class SlideCore {
     }
 
     public refreshSlide() {
-        renderSlide({slide: this.getCurrentSlide(), safeMode: true});
+        refreshSlide(this.getCurrentSlide());
     }
 
     public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right") {

@@ -65,3 +65,8 @@ export const renderSlide = (options: RenderOptions) => {
             document.getElementById('root') as HTMLElement);
     }
 }
+
+export const refreshSlide = (slide: Slide) => {
+    ReactDOM.render(<HtmlSlide slide={slide} safeMode={true} action="refresh"/>,
+        document.getElementById('root') as HTMLElement);
+}
