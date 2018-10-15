@@ -55,7 +55,7 @@ export class SlideCore {
         renderSlide({slide: this.getCurrentSlide(), safeMode: true});
     }
 
-    public nextSlide(transformInType: Transformation = "Left", transformOutType: Transformation = "Right") {
+    public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right") {
         const oldSlide = this.getCurrentSlide();
         const currentIndex = this.getCurrentIndex();
         if(currentIndex < (this.slideNames.length - 1)) {
@@ -66,7 +66,7 @@ export class SlideCore {
         }
         renderSlide({
             slide: this.getCurrentSlide(),
-            oldSlide,
+            oldSlide: withTransformation ? oldSlide : undefined,
             inOut: true,
             transformInType: "Left",
             transformOutType: "Right"
@@ -74,7 +74,7 @@ export class SlideCore {
         this.showCurrentIndex();
     }
 
-    public prevSlide(transformInType: Transformation = "Right", transformOutType: Transformation = "Left") {
+    public prevSlide(withTransformation = true, transformInType: Transformation = "Right", transformOutType: Transformation = "Left") {
         const oldSlide = this.getCurrentSlide();
         const currentIndex = this.getCurrentIndex();
         if(currentIndex > 0) {
@@ -84,7 +84,7 @@ export class SlideCore {
             this.setCurrentSlideWithIndex(this.slideNames.length - 1);
         }
         renderSlide({slide: this.getCurrentSlide(),
-            oldSlide,
+            oldSlide: withTransformation ? oldSlide : undefined,
             inOut: true,
             transformInType: "Right",
             transformOutType: "Left"

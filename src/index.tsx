@@ -27,6 +27,8 @@ const renderFirstSlide = (startIndex) => {
 const bindKeys = () => {
     bindKeyToFunction("right", () => slideCore.nextSlide())
     bindKeyToFunction("left", () => slideCore.prevSlide())
+    bindKeyToFunction("k", () => slideCore.nextSlide(false))
+    bindKeyToFunction("j", () => slideCore.prevSlide(false))
     bindKeyToFunction("down", () => slideCore.getCurrentSlide().nextStep())
     bindKeyToFunction("up", () => slideCore.getCurrentSlide().prevStep())
     bindKeyToFunction("m", () => slideCore.getCurrentSlide().nextStep())
