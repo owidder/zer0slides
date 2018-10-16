@@ -1,14 +1,42 @@
+import _ from 'lodash';
 import {Step} from './Step';
 import {pathToHtml} from '../html/pathToHtml';
 import {setStepCtr, showHideUp, showHideDown} from '../html/controlElements';
+import {Transformation} from '../html/transformations/Transformation';
 
 export class Slide {
     public steps: Step[] = []
     public currentStepNo: number = -1
     public name: string
 
+    public transformationInNext: Transformation
+    public transformationOutNext: Transformation
+    public transformationInPrev: Transformation
+    public transformationOutPrev: Transformation
+
     constructor(name: string) {
         this.name = name;
+        this.createRandomTransformations()
+    }
+
+    public createRandomTransformations() {
+        if(_.random(0, 1) === 1) {
+            this.transformationInNext = "Left";
+            this.transformationInPrev = "Right";
+        }
+        else {
+            this.transformationInNext = "Up";
+            this.transformationInPrev = "Down";
+        }
+
+        if(_.random(0, 1) === 1) {
+            this.transformationOutNext = "Right";
+            this.transformationInPrev = "Left";
+        }
+        else {
+            this.transformationInNext = "Down";
+            this.transformationInPrev = "Up";
+        }
     }
 
     public showStepCtr() {

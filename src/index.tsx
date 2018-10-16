@@ -34,6 +34,12 @@ const bindKeys = () => {
     bindKeyToFunction("s", () => slideCore.nextSlide(true, "RotateX", "RotateX", "twin"))
     bindKeyToFunction("a", () => slideCore.prevSlide(true, "RotateX", "RotateX", "twin"))
 
+    bindKeyToFunction("h", () => slideCore.nextSlide(true, "Up", "Down"))
+    bindKeyToFunction("g", () => slideCore.prevSlide(true, "Down", "Up"))
+
+    bindKeyToFunction("2", () => slideCore.nextSlide(true, "Slide", "Slide"))
+    bindKeyToFunction("1", () => slideCore.prevSlide(true, "Slide", "Slide"))
+
     bindKeyToFunction("f", () => slideCore.nextSlide(true, "Z", "Z", "firstOutThenIn"))
     bindKeyToFunction("d", () => slideCore.prevSlide(true, "Z", "Z", "firstOutThenIn"))
 

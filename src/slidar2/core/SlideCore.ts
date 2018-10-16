@@ -64,12 +64,13 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(0);
         }
+        const slide = this.getCurrentSlide();
         renderSlide({
-            slide: this.getCurrentSlide(),
+            slide,
             oldSlide: withTransformation ? oldSlide : undefined,
             inOut,
-            transformInType,
-            transformOutType
+            transformInType: transformInType === "Slide" ? slide.transformationInNext : transformInType,
+            transformOutType: transformOutType === "Slide" ? oldSlide.transformationOutNext : transformOutType
         });
         this.showCurrentIndex();
     }
@@ -83,11 +84,13 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(this.slideNames.length - 1);
         }
-        renderSlide({slide: this.getCurrentSlide(),
+        const slide = this.getCurrentSlide();
+        renderSlide({
+            slide,
             oldSlide: withTransformation ? oldSlide : undefined,
             inOut,
-            transformInType,
-            transformOutType
+            transformInType: transformInType === "Slide" ? slide.transformationInPrev : transformInType,
+            transformOutType: transformOutType === "Slide" ? oldSlide.transformationOutPrev : transformOutType
         });
         this.showCurrentIndex();
     }
