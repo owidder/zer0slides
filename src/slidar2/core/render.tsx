@@ -47,10 +47,12 @@ const outAndInAtOnce = (options: RenderOptions) => {
         />, document.getElementById('root') as HTMLElement);
     })
 
+/*
     transformInOutReady.then(() => {
         ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode === true} action="show"/>,
             document.getElementById('root') as HTMLElement);
     })
+*/
 }
 
 const twin = (options: RenderOptions) => {

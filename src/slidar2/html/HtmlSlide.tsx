@@ -60,6 +60,15 @@ const clean = (container: OneOrTwo) => {
     $(`${selector(container)} .${SLIDE_CLASS}`).remove();
 }
 
+const startDelayed = (delay, fct: () => Promise<any>) => {
+    return new Promise(resolve => {
+        setTimeout(async () => {
+            await fct();
+            resolve();
+        }, delay)
+    })
+}
+
 export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
     private currentContainer: OneOrTwo = "1";
@@ -169,15 +178,15 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         })
     }
 
-    private transformInOut(transformInType: Transformation | undefined, transformOutType: Transformation | undefined) {
+    private transformInOut(transformInType: Transformation, transformOutType: Transformation) {
         const {slide, slideOut, transformReadyCallback} = this.props;
         Promise.all([
-            this.transformIn(this.otherContainer(), slide, transformInType),
+            startDelayed(150, () => this.transformIn(this.otherContainer(), slide, transformInType)),
             this.transformOut(this.currentContainer, slideOut, transformOutType)
         ]).then(() => {
+            this.switchContainers();
             transformReadyCallback && transformReadyCallback();
         })
-        this.switchContainers();
     }
 
     private twinMove(transformType: Transformation) {
