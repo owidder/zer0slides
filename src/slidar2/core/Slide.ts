@@ -22,20 +22,20 @@ export class Slide {
     public createRandomTransformations() {
         if(_.random(0, 1) === 1) {
             this.transformationInNext = "Left";
-            this.transformationInPrev = "Right";
+            this.transformationOutPrev = "Left";
         }
         else {
             this.transformationInNext = "Up";
-            this.transformationInPrev = "Down";
+            this.transformationOutPrev = "Up";
         }
 
         if(_.random(0, 1) === 1) {
             this.transformationOutNext = "Right";
-            this.transformationInPrev = "Left";
+            this.transformationInPrev = "Right";
         }
         else {
-            this.transformationInNext = "Down";
-            this.transformationInPrev = "Up";
+            this.transformationOutNext = "Down";
+            this.transformationInPrev = "Down";
         }
     }
 

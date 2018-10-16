@@ -25,8 +25,8 @@ const renderFirstSlide = (startIndex) => {
 }
 
 const bindKeys = () => {
-    bindKeyToFunction("right", () => slideCore.nextSlide())
-    bindKeyToFunction("left", () => slideCore.prevSlide())
+    bindKeyToFunction("2", () => slideCore.nextSlide())
+    bindKeyToFunction("1", () => slideCore.prevSlide())
 
     bindKeyToFunction("k", () => slideCore.nextSlide(false))
     bindKeyToFunction("j", () => slideCore.prevSlide(false))
@@ -37,8 +37,8 @@ const bindKeys = () => {
     bindKeyToFunction("h", () => slideCore.nextSlide(true, "Up", "Down"))
     bindKeyToFunction("g", () => slideCore.prevSlide(true, "Down", "Up"))
 
-    bindKeyToFunction("2", () => slideCore.nextSlide(true, "Slide", "Slide"))
-    bindKeyToFunction("1", () => slideCore.prevSlide(true, "Slide", "Slide"))
+    bindKeyToFunction("right", () => slideCore.nextSlide(true, "Slide", "Slide"))
+    bindKeyToFunction("left", () => slideCore.prevSlide(true, "Slide", "Slide"))
 
     bindKeyToFunction("f", () => slideCore.nextSlide(true, "Z", "Z", "firstOutThenIn"))
     bindKeyToFunction("d", () => slideCore.prevSlide(true, "Z", "Z", "firstOutThenIn"))
