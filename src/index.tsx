@@ -14,7 +14,7 @@ import './gapslides.css';
 
 const renderFirstSlide = (startIndex) => {
     const slideNo = paramValue("slide");
-    if(slideNo != null && Number(slideNo) > -1) {
+    if (slideNo != null && Number(slideNo) > -1) {
         slideCore.setCurrentSlideWithIndex(Number(slideNo));
         renderSlide({slide: slideCore.getCurrentSlide()});
     }
@@ -50,7 +50,12 @@ const bindKeys = () => {
     bindKeyToFunction("i", () => slideCore.getCurrentSlide().prevStep())
 
     bindKeyToFunction("r", () => slideCore.refreshSlide())
-    bindKeyToFunction("0", () => slideCore.setCurrentSlideWithIndex(0))
+    bindKeyToFunction("t", () => window.location.reload())
+    bindKeyToFunction("0", () => {
+            slideCore.setCurrentSlideWithIndex(0);
+            window.location.reload();
+        }
+    )
 }
 
 init();
