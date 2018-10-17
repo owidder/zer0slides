@@ -42,6 +42,11 @@ export class SlideCore {
         return this.currentSlide
     }
 
+    public getCurrenzSlideSelector() {
+        const currentName = this.getCurrentSlide().name;
+        return `#${currentName}`;
+    }
+
     public getCurrentIndex() {
         const currentName = this.currentSlide.name;
         return this.slideNames.indexOf(currentName);

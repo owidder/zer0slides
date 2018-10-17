@@ -9,6 +9,7 @@ import {Slide} from './slidar2/core/Slide';
 import {bindKeyToFunction} from './slidar2/core/keys';
 import {renderSlide} from './slidar2/core/render';
 import {paramValue} from './slidar2/url/queryUtil';
+import {switchCurrentSlideToBlack} from './slidar2/showCode/controlShowCode';
 
 import './gapslides.css';
 
@@ -56,6 +57,8 @@ const bindKeys = () => {
             window.location.reload();
         }
     )
+
+    bindKeyToFunction("b", () => switchCurrentSlideToBlack());
 }
 
 init();
