@@ -1,0 +1,81 @@
+<style>
+
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+
+    #credits * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    #credits {
+        height: 100vh;
+        background: radial-gradient(circle at top center, #333 0%, #111 100%);
+        overflow: hidden;
+    }
+
+    #credits .wrapper {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        width: 400px;
+        margin-left: -200px;
+        font: 300 30px/1 'Open Sans Condensed', sans-serif;
+        text-align: center;
+        text-transform: uppercase;
+        color: #fff;
+        animation: 100s credits linear infinite;
+    }
+
+    #credits .movie {
+        margin-bottom: 50px;
+        font-size: 50px;
+    }
+
+    #credits .job {
+        margin-bottom: 5px;
+        font-size: 18px;
+    }
+
+    #credits .name {
+        margin-bottom: 50px;
+        font-size: 35px;
+    }
+
+    @keyframes credits {
+        0% { top:  100%; }
+        100% { top: -500%; }
+    }
+</style>
+
+<div class='wrapper'>
+    <div class='movie'>Thanks to</div>
+    <div class='job'>Blockchain</div>
+    <div class='name'>Ethereum</div>
+    <div class='job'>Network</div>
+    <div class='name'>Rinkeby</div>
+    <div class='job'>Nodes to use for free</div>
+    <div class='name'>Infura</div>
+    <div class='job'>Ethereum block explorer</div>
+    <div class='name'>Etherscan</div>
+    <div class='job'>Wallet</div>
+    <div class='name'>Metamask</div>
+    <div class='job'>Local development blockchain</div>
+    <div class='name'>Ganache</div>
+    <div class='job'>Testing, deployment & more</div>
+    <div class='name'>Truffle</div>
+    <div class='job'>Easy contract calling</div>
+    <div class='name'>Drizzle</div>
+    <div class='job'>These cool credits</div>
+    <div class='name'>https://codepen.io/oknoblich/pen/vfJxr (from  Oliver Knoblich, https://codepen.io/oknoblich/)</div>
+</div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "credits";
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>
