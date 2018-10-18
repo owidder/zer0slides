@@ -64,11 +64,20 @@
         background-position: left top;
     }
 
+    ._titlecube {
+        transform: translateY(-10vh);
+    }
+
 </style>
 
 <div class="slidecounter"></div>
 
-<div id="_titlecube"></div>
+<div class="authorcontainer">
+    <div class="author">
+        Oliver Widder, iteratec GmbH
+    </div>
+</div>
+<div class="_titlecube"></div>
 
 <script>
 
@@ -78,19 +87,19 @@
 
         const ID = "title-cube";
 
-        slidAR.cube.create("#_titlecube", 350);
+        slidAR.cube.create("#title-cube ._titlecube", 350);
 
-        slidAR.classUtil.setClass("#_titlecube .cube-top", "with-ethereum");
+        slidAR.classUtil.setClass("#title-cube .cube-top", "with-ethereum");
 
-        slidAR.classUtil.setClass("#_titlecube .cube-bottom", "with-metamask");
+        slidAR.classUtil.setClass("#title-cube .cube-bottom", "with-metamask");
 
-        slidAR.classUtil.switchBetweenClasses("#_titlecube .cube-right",
+        slidAR.classUtil.switchBetweenClasses("#title-cube .cube-right",
             ["with-rinkeby-faucet", "with-infura"], 2000)
 
-        slidAR.classUtil.switchBetweenClasses("#_titlecube .cube-back",
+        slidAR.classUtil.switchBetweenClasses("#title-cube .cube-back",
             ["with-etherscan", "with-ganache", "with-drizzle"], 2000)
 
-        slidAR.classUtil.switchBetweenClasses("#_titlecube .cube-left",
+        slidAR.classUtil.switchBetweenClasses("#title-cube .cube-left",
             ["with-truffle", "with-javascript"], 2500)
 
         slidAR.coolText.glowText.create("#" + ID + " .cube-front", ["Block-", "chain", "Clients",], "middle-large glow");
