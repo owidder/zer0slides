@@ -1,0 +1,76 @@
+<style>
+
+    #qrcode-all .small-a {
+        font-size: 1em;
+    }
+
+    #qrcode-all .bold-a {
+        font-weight: bolder;
+    }
+
+    #qrcode-all .small-img {
+        height: 7em;
+    }
+
+    #qrcode-all .middle-part {
+        margin-top: 3%;
+    }
+
+</style>
+
+<div class="row">
+    <div class="col s6">
+        <div class="centerflexcol">
+            <div class="title1"></div>
+            <div class="middle-part qrcode1"></div>
+            <a class="small-a" target="_blank" href="https://owidder.github.io/GapSlides/build/index.html#&slide=0">https://owidder.github.io/GapSlides/build/index.html#&slide=0</a>
+            <h5><a class="bold-a" class="bold-a" target="_blank" href="https://goo.gl/YPQbgU">https://goo.gl/YPQbgU</a></h5>
+        </div>
+    </div>
+    <div class="col s6">
+        <div class="centerflexcol">
+            <div class="title2"></div>
+            <div class="middle-part qrcode2"></div>
+            <a class="small-a" target="_blank" href="https://owidder.github.io/codetalks2018/client/build/index.html">https://owidder.github.io/codetalks2018/client/build/index.html</a>
+            <h5><a class="bold-a" target="_blank" href="https://goo.gl/mzz9ZT">https://goo.gl/mzz9ZT</a></h5>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col s6">
+        <div class="centerflexcol">
+            <div class="title3"></div>
+            <img class="small-img middle-part" src="./slides/codeTalks/img/geek-and-poke.png">
+            <h5><a class="bold-a" target="_blank" href="http://geek-and-poke.com">geek-and-poke.com</a></h5>
+        </div>
+    </div>
+    <div class="col s6">
+        <div class="centerflexcol">
+            <div class="title4"></div>
+            <img class="small-img middle-part" src="./slides/codeTalks/img/iteratec.png">
+            <h5><a class="bold-a" target="_blank" href="https://www.iteratec.de">iteratec.de</a></h5>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "qrcode-all";
+
+        const address1 = "https://owidder.github.io/GapSlides/build/index.html#&slide=0";
+        slidAR.qrUtil.makeQrCode("#" + ID + " .qrcode1", address1);
+
+        const address2 = "https://owidder.github.io/codetalks2018/client/build/index.html";
+        slidAR.qrUtil.makeQrCode("#" + ID + " .qrcode2", address2);
+
+        slidAR.coolText.glowText.create("#" + ID + " .title1", ["The slides",], "small glow");
+        slidAR.coolText.glowText.create("#" + ID + " .title2", ["The client",], "small glow");
+        slidAR.coolText.glowText.create("#" + ID + " .title3", ["My blog",], "small glow");
+        slidAR.coolText.glowText.create("#" + ID + " .title4", ["My company",], "small glow");
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>
