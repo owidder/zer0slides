@@ -1,0 +1,30 @@
+<style>
+
+    #d3-title .code {
+        font-size: 6em;
+    }
+
+</style>
+
+<div class="code"></div>
+<div class="screencontainer">
+    <div class="screenposition screenright screentop">
+        <img src="./slides/d3Wks/img/d3.jpeg">
+    </div>
+</div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "d3-title";
+
+        gapslides.showCode2.bash("#" + ID + " .code",
+            "Data\n" +
+            "Driven\n" +
+            "Documents\n", {noBackgroundColor: true});
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

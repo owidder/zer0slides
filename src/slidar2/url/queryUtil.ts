@@ -1,3 +1,5 @@
+// deprecated
+// use queryUtil2
 import * as url from "url";
 import * as _ from "lodash";
 
