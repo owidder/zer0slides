@@ -1,0 +1,30 @@
+<style>
+
+    #change-data-title .code {
+        font-size: 3em;
+    }
+
+    #change-data-title .code {
+        position: relative;
+        top: 30%;
+    }
+
+</style>
+
+<div class="screencontainer">
+    <div class="code"></div>
+</div>
+
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "change-data-title";
+
+        gapslides.showCode2.bash("#" + ID + " .code", "Change data", {noLineNumbers: true});
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>
