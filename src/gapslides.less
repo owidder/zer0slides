@@ -31,7 +31,6 @@ img._70 {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
 }
 
 .screenposition {
@@ -54,6 +53,10 @@ img._70 {
   &.screenbottom {
     align-items: flex-end;
   }
+
+  & .screenCenterY {
+    align-content: center;
+  }
 }
 
 .author {
@@ -65,4 +68,12 @@ img._70 {
   align-items: flex-end;
   padding-bottom: 1em;
   padding-right: 1em;
+}
+
+.line-highlight {
+  border: solid black 2px;
+}
+
+.stdmargin {
+  margin: 1em;
 }

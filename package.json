@@ -24,7 +24,7 @@
     "jquery": "^3.3.1",
     "keyboardjs": "^2.4.1",
     "lodash": "^4.17.11",
-    "materialize-css": "^1.0.0",
+    "materialize-css": "^1.0.0-rc.2",
     "metamask-logo": "^2.2.0",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",

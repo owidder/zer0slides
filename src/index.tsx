@@ -12,6 +12,7 @@ import {paramValue} from './slidar2/url/queryUtil';
 import {getParamValue} from './slidar2/url/queryUtil2';
 import {switchCurrentSlideToBlack} from './slidar2/showCode/controlShowCode';
 
+import 'materialize-css/dist/css/materialize.css';
 import './gapslides.less';
 
 const renderFirstSlide = (startIndex) => {
