@@ -11,7 +11,7 @@ const createReverseStep = (step: Step) => {
     return {step, reverseStep}
 }
 
-export const steps = {
+export const steps2 = {
     createReverseStep,
     setSteps,
 }
