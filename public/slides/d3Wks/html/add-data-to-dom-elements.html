@@ -57,11 +57,11 @@
             "</svg>", {noBackgroundColor: true});
 
         gapslides.showCode2.js(codeSelector2,
-            "const selection = d3.selectAll(\"circle\")\n" +
+            "d3.selectAll(\"circle\")\n" +
             "   .data(\n" +
-            "       [{name:\"a\", x:100, y:100, r:20, color:\"blue\"},\n" +
-            "       {name:\"b\", x:100, y:400, r:30, color:\"orange\"},\n" +
-            "       {name:\"c\", x:600, y:400, r:40, color:\"red\"}]\n" +
+            "       [{name:\"a\", x:50, y:50, r:20, color:\"blue\"},\n" +
+            "       {name:\"b\", x:50, y:250, r:30, color:\"orange\"},\n" +
+            "       {name:\"c\", x:250, y:50, r:40, color:\"red\"}]\n" +
             "   );\n" +
             "\n" +
             "const domNodes = document.querySelectorAll(\"circle\");\n" +
@@ -92,9 +92,9 @@
         gapslides.click.setClickHandler(`#${ID} .runcode`, () => {
             d3.selectAll("circle")
                 .data([
-                    {name:"a", x:100, y:100, r:20, color:"blue"},
-                    {name:"b", x:100, y:400, r:30, color:"orange"},
-                    {name:"c", x:600, y:400, r:40, color:"red"}
+                    {name:"a", x:50, y:50, r:20, color:"blue"},
+                    {name:"b", x:250, y:50, r:30, color:"orange"},
+                    {name:"c", x:50, y:250, r:40, color:"red"}
                 ]);
 
             const domNodes = document.querySelectorAll(`#${ID} circle`);

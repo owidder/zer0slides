@@ -1,15 +1,15 @@
 <style>
 
-    #change-attributes-of-dom-elements .code {
+    #transitions .code {
         font-size: 1.5em;
     }
 
-    #change-attributes-of-dom-elements svg {
+    #transitions svg {
         border: solid;
         margin: 1em;
     }
 
-    #change-attributes-of-dom-elements circle {
+    #transitions circle {
         fill: white;
         stroke: black;
         stroke-width: 2px;
@@ -43,7 +43,7 @@
     /* global slidAR */
 
     (function () {
-        const ID = "change-attributes-of-dom-elements";
+        const ID = "transitions";
 
         const codeSelector1 = "#" + ID + " .code1";
 
@@ -56,6 +56,8 @@
             "   );\n" +
             "\n" +
             "selection\n" +
+            "        .transition()\n" +
+            "        .duration(5000)\n" +
             "        .attr(\"cx\", function (d) {\n" +
             "            return d.x;\n" +
             "        })\n" +
@@ -70,14 +72,9 @@
             "        })", {noBackgroundColor: true});
 
         const steps = [];
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "1"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "8-20"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "8"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "9-11"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "12-14"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "15-17"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "18-20"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, ""));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "9-10"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "9"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "10"));
 
         gapslides.steps2.setSteps(ID, steps);
 
@@ -90,6 +87,8 @@
                 ]);
 
             selection
+                .transition()
+                .duration(5000)
                 .attr("cx", function (d) {
                     return d.x;
                 })
