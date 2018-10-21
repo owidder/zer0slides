@@ -1,0 +1,30 @@
+<style>
+
+    #begin-empty-title .code {
+        font-size: 3em;
+    }
+
+    #begin-empty-title .code {
+        position: relative;
+        top: 30%;
+    }
+
+</style>
+
+<div class="screencontainer">
+    <div class="code"></div>
+</div>
+
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "begin-empty-title";
+
+        gapslides.showCode2.bash("#" + ID + " .code", "Begin with empty SVG", {noLineNumbers: true});
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

@@ -24,7 +24,6 @@ const refresh = () => {
 }
 
 const render = (selector: string, language: string, _string: string, options: ShowCodeOptions) => {
-    console.log("render")
     const html = Prism.highlight(_string, Prism.languages[language]);
     const style = options.noBackgroundColor ? "background-color: transparent;" : "";
     const lineNumbersClass = options.noLineNumbers ? "" : "line-numbers";

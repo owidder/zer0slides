@@ -36,6 +36,7 @@
     </div>
 </div>
 
+<div class="code2 code"></div>
 <div class="code1 code"></div>
 
 <script>
@@ -46,6 +47,14 @@
         const ID = "create-dom-elements-enter-update";
 
         const codeSelector1 = "#" + ID + " .code1";
+        const codeSelector2 = "#" + ID + " .code2";
+
+        gapslides.showCode2.bash(codeSelector2,
+            "<svg id=\"svg01\" height=\"300\" width=\"300\">\n" +
+            "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
+            "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
+            "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
+            "</svg>", {noBackgroundColor: true});
 
         gapslides.showCode2.js(codeSelector1,
             "const selection = d3.selectAll(\"circle\")\n" +
@@ -112,6 +121,7 @@
         steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "36"));
         steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "38-40"));
         steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "42"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, ""));
 
         gapslides.steps2.setSteps(ID, steps);
 

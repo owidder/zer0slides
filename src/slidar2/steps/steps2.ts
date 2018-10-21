@@ -11,7 +11,12 @@ const createReverseStep = (step: Step) => {
     return {step, reverseStep}
 }
 
+const createStep = (f: () => void, b: () => void) => {
+    return new Step(f, b);
+}
+
 export const steps2 = {
+    createStep,
     createReverseStep,
     setSteps,
 }
