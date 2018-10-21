@@ -27,6 +27,7 @@
 
 <div class="screencontainer">
     <div class="screenposition screenright screenbottom">
+        <a class="runcode btn-floating btn waves-effect waves-light blue stdmargin"><i class="material-icons">play_arrow</i></a>
         <svg id="svg01" height="300" width="300">
             <circle cx="150" cy="150" r="10"></circle>
             <circle cx="150" cy="150" r="10"></circle>
@@ -37,7 +38,6 @@
 
 <div class="code2 code"></div>
 <div class="code1 code"></div>
-<a class="runcode btn-floating btn waves-effect waves-light blue stdmargin"><i class="material-icons">play_arrow</i></a>
 
 <script>
 
@@ -65,18 +65,18 @@
             "   );\n" +
             "\n" +
             "selection\n" +
-            "        .attr(\"cx\", function (d) {\n" +
-            "            return d.x;\n" +
-            "        })\n" +
-            "        .attr(\"cy\", function (d) {\n" +
-            "            return d.y;\n" +
-            "        })\n" +
-            "        .attr(\"r\", function (d) {\n" +
-            "            return d.r;\n" +
-            "        })\n" +
-            "        .style(\"fill\", function (d) {\n" +
-            "            return d.color;\n" +
-            "        })", {noBackgroundColor: true});
+            "   .attr(\"cx\", function (d) {\n" +
+            "       return d.x;\n" +
+            "   })\n" +
+            "   .attr(\"cy\", function (d) {\n" +
+            "       return d.y;\n" +
+            "   })\n" +
+            "   .attr(\"r\", function (d) {\n" +
+            "       return d.r;\n" +
+            "   })\n" +
+            "   .style(\"fill\", function (d) {\n" +
+            "       return d.color;\n" +
+            "   })", {noBackgroundColor: true});
 
         const steps = [];
         steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "1"));
