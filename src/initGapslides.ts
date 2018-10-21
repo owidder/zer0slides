@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import * as _ from 'lodash';
 
 import {slidAR} from './slidarClassic/slidAR';
 
@@ -22,5 +22,5 @@ export const init = () => {
 
     (window as any).gapslides = gapslides;
     (window as any).slidAR = slidAR;
-    (window as any).d3 = d3;
+    (window as any)._ = _;
 }
