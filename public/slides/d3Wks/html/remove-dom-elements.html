@@ -1,15 +1,15 @@
 <style>
 
-    #begin-empty .code {
+    #remove-dom-elements .code {
         font-size: 1.5em;
     }
 
-    #begin-empty svg {
+    #remove-dom-elements svg {
         border: solid;
         margin: 1em;
     }
 
-    #begin-empty circle {
+    #remove-dom-elements circle {
         fill: white;
         stroke: black;
         stroke-width: 2px;
@@ -29,9 +29,6 @@
     <div class="screenposition screenright screenbottom">
         <a class="runcode btn-floating btn waves-effect waves-light blue stdmargin"><i class="material-icons">play_arrow</i></a>
         <svg id="svg01" height="300" width="300">
-            <circle cx="150" cy="150" r="10"></circle>
-            <circle cx="150" cy="150" r="10"></circle>
-            <circle cx="150" cy="150" r="10"></circle>
         </svg>
     </div>
 </div>
@@ -44,15 +41,12 @@
     /* global slidAR */
 
     (function () {
-        const ID = "begin-empty";
+        const ID = "remove-dom-elements";
 
         const codeSelector1 = "#" + ID + " .code1";
         const codeSelector2 = "#" + ID + " .code2";
 
         const fullSvgCode = "<svg id=\"svg01\" height=\"300\" width=\"300\">\n" +
-            "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
-            "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
-            "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
             "</svg>";
         const codeOptions = {noBackgroundColor: true};
 
@@ -89,40 +83,46 @@
             "   })" +
             "\n\n" +
             "setTimeout(function () {\n" +
-            "                const selection = d3.selectAll(\"circle\")\n" +
-            "                    .data([\n" +
-            "                        {name:\"c\", x:0, y:0, r:80, color:\"grey\"},\n" +
-            "                        {name:\"a\", x:280, y:280, r:10, color:\"yellow\"},\n" +
-            "                        {name:\"d\", x:280, y:30, r:30, color:\"green\"},\n" +
-            "                        {name:\"e\", x:50, y:50, r:20, color:\"red\"},\n" +
-            "                        {name:\"b\", x:0, y:300, r:60, color:\"cyan\"}\n" +
-            "                    ], function (d) {\n" +
-            "                        return d.name;\n" +
-            "                    });\n" +
+            "   const selection = d3.selectAll(\"circle\")\n" +
+            "       .data([\n" +
+            "           {name:\"c\", x:0, y:0, r:80, color:\"grey\"},\n" +
+            "           {name:\"d\", x:280, y:30, r:30, color:\"green\"},\n" +
+            "           {name:\"e\", x:50, y:50, r:20, color:\"red\"},\n" +
+            "           {name:\"b\", x:0, y:300, r:60, color:\"cyan\"}\n" +
+            "       ], function (d) {\n" +
+            "           return d.name;\n" +
+            "       });\n" +
             "\n" +
-            "                const newElements = selection.enter()\n" +
-            "                    .append(\"circle\")\n" +
-            "                    .attr(\"cx\", 150)\n" +
-            "                    .attr(\"cy\", 150)\n" +
-            "                    .attr(\"r\", 10);\n" +
+            "   const newElements = selection.enter()\n" +
+            "       .append(\"circle\")\n" +
+            "       .attr(\"cx\", 150)\n" +
+            "       .attr(\"cy\", 150)\n" +
+            "       .attr(\"r\", 10);\n" +
             "\n" +
-            "                newElements.merge(selection)\n" +
-            "                    .transition()\n" +
-            "                    .duration(5000)\n" +
-            "                    .attr(\"cx\", function (d) {\n" +
-            "                        return d.x;\n" +
-            "                    })\n" +
-            "                    .attr(\"cy\", function (d) {\n" +
-            "                        return d.y;\n" +
-            "                    })\n" +
-            "                    .attr(\"r\", function (d) {\n" +
-            "                        return d.r;\n" +
-            "                    })\n" +
-            "                    .style(\"fill\", function (d) {\n" +
-            "                        return d.color;\n" +
-            "                    })\n" +
+            "   newElements.merge(selection)\n" +
+            "       .transition()\n" +
+            "       .duration(5000)\n" +
+            "       .attr(\"cx\", function (d) {\n" +
+            "           return d.x;\n" +
+            "       })\n" +
+            "       .attr(\"cy\", function (d) {\n" +
+            "           return d.y;\n" +
+            "       })\n" +
+            "       .attr(\"r\", function (d) {\n" +
+            "           return d.r;\n" +
+            "       })\n" +
+            "       .style(\"fill\", function (d) {\n" +
+            "           return d.color;\n" +
+            "       })\n" +
             "\n" +
-            "            }, 6000);", codeOptions);
+            "   selection.exit()\n" +
+            "       .transition()\n" +
+            "       .duration(5000)\n" +
+            "       .attr(\"r\", 0)\n" +
+            "       .style(\"opacity\", 0)\n" +
+            "       .remove();\n" +
+            "\n" +
+            "}, 6000);", codeOptions);
 
         const emptySvgCode = "<svg id=\"svg01\" height=\"300\" width=\"300\">\n</svg>";
 
@@ -147,12 +147,20 @@
         }
 
         const steps = [];
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector2, "2-4"));
-        steps.push(gapslides.steps2.createStep(removeSvg, undoRemoveSvg));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "8-12"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "14"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "1-28, 31-62"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "33-36"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "63-68"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "63"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "64"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "65"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "66"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "67"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "68"));
         steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, ""));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "31-68"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "31-39"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "41-45"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "47-61"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "63-68"));
 
         gapslides.steps2.setSteps(ID, steps);
 
@@ -191,7 +199,6 @@
                 const selection = svg.selectAll("circle")
                     .data([
                         {name:"c", x:0, y:0, r:80, color:"grey"},
-                        {name:"a", x:280, y:280, r:10, color:"yellow"},
                         {name:"d", x:280, y:30, r:30, color:"green"},
                         {name:"e", x:50, y:50, r:20, color:"red"},
                         {name:"b", x:0, y:300, r:60, color:"cyan"}
@@ -220,6 +227,13 @@
                     .style("fill", function (d) {
                         return d.color;
                     })
+
+                selection.exit()
+                    .transition()
+                    .duration(5000)
+                    .attr("r", 0)
+                    .style("opacity", 0)
+                    .remove();
 
             }, 6000);
         });
