@@ -89,40 +89,40 @@
             "   })" +
             "\n\n" +
             "setTimeout(function () {\n" +
-            "                const selection = d3.selectAll(\"circle\")\n" +
-            "                    .data([\n" +
-            "                        {name:\"c\", x:0, y:0, r:80, color:\"grey\"},\n" +
-            "                        {name:\"a\", x:280, y:280, r:10, color:\"yellow\"},\n" +
-            "                        {name:\"d\", x:280, y:30, r:30, color:\"green\"},\n" +
-            "                        {name:\"e\", x:50, y:50, r:20, color:\"red\"},\n" +
-            "                        {name:\"b\", x:0, y:300, r:60, color:\"cyan\"}\n" +
-            "                    ], function (d) {\n" +
-            "                        return d.name;\n" +
-            "                    });\n" +
+            "   const selection = d3.selectAll(\"circle\")\n" +
+            "       .data([\n" +
+            "           {name:\"c\", x:0, y:0, r:80, color:\"grey\"},\n" +
+            "           {name:\"a\", x:280, y:280, r:10, color:\"yellow\"},\n" +
+            "           {name:\"d\", x:280, y:30, r:30, color:\"green\"},\n" +
+            "           {name:\"e\", x:50, y:50, r:20, color:\"red\"},\n" +
+            "           {name:\"b\", x:0, y:300, r:60, color:\"cyan\"}\n" +
+            "       ], function (d) {\n" +
+            "           return d.name;\n" +
+            "       });\n" +
             "\n" +
-            "                const newElements = selection.enter()\n" +
-            "                    .append(\"circle\")\n" +
-            "                    .attr(\"cx\", 150)\n" +
-            "                    .attr(\"cy\", 150)\n" +
-            "                    .attr(\"r\", 10);\n" +
+            "   const newElements = selection.enter()\n" +
+            "       .append(\"circle\")\n" +
+            "       .attr(\"cx\", 150)\n" +
+            "       .attr(\"cy\", 150)\n" +
+            "       .attr(\"r\", 10);\n" +
             "\n" +
-            "                newElements.merge(selection)\n" +
-            "                    .transition()\n" +
-            "                    .duration(5000)\n" +
-            "                    .attr(\"cx\", function (d) {\n" +
-            "                        return d.x;\n" +
-            "                    })\n" +
-            "                    .attr(\"cy\", function (d) {\n" +
-            "                        return d.y;\n" +
-            "                    })\n" +
-            "                    .attr(\"r\", function (d) {\n" +
-            "                        return d.r;\n" +
-            "                    })\n" +
-            "                    .style(\"fill\", function (d) {\n" +
-            "                        return d.color;\n" +
-            "                    })\n" +
+            "   newElements.merge(selection)\n" +
+            "       .transition()\n" +
+            "       .duration(5000)\n" +
+            "       .attr(\"cx\", function (d) {\n" +
+            "           return d.x;\n" +
+            "       })\n" +
+            "       .attr(\"cy\", function (d) {\n" +
+            "           return d.y;\n" +
+            "       })\n" +
+            "       .attr(\"r\", function (d) {\n" +
+            "           return d.r;\n" +
+            "       })\n" +
+            "       .style(\"fill\", function (d) {\n" +
+            "           return d.color;\n" +
+            "       })\n" +
             "\n" +
-            "            }, 6000);", codeOptions);
+            "}, 6000);", codeOptions);
 
         const emptySvgCode = "<svg id=\"svg01\" height=\"300\" width=\"300\">\n</svg>";
 
