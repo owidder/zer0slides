@@ -53,55 +53,20 @@
         gapslides.showCode2.bash(codeSelector2, fullSvgCode, codeOptions);
 
         gapslides.showCode2.js(codeSelector1,
-            "const selection = d3.selectAll(\"circle\")\n" +
-            "   .data(\n" +
-            "       [{name:\"a\", x:50, y:50, r:20, color:\"blue\"},\n" +
-            "       {name:\"b\", x:50, y:250, r:30, color:\"orange\"},\n" +
-            "       {name:\"c\", x:250, y:50, r:40, color:\"red\"}]\n" +
-            "   );\n" +
-            "\n" +
-            "const newElements = selection.enter()\n" +
-            "   .append(\"circle\")\n" +
-            "   .attr(\"cx\", 150)\n" +
-            "   .attr(\"cy\", 150)\n" +
-            "   .attr(\"r\", 10);\n" +
-            "\n" +
-            "newElements.merge(selection)\n" +
-            "   .transition()\n" +
-            "   .duration(5000)\n" +
-            "   .attr(\"cx\", function (d) {\n" +
-            "       return d.x;\n" +
-            "   })\n" +
-            "   .attr(\"cy\", function (d) {\n" +
-            "       return d.y;\n" +
-            "   })\n" +
-            "   .attr(\"r\", function (d) {\n" +
-            "       return d.r;\n" +
-            "   })\n" +
-            "   .style(\"fill\", function (d) {\n" +
-            "       return d.color;\n" +
-            "   })" +
-            "\n\n" +
-            "setTimeout(function () {\n" +
-            "   const selection = d3.selectAll(\"circle\")\n" +
-            "       .data([\n" +
-            "           {name:\"c\", x:0, y:0, r:80, color:\"grey\"},\n" +
-            "           {name:\"d\", x:280, y:30, r:30, color:\"green\"},\n" +
-            "           {name:\"e\", x:50, y:50, r:20, color:\"red\"},\n" +
-            "           {name:\"b\", x:0, y:300, r:60, color:\"cyan\"}\n" +
-            "       ], function (d) {\n" +
+            "function render(data) {\n" +
+            "   const selection = svg.selectAll(\"circle\")\n" +
+            "       .data(data, function (d) {\n" +
             "           return d.name;\n" +
             "       });\n" +
             "\n" +
-            "   const newElements = selection.enter()\n" +
+            "   selection.enter()\n" +
             "       .append(\"circle\")\n" +
             "       .attr(\"cx\", 150)\n" +
             "       .attr(\"cy\", 150)\n" +
-            "       .attr(\"r\", 10);\n" +
-            "\n" +
-            "   newElements.merge(selection)\n" +
+            "       .attr(\"r\", 10)\n" +
+            "       .merge(selection)\n" +
             "       .transition()\n" +
-            "       .duration(5000)\n" +
+            "       .duration(1000)\n" +
             "       .attr(\"cx\", function (d) {\n" +
             "           return d.x;\n" +
             "       })\n" +
@@ -117,50 +82,61 @@
             "\n" +
             "   selection.exit()\n" +
             "       .transition()\n" +
-            "       .duration(5000)\n" +
+            "       .duration(500)\n" +
             "       .attr(\"r\", 0)\n" +
             "       .style(\"opacity\", 0)\n" +
             "       .remove();\n" +
             "\n" +
-            "}, 6000);", codeOptions);
+            "}\n" +
+            "\n" +
+            "const colorScale = d3.scaleOrdinal(d3.schemeCategory20);\n" +
+            "\n" +
+            "setInterval(function () {\n" +
+            "   const data = [];\n" +
+            "\n" +
+            "   for(var i = 0; i < 20; i++) {\n" +
+            "       if(Math.random() > .1) {\n" +
+            "           data.push({\n" +
+            "               name: i,\n" +
+            "               x: Math.floor(d3.randomUniform(0,300)()),\n" +
+            "               y: Math.floor(d3.randomUniform(0,300)()),\n" +
+            "               r: Math.floor(d3.randomUniform(0,50)()),\n" +
+            "               color: colorScale(i)\n" +
+            "           })\n" +
+            "       }\n" +
+            "   }\n" +
+            "\n" +
+            "   render(data)\n" +
+            "}, 1000)\n"
+            , codeOptions);
 
         const emptySvgCode = "<svg id=\"svg01\" height=\"300\" width=\"300\">\n</svg>";
 
-        const removeSvg = () => {
-            gapslides.showCode2.js(codeSelector2, emptySvgCode, codeOptions);
-            const svg = d3.select("#svg01");
-            svg.selectAll("circle").remove();
-        }
-
-        const undoRemoveSvg = () => {
-            gapslides.showCode2.js(codeSelector2, fullSvgCode, codeOptions);
-            steps.push(gapslides.showCode2.highlightLines(codeSelector2, "2-4"));
-            const svg = d3.select("#svg01");
-            svg.selectAll("circle")
-                .data([0, 1, 2])
-                .enter()
-                .append("circle")
-                .attr("cx", 150)
-                .attr("cy", 150)
-                .attr("r", 10)
-                .style("fill", "white")
-        }
-
         const steps = [];
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "33-36"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "63-68"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "63"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "64"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "65"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "66"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "67"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "68"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "1-35"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "1,35"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "2-5"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "7-26"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "7-11"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "12-26"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "28-33"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "37"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "39-55"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "39,55"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "40-54"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "40"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "42-52"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "42,52"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "43-51"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "43,51"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "44-50"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "45"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "46"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "47"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "48"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "49"));
+        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "54"));
         steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, ""));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "31-68"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "31-39"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "41-45"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "47-61"));
-        steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "63-68"));
 
         gapslides.steps2.setSteps(ID, steps);
 
@@ -203,20 +179,21 @@
 
             }
 
-            const color = d3.scaleOrdinal(d3.schemeCategory20);
+            const colorScale = d3.scaleOrdinal(d3.schemeCategory20);
 
             setInterval(function () {
                 const data = [];
 
-                debugger
                 for(var i = 0; i < 20; i++) {
-                    data.push({
-                        name: i,
-                        x: _.random(0, 300),
-                        y: _.random(0, 300),
-                        r: _.random(0, 50),
-                        color: color(i)
-                    })
+                    if(Math.random() > .1) {
+                        data.push({
+                            name: i,
+                            x: Math.floor(d3.randomUniform(0,300)()),
+                            y: Math.floor(d3.randomUniform(0,300)()),
+                            r: Math.floor(d3.randomUniform(0,50)()),
+                            color: colorScale(i)
+                        })
+                    }
                 }
 
                 render(data)
