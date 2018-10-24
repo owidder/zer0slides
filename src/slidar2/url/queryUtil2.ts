@@ -14,12 +14,19 @@ export const getHashParamValue = (paramName: string) => {
     return parsed[paramName];
 }
 
-export const getParamValue = (paramName: string) => {
-    const searchParamValue = getSearchParamValue(paramName);
-    if(searchParamValue) {
-        return searchParamValue;
+const doCutTrailingSlash = (value: string, cutTrailingSlash: boolean) => {
+    if(cutTrailingSlash && value && value.length > 0 && value.endsWith("/")) {
+        return value.substr(0, value.length-1);
     }
 
-    return getHashParamValue(paramName);
+    return value;
+}
 
+export const getParamValue = (paramName: string, cutTrailingSlash = false) => {
+    const searchParamValue = getSearchParamValue(paramName);
+    if(searchParamValue) {
+        return doCutTrailingSlash(searchParamValue, cutTrailingSlash);
+    }
+
+    return doCutTrailingSlash(getHashParamValue(paramName), cutTrailingSlash);
 }

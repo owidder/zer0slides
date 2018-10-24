@@ -65,7 +65,7 @@ const bindKeys = () => {
 
 init();
 
-const initName = getParamValue("init") || "init";
+const initName = getParamValue("init", true) || "init";
 renderSlide({slide: new Slide(initName)});
 
 initReadyPromise.then((startIndex) => {
