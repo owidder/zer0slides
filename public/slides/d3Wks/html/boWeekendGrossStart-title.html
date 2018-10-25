@@ -1,0 +1,30 @@
+<style>
+
+    #boWeekendGrossStart-title .code {
+        font-size: 3em;
+    }
+
+    #boWeekendGrossStart-title .code {
+        position: relative;
+        top: 30%;
+    }
+
+</style>
+
+<div class="screencontainer">
+    <div class="code"></div>
+</div>
+
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "boWeekendGrossStart-title";
+
+        gapslides.showCode2.bash("#" + ID + " .code", "Box Office Weekend Gross: Start", {noLineNumbers: true});
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

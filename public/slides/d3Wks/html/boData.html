@@ -1,0 +1,55 @@
+<style>
+
+    #boData .code {
+        font-size: 1.5em;
+    }
+
+</style>
+
+<div class="code1 code"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "boData";
+
+        const codeSelector1 = "#" + ID + " .code1";
+
+        const codeOptions = {noBackgroundColor: true};
+
+        $.get("slides/d3Wks/code/bo-formatted-small.json", function (text) {
+            gapslides.showCode2.bash(codeSelector1, text, codeOptions);
+
+            const steps = [];
+
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "3-47"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "50-56"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "57"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "60-61"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "63-69"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "63"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "64"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "65"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "66"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "67"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "68"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "69"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "71-74"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "76-79"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "81-82"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "83-94"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "96-109"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "111-124"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "126"));
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "128-131"));
+
+            gapslides.steps2.setSteps(ID, steps);
+
+            slidAR.initPhase.markSlideAsReady(ID);
+        })
+
+
+    })()
+</script>
