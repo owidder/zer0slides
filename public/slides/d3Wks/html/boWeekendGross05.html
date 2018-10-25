@@ -1,0 +1,36 @@
+<style>
+
+    #boWeekendGross05 .code {
+        font-size: 1.5em;
+    }
+
+</style>
+
+<div class="code1 code"></div>
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "boWeekendGross05";
+
+        const codeSelector1 = "#" + ID + " .code1";
+
+        const codeOptions = {noBackgroundColor: true};
+
+        $.get("slides/d3Wks/code/boWeekendGross05.html", function (text) {
+            gapslides.showCode2.js(codeSelector1, text, codeOptions);
+
+            const steps = [];
+
+            steps.push(gapslides.showCode2.highlightLinesStep(codeSelector1, "194-198"));
+
+            gapslides.steps2.setSteps(ID, steps);
+
+            slidAR.initPhase.markSlideAsReady(ID);
+        })
+
+
+    })()
+</script>

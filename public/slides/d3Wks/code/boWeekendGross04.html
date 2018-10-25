@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D3 Workshop</title>
+
+    <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="css/material-icons.css">
+
+    <script src="lib/d3.v4.js"></script>
+
+    <style>
+        rect {
+            stroke: black;
+            stroke-width: 2px;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .controls {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+        }
+
+        .control {
+            margin: 1em;
+        }
+
+        .weekctr {
+            font-size: 2em;
+        }
+
+        text.bar {
+            font-size: .7em;
+            transform: translateY(-10px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="screen">
+    <div class="controls">
+        <div class="weekctr control"></div>
+        <a class="control btn-floating btn-large waves-effect waves-light blue" onclick="prev()"><i class="material-icons">skip_previous</i></a>
+        <a class="control btn-floating btn-large waves-effect waves-light blue" onclick="next()"><i class="material-icons">skip_next</i></a>
+    </div>
+</div>
+<div id="svgcontainer"></div>
+
+<script>
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const BAR_OFFSET_X = 100;
+    const BAR_BOTTOM_OFFSET = 100;
+    const BAR_TOP_OFFSET = 100;
+    const BAR_WIDTH = 100;
+    const BAR_GAP = 10;
+    const INITIAL_BAR_HEIGHT = 50;
+    const BAR_BASELINE = height - BAR_BOTTOM_OFFSET;
+
+    const svg = d3.select("#svgcontainer")
+        .append("svg")
+        .attr("height", height)
+        .attr("width", width);
+
+    const axisRoot = svg.append("g");
+    axisRoot.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + (BAR_OFFSET_X - 10) + ",0)");
+
+    let sortedWeeks = [];
+    let currentWeek = -1;
+    d3.json("data/bo.json", function (weekData) {
+        weekData.forEach(function (week) {
+            week.forEach(function (film, index) {
+                film.index = index;
+            })
+        });
+        sortedWeeks = weekData.sort(function (weekA, weekB) {
+            return d3.ascending(weekA[0].date, weekB[0].date);
+        });
+
+        next();
+    });
+
+    function next() {
+        if(sortedWeeks.length > 0) {
+            if(currentWeek < sortedWeeks.length -1) {
+                currentWeek += 1;
+            }
+            else {
+                currentWeek = 0;
+            }
+
+            d3.select(".weekctr").text(sortedWeeks[currentWeek][0].date);
+
+            render();
+        }
+    }
+
+    function prev() {
+        if(sortedWeeks.length > 0) {
+            if(currentWeek > 0) {
+                currentWeek -= 1;
+            }
+            else {
+                currentWeek = sortedWeeks.length;
+            }
+
+            d3.select(".weekctr").text(sortedWeeks[currentWeek][0].date);
+
+            render();
+        }
+    }
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory20);
+
+    function render() {
+        const weekData = sortedWeeks[currentWeek].slice(0, 10);
+
+        const maxWg = d3.max(weekData, function (d) {
+            return d.wg;
+        });
+
+        const yScale = d3.scaleLinear()
+            .domain([0, maxWg])
+            .range([BAR_BASELINE, BAR_TOP_OFFSET]);
+
+        const heightScale = d3.scaleLinear()
+            .domain([0, maxWg])
+            .range([0, BAR_BASELINE - BAR_TOP_OFFSET]);
+
+        const selection = svg.selectAll("g.bar")
+            .data(weekData, function (d) {
+                return d.title;
+            });
+
+        svg.selectAll("rect.bar")
+            .data(weekData, function (d) {
+                return d.title;
+            });
+
+        const enterG = selection.enter()
+            .append("g")
+            .attr("class", "bar")
+            .attr("transform", function(d) {
+                const x = d.index * (BAR_WIDTH + BAR_GAP) + BAR_OFFSET_X;
+                const y = BAR_BASELINE - INITIAL_BAR_HEIGHT;
+                return "translate(" + x + "," + y + ")";
+            });
+
+        enterG
+            .append("rect")
+            .attr("class", "bar")
+            .attr("width", BAR_WIDTH)
+            .attr("height", INITIAL_BAR_HEIGHT)
+            .style("fill", function (d) {
+                return colorScale(d.title);
+            });
+
+        enterG
+            .append("text")
+            .attr("class", "bar")
+            .text(function (d) {
+                return d.title;
+            });
+
+        svg.selectAll("g.bar")
+            .transition()
+            .duration(1000)
+            .attr("transform", function(d) {
+                const x = d.index * (BAR_WIDTH + BAR_GAP) + BAR_OFFSET_X;
+                const y = yScale(d.wg);
+                return "translate(" + x + "," + y + ")";
+            });
+
+        svg.selectAll("rect.bar")
+            .transition()
+            .duration(1000)
+            .attr("height", function (d) {
+                return heightScale(d.wg);
+            });
+
+    }
+
+</script>
+
+</body>
+</html>

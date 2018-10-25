@@ -1,0 +1,30 @@
+<style>
+
+    #boWeekendGross04-title .code {
+        font-size: 3em;
+    }
+
+    #boWeekendGross04-title .code {
+        position: relative;
+        top: 30%;
+    }
+
+</style>
+
+<div class="screencontainer">
+    <div class="code"></div>
+</div>
+
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "boWeekendGross04-title";
+
+        gapslides.showCode2.bash("#" + ID + " .code", "Step 4: Update data in child nodes", {noLineNumbers: true});
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>

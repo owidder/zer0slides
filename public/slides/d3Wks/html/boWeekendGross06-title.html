@@ -1,0 +1,30 @@
+<style>
+
+    #boWeekendGross06-title .code {
+        font-size: 3em;
+    }
+
+    #boWeekendGross06-title .code {
+        position: relative;
+        top: 30%;
+    }
+
+</style>
+
+<div class="screencontainer">
+    <div class="code"></div>
+</div>
+
+
+<script>
+
+    /* global slidAR */
+
+    (function () {
+        const ID = "boWeekendGross06-title";
+
+        gapslides.showCode2.bash("#" + ID + " .code", "Step 6: Create axis", {noLineNumbers: true});
+
+        slidAR.initPhase.markSlideAsReady(ID);
+    })()
+</script>
