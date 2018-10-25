@@ -52,14 +52,14 @@ export class Slide {
     public nextStep() {
         if(this.currentStepNo < this.steps.length - 1) {
             this.currentStepNo++;
-            this.steps[this.currentStepNo].perform();
+            this.steps[this.currentStepNo] && this.steps[this.currentStepNo].perform();
             this.showStepCtr()
         }
     }
 
     public prevStep() {
         if(this.currentStepNo > -1) {
-            this.steps[this.currentStepNo].unperform();
+            this.steps[this.currentStepNo] && this.steps[this.currentStepNo].unperform();
             this.currentStepNo--;
             this.showStepCtr();
         }
