@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
 import * as $ from 'jquery';
 
-import {steps2} from './slidar2/steps/steps2';
+import {steps} from './slidar2/steps/steps';
 import {lifecycle} from './slidar2/lifecycle/lifecycle';
 import {click} from './slidar2/click/click';
 import {core} from './slidar2/core/core';
 import {controlElements} from './slidar2/html/controlElements';
-import {showCode2} from './slidar2/showCode/showCode2';
+import {showCode} from './slidar2/showCode/showCode';
 
 export const init = () => {
     const gapslides = {
@@ -14,8 +14,8 @@ export const init = () => {
         click,
         core,
         lifecycle,
-        showCode2,
-        steps2,
+        showCode2: showCode,
+        steps2: steps,
     } as any
 
     (window as any).gapslides = gapslides;

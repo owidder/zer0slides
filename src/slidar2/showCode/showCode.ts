@@ -92,7 +92,7 @@ export const switchToBlack = (selector: string) => {
     $(`${selector} .token`).addClass("onlyBlack");
 }
 
-export const showCode2 = {
+export const showCode = {
     css,
     js,
     bash,
