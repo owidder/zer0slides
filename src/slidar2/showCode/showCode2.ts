@@ -4,6 +4,7 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 
 import {steps} from '../steps/steps';
 import {Step} from '../core/Step';
+import {q} from '../selector/selector';
 
 const {createReverseStep} = steps;
 

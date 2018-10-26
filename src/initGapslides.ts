@@ -1,8 +1,6 @@
 import * as _ from 'lodash';
 import * as $ from 'jquery';
 
-import {slidAR} from './slidarClassic/slidAR';
-
 import {steps2} from './slidar2/steps/steps2';
 import {lifecycle} from './slidar2/lifecycle/lifecycle';
 import {click} from './slidar2/click/click';
@@ -18,11 +16,9 @@ export const init = () => {
         lifecycle,
         showCode2,
         steps2,
-        ...slidAR
     } as any
 
     (window as any).gapslides = gapslides;
-    (window as any).slidAR = slidAR;
     (window as any)._ = _;
     (window as any).$ = $;
 }
