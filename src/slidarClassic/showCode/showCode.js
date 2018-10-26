@@ -2,8 +2,8 @@ import * as $ from 'jquery';
 
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 
-import {steps} from '../../slidar2/steps/steps';
-import {Step} from '../../slidar2/core/Step';
+import {steps} from '../../gapslides/steps/steps';
+import {Step} from '../../gapslides/core/Step';
 
 const {createReverseStep} = steps;
 

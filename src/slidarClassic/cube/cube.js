@@ -2,8 +2,8 @@ import * as d3 from 'd3';
 import * as $ from 'jquery';
 const vsprintf = require('sprintf-js').vsprintf;
 
-import {steps} from '../../slidar2/steps/steps';
-import {Step} from '../../slidar2/core/Step';
+import {steps} from '../../gapslides/steps/steps';
+import {Step} from '../../gapslides/core/Step';
 
 const {createReverseStep} = steps;
 

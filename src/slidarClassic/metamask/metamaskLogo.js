@@ -1,5 +1,5 @@
-import {steps} from '../../slidar2/steps/steps';
-import {Step} from '../../slidar2/core/Step';
+import {steps} from '../../gapslides/steps/steps';
+import {Step} from '../../gapslides/core/Step';
 
 const {createReverseStep} = steps;
 
