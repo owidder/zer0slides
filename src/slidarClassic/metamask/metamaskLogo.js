@@ -1,5 +1,5 @@
-import {steps} from '../../gapslides/steps/steps';
-import {Step} from '../../gapslides/core/Step';
+import {steps} from '../../zer0slides/steps/steps';
+import {Step} from '../../zer0slides/core/Step';
 
 const {createReverseStep} = steps;
 

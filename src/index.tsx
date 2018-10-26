@@ -3,14 +3,14 @@ import 'materialize-css/dist/css/materialize.css';
 import * as React from 'react';
 
 import {init} from './initGapslides';
-import {initReadyPromise} from './gapslides/lifecycle/lifecycle';
-import {slideCore} from './gapslides/core/core';
-import {Slide} from './gapslides/core/Slide';
-import {bindKeyToFunction} from './gapslides/core/keys';
-import {renderSlide} from './gapslides/core/render';
-import {paramValue} from './gapslides/url/queryUtil';
-import {getParamValue} from './gapslides/url/queryUtil2';
-import {switchCurrentSlideToBlack} from './gapslides/showCode/controlShowCode';
+import {initReadyPromise} from './zer0slides/lifecycle/lifecycle';
+import {slideCore} from './zer0slides/core/core';
+import {Slide} from './zer0slides/core/Slide';
+import {bindKeyToFunction} from './zer0slides/core/keys';
+import {renderSlide} from './zer0slides/core/render';
+import {paramValue} from './zer0slides/url/queryUtil';
+import {getParamValue} from './zer0slides/url/queryUtil2';
+import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
 
 import 'materialize-css/dist/css/materialize.css';
 import './gapslides.less';
