@@ -13,6 +13,7 @@ import {getParamValue} from './zer0slides/url/queryUtil2';
 import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
 
 import 'materialize-css/dist/css/materialize.css';
+import 'prismjs/themes/prism.css';
 import './gapslides.less';
 
 const renderFirstSlide = (startIndex) => {

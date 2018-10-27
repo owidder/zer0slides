@@ -8,26 +8,30 @@ import {q} from '../selector/selector';
 
 const {createReverseStep} = steps;
 
-const Prism = (window as any).Prism;
+const prism = require("prismjs");
+require("prismjs/plugins/line-numbers/prism-line-numbers");
+require("prismjs/components/prism-bash");
+require("prismjs/components/prism-javascript");
+require("prismjs/components/prism-css");
 
 interface ShowCodeOptions {
-    noBackgroundColor?: boolean,
-    noLineNumbers?: boolean
+    backgroundColor?: boolean,
+    lineNumbers?: boolean
 }
 
 const refresh = () => {
     return new Promise(resolve => {
         setTimeout(() => {
-            Prism.highlightAll();
+            prism.highlightAll();
             resolve();
         }, 0);
     })
 }
 
 const render = (selector: string, language: string, _string: string, options: ShowCodeOptions) => {
-    const html = Prism.highlight(_string, Prism.languages[language]);
-    const style = options.noBackgroundColor ? "background-color: transparent;" : "";
-    const lineNumbersClass = options.noLineNumbers ? "" : "line-numbers";
+    const html = prism.highlight(_string, prism.languages[language]);
+    const style = options.backgroundColor ? `background-color: ${options.backgroundColor};` : "background-color: transparent";
+    const lineNumbersClass = options.lineNumbers ? "line-numbers" : "";
     $(selector).html(`<pre style="${style}" class="language-${language} ${lineNumbersClass}"><code>${html}</code></pre>`);
     return refresh();
 }
@@ -93,6 +97,7 @@ export const switchToBlack = (selector: string) => {
 }
 
 export const showCode = {
+    all: bash,
     css,
     js,
     bash,

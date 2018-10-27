@@ -1,8 +1,9 @@
 import {SimplePromise} from '../core/SimplePromise';
+import {slideName} from '../core/core';
 
 export const initReadyPromise = new SimplePromise<number>();
 
-const initReady = (startIndex: number) => {
+const initReady = (startIndex = 0) => {
     initReadyPromise.resolve(startIndex);
 }
 
@@ -12,7 +13,8 @@ export const resetSlideReadyPromise = (name: string) => {
     slideReadyPromises[name] = new SimplePromise();
 }
 
-const slideReady = (name: string) => {
+const slideReady = () => {
+    const name = slideName();
     slideReadyPromises[name].resolve();
 }
 

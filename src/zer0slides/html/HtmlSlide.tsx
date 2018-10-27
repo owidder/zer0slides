@@ -166,14 +166,17 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
             clean(container);
             $(selector(container)).append(`<div id="${slide.name}" class="${slide.name} ${SLIDE_CLASS}"></div>`);
-            $(`${selector(container)} .${slide.name}`).load(slide.getPathToHtml());
+            $.get(slide.getPathToHtml(), (htmlCode: string) => {
+                const replacedHtml = htmlCode.replace(/__0__/g, slide.name);
+                $(`${selector(container)} .${slide.name}`).html(replacedHtml);
 
-            slideReadyPromise(slide.name).then(() => {
-                resolve();
-                setTimeout(() => {
-                    showHideStepCtr(slide.steps.length > 0);
-                    slide.performToCurrentStep();
-                }, this.props.safeMode ? 3000 : 100)
+                slideReadyPromise(slide.name).then(() => {
+                    resolve();
+                    setTimeout(() => {
+                        showHideStepCtr(slide.steps.length > 0);
+                        slide.performToCurrentStep();
+                    }, this.props.safeMode ? 3000 : 100)
+                })
             })
         })
     }

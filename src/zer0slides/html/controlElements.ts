@@ -49,6 +49,32 @@ const leftArrowClicked = () => {
     slideCore.prevSlide();
 }
 
+const createCounter = (root: any) => {
+    const counterDiv = root.append("div");
+    counterDiv.append("span").attr("class stepctr counter").text("[0/0]");
+    counterDiv.append("span").attr("slideno counter").text("0");
+}
+
+const createArrow = (root: any, className: string, onClick: () => void, text: string) => {
+    root.append("a")
+        .attr("class", className)
+        .attr("href", "#")
+        .on("click", onClick)
+        .append("i")
+        .attr("class", "material-icons")
+        .text(text)
+}
+
+export const createControlElements = () => {
+    const root = d3.selectAll("#control-elements");
+
+    createCounter(root);
+    createArrow(root, "right", rightArrowClicked, "arrow_forward");
+    createArrow(root, "left", leftArrowClicked, "arrow_back");
+    createArrow(root, "up", upArrowClicked, "arrow_upward");
+    createArrow(root, "down", downArrowClicked, "arrow_downward");
+}
+
 export const controlElements = {
     downArrowClicked,
     leftArrowClicked,

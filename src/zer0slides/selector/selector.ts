@@ -1,5 +1,9 @@
 import {slideName} from '../core/core';
 
-export const q = (selector: string) => {
-    return `#${slideName()} ${selector}`;
+export const q = (_selector: string) => {
+    return `#${slideName()} ${_selector}`;
+}
+
+export const selector = {
+    q
 }
