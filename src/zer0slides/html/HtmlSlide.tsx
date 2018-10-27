@@ -3,7 +3,7 @@ import * as $ from 'jquery';
 
 import {Slide} from '../core/Slide';
 import {resetSlideReadyPromise, slideReadyPromise} from '../lifecycle/lifecycle';
-import {showHideDown, showHideStepCtr, showHideUp} from './controlElements';
+import {showHideStepCtr} from './controlElements';
 import {Transformation} from './transformations/Transformation';
 
 import "./transformations/transformations.less";

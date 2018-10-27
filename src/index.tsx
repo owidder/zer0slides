@@ -11,6 +11,7 @@ import {renderSlide} from './zer0slides/core/render';
 import {paramValue} from './zer0slides/url/queryUtil';
 import {getParamValue} from './zer0slides/url/queryUtil2';
 import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
+import {createControlElements} from './zer0slides/html/controlElements';
 
 import 'materialize-css/dist/css/materialize.css';
 import 'prismjs/themes/prism.css';
@@ -72,5 +73,6 @@ renderSlide({slide: new Slide(initName)});
 initReadyPromise.then((startIndex) => {
     renderFirstSlide(startIndex);
     bindKeys();
+    createControlElements();
 });
 

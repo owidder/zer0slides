@@ -51,8 +51,8 @@ const leftArrowClicked = () => {
 
 const createCounter = (root: any) => {
     const counterDiv = root.append("div");
-    counterDiv.append("span").attr("class stepctr counter").text("[0/0]");
-    counterDiv.append("span").attr("slideno counter").text("0");
+    counterDiv.append("span").attr("class", "stepctr counter").text("[0/0]");
+    counterDiv.append("span").attr("class", "slideno counter").text("0");
 }
 
 const createArrow = (root: any, className: string, onClick: () => void, text: string) => {
