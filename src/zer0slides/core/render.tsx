@@ -27,17 +27,20 @@ const firstOutThenIn = (options: RenderOptions) => {
         />, document.getElementById('root') as HTMLElement);
     })
 
-    transformOutReady.then(() => {
-        ReactDOM.render(<HtmlSlide slide={options.slide}
-                                   safeMode={options.safeMode === true}
-                                   action="transform-in"
-                                   transformType={options.transformInType || "Left"}/>,
-            document.getElementById('root') as HTMLElement);
+    return new Promise(resolve => {
+        transformOutReady.then(() => {
+            ReactDOM.render(<HtmlSlide slide={options.slide}
+                                       safeMode={options.safeMode === true}
+                                       action="transform-in"
+                                       transformReadyCallback={resolve}
+                                       transformType={options.transformInType || "Left"}/>,
+                document.getElementById('root') as HTMLElement);
+        })
     })
 }
 
 const outAndInAtOnce = (options: RenderOptions) => {
-    const transformInOutReady = new Promise(resolve => {
+    return new Promise(resolve => {
         ReactDOM.render(<HtmlSlide slideOut={options.oldSlide} slide={options.slide}
                                    safeMode={options.safeMode === true}
                                    action="transform-in-out"
@@ -47,12 +50,6 @@ const outAndInAtOnce = (options: RenderOptions) => {
         />, document.getElementById('root') as HTMLElement);
     })
 
-/*
-    transformInOutReady.then(() => {
-        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode === true} action="show"/>,
-            document.getElementById('root') as HTMLElement);
-    })
-*/
 }
 
 const twin = (options: RenderOptions) => {
@@ -65,9 +62,14 @@ const twin = (options: RenderOptions) => {
         />, document.getElementById('root') as HTMLElement);
     })
 
-    twinReady.then(() => {
-        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode === true} action="show"/>,
-            document.getElementById('root') as HTMLElement);
+    return new Promise(resolve => {
+        twinReady.then(() => {
+            ReactDOM.render(<HtmlSlide slide={options.slide}
+                                       safeMode={options.safeMode === true}
+                                       transformReadyCallback={resolve}
+                                       action="show"/>,
+                document.getElementById('root') as HTMLElement);
+        })
     })
 }
 

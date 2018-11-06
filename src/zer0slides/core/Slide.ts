@@ -8,6 +8,7 @@ export class Slide {
     public steps: Step[] = []
     public currentStepNo: number = -1
     public name: string
+    public autoStepIntervalId: number = -1
 
     public transformationInNext: Transformation
     public transformationOutNext: Transformation
@@ -49,20 +50,34 @@ export class Slide {
         return pathToHtml(this.name);
     }
 
-    public nextStep() {
-        if(this.currentStepNo < this.steps.length - 1) {
-            this.currentStepNo++;
-            this.steps[this.currentStepNo] && this.steps[this.currentStepNo].perform();
-            this.showStepCtr()
+    public nextStep(roundRobin = false) {
+        if(this.currentStepNo >= this.steps.length - 1) {
+            if(roundRobin) {
+                this.currentStepNo = -1;
+            }
+            else {
+                return;
+            }
         }
+
+        this.currentStepNo++;
+        this.steps[this.currentStepNo] && this.steps[this.currentStepNo].perform();
+        this.showStepCtr()
     }
 
-    public prevStep() {
-        if(this.currentStepNo > -1) {
-            this.steps[this.currentStepNo] && this.steps[this.currentStepNo].unperform();
-            this.currentStepNo--;
-            this.showStepCtr();
+    public prevStep(roundRobin = false) {
+        if(this.currentStepNo <= -1) {
+            if(roundRobin) {
+                this.currentStepNo = this.steps.length;
+            }
+            else {
+                return;
+            }
         }
+
+        this.steps[this.currentStepNo] && this.steps[this.currentStepNo].unperform();
+        this.currentStepNo--;
+        this.showStepCtr();
     }
 
     public performToCurrentStep() {
@@ -72,5 +87,22 @@ export class Slide {
             }
         }
         this.showStepCtr();
+    }
+
+    public autoStepOn(intervalInMs: number) {
+        this.autoStepIntervalId = window.setInterval(() => {
+            this.nextStep(true);
+        }, intervalInMs)
+    }
+
+    public autoStepOff() {
+        if(this.autoStepIntervalId > -1) {
+            window.clearInterval(this.autoStepIntervalId);
+            this.autoStepIntervalId = -1;
+        }
+    }
+
+    public aboutToBeRemoved() {
+        this.autoStepOff();
     }
 }

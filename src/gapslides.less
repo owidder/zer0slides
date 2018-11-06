@@ -58,8 +58,21 @@ img._70 {
   color: #000;
 }
 
-#control-elements .flexbox .counter {
-  margin-right: 10px;
+#control-elements {
+
+  & .counter {
+    margin: 1em;
+  }
+  & .flexbox .counter {
+    margin-right: 10px;
+  }
+
+  &.topleftvertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
 }
 
 .authorcontainer, .screencontainer {
@@ -70,10 +83,22 @@ img._70 {
   height: 100vh;
 }
 
+.code .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 1em;
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+}
+
 .screenposition {
   width: 100%;
   height: 100%;
   display: flex;
+
+  &.screenvertical {
+    flex-direction: column;
+  }
 
   &.screenleft {
     justify-content: flex-start;

@@ -4,12 +4,13 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 
 import {steps} from '../steps/steps';
 import {Step} from '../core/Step';
-import {q} from '../selector/selector';
+import {scrollToCurrentLine} from './scroll';
 
 const {createReverseStep} = steps;
 
 const prism = require("prismjs");
 require("prismjs/plugins/line-numbers/prism-line-numbers");
+require("prismjs/plugins/line-highlight/prism-line-highlight");
 require("prismjs/components/prism-bash");
 require("prismjs/components/prism-javascript");
 require("prismjs/components/prism-css");
@@ -54,7 +55,6 @@ export const remove = (selector: string) => {
 }
 
 export const highlightLines = (selector: string, lineString: string) => {
-    console.log(lineString);
     const _sel = `${selector} pre`;
     const old = $(_sel).attr("data-line");
     if(lineString) {
@@ -65,6 +65,8 @@ export const highlightLines = (selector: string, lineString: string) => {
         $(`${_sel} div.line-highlight`).remove();
     }
     refresh();
+
+    setTimeout(scrollToCurrentLine, 1000);
 
     return old;
 }

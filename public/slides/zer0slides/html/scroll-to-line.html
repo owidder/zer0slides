@@ -1,0 +1,136 @@
+<style>
+
+    #__0__ .code {
+        font-size: 2em;
+    }
+
+</style>
+
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        const codeSelector = "#__0__ .code";
+        _0.showCode.js(codeSelector,
+            "import * as $ from 'jquery';\n" +
+            "\n" +
+            "import 'prismjs/plugins/line-numbers/prism-line-numbers.css';\n" +
+            "\n" +
+            "import {steps} from '../steps/steps';\n" +
+            "import {Step} from '../core/Step';\n" +
+            "import {q} from '../selector/selector';\n" +
+            "\n" +
+            "const {createReverseStep} = steps;\n" +
+            "\n" +
+            "const prism = require(\"prismjs\");\n" +
+            "require(\"prismjs/plugins/line-numbers/prism-line-numbers\");\n" +
+            "require(\"prismjs/plugins/line-highlight/prism-line-highlight\");\n" +
+            "require(\"prismjs/components/prism-bash\");\n" +
+            "require(\"prismjs/components/prism-javascript\");\n" +
+            "require(\"prismjs/components/prism-css\");\n" +
+            "\n" +
+            "interface ShowCodeOptions {\n" +
+            "    backgroundColor?: boolean,\n" +
+            "    lineNumbers?: boolean\n" +
+            "}\n" +
+            "\n" +
+            "const refresh = () => {\n" +
+            "    return new Promise(resolve => {\n" +
+            "        setTimeout(() => {\n" +
+            "            prism.highlightAll();\n" +
+            "            resolve();\n" +
+            "        }, 0);\n" +
+            "    })\n" +
+            "}\n" +
+            "\n" +
+            "const render = (selector: string, language: string, _string: string, options: ShowCodeOptions) => {\n" +
+            "    const html = prism.highlight(_string, prism.languages[language]);\n" +
+            "    const style = options.backgroundColor ? `background-color: ${options.backgroundColor};` : \"background-color: transparent\";\n" +
+            "    const lineNumbersClass = options.lineNumbers ? \"line-numbers\" : \"\";\n" +
+            "    $(selector).html(`<pre style=\"${style}\" class=\"language-${language} ${lineNumbersClass}\"><code>${html}</code></pre>`);\n" +
+            "    return refresh();\n" +
+            "}\n" +
+            "\n" +
+            "export const css = (selector: string, cssString: string, options: ShowCodeOptions = {}) => {\n" +
+            "    return render(selector, \"css\", cssString, options);\n" +
+            "}\n" +
+            "\n" +
+            "export const js = (selector: string, jsString: string, options: ShowCodeOptions = {}) => {\n" +
+            "    return render(selector, \"javascript\", jsString, options);\n" +
+            "}\n" +
+            "\n" +
+            "export const bash = (selector: string, jsString: string, options: ShowCodeOptions = {}) => {\n" +
+            "    console.log(\"bash\")\n" +
+            "    return render(selector, \"clike\", jsString, options);\n" +
+            "}\n" +
+            "\n" +
+            "export const remove = (selector: string) => {\n" +
+            "    $(selector).empty();\n" +
+            "}\n" +
+            "\n" +
+            "export const highlightLines = (selector: string, lineString: string) => {\n" +
+            "    const _sel = `${selector} pre`;\n" +
+            "    const old = $(_sel).attr(\"data-line\");\n" +
+            "    if(lineString) {\n" +
+            "        $(_sel).attr(\"data-line\", lineString);\n" +
+            "    }\n" +
+            "    else {\n" +
+            "        $(_sel).removeAttr(\"data-line\");\n" +
+            "        $(`${_sel} div.line-highlight`).remove();\n" +
+            "    }\n" +
+            "    refresh();\n" +
+            "\n" +
+            "    return old;\n" +
+            "}\n" +
+            "\n" +
+            "export const highlightLinesStep = (selector: string, linesString: string) => {\n" +
+            "    let old;\n" +
+            "    return new Step(() => old = highlightLines(selector, linesString), () => highlightLines(selector, old))\n" +
+            "}\n" +
+            "\n" +
+            "export const cssStep = (selector: string, cssString: string) => {\n" +
+            "    return new Step(() => css(selector, cssString), () => remove(selector))\n" +
+            "}\n" +
+            "\n" +
+            "export const jsStep = (selector: string, jsString: string) => {\n" +
+            "    return new Step(() => js(selector, jsString), () => remove(selector))\n" +
+            "}\n" +
+            "\n" +
+            "export const cssStepWithReverse = (selector: string, cssString: string) => {\n" +
+            "    const step = cssStep(selector, cssString);\n" +
+            "    return createReverseStep(step);\n" +
+            "}\n" +
+            "\n" +
+            "export const jsStepWithReverse = (selector: string, jsString: string) => {\n" +
+            "    const step = jsStep(selector, jsString);\n" +
+            "    return createReverseStep(step);\n" +
+            "}\n" +
+            "\n" +
+            "export const switchToBlack = (selector: string) => {\n" +
+            "    $(`${selector} .token`).addClass(\"onlyBlack\");\n" +
+            "}\n" +
+            "\n" +
+            "export const showCode = {\n" +
+            "    all: bash,\n" +
+            "    css,\n" +
+            "    js,\n" +
+            "    bash,\n" +
+            "    remove,\n" +
+            "    cssStep,\n" +
+            "    cssStepWithReverse,\n" +
+            "    jsStep,\n" +
+            "    jsStepWithReverse,\n" +
+            "    highlightLines,\n" +
+            "    highlightLinesStep,\n" +
+            "    switchToBlack\n" +
+            "}\n", {lineNumbers: true});
+
+        const steps = [];
+        steps.push(_0.showCode.highlightLinesStep(codeSelector, "99-112"));
+
+        _0.steps.setSteps(steps);
+
+        ___();
+    })()
+</script>

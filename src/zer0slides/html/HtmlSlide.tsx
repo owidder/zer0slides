@@ -112,7 +112,8 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
             case "refresh":
                 clean(this.currentContainer);
-                this.show(this.currentContainer, slide);
+                await this.show(this.currentContainer, slide);
+                transformReadyCallback && transformReadyCallback();
                 break;
 
             case "twinMove":
@@ -120,7 +121,8 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
                 break;
 
             default:
-                this.show(this.currentContainer, slide);
+                await this.show(this.currentContainer, slide);
+                transformReadyCallback && transformReadyCallback();
         }
     }
 

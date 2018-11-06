@@ -2,14 +2,12 @@ import {SlideCore} from './SlideCore';
 
 export const slideCore = new SlideCore();
 
-let _folderName: string | undefined;
-
 const setFolderName = (folderName: string) => {
-    _folderName = folderName;
+    slideCore.folderName = folderName;
 }
 
 export const getFolderName = () => {
-    return _folderName;
+    return slideCore.folderName;
 }
 
 const addSlide = (_slideName: string) => {
