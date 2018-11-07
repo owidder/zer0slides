@@ -5,6 +5,6 @@ import {slideCore} from '../core/core';
 export const scrollToCurrentLine = () => {
     const slideSelector = slideCore.getCurrentSlideSelector();
     const selector = `${slideSelector} .line-highlight`;
-    const domElement = $(selector);
-    domElement.animate({scrollTop: 20}, 800);
+    const offset = $(selector).offset().top;
+    $("html, body").animate({scrollTop: offset}, 800);
 }

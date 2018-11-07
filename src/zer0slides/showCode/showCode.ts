@@ -59,14 +59,13 @@ export const highlightLines = (selector: string, lineString: string) => {
     const old = $(_sel).attr("data-line");
     if(lineString) {
         $(_sel).attr("data-line", lineString);
+        setTimeout(scrollToCurrentLine, 10);
     }
     else {
         $(_sel).removeAttr("data-line");
         $(`${_sel} div.line-highlight`).remove();
     }
     refresh();
-
-    setTimeout(scrollToCurrentLine, 1000);
 
     return old;
 }
