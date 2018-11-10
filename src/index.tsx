@@ -1,5 +1,5 @@
 import 'materialize-css/dist/css/materialize.css';
-
+import * as $ from 'jquery';
 import * as React from 'react';
 
 import {init} from './initGapslides';
@@ -16,6 +16,10 @@ import {createControlElements} from './zer0slides/html/controlElements';
 import 'materialize-css/dist/css/materialize.css';
 import 'prismjs/themes/prism.css';
 import './gapslides.less';
+
+import 'protip/protip.min.css';
+
+require('protip/main');
 
 const renderFirstSlide = (startIndex) => {
     const slideNo = paramValue("slide");
@@ -65,6 +69,7 @@ const bindKeys = () => {
     bindKeyToFunction("b", () => switchCurrentSlideToBlack());
 }
 
+($ as any).protip();
 init();
 
 const initName = getParamValue("init", true) || "init";

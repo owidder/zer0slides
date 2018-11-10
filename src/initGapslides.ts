@@ -5,6 +5,7 @@ import {core} from './zer0slides/core/core';
 import {controlElements} from './zer0slides/html/controlElements';
 import {showCode} from './zer0slides/showCode/showCode';
 import {selector} from './zer0slides/selector/selector';
+import {tooltip} from './zer0slides/showCode/tooltip';
 
 export const init = () => {
     const zer0slides = {
@@ -15,6 +16,7 @@ export const init = () => {
         selector,
         showCode,
         steps,
+        tooltip,
     } as any
 
     (window as any).zer0slides = zer0slides;

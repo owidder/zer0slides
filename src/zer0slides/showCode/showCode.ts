@@ -5,6 +5,7 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import {steps} from '../steps/steps';
 import {Step} from '../core/Step';
 import {scrollToCurrentLine} from './scroll';
+import {createTooltips} from './tooltip';
 
 const {createReverseStep} = steps;
 
@@ -18,6 +19,12 @@ require("prismjs/components/prism-css");
 interface ShowCodeOptions {
     backgroundColor?: boolean,
     lineNumbers?: boolean
+}
+
+interface HighlightLinesOptions {
+    linesString: string,
+    tooltip?: string,
+    position?: string,
 }
 
 const refresh = () => {
@@ -54,18 +61,57 @@ export const remove = (selector: string) => {
     $(selector).empty();
 }
 
-export const highlightLines = (selector: string, lineString: string) => {
+const createTooltipsForHighlights = (highlightLinesOptions: HighlightLinesOptions[]) => {
+    const tooltips = highlightLinesOptions.map((hlOption, index) => {
+        if(hlOption.tooltip) {
+            return {
+                lineIndex: index,
+                position: hlOption.position,
+                text: hlOption.tooltip
+            }
+        }
+
+        return undefined;
+    })
+
+    createTooltips(tooltips);
+}
+
+export const highlightLines2 = (selector: string, optionsArray: HighlightLinesOptions[]) => {
+    const allLinesString = optionsArray.reduce((accLinesString, currentOption) => {
+        return `${accLinesString},${currentOption.linesString}`
+    }, "");
+
+    return highlightLines(selector, allLinesString, () => {
+        createTooltipsForHighlights(optionsArray);
+    })
+}
+
+export const highlightLines2Step = (selector: string, optionsArray: HighlightLinesOptions[]) => {
+    let old;
+    return new Step(() => old = highlightLines2(selector, optionsArray), () => highlightLines(selector, old))
+}
+
+export const highlightLines = (selector: string, lineString: string, callbackWhenFinished?: () => void) => {
     const _sel = `${selector} pre`;
     const old = $(_sel).attr("data-line");
+
     if(lineString) {
         $(_sel).attr("data-line", lineString);
-        setTimeout(scrollToCurrentLine, 10);
+        refresh().then(() => {
+            setTimeout(() => {
+                scrollToCurrentLine();
+                callbackWhenFinished && callbackWhenFinished();
+            }, 10);
+        })
     }
     else {
         $(_sel).removeAttr("data-line");
         $(`${_sel} div.line-highlight`).remove();
+        refresh().then(() => {
+            callbackWhenFinished && callbackWhenFinished();
+        });
     }
-    refresh();
 
     return old;
 }
