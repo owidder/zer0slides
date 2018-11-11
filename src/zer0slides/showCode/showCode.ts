@@ -6,6 +6,8 @@ import {steps} from '../steps/steps';
 import {Step} from '../core/Step';
 import {scrollToCurrentLine} from './scroll';
 import {createTooltips} from './tooltip';
+import {getData, setData} from '../core/data';
+import {selector} from "../selector/selector";
 
 const {createReverseStep} = steps;
 
@@ -22,7 +24,7 @@ interface ShowCodeOptions {
 }
 
 interface HighlightLinesOptions {
-    linesString: string,
+    lines: string,
     tooltip?: string,
     position?: string,
 }
@@ -78,13 +80,49 @@ const createTooltipsForHighlights = (highlightLinesOptions: HighlightLinesOption
 }
 
 export const highlightLines2 = (selector: string, optionsArray: HighlightLinesOptions[]) => {
-    const allLinesString = optionsArray.reduce((accLinesString, currentOption) => {
-        return `${accLinesString},${currentOption.linesString}`
-    }, "");
+    const oldOptionsArray = getData(selector);
+    setData(selector, optionsArray);
 
-    return highlightLines(selector, allLinesString, () => {
+    const allLinesArray = optionsArray.reduce((accLinesArray, currentOption) => {
+        return [...accLinesArray, currentOption.lines];
+    }, []);
+    const allLinesString = allLinesArray.join(",");
+
+    highlightLines(selector, allLinesString, () => {
         createTooltipsForHighlights(optionsArray);
-    })
+    });
+
+    return oldOptionsArray;
+}
+
+export const _highlightLines = (selector: string, lines: string | HighlightLinesOptions[]): string | HighlightLinesOptions[] => {
+    let old = getData(selector);
+    if(!old) {
+       old =  dataLine(selector);
+    }
+
+    if(typeof lines === "string") {
+        highlightLines(selector, lines);
+    }
+    else {
+        highlightLines2(selector, lines);
+    }
+
+    return old;
+}
+
+export const _highlightLinesStep = (selector: string, lines: string | HighlightLinesOptions[]) => {
+    let old;
+    return new Step(() => old = _highlightLines(selector, lines), () => _highlightLines(selector, old))
+}
+
+const dataLine = (selector: string, value?: string): string | void => {
+    const _sel = `${selector} pre`;
+    if(!value) {
+        return $(_sel).attr("data-line");
+    }
+
+    $(_sel).attr("data-line", value);
 }
 
 export const highlightLines2Step = (selector: string, optionsArray: HighlightLinesOptions[]) => {
@@ -155,5 +193,8 @@ export const showCode = {
     jsStepWithReverse,
     highlightLines,
     highlightLinesStep,
-    switchToBlack
+    highlightLines2,
+    highlightLines2Step,
+    _highlightLines,
+    _highlightLinesStep,
 }

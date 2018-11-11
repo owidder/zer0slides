@@ -127,8 +127,13 @@
             "}\n", {lineNumbers: true});
 
         const steps = [];
-        steps.push(_0.showCode.highlightLinesStep(codeSelector, "99-112"));
-        steps.push(_0.showCode.highlightLinesStep(codeSelector, "1-5"));
+        steps.push(_0.showCode._highlightLinesStep(codeSelector, "99-112"));
+
+
+        steps.push(_0.showCode._highlightLinesStep(codeSelector, [
+            {lines: "1-5", tooltip: "Tooltip 1"},
+            {lines: "8-10", tooltip: "Tooltip 2"},
+        ]));
 
         _0.steps.setSteps(steps);
 

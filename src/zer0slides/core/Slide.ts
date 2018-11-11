@@ -98,6 +98,7 @@ export class Slide {
     public autoStepOff() {
         if(this.autoStepIntervalId > -1) {
             window.clearInterval(this.autoStepIntervalId);
+            console.log("interval off: " + this.autoStepIntervalId);
             this.autoStepIntervalId = -1;
         }
     }
