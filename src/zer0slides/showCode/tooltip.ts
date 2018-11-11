@@ -13,9 +13,9 @@ const createTooltipSelector = (tooltip: Tooltip) => {
         return tooltip.selector;
     }
 
-    const nthChild = tooltip.lineIndex > 0 ? tooltip.lineIndex + 1 : 1;
+    const nth = tooltip.lineIndex > 0 ? tooltip.lineIndex + 1 : 1;
     const slideSelector = slideCore.getCurrentSlideSelector();
-    const selector = `${slideSelector} .line-highlight:nth-child(${nthChild})`;
+    const selector = `${slideSelector} .line-highlight:nth-of-type(${nth})`;
 
     return selector;
 }

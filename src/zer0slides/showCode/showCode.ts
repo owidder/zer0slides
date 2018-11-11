@@ -137,8 +137,8 @@ export const highlightLines = (selector: string, lineString: string, callbackWhe
     if(lineString) {
         $(_sel).attr("data-line", lineString);
         refresh().then(() => {
-            setTimeout(() => {
-                scrollToCurrentLine();
+            setTimeout(async () => {
+                await scrollToCurrentLine();
                 callbackWhenFinished && callbackWhenFinished();
             }, 10);
         })
