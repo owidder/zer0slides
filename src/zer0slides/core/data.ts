@@ -1,12 +1,23 @@
-import * as d3 from 'd3';
+import * as _ from 'lodash';
 import {selector} from "../selector/selector";
 
 export const setData = (selector: string, data: any) => {
-    d3.select(selector)
-        .attr("__z0__", data);
+    const elem: any = document.querySelector(selector);
+    if(!_.isUndefined(elem)) {
+        elem.__z0__ = data;
+    }
 }
 
-export const getData = (selector: string): any => {
-    return d3.select(selector).attr("__z0__");
+export const getData = (selector: string): any | void => {
+    const elem: any = document.querySelector(selector);
+    if(!_.isUndefined(elem)) {
+        return elem.__z0__;
+    }
 }
 
+export const resetData = (selector: string) => {
+    const elem: any = document.querySelector(selector);
+    if(!_.isUndefined(elem)) {
+        delete elem.__z0__;
+    }
+}

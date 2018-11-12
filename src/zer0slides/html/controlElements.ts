@@ -65,7 +65,22 @@ const createArrow = (root: any, className: string, onClick: () => void, text: st
         .text(text)
 }
 
+const createControlElementsDefaultContainer = () => {
+    const body = d3.select("body");
+    body.selectAll(".screencontainer")
+        .data([1])
+        .enter()
+        .append("div")
+        .attr("class", "screencontainer")
+        .append("div")
+        .attr("id", "control-elements")
+        .attr("class", "topleftvertical");
+
+    d3.selectAll(".screencontainer").raise();
+}
+
 export const createControlElements = () => {
+    createControlElementsDefaultContainer();
     const root = d3.selectAll("#control-elements");
 
     createCounter(root);

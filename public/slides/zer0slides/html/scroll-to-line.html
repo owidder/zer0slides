@@ -1,7 +1,7 @@
 <style>
 
     #__0__ .code {
-        font-size: 2em;
+        font-size: 1.5em;
     }
 
 </style>
@@ -44,13 +44,6 @@
             "    })\n" +
             "}\n" +
             "\n" +
-            "const render = (selector: string, language: string, _string: string, options: ShowCodeOptions) => {\n" +
-            "    const html = prism.highlight(_string, prism.languages[language]);\n" +
-            "    const style = options.backgroundColor ? `background-color: ${options.backgroundColor};` : \"background-color: transparent\";\n" +
-            "    const lineNumbersClass = options.lineNumbers ? \"line-numbers\" : \"\";\n" +
-            "    $(selector).html(`<pre style=\"${style}\" class=\"language-${language} ${lineNumbersClass}\"><code>${html}</code></pre>`);\n" +
-            "    return refresh();\n" +
-            "}\n" +
             "\n" +
             "export const css = (selector: string, cssString: string, options: ShowCodeOptions = {}) => {\n" +
             "    return render(selector, \"css\", cssString, options);\n" +
@@ -86,7 +79,8 @@
             "\n" +
             "export const highlightLinesStep = (selector: string, linesString: string) => {\n" +
             "    let old;\n" +
-            "    return new Step(() => old = highlightLines(selector, linesString), () => highlightLines(selector, old))\n" +
+            "    return new Step(() => old = highlightLines(selector, linesString), \n" +
+            "() => highlightLines(selector, old))\n" +
             "}\n" +
             "\n" +
             "export const cssStep = (selector: string, cssString: string) => {\n" +
@@ -127,12 +121,12 @@
             "}\n", {lineNumbers: true});
 
         const steps = [];
-        steps.push(_0.showCode._highlightLinesStep(codeSelector, "99-112"));
+        steps.push(_0.showCode._highlightLinesStep(codeSelector, "93-106"));
 
 
         steps.push(_0.showCode._highlightLinesStep(codeSelector, [
-            {lines: "1-5", tooltip: "Tooltip 1", position: "bottom"},
-            {lines: "8-10", tooltip: "Tooltip 2", position: "top"},
+            {lines: "1-7", tooltip: "Tooltip 1", position: "bottom", placement: "inside"},
+            {lines: "11-16", tooltip: "Tooltip 2", position: "top"},
         ]));
 
         _0.steps.setSteps(steps);

@@ -12,14 +12,11 @@ import {paramValue} from './zer0slides/url/queryUtil';
 import {getParamValue} from './zer0slides/url/queryUtil2';
 import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
 import {createControlElements} from './zer0slides/html/controlElements';
+import {initTooltip} from './zer0slides/showCode/tooltip';
 
 import 'materialize-css/dist/css/materialize.css';
 import 'prismjs/themes/prism.css';
 import './gapslides.less';
-
-import 'protip/protip.min.css';
-
-require('protip/main');
 
 const renderFirstSlide = (startIndex) => {
     const slideNo = paramValue("slide");
@@ -69,7 +66,7 @@ const bindKeys = () => {
     bindKeyToFunction("b", () => switchCurrentSlideToBlack());
 }
 
-($ as any).protip();
+initTooltip();
 init();
 
 const initName = getParamValue("init", true) || "init";

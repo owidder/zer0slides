@@ -6,7 +6,7 @@ import {steps} from '../steps/steps';
 import {Step} from '../core/Step';
 import {scrollToCurrentLine} from './scroll';
 import {createTooltips} from './tooltip';
-import {getData, setData} from '../core/data';
+import {getData, setData, resetData} from '../core/data';
 import {selector} from "../selector/selector";
 
 const {createReverseStep} = steps;
@@ -68,8 +68,8 @@ const createTooltipsForHighlights = (highlightLinesOptions: HighlightLinesOption
         if(hlOption.tooltip) {
             return {
                 lineIndex: index,
-                position: hlOption.position,
-                text: hlOption.tooltip
+                text: hlOption.tooltip,
+                ...hlOption
             }
         }
 
@@ -79,7 +79,7 @@ const createTooltipsForHighlights = (highlightLinesOptions: HighlightLinesOption
     createTooltips(tooltips);
 }
 
-export const highlightLines2 = (selector: string, optionsArray: HighlightLinesOptions[]) => {
+export const highlightLines2 = (selector: string, optionsArray: HighlightLinesOptions[] = []) => {
     const oldOptionsArray = getData(selector);
     setData(selector, optionsArray);
 
@@ -101,6 +101,8 @@ export const _highlightLines = (selector: string, lines: string | HighlightLines
        old =  dataLine(selector);
     }
 
+    resetData(selector);
+
     if(typeof lines === "string") {
         highlightLines(selector, lines);
     }
@@ -113,7 +115,13 @@ export const _highlightLines = (selector: string, lines: string | HighlightLines
 
 export const _highlightLinesStep = (selector: string, lines: string | HighlightLinesOptions[]) => {
     let old;
-    return new Step(() => old = _highlightLines(selector, lines), () => _highlightLines(selector, old))
+    return new Step(() => {
+        old = _highlightLines(selector, lines);
+        console.log(old);
+    }, () => {
+        console.log(old);
+        _highlightLines(selector, old);
+    })
 }
 
 const dataLine = (selector: string, value?: string): string | void => {
@@ -139,7 +147,7 @@ export const highlightLines = (selector: string, lineString: string, callbackWhe
         refresh().then(() => {
             setTimeout(async () => {
                 await scrollToCurrentLine();
-                callbackWhenFinished && callbackWhenFinished();
+                callbackWhenFinished && setTimeout(callbackWhenFinished, 20);
             }, 10);
         })
     }
