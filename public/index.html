@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#000000">
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <title>Zer0slides</title>
-
 </head>
 <body>
+<script>
+    window.onload = function () {
+        _0.core.setFolderName("zer0slides");
+
+        _0.core.addSlide("zer0slides-title");
+        _0.core.addSlide("scroll-to-line");
+
+        _0.lifecycle.initReady();
+    }
+</script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 import {Step} from './Step';
 import {pathToHtml} from '../html/pathToHtml';
 import {setStepCtr, showHideUp, showHideDown} from '../html/controlElements';

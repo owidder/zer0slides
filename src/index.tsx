@@ -1,6 +1,7 @@
 import 'materialize-css/dist/css/materialize.css';
 import * as $ from 'jquery';
 import * as React from 'react';
+import * as _ from 'lodash';
 
 import {init} from './initGapslides';
 import {initReadyPromise} from './zer0slides/lifecycle/lifecycle';
@@ -69,8 +70,10 @@ const bindKeys = () => {
 initTooltip();
 init();
 
-const initName = getParamValue("init", true) || "init";
-renderSlide({slide: new Slide(initName)});
+const initName = getParamValue("init", true);
+if(!_.isUndefined(initName) && initName.length > 0) {
+    renderSlide({slide: new Slide(initName)});
+}
 
 initReadyPromise.then((startIndex) => {
     renderFirstSlide(startIndex);
