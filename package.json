@@ -65,7 +65,7 @@
     "test": "node scripts/test.js --env=jsdom",
     "distjs": "copyfiles -f build/**/main.*.js* dist && mv dist/main.*.js dist/z0.js && cp dist/main.*.js.map dist/z0.js.map",
     "distcss": "copyfiles -f build/**/main.*.css* dist && mv dist/main.*.css dist/z0.css && cp dist/main.*.css.map dist/z0.css.map",
-    "dist": "npm run build && npm run distjs && npm run distcss"
+    "dist": "rimraf dist && npm run build && npm run distjs && npm run distcss"
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",
@@ -77,6 +77,7 @@
     "express": "^4.16.4",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "rimraf": "^2.6.2",
     "typescript": "^3.1.1"
   },
   "jest": {
