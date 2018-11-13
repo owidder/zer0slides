@@ -6,10 +6,10 @@ export const pathTo = (name: string, extension?: string) => {
     const fullname = extension ? `${name}.${extension}` : name;
 
     if(!folderName) {
-        return `slides/${fullname}`;
+        return `./${fullname}`;
     }
 
-    return `slides/${folderName}/html/${fullname}`
+    return `./${folderName}/${fullname}`
 }
 
 export const pathToHtml = (name: string) => {

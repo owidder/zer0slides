@@ -29,9 +29,22 @@ export const init = () => {
         showCode,
         steps,
         tooltip,
-    } as any
+    } as any;
+
+    const _0 = {
+        addSlide: core.addSlide,
+        highlightLines: showCode._highlightLines,
+        highlightLinesStep: showCode._highlightLinesStep,
+        setSteps: steps.setSteps,
+        autoStepOn: steps.autoStepOn,
+        codeJs: showCode.js,
+        codeCss: showCode.css,
+        codeBash: showCode.bash,
+        q: selector.q,
+        ...lifecycle
+    } as any;
 
     (window as any).zer0slides = zer0slides;
-    (window as any)._0 = zer0slides;
+    (window as any)._0 = _0;
     (window as any).___ = lifecycle.slideReady;
 }

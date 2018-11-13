@@ -7,7 +7,7 @@ import {Step} from '../core/Step';
 import {scrollToCurrentLine} from './scroll';
 import {createTooltips} from './tooltip';
 import {getData, setData, resetData} from '../core/data';
-import {selector} from "../selector/selector";
+import {q} from "../selector/selector";
 
 const {createReverseStep} = steps;
 
@@ -41,8 +41,8 @@ const refresh = () => {
 const render = (selector: string, language: string, _string: string, options: ShowCodeOptions) => {
     const html = prism.highlight(_string, prism.languages[language]);
     const style = options.backgroundColor ? `background-color: ${options.backgroundColor};` : "background-color: transparent";
-    const lineNumbersClass = options.lineNumbers ? "line-numbers" : "";
-    $(selector).html(`<pre style="${style}" class="language-${language} ${lineNumbersClass}"><code>${html}</code></pre>`);
+    const lineNumbersClass = options.lineNumbers === false ? "" : "line-numbers";
+    $(q(selector)).html(`<pre style="${style}" class="language-${language} ${lineNumbersClass}"><code>${html}</code></pre>`);
     return refresh();
 }
 
@@ -80,8 +80,8 @@ const createTooltipsForHighlights = (highlightLinesOptions: HighlightLinesOption
 }
 
 export const highlightLines2 = (selector: string, optionsArray: HighlightLinesOptions[] = []) => {
-    const oldOptionsArray = getData(selector);
-    setData(selector, optionsArray);
+    const oldOptionsArray = getData(q(selector));
+    setData(q(selector), optionsArray);
 
     const allLinesArray = optionsArray.reduce((accLinesArray, currentOption) => {
         return [...accLinesArray, currentOption.lines];
@@ -139,7 +139,7 @@ export const highlightLines2Step = (selector: string, optionsArray: HighlightLin
 }
 
 export const highlightLines = (selector: string, lineString: string, callbackWhenFinished?: () => void) => {
-    const _sel = `${selector} pre`;
+    const _sel = `${q(selector)} pre`;
     const old = $(_sel).attr("data-line");
 
     if(lineString) {

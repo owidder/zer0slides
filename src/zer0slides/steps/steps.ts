@@ -1,9 +1,15 @@
+import * as _ from 'lodash';
+
 import {Step} from "../core/Step";
 import {slideCore} from '../core/core';
 
-const setSteps = (_steps: Step[]) => {
+const getCurrentSlide = () => {
     const slideName = slideCore.getCurrentSlide().name;
-    const slide = slideCore.getSlide(slideName);
+    return slideCore.getSlide(slideName);
+}
+
+const setSteps = (_steps: Step[]) => {
+    const slide = getCurrentSlide();
     slide.steps = _steps;
 }
 

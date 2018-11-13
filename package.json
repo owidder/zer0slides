@@ -63,8 +63,9 @@
     "start": "cross-env PORT=4000 node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "dist": "copyfiles -f build/**/main.*.js dist && mv dist/main.*.js dist/z0.js",
-    "distw": "copyfiles -f build/**/main.*.js dist && move dist/main.*.js dist/z0.js"
+    "distjs": "copyfiles -f build/**/main.*.js* dist && mv dist/main.*.js dist/z0.js && mv dist/main.*.js.map dist/z0.js.map",
+    "distcss": "copyfiles -f build/**/main.*.css* dist && mv dist/main.*.css dist/z0.css && mv dist/main.*.css.map dist/z0.css.map",
+    "dist": "npm run build && npm run distjs && npm run distcss",
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",

@@ -1,0 +1,29 @@
+<style>
+
+    #__0__ .code {
+        font-size: 6em;
+    }
+
+</style>
+
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.codeJs(".code",
+            "'Zer0slides'\n" +
+            "Slide your code\n" +
+            "Code your slides");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1"));
+        steps.push(_0.highlightLinesStep(".code", "2"));
+        steps.push(_0.highlightLinesStep(".code", "3"));
+
+        _0.setSteps(steps);
+
+        _0.autoStepOn(1000);
+        ___();
+    })()
+</script>
