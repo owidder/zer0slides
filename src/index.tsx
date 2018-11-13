@@ -67,7 +67,7 @@ const bindKeys = () => {
     bindKeyToFunction("b", () => switchCurrentSlideToBlack());
 }
 
-initTooltip();
+//initTooltip();
 init();
 
 const initName = getParamValue("init", true);

@@ -74,6 +74,7 @@
     "@types/react-dom": "^16.0.8",
     "copyfiles": "^2.1.0",
     "cross-env": "^5.2.0",
+    "express": "^4.16.4",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "typescript": "^3.1.1"
