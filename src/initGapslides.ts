@@ -10,7 +10,9 @@ import {selector} from './zer0slides/selector/selector';
 import {tooltip} from './zer0slides/showCode/tooltip';
 
 const createRoot = () => {
+    console.log("before");
     const body = d3.select("body");
+    console.log("after");
     body.selectAll("#root")
         .data([1])
         .enter()
