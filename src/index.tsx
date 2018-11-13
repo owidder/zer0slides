@@ -70,6 +70,7 @@ const bindKeys = () => {
 //initTooltip();
 init();
 
+/*
 const initName = getParamValue("init", true);
 if(!_.isUndefined(initName) && initName.length > 0) {
     renderSlide({slide: new Slide(initName)});
@@ -80,4 +81,5 @@ initReadyPromise.then((startIndex) => {
     bindKeys();
     createControlElements();
 });
+*/
 
