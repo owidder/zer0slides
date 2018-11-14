@@ -16,6 +16,7 @@ const createRoot = () => {
         .enter()
         .append("div")
         .attr("id", "root");
+    console.log("root created");
 }
 
 export const init = () => {
