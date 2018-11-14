@@ -17,7 +17,9 @@ interface Tooltip {
 }
 
 export const initTooltip = () => {
+    console.log("before");
     ($ as any).protip();
+    console.log("after");
 }
 
 export const reset = () => {
