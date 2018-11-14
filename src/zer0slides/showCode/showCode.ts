@@ -78,23 +78,7 @@ const createTooltipsForHighlights = (highlightLinesOptions: HighlightLinesOption
     createTooltips(tooltips);
 }
 
-export const highlightLines2 = (selector: string, optionsArray: HighlightLinesOptions[] = []) => {
-    const oldOptionsArray = getData(q(selector));
-    setData(q(selector), optionsArray);
-
-    const allLinesArray = optionsArray.reduce((accLinesArray, currentOption) => {
-        return [...accLinesArray, currentOption.lines];
-    }, []);
-    const allLinesString = allLinesArray.join(",");
-
-    highlightLines(selector, allLinesString, () => {
-        createTooltipsForHighlights(optionsArray);
-    });
-
-    return oldOptionsArray;
-}
-
-export const _highlightLines = (selector: string, lines: string | HighlightLinesOptions[]): string | HighlightLinesOptions[] => {
+export const highlightLines = (selector: string, lines: string | HighlightLinesOptions[]): string | HighlightLinesOptions[] => {
     let old = getData(selector);
     if(!old) {
        old =  dataLine(selector);
@@ -103,21 +87,21 @@ export const _highlightLines = (selector: string, lines: string | HighlightLines
     resetData(selector);
 
     if(typeof lines === "string") {
-        highlightLines(selector, lines);
+        highlightLinesNoTooltip(selector, lines);
     }
     else {
-        highlightLines2(selector, lines);
+        highlightLinesWithTooltip(selector, lines);
     }
 
     return old;
 }
 
-export const _highlightLinesStep = (selector: string, lines: string | HighlightLinesOptions[]) => {
+export const highlightLinesStep = (selector: string, lines: string | HighlightLinesOptions[]) => {
     let old;
     return new Step(() => {
-        old = _highlightLines(selector, lines);
+        old = highlightLines(selector, lines);
     }, () => {
-        _highlightLines(selector, old);
+        highlightLines(selector, old);
     })
 }
 
@@ -130,12 +114,23 @@ const dataLine = (selector: string, value?: string): string | void => {
     $(_sel).attr("data-line", value);
 }
 
-export const highlightLines2Step = (selector: string, optionsArray: HighlightLinesOptions[]) => {
-    let old;
-    return new Step(() => old = highlightLines2(selector, optionsArray), () => highlightLines(selector, old))
+export const highlightLinesWithTooltip = (selector: string, optionsArray: HighlightLinesOptions[] = []) => {
+    const oldOptionsArray = getData(q(selector));
+    setData(q(selector), optionsArray);
+
+    const allLinesArray = optionsArray.reduce((accLinesArray, currentOption) => {
+        return [...accLinesArray, currentOption.lines];
+    }, []);
+    const allLinesString = allLinesArray.join(",");
+
+    highlightLinesNoTooltip(selector, allLinesString, () => {
+        createTooltipsForHighlights(optionsArray);
+    });
+
+    return oldOptionsArray;
 }
 
-export const highlightLines = (selector: string, lineString: string, callbackWhenFinished?: () => void) => {
+export const highlightLinesNoTooltip = (selector: string, lineString: string, callbackWhenFinished?: () => void) => {
     const _sel = `${q(selector)} pre`;
     const old = $(_sel).attr("data-line");
 
@@ -157,11 +152,6 @@ export const highlightLines = (selector: string, lineString: string, callbackWhe
     }
 
     return old;
-}
-
-export const highlightLinesStep = (selector: string, linesString: string) => {
-    let old;
-    return new Step(() => old = highlightLines(selector, linesString), () => highlightLines(selector, old))
 }
 
 export const cssStep = (selector: string, cssString: string) => {
@@ -198,8 +188,4 @@ export const showCode = {
     jsStepWithReverse,
     highlightLines,
     highlightLinesStep,
-    highlightLines2,
-    highlightLines2Step,
-    _highlightLines,
-    _highlightLinesStep,
 }

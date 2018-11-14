@@ -35,8 +35,8 @@ export const init = () => {
 
     const _0 = {
         addSlide: core.addSlide,
-        highlightLines: showCode._highlightLines,
-        highlightLinesStep: showCode._highlightLinesStep,
+        highlightLines: showCode.highlightLines,
+        highlightLinesStep: showCode.highlightLinesStep,
         setSteps: steps.setSteps,
         autoStepOn: steps.autoStepOn,
         codeJs: showCode.js,
