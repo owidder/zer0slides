@@ -74,7 +74,6 @@ const twin = (options: RenderOptions) => {
 }
 
 export const renderSlide = (options: RenderOptions) => {
-    console.log("render slide");
     if(options.oldSlide) {
         switch (options.inOut) {
             case "outAndInAtOnce":

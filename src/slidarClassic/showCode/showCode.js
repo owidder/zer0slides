@@ -41,7 +41,6 @@ export const remove = (selector) => {
 }
 
 export const highlightLines = (selector, lineString) => {
-    console.log(lineString);
     const _sel = `${selector} pre`;
     const old = $(_sel).attr("data-line");
     if(lineString) {

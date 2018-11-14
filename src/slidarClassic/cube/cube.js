@@ -119,7 +119,6 @@ export const createWithCanvasStep = (containerSelector, sizeInPx) => {
 }
 
 export const startStopAnimation = (trueIfStart) => {
-    console.log("startStopAnimation: " + trueIfStart)
     d3.selectAll("div._cube")
         .classed("animate-cube", trueIfStart)
 }

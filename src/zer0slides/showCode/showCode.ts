@@ -55,7 +55,6 @@ export const js = (selector: string, jsString: string, options: ShowCodeOptions 
 }
 
 export const bash = (selector: string, jsString: string, options: ShowCodeOptions = {}) => {
-    console.log("bash")
     return render(selector, "clike", jsString, options);
 }
 
@@ -117,9 +116,7 @@ export const _highlightLinesStep = (selector: string, lines: string | HighlightL
     let old;
     return new Step(() => {
         old = _highlightLines(selector, lines);
-        console.log(old);
     }, () => {
-        console.log(old);
         _highlightLines(selector, old);
     })
 }
