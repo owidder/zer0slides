@@ -8,6 +8,7 @@ import {controlElements} from './zer0slides/html/controlElements';
 import {showCode} from './zer0slides/showCode/showCode';
 import {selector} from './zer0slides/selector/selector';
 import {tooltip} from './zer0slides/showCode/tooltip';
+import {file} from './zer0slides/file/file';
 
 const createRoot = () => {
     const body = d3.select("body");
@@ -29,6 +30,7 @@ export const init = () => {
         showCode,
         steps,
         tooltip,
+        file,
     } as any;
 
     const _0 = {
@@ -41,6 +43,7 @@ export const init = () => {
         codeCss: showCode.css,
         codeBash: showCode.bash,
         q: selector.q,
+        readFile: file.read,
         ...lifecycle
     } as any;
 

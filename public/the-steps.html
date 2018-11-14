@@ -1,0 +1,30 @@
+<style>
+
+    #__0__ .code {
+        font-size: 3em;
+    }
+
+</style>
+
+<h1>It couldn't be easier</h1>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.codeJs(".code",
+            "How to create your zer0slides code slide show?\n" +
+            "Step 1: Create a host page\n" +
+            "Step 2:Create a small HTML file for each slide");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1"));
+        steps.push(_0.highlightLinesStep(".code", {lines: "2", tooltip: "Just a super small index.html", position: "top"}));
+        steps.push(_0.highlightLinesStep(".code", {lines: "3", tooltip: "Just plain old HTML/CSS/JavaScript", position: "top"}));
+
+        _0.setSteps(steps);
+
+        _0.autoStepOn(1000);
+        ___();
+    })()
+</script>

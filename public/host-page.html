@@ -1,0 +1,30 @@
+<style>
+
+    #__0__ .code {
+        font-size: 1.5em;
+    }
+
+</style>
+
+<h1>The host page</h1>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.readFile("index.html").then(function (code) {
+            _0.codeJs(".code", code);
+
+            const steps = [];
+            steps.push(_0.highlightLinesStep(".code", "1-2"));
+            steps.push(_0.highlightLinesStep(".code", [
+                {lines: "5-7", tooltip: "Tooltip 1", position: "bottom", placement: "inside"},
+                {lines: "11-16", tooltip: "Tooltip 2", position: "top"},
+            ]));
+
+            _0.setSteps(steps);
+
+            ___();
+        })
+    })()
+</script>
