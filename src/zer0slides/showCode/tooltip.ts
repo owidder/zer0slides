@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import * as $ from 'jquery';
 import * as _ from 'lodash';
 import {slideCore} from "../core/core";
+import {addCleanFunction} from "../lifecycle/lifecycle";
 
 import 'protip/protip.min.css';
 
@@ -17,6 +18,15 @@ interface Tooltip {
 }
 
 export const initTooltip = () => {
+    addCleanFunction(cleanAfterSlideFinished);
+    refresh();
+}
+
+const cleanAfterSlideFinished = () => {
+    d3.selectAll(".protip-container").remove();
+}
+
+const refresh = () => {
     ($ as any).protip();
 }
 
@@ -27,7 +37,7 @@ export const reset = () => {
     d3.selectAll(selector)
         .classed("protip", false)
 
-    initTooltip();
+    refresh();
     ($(selector) as any).protipHide();
 }
 
@@ -54,7 +64,7 @@ export const createTooltip = (tooltip: Tooltip) => {
         .attr("data-pt-auto-show", true)
         .attr("data-pt-placement", _.isUndefined(tooltip.placement) ? "outside" : tooltip.placement);
 
-    initTooltip();
+    refresh();
     ($(selector) as any).protipShow();
 }
 
