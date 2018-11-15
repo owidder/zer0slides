@@ -16,11 +16,12 @@
             _0.codeJs(".code", code);
 
             const steps = [];
-            steps.push(_0.highlightLinesStep(".code", "1-2"));
-            steps.push(_0.highlightLinesStep(".code", [
-                {lines: "5-7", tooltip: "Tooltip 1", position: "bottom", placement: "inside"},
-                {lines: "11-16", tooltip: "Tooltip 2", position: "top"},
-            ]));
+            steps.push(_0.highlightLinesStep(".code", "1-18", "That's all the boilerplate you need"));
+            steps.push(_0.highlightLinesStep(".code", "9-15", "In an onload function the slides are added"));
+            steps.push(_0.highlightLinesStep(".code", "10-12", "The '_0' object is your friend"));
+            steps.push(_0.highlightLinesStep(".code", "10-12", "Just call 'addSlide' for each slide", "bottom"));
+            steps.push(_0.highlightLinesStep(".code", "10-12", "The parameter is the name of the html file of the slide (w/o the '.html' extension)"));
+            steps.push(_0.highlightLinesStep(".code", "14", "At the end just call 'initReady' (don't ask why!)"));
 
             _0.setSteps(steps);
 

@@ -75,21 +75,28 @@ const twin = (options: RenderOptions) => {
 
 export const renderSlide = (options: RenderOptions) => {
     if(options.oldSlide) {
-        switch (options.inOut) {
-            case "outAndInAtOnce":
-                outAndInAtOnce(options);
-                break;
+        new Promise(resolve => {
+            switch (options.inOut) {
+                case "outAndInAtOnce":
+                    outAndInAtOnce(options).then(resolve);
+                    break;
 
-            case "twin":
-                twin(options);
-                break;
+                case "twin":
+                    twin(options).then(resolve);
+                    break;
 
-            default:
-                firstOutThenIn(options);
-        }
+                default:
+                    firstOutThenIn(options).then(resolve);
+            }
+        }).then(() => options.slide.performToCurrentStep());
     }
     else {
-        ReactDOM.render(<HtmlSlide slide={options.slide} safeMode={options.safeMode === true} action="show"/>,
+        ReactDOM.render(<HtmlSlide
+                slide={options.slide}
+                safeMode={options.safeMode === true}
+                action="show"
+                renderReadyCallback={options.slide.performToCurrentStep.bind(options.slide)}
+            />,
             document.getElementById('root') as HTMLElement);
     }
 }
