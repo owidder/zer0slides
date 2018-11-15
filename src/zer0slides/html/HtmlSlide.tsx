@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as $ from 'jquery';
 
 import {Slide} from '../core/Slide';
-import {resetSlideReadyPromise, slideReadyPromise} from '../lifecycle/lifecycle';
+import {resetSlideReadyPromise, slideReadyPromise, cleanAfterSlideFinished} from '../lifecycle/lifecycle';
 import {showHideStepCtr} from './controlElements';
 import {Transformation} from './transformations/Transformation';
 
@@ -58,6 +58,7 @@ const removeSlide = (container: OneOrTwo, slide: Slide) => {
 
 const clean = (container: OneOrTwo) => {
     $(`${selector(container)} .${SLIDE_CLASS}`).remove();
+    cleanAfterSlideFinished();
 }
 
 const startDelayed = (delay, fct: () => Promise<any>) => {

@@ -49,7 +49,7 @@ export const createTooltip = (tooltip: Tooltip) => {
     d3.selectAll(selector)
         .classed("protip", true)
         .attr("data-pt-title", tooltip.text)
-        .attr("data-pt-position", tooltip.position ? tooltip.position : true)
+        .attr("data-pt-position", tooltip.position ? tooltip.position : "top")
         .attr("data-pt-trigger", "sticky")
         .attr("data-pt-auto-show", true)
         .attr("data-pt-placement", _.isUndefined(tooltip.placement) ? "outside" : tooltip.placement);

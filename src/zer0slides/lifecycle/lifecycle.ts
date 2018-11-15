@@ -1,6 +1,16 @@
 import {SimplePromise} from '../core/SimplePromise';
 import {slideName} from '../core/core';
 
+const cleanFunctions: Array<() => void> = [];
+
+export const addCleanFunction = (cleanFunction: () => void) => {
+    cleanFunctions.push(cleanFunction);
+}
+
+export const cleanAfterSlideFinished = () => {
+    cleanFunctions.forEach(cleanFunction => cleanFunction());
+}
+
 export const initReadyPromise = new SimplePromise<number>();
 
 const initReady = (startIndex = 0) => {
@@ -15,7 +25,7 @@ export const resetSlideReadyPromise = (name: string) => {
 
 const slideReady = () => {
     const name = slideName();
-    slideReadyPromises[name].resolve();
+    slideReadyPromises[name] && slideReadyPromises[name].resolve();
 }
 
 export const slideReadyPromise = (name: string) => {

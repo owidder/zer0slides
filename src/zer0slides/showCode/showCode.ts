@@ -1,11 +1,12 @@
 import * as $ from 'jquery';
+import * as _ from 'lodash';
 
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 
 import {steps} from '../steps/steps';
 import {Step} from '../core/Step';
 import {scrollToCurrentLine} from './scroll';
-import {createTooltips} from './tooltip';
+import {createTooltips, reset} from './tooltip';
 import {getData, setData, resetData} from '../core/data';
 import {q} from "../selector/selector";
 
@@ -78,7 +79,7 @@ const createTooltipsForHighlights = (highlightLinesOptions: HighlightLinesOption
     createTooltips(tooltips);
 }
 
-export const highlightLines = (selector: string, lines: string | HighlightLinesOptions[]): string | HighlightLinesOptions[] => {
+export const highlightLines = (selector: string, lines: string | HighlightLinesOptions[], tooltip?: string, position?: string): string | HighlightLinesOptions[] => {
     let old = getData(selector);
     if(!old) {
        old =  dataLine(selector);
@@ -87,19 +88,24 @@ export const highlightLines = (selector: string, lines: string | HighlightLinesO
     resetData(selector);
 
     if(typeof lines === "string") {
-        highlightLinesNoTooltip(selector, lines);
+        if(_.isUndefined(tooltip)) {
+            highlightLinesNoTooltip(selector, lines);
+        }
+        else {
+            highlightLinesWithSimpleTooltip(selector, lines, tooltip, position);
+        }
     }
     else {
-        highlightLinesWithTooltip(selector, lines);
+        highlightLinesWithComplexTooltip(selector, lines);
     }
 
     return old;
 }
 
-export const highlightLinesStep = (selector: string, lines: string | HighlightLinesOptions[]) => {
+export const highlightLinesStep = (selector: string, lines: string | HighlightLinesOptions[], tooltip?: string, position?: string) => {
     let old;
     return new Step(() => {
-        old = highlightLines(selector, lines);
+        old = highlightLines(selector, lines, tooltip, position);
     }, () => {
         highlightLines(selector, old);
     })
@@ -114,8 +120,17 @@ const dataLine = (selector: string, value?: string): string | void => {
     $(_sel).attr("data-line", value);
 }
 
-export const highlightLinesWithTooltip = (selector: string, optionsArray: HighlightLinesOptions[] = []) => {
-    const oldOptionsArray = getData(q(selector));
+const highlightLinesWithSimpleTooltip = (selector: string, lines: string, tooltip: string, position?: string) => {
+    const simpleOptionsArray = [{lines, tooltip, position}];
+    setData(q(selector), simpleOptionsArray);
+
+    reset();
+    highlightLinesNoTooltip(selector, lines, () => {
+        createTooltipsForHighlights(simpleOptionsArray);
+    });
+}
+
+const highlightLinesWithComplexTooltip = (selector: string, optionsArray: HighlightLinesOptions[] = []) => {
     setData(q(selector), optionsArray);
 
     const allLinesArray = optionsArray.reduce((accLinesArray, currentOption) => {
@@ -123,24 +138,20 @@ export const highlightLinesWithTooltip = (selector: string, optionsArray: Highli
     }, []);
     const allLinesString = allLinesArray.join(",");
 
+    reset();
     highlightLinesNoTooltip(selector, allLinesString, () => {
         createTooltipsForHighlights(optionsArray);
     });
-
-    return oldOptionsArray;
 }
 
-export const highlightLinesNoTooltip = (selector: string, lineString: string, callbackWhenFinished?: () => void) => {
+const highlightLinesNoTooltip = (selector: string, lineString: string, callbackWhenFinished?: () => void) => {
     const _sel = `${q(selector)} pre`;
-    const old = $(_sel).attr("data-line");
 
     if(lineString) {
         $(_sel).attr("data-line", lineString);
         refresh().then(() => {
-            setTimeout(async () => {
-                await scrollToCurrentLine();
-                callbackWhenFinished && setTimeout(callbackWhenFinished, 20);
-            }, 10);
+            callbackWhenFinished && callbackWhenFinished();
+            scrollToCurrentLine();
         })
     }
     else {
@@ -150,8 +161,6 @@ export const highlightLinesNoTooltip = (selector: string, lineString: string, ca
             callbackWhenFinished && callbackWhenFinished();
         });
     }
-
-    return old;
 }
 
 export const cssStep = (selector: string, cssString: string) => {

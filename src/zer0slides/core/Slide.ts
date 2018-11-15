@@ -83,7 +83,7 @@ export class Slide {
     public performToCurrentStep() {
         if(this.currentStepNo > -1) {
             for(let i = 0; i <= this.currentStepNo; i++) {
-                this.steps[i].perform();
+                (this.steps[i] != null) && this.steps[i].perform();
             }
         }
         this.showStepCtr();
