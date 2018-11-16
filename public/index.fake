@@ -10,7 +10,6 @@
         _0.addSlide("zer0slides-title");
         _0.addSlide("the-steps");
         _0.addSlide("host-page");
-        _0.addSlide("slide-html");
 
         _0.initReady();
     }

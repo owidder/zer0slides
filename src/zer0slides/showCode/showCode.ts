@@ -79,7 +79,11 @@ const createTooltipsForHighlights = (highlightLinesOptions: HighlightLinesOption
     createTooltips(tooltips);
 }
 
-export const highlightLines = (selector: string, lines: string | HighlightLinesOptions[], tooltip?: string, position?: string): string | HighlightLinesOptions[] => {
+export const highlightLines = (selector: string,
+                               lines: string | HighlightLinesOptions[],
+                               tooltip?: string,
+                               position?: string,
+                               placement?: string): string | HighlightLinesOptions[] => {
     let old = getData(selector);
     if(!old) {
        old =  dataLine(selector);
@@ -92,7 +96,7 @@ export const highlightLines = (selector: string, lines: string | HighlightLinesO
             highlightLinesNoTooltip(selector, lines);
         }
         else {
-            highlightLinesWithSimpleTooltip(selector, lines, tooltip, position);
+            highlightLinesWithSimpleTooltip(selector, lines, tooltip, position, placement);
         }
     }
     else {
@@ -102,10 +106,10 @@ export const highlightLines = (selector: string, lines: string | HighlightLinesO
     return old;
 }
 
-export const highlightLinesStep = (selector: string, lines: string | HighlightLinesOptions[], tooltip?: string, position?: string) => {
+export const highlightLinesStep = (selector: string, lines: string | HighlightLinesOptions[], tooltip?: string, position?: string, placement?: string) => {
     let old;
     return new Step(() => {
-        old = highlightLines(selector, lines, tooltip, position);
+        old = highlightLines(selector, lines, tooltip, position, placement);
     }, () => {
         highlightLines(selector, old);
     })
@@ -120,8 +124,8 @@ const dataLine = (selector: string, value?: string): string | void => {
     $(_sel).attr("data-line", value);
 }
 
-const highlightLinesWithSimpleTooltip = (selector: string, lines: string, tooltip: string, position?: string) => {
-    const simpleOptionsArray = [{lines, tooltip, position}];
+const highlightLinesWithSimpleTooltip = (selector: string, lines: string, tooltip: string, position?: string, placement?: string) => {
+    const simpleOptionsArray = [{lines, tooltip, position, placement}];
     setData(q(selector), simpleOptionsArray);
 
     reset();

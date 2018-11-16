@@ -31,6 +31,18 @@ const renderFirstSlide = (startIndex) => {
     }
 }
 
+const nextStep = () => {
+    const currentSlide = slideCore.getCurrentSlide();
+    currentSlide.autoStepOff();
+    currentSlide.nextStep();
+}
+
+const prevStep = () => {
+    const currentSlide = slideCore.getCurrentSlide();
+    currentSlide.autoStepOff();
+    currentSlide.prevStep();
+}
+
 const bindKeys = () => {
     bindKeyToFunction("2", () => slideCore.nextSlide())
     bindKeyToFunction("1", () => slideCore.prevSlide())
@@ -50,11 +62,11 @@ const bindKeys = () => {
     bindKeyToFunction("f", () => slideCore.nextSlide(true, "Z", "Z", "firstOutThenIn"))
     bindKeyToFunction("d", () => slideCore.prevSlide(true, "Z", "Z", "firstOutThenIn"))
 
-    bindKeyToFunction("down", () => slideCore.getCurrentSlide().nextStep())
-    bindKeyToFunction("up", () => slideCore.getCurrentSlide().prevStep())
+    bindKeyToFunction("down", () => nextStep())
+    bindKeyToFunction("up", () => prevStep())
 
-    bindKeyToFunction("m", () => slideCore.getCurrentSlide().nextStep())
-    bindKeyToFunction("i", () => slideCore.getCurrentSlide().prevStep())
+    bindKeyToFunction("m", () => nextStep())
+    bindKeyToFunction("i", () => prevStep())
 
     bindKeyToFunction("r", () => slideCore.refreshSlide())
     bindKeyToFunction("t", () => window.location.reload())

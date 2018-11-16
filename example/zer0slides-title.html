@@ -7,6 +7,7 @@
 </style>
 
 <div class="code"></div>
+<h5>Use 'right'/'left' to change slides, 'down'/'up' to step forward/back.</h5>
 
 <script>
 
@@ -17,13 +18,13 @@
             "Code your slides");
 
         const steps = [];
-        steps.push(_0.highlightLinesStep(".code", "1"));
-        steps.push(_0.highlightLinesStep(".code", "2"));
-        steps.push(_0.highlightLinesStep(".code", "3"));
+        steps.push(_0.highlightLinesStep(".code", "1", "Super easy!", "top"));
+        steps.push(_0.highlightLinesStep(".code", "2", "Show your code and highlight lines with tooltips"));
+        steps.push(_0.highlightLinesStep(".code", "3", "Do anything you can do with HTML/CSS/JavaScript", "top"));
 
         _0.setSteps(steps);
 
-        _0.autoStepOn(1000);
+        _0.autoStepOn(2000);
         ___();
     })()
 </script>
