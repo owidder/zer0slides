@@ -93,7 +93,7 @@ initReadyPromise.then((startIndex) => {
     bindKeys();
     createControlElements();
     setInterval(() => {
-        mojo.doubleBurst(document.querySelector("i.down"));
+        mojo.doubleBurst(document.querySelector("i.icon-down"), 2);
     }, 5000);
 });
 

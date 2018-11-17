@@ -6,7 +6,7 @@ const startEffect = (tweens: any[]) => {
     timeline.replay();
 }
 
-export const burst = (element: any) => {
+export const burst = (element: any, factor: number = 1) => {
     const tweens = [
         // burst animation
         new mojs.Burst({
@@ -17,7 +17,7 @@ export const burst = (element: any) => {
                 fill: 			'#C0C1C3',
                 opacity: 		0.6,
                 radius: 		15,
-                duration: 	3400,
+                duration: 	1700 * factor,
                 easing: 		mojs.easing.bezier(0.1, 1, 0.3, 1)
             }
         }),
@@ -30,12 +30,12 @@ export const burst = (element: any) => {
             stroke: 		'#C0C1C3',
             strokeWidth: {20:0},
             opacity: 		0.6,
-            duration: 	1400,
+            duration: 	700 * factor,
             easing: 		mojs.easing.sin.out
         }),
         // icon scale animation
         new mojs.Tween({
-            duration : 2400,
+            duration : 1200 * factor,
             onUpdate: (progress) => {
                 if(progress > 0.3) {
                     const elasticOutProgress = mojs.easing.elastic.out(1.43*progress-0.43);
@@ -51,7 +51,7 @@ export const burst = (element: any) => {
     startEffect(tweens);
 }
 
-export const colorBurst = (element: any) => {
+export const colorBurst = (element: any, factor: number = 1) => {
     const scaleCurve4 = mojs.easing.path('M0,100 L25,99.9999983 C26.2328835,75.0708847 19.7847843,0 100,0');
     const tweens = [
         // burst animation
@@ -65,7 +65,7 @@ export const colorBurst = (element: any) => {
                 radius: 	20,
                 direction: [ -1, -1, -1, 1, -1 ],
                 swirlSize: 'rand(10, 14)',
-                duration: 3000,
+                duration: 1500,
                 easing: 	mojs.easing.bezier(0.1, 1, 0.3, 1),
                 isSwirl: 	true
             }
@@ -79,12 +79,12 @@ export const colorBurst = (element: any) => {
             stroke: 			'#988ADE',
             strokeWidth: 	{15:0},
             opacity: 			0.6,
-            duration: 		1500,
+            duration: 		750,
             easing: 			mojs.easing.bezier(0, 1, 0.5, 1)
         }),
         // icon scale animation
         new mojs.Tween({
-            duration : 1800,
+            duration : 900,
             onUpdate: (progress) => {
                 const scaleProgress = scaleCurve4(progress);
                 element.style.WebkitTransform = element.style.transform = 'scale3d(' + scaleProgress + ',' + scaleProgress + ',1)';
@@ -95,7 +95,7 @@ export const colorBurst = (element: any) => {
     startEffect(tweens)
 }
 
-export const doubleBurst = (element: any) => {
+export const doubleBurst = (element: any, factor: number = 1) => {
     const tweens = [
         // burst animation
         new mojs.Burst({
@@ -109,8 +109,8 @@ export const doubleBurst = (element: any) => {
                 radius: 		{'rand(5,20)':0},
                 swirlSize: 	15,
                 direction:  [ 1, 1, -1, -1, 1, 1, -1, -1, -1 ],
-                duration: 	1200,
-                delay: 			200,
+                duration: 	1200 * factor,
+                delay: 			200 * factor,
                 easing: 		mojs.easing.bezier(0.1, 1, 0.3, 1),
                 isSwirl: 		true
 
@@ -124,7 +124,7 @@ export const doubleBurst = (element: any) => {
             stroke: 			'#988ADE',
             strokeWidth: 	{30:0},
             opacity: 			0.6,
-            duration: 		1500,
+            duration: 		1500 * factor,
             easing: 			mojs.easing.bezier(0.1, 1, 0.3, 1)
         }),
         new mojs.Shape({
@@ -134,13 +134,13 @@ export const doubleBurst = (element: any) => {
             stroke: 		'#988ADE',
             strokeWidth: {20:0},
             opacity: 		0.3,
-            duration: 	1600,
-            delay: 			320,
+            duration: 	1600 * factor,
+            delay: 			320 * factor,
             easing: 		mojs.easing.bezier(0.1, 1, 0.3, 1)
         }),
         // icon scale animation
         new mojs.Tween({
-            duration : 1000,
+            duration : 1000 * factor,
             onUpdate: (progress) => {
                 if(progress > 0.3) {
                     const elasticOutProgress = mojs.easing.elastic.out(1.43*progress-0.43);
