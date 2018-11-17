@@ -12,7 +12,6 @@ export type InOut = "outAndInAtOnce" | "twin" | "firstOutThenIn";
 export interface RenderOptions {
     slide: Slide,
     oldSlide?: Slide,
-    safeMode?: boolean,
     inOut?: InOut,
     type?: string,
     transformInType?: Transformation,
@@ -22,7 +21,6 @@ export interface RenderOptions {
 const firstOutThenIn = (options: RenderOptions) => {
     const transformOutReady = new Promise(resolve => {
         ReactDOM.render(<HtmlSlide slide={options.oldSlide}
-                                   safeMode={options.safeMode === true}
                                    action="transform-out"
                                    transformReadyCallback={resolve}
                                    transformType={options.transformOutType || "Right"}
@@ -32,7 +30,6 @@ const firstOutThenIn = (options: RenderOptions) => {
     return new Promise(resolve => {
         transformOutReady.then(() => {
             ReactDOM.render(<HtmlSlide slide={options.slide}
-                                       safeMode={options.safeMode === true}
                                        action="transform-in"
                                        transformReadyCallback={resolve}
                                        transformType={options.transformInType || "Left"}/>,
@@ -44,7 +41,6 @@ const firstOutThenIn = (options: RenderOptions) => {
 const outAndInAtOnce = (options: RenderOptions) => {
     return new Promise(resolve => {
         ReactDOM.render(<HtmlSlide slideOut={options.oldSlide} slide={options.slide}
-                                   safeMode={options.safeMode === true}
                                    action="transform-in-out"
                                    transformReadyCallback={resolve}
                                    transformOutType={options.transformOutType || "Right"}
@@ -57,7 +53,6 @@ const outAndInAtOnce = (options: RenderOptions) => {
 const twin = (options: RenderOptions) => {
     const twinReady = new Promise(resolve => {
         ReactDOM.render(<HtmlSlide slideOut={options.oldSlide} slide={options.slide}
-                                   safeMode={options.safeMode === true}
                                    action="twinMove"
                                    transformReadyCallback={resolve}
                                    transformType={options.transformInType || "RotateX"}
@@ -67,7 +62,6 @@ const twin = (options: RenderOptions) => {
     return new Promise(resolve => {
         twinReady.then(() => {
             ReactDOM.render(<HtmlSlide slide={options.slide}
-                                       safeMode={options.safeMode === true}
                                        transformReadyCallback={resolve}
                                        action="show"/>,
                 document.getElementById('root') as HTMLElement);
@@ -85,7 +79,7 @@ const newSlideActions = (slide: Slide) => {
 }
 
 export const renderSlide = (options: RenderOptions) => {
-    if(options.oldSlide) {
+    if (options.oldSlide) {
         new Promise(resolve => {
             switch (options.inOut) {
                 case "outAndInAtOnce":
@@ -104,7 +98,6 @@ export const renderSlide = (options: RenderOptions) => {
     else {
         ReactDOM.render(<HtmlSlide
                 slide={options.slide}
-                safeMode={options.safeMode === true}
                 action="show"
                 renderReadyCallback={() => {
                     newSlideActions(options.slide)
@@ -115,6 +108,10 @@ export const renderSlide = (options: RenderOptions) => {
 }
 
 export const refreshSlide = (slide: Slide) => {
-    ReactDOM.render(<HtmlSlide slide={slide} safeMode={true} action="refresh"/>,
+    ReactDOM.render(<HtmlSlide slide={slide}
+                               action="refresh"
+                               renderReadyCallback={() => {
+                                   newSlideActions(slide)
+                               }}/>,
         document.getElementById('root') as HTMLElement);
 }

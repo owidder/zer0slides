@@ -11,7 +11,6 @@ import "./transformations/transformations.less";
 interface HtmlSlideProps {
     slide: Slide,
     slideOut?: Slide,
-    safeMode: boolean,
     action: "transform-out" | "transform-in" | "show" | "transform-in-out" | "refresh" | "twinMove",
     transformReadyCallback?: () => void,
     renderReadyCallback?: () => void,
@@ -179,7 +178,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
                     setTimeout(() => {
                         showHideStepCtr(slide.steps.length > 0);
                         this.props.renderReadyCallback && this.props.renderReadyCallback();
-                    }, this.props.safeMode ? 300 : 100)
+                    }, 100)
                 })
             })
         })
