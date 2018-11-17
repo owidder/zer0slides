@@ -4,7 +4,8 @@ import {slideCore} from '../core/core';
 
 export const scrollToStart = () => {
     return new Promise(resolve => {
-        $("html, body").animate({scrollTop: 0, scrollLeft: 0}, 100, "swing", resolve);
+        console.log("start scroll");
+        $("html, body").animate({scrollTop: 0, scrollLeft: 0}, 10, "swing", resolve);
     })
 }
 
@@ -14,7 +15,7 @@ export const scrollToCurrentLine = (): Promise<void> => {
     if($(selector).offset()) {
         const offset = $(selector).offset().top;
         return new Promise(resolve => {
-            $("html, body").animate({scrollTop: offset}, 800, "swing", resolve);
+            $("html, body").animate({scrollTop: offset}, 10, "swing", resolve);
         })
     }
     else {

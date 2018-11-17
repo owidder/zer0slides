@@ -86,10 +86,11 @@ let timeline;
 
 const startEffect = () => {
     if(!(slideCore.getCurrentSlide().currentStepNo > 0)) {
-        timeline = mojs.doubleBurst(document.querySelector("i.icon-down"), 2);
-        effectInterval = setInterval(() => {
-            mojs.startEffect(timeline);
-        }, 5000)
+                timeline = mojs.doubleBurst(document.querySelector("i.icon-down"), 2);
+                mojs.startEffect(timeline)
+                effectInterval = setInterval(() => {
+                    mojs.startEffect(timeline);
+                }, 5000)
     }
 }
 
