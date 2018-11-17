@@ -1,3 +1,5 @@
+import 'mo-js/build/mo';
+
 const mojs = (window as any).mojs;
 
 const startEffect = (tweens: any[]) => {
