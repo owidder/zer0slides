@@ -14,6 +14,7 @@ import {getParamValue} from './zer0slides/url/queryUtil2';
 import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
 import {createControlElements} from './zer0slides/html/controlElements';
 import {initTooltip} from './zer0slides/showCode/tooltip';
+import * as mojo from './zer0slides/effects/mojs';
 
 import 'materialize-css/dist/css/materialize.css';
 import 'prismjs/themes/prism.css';
@@ -91,5 +92,8 @@ initReadyPromise.then((startIndex) => {
     renderFirstSlide(startIndex);
     bindKeys();
     createControlElements();
+    setInterval(() => {
+        mojo.doubleBurst(document.querySelector("i.down"));
+    }, 5000);
 });
 

@@ -61,7 +61,7 @@ const createArrow = (root: any, className: string, onClick: () => void, text: st
         .attr("href", "#")
         .on("click", onClick)
         .append("i")
-        .attr("class", "material-icons")
+        .attr("class", "material-icons " + className)
         .text(text)
 }
 

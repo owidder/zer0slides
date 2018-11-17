@@ -27,6 +27,7 @@
     "lodash": "^4.17.11",
     "materialize-css": "^1.0.0-rc.2",
     "metamask-logo": "^2.2.0",
+    "mo-js": "^0.288.2",
     "npm": "^6.4.1",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
