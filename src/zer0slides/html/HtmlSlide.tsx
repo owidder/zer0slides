@@ -179,7 +179,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
                     setTimeout(() => {
                         showHideStepCtr(slide.steps.length > 0);
                         this.props.renderReadyCallback && this.props.renderReadyCallback();
-                    }, this.props.safeMode ? 3000 : 100)
+                    }, this.props.safeMode ? 300 : 100)
                 })
             })
         })

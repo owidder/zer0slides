@@ -3,12 +3,15 @@ import {Step} from './Step';
 import {pathToHtml} from '../html/pathToHtml';
 import {setStepCtr, showHideUp, showHideDown} from '../html/controlElements';
 import {Transformation} from '../html/transformations/Transformation';
+import {SimplePromise} from './SimplePromise';
+import {slideCore} from "./core";
 
 export class Slide {
     public steps: Step[] = []
     public currentStepNo: number = -1
     public name: string
     public autoStepIntervalId: number = -1
+    public firstStepPromise = new SimplePromise()
 
     public transformationInNext: Transformation
     public transformationOutNext: Transformation
@@ -17,7 +20,7 @@ export class Slide {
 
     constructor(name: string) {
         this.name = name;
-        this.createRandomTransformations()
+        this.createRandomTransformations();
     }
 
     public createRandomTransformations() {
@@ -51,6 +54,9 @@ export class Slide {
     }
 
     public nextStep(roundRobin = false) {
+        if(!(this.currentStepNo > 0)) {
+            slideCore.firstStepCallback();
+        }
         if(this.currentStepNo >= this.steps.length - 1) {
             if(roundRobin) {
                 this.currentStepNo = -1;

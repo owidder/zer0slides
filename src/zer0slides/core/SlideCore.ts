@@ -13,6 +13,9 @@ export class SlideCore {
 
     public folderName: string;
     public autoStepIntervalInMs = -1;
+    public newSlideCallback= () => {}
+    public firstStepCallback = () => {}
+    public nextSlideCallback = () => {}
 
     public addSlide(name: string) {
         const slide = new Slide(name);
@@ -73,6 +76,7 @@ export class SlideCore {
     }
 
     public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
+        this.nextSlideCallback();
         const oldSlide = this.getCurrentSlide();
         this.doWithOldSlide(oldSlide);
 

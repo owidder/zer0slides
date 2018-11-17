@@ -1,14 +1,27 @@
 import 'mo-js/build/mo';
+import {Simulate} from "react-dom/test-utils";
 
 const mojs = (window as any).mojs;
 
-const startEffect = (tweens: any[]) => {
-    const timeline = new mojs.Timeline();
-    tweens.forEach(tween => timeline.add(tween));
+export const startEffect = (timeline: any) => {
     timeline.replay();
 }
 
+export const stopEffect = (timeline: any, element: any) => {
+    timeline.stop();
+    if(element) {
+        element.style.WebkitTransform = element.style.transform = 'scale3d(1,1,1)';
+    }
+}
+
+const createTimeline = (tweens: any[]) => {
+    const timeline = new mojs.Timeline();
+    tweens.forEach(tween => timeline.add(tween));
+    return timeline;
+}
+
 export const burst = (element: any, factor: number = 1) => {
+    if(!element) {return}
     const tweens = [
         // burst animation
         new mojs.Burst({
@@ -50,10 +63,11 @@ export const burst = (element: any, factor: number = 1) => {
         })
     ]
 
-    startEffect(tweens);
+    return createTimeline(tweens);
 }
 
 export const colorBurst = (element: any, factor: number = 1) => {
+    if(!element) {return}
     const scaleCurve4 = mojs.easing.path('M0,100 L25,99.9999983 C26.2328835,75.0708847 19.7847843,0 100,0');
     const tweens = [
         // burst animation
@@ -94,10 +108,11 @@ export const colorBurst = (element: any, factor: number = 1) => {
         })
     ]
 
-    startEffect(tweens)
+    return createTimeline(tweens);
 }
 
 export const doubleBurst = (element: any, factor: number = 1) => {
+    if(!element) {return}
     const tweens = [
         // burst animation
         new mojs.Burst({
@@ -155,5 +170,5 @@ export const doubleBurst = (element: any, factor: number = 1) => {
         })
     ]
 
-    startEffect(tweens);
+    return createTimeline(tweens);
 }

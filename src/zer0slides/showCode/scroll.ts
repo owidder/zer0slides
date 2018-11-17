@@ -2,6 +2,12 @@ import * as $ from 'jquery';
 
 import {slideCore} from '../core/core';
 
+export const scrollToStart = () => {
+    return new Promise(resolve => {
+        $("html, body").animate({scrollTop: 0, scrollLeft: 0}, 100, "swing", resolve);
+    })
+}
+
 export const scrollToCurrentLine = (): Promise<void> => {
     const slideSelector = slideCore.getCurrentSlideSelector();
     const selector = `${slideSelector} .line-highlight`;

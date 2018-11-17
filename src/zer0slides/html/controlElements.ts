@@ -1,6 +1,8 @@
 import * as d3 from 'd3';
 
 import {slideCore} from '../core/core';
+import * as mojs from '../effects/mojs';
+import {timingSafeEqual} from "crypto";
 
 const STEPCTR_SELECTOR = "#control-elements .stepctr";
 const SLIDENO_SELECTOR = "#control-elements .slideno";
@@ -79,6 +81,29 @@ const createControlElementsDefaultContainer = () => {
     d3.selectAll(".screencontainer").raise();
 }
 
+let effectInterval;
+let timeline;
+
+const startEffect = () => {
+    if(!(slideCore.getCurrentSlide().currentStepNo > 0)) {
+        timeline = mojs.doubleBurst(document.querySelector("i.icon-down"), 2);
+        effectInterval = setInterval(() => {
+            mojs.startEffect(timeline);
+        }, 5000)
+    }
+}
+
+const stopEffect = () => {
+    if(effectInterval) {
+        clearInterval(effectInterval);
+        effectInterval = undefined;
+    }
+    if(timeline) {
+        mojs.stopEffect(timeline, document.querySelector("i.icon-down"));
+        timeline = undefined;
+    }
+}
+
 export const createControlElements = () => {
     createControlElementsDefaultContainer();
     const root = d3.selectAll("#control-elements");
@@ -88,6 +113,11 @@ export const createControlElements = () => {
     createArrow(root, "left", leftArrowClicked, "arrow_back");
     createArrow(root, "up", upArrowClicked, "arrow_upward");
     createArrow(root, "down", downArrowClicked, "arrow_downward");
+
+
+    slideCore.newSlideCallback = startEffect;
+    slideCore.firstStepCallback = stopEffect;
+    slideCore.nextSlideCallback = stopEffect;
 }
 
 export const controlElements = {

@@ -4,6 +4,8 @@ import * as ReactDOM from "react-dom";
 import {Slide} from "./Slide";
 import {HtmlSlide} from '../html/HtmlSlide';
 import {Transformation} from '../html/transformations/Transformation';
+import {slideCore} from "./core";
+import {scrollToStart} from '../showCode/scroll';
 
 export type InOut = "outAndInAtOnce" | "twin" | "firstOutThenIn";
 
@@ -73,6 +75,13 @@ const twin = (options: RenderOptions) => {
     })
 }
 
+const newSlideActions = (slide: Slide) => {
+    scrollToStart().then(() => {
+        slide.performToCurrentStep();
+        slideCore.newSlideCallback();
+    })
+}
+
 export const renderSlide = (options: RenderOptions) => {
     if(options.oldSlide) {
         new Promise(resolve => {
@@ -88,14 +97,16 @@ export const renderSlide = (options: RenderOptions) => {
                 default:
                     firstOutThenIn(options).then(resolve);
             }
-        }).then(() => options.slide.performToCurrentStep());
+        }).then(() => newSlideActions(options.slide));
     }
     else {
         ReactDOM.render(<HtmlSlide
                 slide={options.slide}
                 safeMode={options.safeMode === true}
                 action="show"
-                renderReadyCallback={options.slide.performToCurrentStep.bind(options.slide)}
+                renderReadyCallback={() => {
+                    newSlideActions(options.slide)
+                }}
             />,
             document.getElementById('root') as HTMLElement);
     }
