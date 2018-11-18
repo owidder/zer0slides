@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/jquery": "^3.3.10",
     "@types/lodash": "^4.14.118",
+    "@types/qrcode": "^1.3.0",
     "@types/query-string": "^6.1.1",
     "autoprefixer": "7.1.6",
     "babel-jest": "20.0.3",
@@ -35,7 +36,7 @@
     "prismjs": "^1.15.0",
     "promise": "8.0.1",
     "protip": "^1.4.16",
-    "qrcode": "^1.3.0",
+    "qrcode": "^1.3.2",
     "query-string": "^6.2.0",
     "raf": "3.4.0",
     "react": "^16.5.2",

@@ -9,6 +9,8 @@ import {showCode} from './zer0slides/showCode/showCode';
 import {selector} from './zer0slides/selector/selector';
 import {tooltip} from './zer0slides/showCode/tooltip';
 import {file} from './zer0slides/file/file';
+import {qrUtil} from './zer0slides/qr/qr';
+import {text} from './zer0slides/text/text';
 
 const createRoot = () => {
     const body = d3.select("body");
@@ -44,6 +46,9 @@ export const init = () => {
         codeBash: showCode.bash,
         q: selector.q,
         readFile: file.read,
+        qrCurrentAddress: qrUtil.qrCurrentAddress,
+        showText: text.showText,
+        setAttribute: text.setAttribute,
         ...lifecycle
     } as any;
 

@@ -73,10 +73,8 @@ const createControlElementsDefaultContainer = () => {
         .data([1])
         .enter()
         .append("div")
-        .attr("class", "screencontainer")
-        .append("div")
         .attr("id", "control-elements")
-        .attr("class", "topleftvertical");
+        .attr("class", "controlcontainer")
 
     d3.selectAll(".screencontainer").raise();
 }

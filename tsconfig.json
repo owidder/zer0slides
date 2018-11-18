@@ -20,8 +20,9 @@
     "noUnusedLocals": false
   },
   "rules": {
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "no-shadowed-variable": false
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["src/**/*.js"]
+  "exclude": ["src/**/*.js", "src/lib/qrcode.js"]
 }
