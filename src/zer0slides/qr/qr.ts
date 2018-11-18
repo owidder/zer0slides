@@ -11,16 +11,8 @@ const cropHash = (url: string) => {
     return url.substr(0, index);
 }
 
-const getCurrentAddressWithRemoveText = (removeText: string) => {
-    const url = window.location.href;
-    const urlWithRemoveText = url.replace(removeText, "");
-
-    return urlWithRemoveText;
-}
-
-export const qrCurrentAddress = (selector: string, scale: number = 10, removeText: string = "") => {
-    const address = getCurrentAddressWithRemoveText(removeText);
-    const addressWoHash = cropHash(address);
+export const qrCurrentAddress = (selector: string, scale: number = 10) => {
+    const addressWoHash = cropHash(window.location.href);
     makeQrCode(selector, addressWoHash, scale);
     return addressWoHash;
 }
