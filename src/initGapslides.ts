@@ -47,6 +47,7 @@ export const init = () => {
         q: selector.q,
         readFile: file.read,
         qrCurrentAddress: qrUtil.qrCurrentAddress,
+        qr: qrUtil.makeQrCode,
         showText: text.showText,
         setAttribute: text.setAttribute,
         ...lifecycle
