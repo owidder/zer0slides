@@ -16,7 +16,7 @@ import {initTooltip} from './zer0slides/showCode/tooltip';
 
 import 'materialize-css/dist/css/materialize.css';
 import 'prismjs/themes/prism.css';
-import './gapslides.less';
+import './zer0slides.less';
 
 const renderFirstSlide = (startIndex) => {
     const slideNo = paramValue("slide");
