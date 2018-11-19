@@ -2,7 +2,7 @@ import 'materialize-css/dist/css/materialize.css';
 import * as React from 'react';
 import * as _ from 'lodash';
 
-import {init} from './initGapslides';
+import {init} from './initZer0Slides';
 import {initReadyPromise} from './zer0slides/lifecycle/lifecycle';
 import {slideCore} from './zer0slides/core/core';
 import {Slide} from './zer0slides/core/Slide';
