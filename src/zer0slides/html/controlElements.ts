@@ -10,7 +10,7 @@ const UP_SELECTOR = "#control-elements .up";
 const DOWN_SELECTOR = "#control-elements .down";
 
 export const setStepCtr = (currentStepNo: number, noOfSteps: number) => {
-    const stepCtrString = `[${currentStepNo+1}/${noOfSteps}]`;
+    const stepCtrString = `[${currentStepNo + 1}/${noOfSteps}]`;
     d3.selectAll(STEPCTR_SELECTOR)
         .text(stepCtrString);
 }
@@ -82,22 +82,30 @@ const createControlElementsDefaultContainer = () => {
 let effectInterval;
 let timeline;
 
+const doEffect = () => {
+    if(timeline == undefined) {
+        timeline = mojs.doubleBurst(document.querySelector("i.icon-down"), 2);
+    }
+    if(timeline != undefined) {
+        mojs.startEffect(timeline);
+    }
+}
+
 const startEffect = () => {
-    if(!(slideCore.getCurrentSlide().currentStepNo > 0)) {
-                timeline = mojs.doubleBurst(document.querySelector("i.icon-down"), 2);
-                mojs.startEffect(timeline)
-                effectInterval = setInterval(() => {
-                    mojs.startEffect(timeline);
-                }, 5000)
+    if (!(slideCore.getCurrentSlide().currentStepNo > 0)) {
+        doEffect();
+        effectInterval = setInterval(() => {
+            doEffect();
+        }, 5000)
     }
 }
 
 const stopEffect = () => {
-    if(effectInterval) {
+    if (effectInterval) {
         clearInterval(effectInterval);
         effectInterval = undefined;
     }
-    if(timeline) {
+    if (timeline) {
         mojs.stopEffect(timeline, document.querySelector("i.icon-down"));
         timeline = undefined;
     }

@@ -1,5 +1,4 @@
 import 'materialize-css/dist/css/materialize.css';
-import * as $ from 'jquery';
 import * as React from 'react';
 import * as _ from 'lodash';
 

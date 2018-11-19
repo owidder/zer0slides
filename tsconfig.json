@@ -21,7 +21,8 @@
   },
   "rules": {
     "jsx-no-lambda": false,
-    "no-shadowed-variable": false
+    "no-shadowed-variable": false,
+    "triple-equals": false
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["src/**/*.js", "src/lib/qrcode.js"]

@@ -20,7 +20,8 @@
     "object-literal-sort-keys": false,
     "no-shadowed-variable": false,
     "jsx-no-lambda": false,
-    "only-arrow-functions": false
+    "only-arrow-functions": false,
+    "triple-equals": false
   },
   "linterOptions": {
     "exclude": [
