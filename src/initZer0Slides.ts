@@ -50,6 +50,7 @@ export const init = () => {
         qr: qrUtil.makeQrCode,
         showText: text.showText,
         setAttribute: text.setAttribute,
+        click: click.setClickHandler,
         ...lifecycle
     } as any;
 

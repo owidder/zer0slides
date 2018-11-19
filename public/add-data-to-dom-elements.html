@@ -1,0 +1,106 @@
+<style>
+
+    #__0__ svg {
+        border: solid;
+        margin: 1em;
+    }
+
+    #__0__ circle {
+        fill: white;
+        stroke: black;
+        stroke-width: 2px;
+        opacity: .5;
+    }
+
+    #__0__ .container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    #__0__ h1 {
+        width: 100vw;
+        text-align: center;
+    }
+
+</style>
+
+<div class="container">
+    <a class="runcode btn-floating btn waves-effect waves-light blue stdmargin"><i class="material-icons">play_arrow</i></a>
+    <svg id="svg01" height="300" width="300">
+        <circle cx="150" cy="150" r="10"></circle>
+        <circle cx="150" cy="150" r="10"></circle>
+        <circle cx="150" cy="150" r="10"></circle>
+    </svg>
+</div>
+
+<h1>Add data to DOM elements</h1>
+<div class="code1 code"></div>
+<div class="code2 code"></div>
+
+<script>
+
+    (function () {
+        _0.codeBash(".code1",
+            "<svg id=\"svg01\" height=\"300\" width=\"300\">\n" +
+            "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
+            "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
+            "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
+            "</svg>");
+
+        _0.codeJs(".code2",
+            "d3.selectAll(\"circle\")\n" +
+            "   .data(\n" +
+            "       [{name:\"a\", x:50, y:50, r:20, color:\"blue\"},\n" +
+            "       {name:\"b\", x:50, y:250, r:30, color:\"orange\"},\n" +
+            "       {name:\"c\", x:250, y:50, r:40, color:\"red\"}]\n" +
+            "   );\n" +
+            "\n" +
+            "const domNodes = document.querySelectorAll(\"circle\");\n" +
+            "window.alert(JSON.stringify(domNodes[0].__data__) + \"\\n\" +\n" +
+            "             JSON.stringify(domNodes[1].__data__) + \"\\n\" +\n" +
+            "             JSON.stringify(domNodes[2].__data__));");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code1", "1-5"));
+        steps.push(_0.highlightLinesStep(".code1", "1,5"));
+        steps.push(_0.highlightLinesStep(".code1", "2-4"));
+        steps.push(_0.highlightLinesStep(".code1", "2"));
+        steps.push(_0.highlightLinesStep(".code1", "3"));
+        steps.push(_0.highlightLinesStep(".code1", "4"));
+        steps.push(_0.highlightLinesStep(".code1", ""));
+
+        steps.push(_0.highlightLinesStep(".code2", "1-6"));
+        steps.push(_0.highlightLinesStep(".code2", "1"));
+        steps.push(_0.highlightLinesStep(".code2", "2"));
+        steps.push(_0.highlightLinesStep(".code2", "3-5"));
+
+        steps.push(_0.highlightLinesStep(".code2", "8-11"));
+        steps.push(_0.highlightLinesStep(".code2", "8"));
+        steps.push(_0.highlightLinesStep(".code2", "9-11"));
+        steps.push(_0.highlightLinesStep(".code2", ""));
+
+        _0.setSteps(steps);
+
+        _0.click(".runcode", () => {
+            d3.selectAll("#__0__ circle")
+                .data([
+                    {name:"a", x:50, y:50, r:20, color:"blue"},
+                    {name:"b", x:250, y:50, r:30, color:"orange"},
+                    {name:"c", x:50, y:250, r:40, color:"red"}
+                ]);
+
+            const domNodes = document.querySelectorAll("#__0__ circle");
+            window.alert(JSON.stringify(domNodes[0].__data__) + "\n" +
+                JSON.stringify(domNodes[1].__data__) + "\n" +
+                JSON.stringify(domNodes[2].__data__));
+        });
+
+        ___();
+    })()
+</script>

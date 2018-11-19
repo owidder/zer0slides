@@ -1,5 +1,6 @@
 import * as $ from 'jquery';
 import * as _ from 'lodash';
+import * as d3 from 'd3';
 
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 
@@ -8,7 +9,7 @@ import {Step} from '../core/Step';
 import {scrollToCurrentLine} from './scroll';
 import {createTooltips, reset} from './tooltip';
 import {getData, setData, resetData} from '../core/data';
-import {q} from "../selector/selector";
+import {q, selector} from "../selector/selector";
 
 const {createReverseStep} = steps;
 
@@ -148,7 +149,13 @@ const highlightLinesWithComplexTooltip = (selector: string, optionsArray: Highli
     });
 }
 
+const addCodeClass = (selector: string) => {
+    d3.selectAll(q(selector))
+        .classed("code", true);
+}
+
 const highlightLinesNoTooltip = (selector: string, lineString: string, callbackWhenFinished?: () => void) => {
+    addCodeClass(selector);
     const _sel = `${q(selector)} pre`;
 
     if(lineString) {
