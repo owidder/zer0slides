@@ -32,7 +32,7 @@
 
 <div class="container">
     <a class="runcode btn-floating btn waves-effect waves-light blue stdmargin"><i class="material-icons">play_arrow</i></a>
-    <svg id="svg01" height="300" width="300">
+    <svg class="svg01" height="300" width="300">
         <circle cx="150" cy="150" r="10"></circle>
         <circle cx="150" cy="150" r="10"></circle>
         <circle cx="150" cy="150" r="10"></circle>
@@ -43,11 +43,15 @@
 <div class="code1 code"></div>
 <div class="code2 code"></div>
 
+<template class="attribute-data">
+    D3 will now put each object into an attribute named <code>__data__</code> of each DOM node
+</template>
+
 <script>
 
     (function () {
         _0.codeBash(".code1",
-            "<svg id=\"svg01\" height=\"300\" width=\"300\">\n" +
+            "<svg height=\"300\" width=\"300\">\n" +
             "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
             "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
             "   <circle cx=\"150\" cy=\"150\" r=\"10\"></circle>\n" +
@@ -67,23 +71,39 @@
             "             JSON.stringify(domNodes[2].__data__));");
 
         const steps = [];
-        steps.push(_0.highlightLinesStep(".code1", "1-5"));
-        steps.push(_0.highlightLinesStep(".code1", "1,5"));
-        steps.push(_0.highlightLinesStep(".code1", "2-4"));
-        steps.push(_0.highlightLinesStep(".code1", "2"));
-        steps.push(_0.highlightLinesStep(".code1", "3"));
-        steps.push(_0.highlightLinesStep(".code1", "4"));
-        steps.push(_0.highlightLinesStep(".code1", ""));
+        steps.push(_0.highlightLinesStep(".code1", "1-5", "In our first example we begin with some static SVG nodes", "top"));
+        steps.push(_0.highlightLinesStep(".code1", "1-5", "This is only for the sake of this example. Normally you do not start with static SVG nodes!"));
+        steps.push(_0.highlightLinesStep(".code1", "2-4", "3 circles", "top"));
+        steps.push(_0.highlightLinesStep(".code1", "2", "Each circle ...", "top"));
+        steps.push(_0.highlightLinesStep(".code1", "3", " ... has ..."));
+        steps.push(_0.highlightLinesStep(".code1", "4", " ... the same radius and position", "top"));
 
-        steps.push(_0.highlightLinesStep(".code2", "1-6"));
-        steps.push(_0.highlightLinesStep(".code2", "1"));
-        steps.push(_0.highlightLinesStep(".code2", "2"));
-        steps.push(_0.highlightLinesStep(".code2", "3-5"));
+        const tts1 = _0.tooltipStep(".svg01 circle", "Here you can see the circles", "top");
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code1", "", ""),
+            tts1
+        ));
+
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code2", "1-6", "Now we want to add a JavaScript object to each 'circle'-DOM-node", "top"),
+            _0.reverse(tts1)
+        ));
+
+        steps.push(_0.highlightLinesStep(".code2", "1", "Select the circle nodes (the argument is just a CSS selector)", "top"));
+        steps.push(_0.highlightLinesStep(".code2", "2-6", "Add an array of JavaScript objects, ..."));
+        steps.push(_0.highlightLinesStep(".code2", "3", " ... the first selected DOM node gets the first object of the array, ..."));
+        steps.push(_0.highlightLinesStep(".code2", "4", " ... the second DOM node gets the second object ...", "top"));
+        steps.push(_0.highlightLinesStep(".code2", "5", " ... and so on."));
+
+        const tts2 = _0.tooltipStep(".svg01 circle", ".attribute-data", "top");
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code2", "", ""),
+            tts2
+        ));
 
         steps.push(_0.highlightLinesStep(".code2", "8-11"));
         steps.push(_0.highlightLinesStep(".code2", "8"));
         steps.push(_0.highlightLinesStep(".code2", "9-11"));
-        steps.push(_0.highlightLinesStep(".code2", ""));
 
         _0.setSteps(steps);
 

@@ -9,7 +9,7 @@ import {Step} from '../core/Step';
 import {scrollToCurrentLine} from './scroll';
 import {createTooltips, reset} from './tooltip';
 import {getData, setData, resetData} from '../core/data';
-import {q, selector} from "../selector/selector";
+import {q} from "../selector/selector";
 
 const {createReverseStep} = steps;
 
@@ -62,6 +62,10 @@ export const bash = (selector: string, jsString: string, options: ShowCodeOption
 
 export const remove = (selector: string) => {
     $(selector).empty();
+}
+
+export const removeStep = (selector: string) => {
+
 }
 
 const createTooltipsForHighlights = (highlightLinesOptions: HighlightLinesOptions[]) => {

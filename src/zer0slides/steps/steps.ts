@@ -13,9 +13,24 @@ const setSteps = (_steps: Step[]) => {
     slide.steps = _steps;
 }
 
+const reverse = (step: Step) => new Step(step.b, step.f);
+
 const createReverseStep = (step: Step) => {
-    const reverseStep = new Step(step.b, step.f);
-    return {step, reverseStep}
+    return {step, reverse: reverse(step)}
+}
+
+const combineSteps = (...steps: Step[]): Step => {
+    const f = () => {
+        steps.forEach(step => {
+            step.f()
+        });
+    }
+
+    const b = () => {
+        steps.forEach(step => step.b());
+    }
+
+    return new Step(f, b);
 }
 
 const createStep = (f: () => void, b: () => void) => {
@@ -31,4 +46,6 @@ export const steps = {
     createReverseStep,
     setSteps,
     autoStepOn,
+    combineSteps,
+    reverse,
 }

@@ -51,6 +51,12 @@ export const init = () => {
         showText: text.showText,
         setAttribute: text.setAttribute,
         click: click.setClickHandler,
+        tooltip: tooltip.addTooltipToDomNode,
+        removeTooltip: tooltip.removeTooltipFromDomNode,
+        tooltipStep: tooltip.addTooltipToDomNodeStep,
+        removeTooltipStep: tooltip.removeTooltipFromDomNodeStep,
+        combine: steps.combineSteps,
+        reverse: steps.reverse,
         ...lifecycle
     } as any;
 
