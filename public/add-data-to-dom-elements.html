@@ -43,8 +43,12 @@
 <div class="code1 code"></div>
 <div class="code2 code"></div>
 
-<template class="attribute-data">
-    D3 will now put each object into an attribute named <code>__data__</code> of each DOM node
+<template class="attribute-data1">
+    D3 will now put each object into an attribute of each DOM node named <b><code>__data__</code></b>,<br> but ...
+</template>
+
+<template class="attribute-data2">
+    ... just forget <b><code>__data__</code></b>! You won't need the knowledge where D3 stores its data.<br> But ...
 </template>
 
 <script>
@@ -95,13 +99,25 @@
         steps.push(_0.highlightLinesStep(".code2", "4", " ... the second DOM node gets the second object ...", "top"));
         steps.push(_0.highlightLinesStep(".code2", "5", " ... and so on."));
 
-        const tts2 = _0.tooltipStep(".svg01 circle", ".attribute-data", "top");
+        const tts2 = _0.tooltipStep(".svg01 circle", ".attribute-data1", "top");
+
         steps.push(_0.combine(
             _0.highlightLinesStep(".code2", "", ""),
             tts2
         ));
 
-        steps.push(_0.highlightLinesStep(".code2", "8-11"));
+        const tts3 = _0.tooltipStep(".svg01 circle", ".attribute-data2");
+
+        steps.push(_0.combine(
+            _0.reverse(tts2),
+            tts3
+        ))
+
+        steps.push(_0.combine(
+            _0.reverse(tts3),
+            _0.highlightLinesStep(".code2", "8-11", "To be frank: "),
+        ));
+
         steps.push(_0.highlightLinesStep(".code2", "8"));
         steps.push(_0.highlightLinesStep(".code2", "9-11"));
 
