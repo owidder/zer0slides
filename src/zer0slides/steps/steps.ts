@@ -19,15 +19,24 @@ const createReverseStep = (step: Step) => {
     return {step, reverse: reverse(step)}
 }
 
+const callDelayedRecursively = (functions: Array<() => void>, index: number) => {
+    if(index < functions.length) {
+        setTimeout(() => {
+            functions[index]();
+            callDelayedRecursively(functions, index + 1);
+        }, 0)
+    }
+}
+
 const combineSteps = (...steps: Step[]): Step => {
     const f = () => {
-        steps.forEach(step => {
-            step.f()
-        });
+        const functions = steps.map(step => step.f);
+        callDelayedRecursively(functions, 0);
     }
 
     const b = () => {
-        steps.reverse().forEach(step => step.b());
+        const functions = steps.reverse().map(step => step.b);
+        callDelayedRecursively(functions, 0);
     }
 
     return new Step(f, b);
