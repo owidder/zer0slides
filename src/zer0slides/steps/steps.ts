@@ -27,7 +27,7 @@ const combineSteps = (...steps: Step[]): Step => {
     }
 
     const b = () => {
-        steps.forEach(step => step.b());
+        steps.reverse().forEach(step => step.b());
     }
 
     return new Step(f, b);
