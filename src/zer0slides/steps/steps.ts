@@ -35,7 +35,7 @@ const combineSteps = (...steps: Step[]): Step => {
     }
 
     const b = () => {
-        const functions = steps.reverse().map(step => step.b);
+        const functions = [...steps].reverse().map(step => step.b);
         callDelayedRecursively(functions, 0);
     }
 

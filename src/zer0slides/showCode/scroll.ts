@@ -4,7 +4,6 @@ import {slideCore} from '../core/core';
 
 export const scrollToStart = () => {
     return new Promise(resolve => {
-        console.log("start scroll");
         $("html, body").animate({scrollTop: 0, scrollLeft: 0}, 10, "swing", resolve);
     })
 }

@@ -75,6 +75,8 @@ export const createTooltip = (tooltip: Tooltip) => {
 export const addTooltipToDomNode = (selector: string, text: string, position: string, placement: string): Tooltip | undefined => {
     const _sel = q(selector);
     const old = getData(_sel);
+    console.log("add: " + selector);
+    console.log(old);
     const tooltip = {selector, text, position, placement};
     createTooltip(tooltip);
     setData(_sel, tooltip);
@@ -85,6 +87,8 @@ export const addTooltipToDomNode = (selector: string, text: string, position: st
 export const removeTooltipFromDomNode = (selector: string): Tooltip | undefined => {
     const _sel = q(selector);
     const old = getData(_sel);
+    console.log("remove: " + selector);
+    console.log(old);
     ($(_sel) as any).protipHide();
     resetData(_sel);
 

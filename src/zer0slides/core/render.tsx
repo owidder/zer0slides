@@ -70,9 +70,7 @@ const twin = (options: RenderOptions) => {
 }
 
 const newSlideActions = (slide: Slide) => {
-    console.log("new slide action");
     scrollToStart().then(() => {
-        console.log("scrolled");
         slide.performToCurrentStep();
         slideCore.newSlideCallback();
     })
