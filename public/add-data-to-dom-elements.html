@@ -51,7 +51,14 @@
     We will now proof that the data is actually inside the DOM nodes.<br>
     <b>But this is just a fun fact.</b><br>
     You don't need to know this to use D3.<br>
-    Feel free to move to the next slide right here
+    <b>Feel free to move to the next slide right here</b>
+</template>
+
+<template class="attribute-data3">
+    Now we select the circle DOM node with the plain old <br>
+    <b><code>document.querySelectorAll</code></b>,
+    read the <b><code>__data__</code></b> attributes and show its contents via <code>window.alert</code><br>
+    Run this code via the play button below and you'll see
 </template>
 
 <script>
@@ -116,12 +123,21 @@
             tts3
         ))
 
+        const tts4 = _0.highlightLinesStep(".code2", "8-11", "Thanks for staying!!!", "top");
+
         steps.push(_0.combine(
             _0.reverse(tts3),
-            _0.highlightLinesStep(".code2", "8-11", "To be frank: "),
+            tts4,
         ));
 
-        steps.push(_0.highlightLinesStep(".code2", "8"));
+        const tts5 = _0.highlightLinesStep(".code2", "8-11", ".attribute-data3", "top");
+
+        steps.push(_0.combine(
+            _0.reverse(tts4),
+            tts5,
+        ));
+
+        steps.push(_0.highlightLinesStep(".code2", "8-11", ".attribute-data3"));
         steps.push(_0.highlightLinesStep(".code2", "9-11"));
 
         _0.setSteps(steps);
