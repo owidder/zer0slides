@@ -137,8 +137,12 @@
             tts5,
         ));
 
-        steps.push(_0.highlightLinesStep(".code2", "8-11", ".attribute-data3"));
-        steps.push(_0.highlightLinesStep(".code2", "9-11"));
+        const tts6 = _0.tooltipStep(".runcode", "Click here", "top");
+
+        steps.push(_0.combine(
+            _0.reverse(tts5),
+            tts6,
+        ));
 
         _0.setSteps(steps);
 
