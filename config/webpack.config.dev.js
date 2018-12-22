@@ -54,6 +54,7 @@ module.exports = {
         // changing JS code would still trigger a refresh.
     ],
     output: {
+        path: paths.appBuild,
         // Add /* filename */ comments to generated require()s in the output.
         pathinfo: true,
         // This does not produce a real file. It's just the virtual path that is
@@ -239,11 +240,12 @@ module.exports = {
         // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
         // In development, this will be an empty string.
         new InterpolateHtmlPlugin(env.raw),
-        // Generates an `index.html` file with the <script> injected.
-        new HtmlWebpackPlugin({
-            inject: true,
-            template: paths.appHtml,
-        }),
+        ['d3'].map(folderName =>
+            new HtmlWebpackPlugin({
+                filename: `${folderName}/index.html`,
+                inject: true,
+                template: `${paths.appPublic}/${folderName}/index.html`,
+            })),
         // Add module names to factory functions so they appear in browser profiler.
         new webpack.NamedModulesPlugin(),
         // Makes some environment variables available to the JS code, for example:

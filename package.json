@@ -63,7 +63,7 @@
   },
   "scripts": {
     "start": "cross-env PORT=4000 node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "rimraf build && node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "distjs": "copyfiles -f build/**/main.*.js* dist && mv dist/main.*.js dist/z0.js && cp dist/main.*.js.map dist/z0.js.map",
     "distcss": "copyfiles -f build/**/main.*.css* dist && mv dist/main.*.css dist/z0.css && cp dist/main.*.css.map dist/z0.css.map",
