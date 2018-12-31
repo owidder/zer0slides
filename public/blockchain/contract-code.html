@@ -1,0 +1,77 @@
+<style>
+
+    #__0__ .code {
+        font-size: 1.2em;
+    }
+
+    #__0__ .code pre {
+        background-color: white;
+    }
+
+    #__0__ .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["HashStore.sol",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "pragma solidity ^0.4.24;\n" +
+            "contract HashStore {\n" +
+            "    struct Entry {\n" +
+            "        address source;\n" +
+            "        uint blockNumber;\n" +
+            "        uint blockTimestamp;\n" +
+            "    }\n" +
+            "    mapping (string => Entry) entries;\n" +
+            "\n" +
+            "    function storeHash(string hash) public {\n" +
+            "        if(entries[hash].source != 0x0) revert();\n" +
+            "        Entry memory entry = Entry(msg.sender, block.number, block.timestamp);\n" +
+            "        entries[hash] = entry;\n" +
+            "    }\n" +
+            "\n" +
+            "    function getSourceFromHash(string hash) public view returns(address) {\n" +
+            "        return entries[hash].source;\n" +
+            "    }\n" +
+            "\n" +
+            "    function getBlockNumberFromHash(string hash) public view returns(uint) {\n" +
+            "        return entries[hash].blockNumber;\n" +
+            "    }\n" +
+            "\n" +
+            "    function getBlockTimestampFromHash(string hash) public view returns(uint) {\n" +
+            "        return entries[hash].blockTimestamp;\n" +
+            "    }\n" +
+            "}\n",
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "1", "Solidity Version"));
+        steps.push(_0.highlightLinesStep(codeSelector, "2", "The contract looks like a JavaScript class"));
+        steps.push(_0.highlightLinesStep(codeSelector, "3-7", "An entry in the HashStore"));
+        steps.push(_0.highlightLinesStep(codeSelector, "4", "The address of the Ethereum account the entry is from"));
+        steps.push(_0.highlightLinesStep(codeSelector, "5", "The block number of the transaction"));
+        steps.push(_0.highlightLinesStep(codeSelector, "6", "The time stamp of the transaction"));
+        steps.push(_0.highlightLinesStep(codeSelector, "8", "Mapping from the value of the hashed text to an entry", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "8", "With the hash value you can get the information from who and when as written into the blockchain"));
+        steps.push(_0.highlightLinesStep(codeSelector, "10-14"));
+        steps.push(_0.highlightLinesStep(codeSelector, "10"));
+        steps.push(_0.highlightLinesStep(codeSelector, "11"));
+        steps.push(_0.highlightLinesStep(codeSelector, "12"));
+        steps.push(_0.highlightLinesStep(codeSelector, "13"));
+        steps.push(_0.highlightLinesStep(codeSelector, "16-18,20-22,24-26"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
