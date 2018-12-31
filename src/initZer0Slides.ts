@@ -11,6 +11,10 @@ import {tooltip} from './zer0slides/showCode/tooltip';
 import {file} from './zer0slides/file/file';
 import {qrUtil} from './zer0slides/qr/qr';
 import {text} from './zer0slides/text/text';
+import {cube} from './zer0slides/specials/cube';
+import {glowText} from './zer0slides/specials/GlowText';
+import {classUtil} from './zer0slides/util/classUtil';
+
 
 const createRoot = () => {
     const body = d3.select("body");
@@ -37,27 +41,33 @@ export const init = () => {
 
     const _0 = {
         addSlide: core.addSlide,
+        autoStepOn: steps.autoStepOn,
+        click: click.setClickHandler,
+        codeBash: showCode.bash,
+        codeCss: showCode.css,
+        codeJs: showCode.js,
+        combine: steps.combineSteps,
+        createCube: cube.create,
+        glowText: glowText.create,
         highlightLines: showCode.highlightLines,
         highlightLinesStep: showCode.highlightLinesStep,
-        setSteps: steps.setSteps,
-        autoStepOn: steps.autoStepOn,
-        codeJs: showCode.js,
-        codeCss: showCode.css,
-        codeBash: showCode.bash,
+        initReady: lifecycle.initReady,
         q: selector.q,
-        readFile: file.read,
-        qrCurrentAddress: qrUtil.qrCurrentAddress,
         qr: qrUtil.makeQrCode,
-        showText: text.showText,
-        setAttribute: text.setAttribute,
-        click: click.setClickHandler,
-        tooltip: tooltip.addTooltipToDomNode,
+        qrCurrentAddress: qrUtil.qrCurrentAddress,
+        readFile: file.read,
         removeTooltip: tooltip.removeTooltipFromDomNode,
-        tooltipStep: tooltip.addTooltipToDomNodeStep,
         removeTooltipStep: tooltip.removeTooltipFromDomNodeStep,
-        combine: steps.combineSteps,
         reverse: steps.reverse,
-        ...lifecycle
+        setAttribute: text.setAttribute,
+        setClass: classUtil.setClass,
+        setSteps: steps.setSteps,
+        showText: text.showText,
+        slideReady: lifecycle.slideReady,
+        startStopCube: cube.startStopAnimation,
+        switchBetweenClasses: classUtil.switchBetweenClasses,
+        tooltip: tooltip.addTooltipToDomNode,
+        tooltipStep: tooltip.addTooltipToDomNodeStep,
     } as any;
 
     (window as any).zer0slides = zer0slides;

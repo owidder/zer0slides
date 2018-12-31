@@ -12,7 +12,7 @@
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
-    "noImplicitThis": true,
+    "noImplicitThis": false,
     "noImplicitAny": false,
     "importHelpers": true,
     "strictNullChecks": false,
