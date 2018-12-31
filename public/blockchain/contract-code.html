@@ -62,13 +62,14 @@
         steps.push(_0.highlightLinesStep(codeSelector, "5", "The block number of the transaction"));
         steps.push(_0.highlightLinesStep(codeSelector, "6", "The time stamp of the transaction"));
         steps.push(_0.highlightLinesStep(codeSelector, "8", "Mapping from the value of the hashed text to an entry", "top"));
-        steps.push(_0.highlightLinesStep(codeSelector, "8", "With the hash value you can get the information from who and when as written into the blockchain"));
-        steps.push(_0.highlightLinesStep(codeSelector, "10-14"));
-        steps.push(_0.highlightLinesStep(codeSelector, "10"));
-        steps.push(_0.highlightLinesStep(codeSelector, "11"));
-        steps.push(_0.highlightLinesStep(codeSelector, "12"));
-        steps.push(_0.highlightLinesStep(codeSelector, "13"));
-        steps.push(_0.highlightLinesStep(codeSelector, "16-18,20-22,24-26"));
+        steps.push(_0.highlightLinesStep(codeSelector, "8", "This map stores the information when and from who a hash value was written into the blockchain"));
+        steps.push(_0.highlightLinesStep(codeSelector, "10-14", "Contract function to put a hash value into the map"));
+        steps.push(_0.highlightLinesStep(codeSelector, "10", "It's public i.e. can be called by everyone", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "11", "If the hash value is already in the map: revert the transaction"));
+        steps.push(_0.highlightLinesStep(codeSelector, "12", "Create the entry based on the global variables 'msg' and 'block'"));
+        steps.push(_0.highlightLinesStep(codeSelector, "13", "Create a new mapping from the hash value to the entry"));
+        steps.push(_0.highlightLinesStep(codeSelector, "16-18,20-22,24-26", "Three functions to read the informations of an entry from the hash value", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "16,20,24", "'view' means the function does not change the state of the contract", "top"));
 
         _0.setSteps(steps);
 
