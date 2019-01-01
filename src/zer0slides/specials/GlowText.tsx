@@ -32,8 +32,25 @@ class GlowText extends React.Component<GlowTextProps> {
     }
 }
 
+const _waitForSelectorRecursive = (selector: string, resolve: () => void) => {
+    if(!document.querySelector(q(selector))) {
+        setTimeout(() => {_waitForSelectorRecursive(selector, resolve)}, 100);
+    }
+    else {
+        resolve();
+    }
+}
+
+const waitForSelector = (selector: string) => {
+    return new Promise(resolve => {
+        _waitForSelectorRecursive(selector, resolve);
+    })
+}
+
 const create = (selector: string, lines: string[], classNames: string) => {
-    ReactDOM.render(<GlowText lines={lines} classNames={classNames}/>, document.querySelector(q(selector)));
+    waitForSelector(selector).then(() => {
+        ReactDOM.render(<GlowText lines={lines} classNames={classNames}/>, document.querySelector(q(selector)));
+    })
 }
 
 export const glowText = {
