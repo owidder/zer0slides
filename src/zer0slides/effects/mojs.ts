@@ -1,6 +1,10 @@
 import 'mo-js/build/mo';
 import {Simulate} from "react-dom/test-utils";
 
+/* ************************************************
+**** from https://github.com/legomushroom/mojs ****
+************************************************* */
+
 const mojs = (window as any).mojs;
 
 export const startEffect = (timeline: any) => {
