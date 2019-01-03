@@ -139,6 +139,8 @@ export const createControlElements = () => {
     slideCore.newSlideCallback = startEffect;
     slideCore.firstStepCallback = stopEffect;
     slideCore.nextSlideCallback = stopEffect;
+
+    slideCore.showCurrentIndex();
 }
 
 export const controlElements = {

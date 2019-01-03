@@ -57,7 +57,7 @@ export class SlideCore {
         return this.slideNames.indexOf(currentName);
     }
 
-    private showCurrentIndex() {
+    public showCurrentIndex() {
         setSlideNo(this.getCurrentIndex());
     }
 
