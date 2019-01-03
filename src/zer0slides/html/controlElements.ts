@@ -91,12 +91,18 @@ const doEffect = () => {
     }
 }
 
+let effectWatchDogStarted = false;
+
 const startEffect = () => {
     if (!(slideCore.getCurrentSlide().currentStepNo > 0)) {
+        stopEffect();
         doEffect();
         effectInterval = setInterval(() => {
             doEffect();
-        }, 5000)
+        }, 5000);
+        if(!effectWatchDogStarted) {
+            startEffectWatchDog();
+        }
     }
 }
 
@@ -109,6 +115,14 @@ const stopEffect = () => {
         mojs.stopEffect(timeline, document.querySelector("i.icon-down"));
         timeline = undefined;
     }
+}
+
+const startEffectWatchDog = () => {
+    effectWatchDogStarted = true;
+    if (slideCore.getCurrentSlide().currentStepNo > 0) {
+        stopEffect();
+    }
+    setTimeout(startEffectWatchDog, 1000);
 }
 
 export const createControlElements = () => {
