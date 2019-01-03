@@ -59,13 +59,14 @@
         steps.push(_0.highlightLinesStep(codeSelector, "3", "Almost Mocha. Just replace 'describe' with 'contract'", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "3", "'accounts' is an array of the 10 predefined accounts"));
         steps.push(_0.highlightLinesStep(codeSelector, "4-9", "Just a Mocha test case", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "4", "Check that the contract returns the correct account ID", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "4", "Communication with local blockchain is async"));
         steps.push(_0.highlightLinesStep(codeSelector, "5", "Get a handy proxy of the contract", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "6", "Call a transactional function of the contract"));
         steps.push(_0.highlightLinesStep(codeSelector, "7", "Call a view function of the contract", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "8", "Normal Chai assert"));
-        steps.push(_0.highlightLinesStep(codeSelector, "10-14"));
-        steps.push(_0.highlightLinesStep(codeSelector, "15-26"));
+        steps.push(_0.highlightLinesStep(codeSelector, "10-14", "Check that it does not return an account ID when called with the wrong hash value", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "15-26", "Check that an exception is thrown when called with the same hash value twice"));
         _0.setSteps(steps);
 
         ___();
