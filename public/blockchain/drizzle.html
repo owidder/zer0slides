@@ -1,0 +1,32 @@
+<style>
+
+    #__0__ .flex {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #__0__ .code {
+        font-size: 4em;
+    }
+
+</style>
+
+<div class="flex">
+    <div><div class="title"></div><img src="./img/drizzle.png"></div>
+    <div class="code"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["Drizzle",], "middle-large glow");
+
+        _0.codeBash(".code",
+            "npm i --save drizzle"
+        );
+
+        _0.setSteps([_0.highlightLinesStep(".code", "1", "Drizzle is a library which makes it easy to call a smart contract")])
+
+        ___();
+    })()
+</script>
