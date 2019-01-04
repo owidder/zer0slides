@@ -1,0 +1,74 @@
+<style>
+
+    #__0__ .code {
+        font-size: 1.2em;
+    }
+
+    #__0__ .code pre {
+        background-color: white;
+    }
+
+    #__0__ .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["HashStore.json",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "{\n" +
+            "  \"contractName\": \"HashStore\",\n" +
+            "  \"abi\": [\n" +
+            "    {\n" +
+            "      \"constant\": false,\n" +
+            "      \"inputs\": [\n" +
+            "        {\n" +
+            "          \"name\": \"hash\",\n" +
+            "          \"type\": \"string\"\n" +
+            "        }\n" +
+            "      ],\n" +
+            "      \"name\": \"storeHash\",\n" +
+            "      \"outputs\": [],\n" +
+            "      \"payable\": false,\n" +
+            "      \"stateMutability\": \"nonpayable\",\n" +
+            "      \"type\": \"function\"\n" +
+            "    },\n" +
+            "    ...\n" +
+            "  ],\n" +
+            "  \"bytecode\": \"0x6080604052348015610010...\",\n" +
+            "  ...\n" +
+            "  \"ast\": {...},\n" +
+            "  ...\n" +
+            "  \"networks\": {\n" +
+            "    \"1537800901683\": {\n" +
+            "      \"events\": {},\n" +
+            "      \"links\": {},\n" +
+            "      \"address\": \"0x3d7280e588a2aa0a39ce9ce1e418744c3eeefbde\",\n" +
+            "      \"transactionHash\": \"0xf1071e42245b875d5589083d00f4118f9095e7819b0a3bca4171880a2e40899e\"\n" +
+            "    }\n" +
+            "   ...\n" +
+            "  },\n" +
+            "}",
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "2", "It's for the contract HashStore"));
+        steps.push(_0.highlightLinesStep(codeSelector, "3-19", "Application binary interface"));
+        steps.push(_0.highlightLinesStep(codeSelector, "24-30", "Data for each network the contract is deployed", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "25", "Network ID"));
+        steps.push(_0.highlightLinesStep(codeSelector, "28", "Address of the contract", "top"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
