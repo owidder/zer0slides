@@ -119,7 +119,7 @@ const stopEffect = () => {
 
 const startEffectWatchDog = () => {
     effectWatchDogStarted = true;
-    if (slideCore.getCurrentSlide().currentStepNo > 0) {
+    if (slideCore.getCurrentSlide().currentStepNo > -1) {
         stopEffect();
     }
     setTimeout(startEffectWatchDog, 1000);
