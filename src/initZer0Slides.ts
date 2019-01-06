@@ -14,6 +14,7 @@ import {text} from './zer0slides/text/text';
 import {cube} from './zer0slides/specials/cube';
 import {glowText} from './zer0slides/specials/GlowText';
 import {classUtil} from './zer0slides/util/classUtil';
+import {metamaskLogo} from './zer0slides/etc/metamaskLogo';
 
 
 const createRoot = () => {
@@ -27,6 +28,7 @@ const createRoot = () => {
 
 export const init = () => {
     createRoot();
+/*
     const zer0slides = {
         controlElements,
         click,
@@ -38,6 +40,7 @@ export const init = () => {
         tooltip,
         file,
     } as any;
+*/
 
     const _0 = {
         addSlide: core.addSlide,
@@ -68,9 +71,10 @@ export const init = () => {
         switchBetweenClasses: classUtil.switchBetweenClasses,
         tooltip: tooltip.addTooltipToDomNode,
         tooltipStep: tooltip.addTooltipToDomNodeStep,
+        metamaskLogo,
     } as any;
 
-    (window as any).zer0slides = zer0slides;
+    // (window as any).zer0slides = zer0slides;
     (window as any)._0 = _0;
     (window as any).___ = lifecycle.slideReady;
 }
