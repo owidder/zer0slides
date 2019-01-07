@@ -15,7 +15,7 @@ import {cube} from './zer0slides/specials/cube';
 import {glowText} from './zer0slides/specials/GlowText';
 import {classUtil} from './zer0slides/util/classUtil';
 import {metamaskLogo} from './zer0slides/etc/metamaskLogo';
-
+import {cast} from './zer0slides/specials/cast';
 
 const createRoot = () => {
     const body = d3.select("body");
@@ -28,19 +28,6 @@ const createRoot = () => {
 
 export const init = () => {
     createRoot();
-/*
-    const zer0slides = {
-        controlElements,
-        click,
-        core,
-        lifecycle,
-        selector,
-        showCode,
-        steps,
-        tooltip,
-        file,
-    } as any;
-*/
 
     const _0 = {
         addSlide: core.addSlide,
@@ -50,6 +37,7 @@ export const init = () => {
         codeCss: showCode.css,
         codeJs: showCode.js,
         combine: steps.combineSteps,
+        createCast: cast.create,
         createCube: cube.create,
         glowText: glowText.create,
         highlightLines: showCode.highlightLines,
@@ -74,7 +62,6 @@ export const init = () => {
         metamaskLogo,
     } as any;
 
-    // (window as any).zer0slides = zer0slides;
     (window as any)._0 = _0;
     (window as any).___ = lifecycle.slideReady;
 }

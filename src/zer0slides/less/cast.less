@@ -1,0 +1,43 @@
+div.__cast {
+  background: radial-gradient(circle at top center, #333 0%, #111 100%);
+  overflow: hidden;
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .wrapper {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 400px;
+    margin-left: -200px;
+    font: 300 30px/1 'Open Sans Condensed', sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    animation: 100s __cast linear infinite;
+  }
+
+  .movie {
+    margin-bottom: 50px;
+    font-size: 50px;
+  }
+
+  .job {
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+
+  .name {
+    margin-bottom: 50px;
+    font-size: 35px;
+  }
+}
+
+@keyframes __cast {
+  0% { top:  100%; }
+  100% { top: -500%; }
+}
