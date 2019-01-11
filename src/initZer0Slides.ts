@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import {steps} from './zer0slides/steps/steps';
 import {lifecycle} from './zer0slides/lifecycle/lifecycle';
 import {click} from './zer0slides/click/click';
-import {core} from './zer0slides/core/core';
+import {core, slideCore} from './zer0slides/core/core';
 import {controlElements} from './zer0slides/html/controlElements';
 import {showCode} from './zer0slides/showCode/showCode';
 import {selector} from './zer0slides/selector/selector';
@@ -60,8 +60,9 @@ export const init = () => {
         tooltip: tooltip.addTooltipToDomNode,
         tooltipStep: tooltip.addTooltipToDomNodeStep,
         metamaskLogo,
-    } as any;
+    };
 
+    slideCore._0 = _0;
     (window as any)._0 = _0;
     (window as any).___ = lifecycle.slideReady;
 }

@@ -7,7 +7,7 @@ import {initReadyPromise} from './zer0slides/lifecycle/lifecycle';
 import {slideCore} from './zer0slides/core/core';
 import {Slide} from './zer0slides/core/Slide';
 import {bindKeyToFunction} from './zer0slides/core/keys';
-import {renderSlide} from './zer0slides/core/render';
+import {renderSlide, renderContentSlide} from './zer0slides/core/render';
 import {paramValue} from './zer0slides/url/queryUtil';
 import {getParamValue} from './zer0slides/url/queryUtil2';
 import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
@@ -19,9 +19,12 @@ import 'prismjs/themes/prism.css';
 import './zer0slides.less';
 
 const renderFirstSlide = (startIndex) => {
-    const slideNo = paramValue("slide");
-    if (slideNo != null && Number(slideNo) > -1) {
-        slideCore.setCurrentSlideWithIndex(Number(slideNo));
+    const slide = paramValue("slide");
+    if(slide == "content") {
+        renderContentSlide();
+    }
+    else if (slide != null && Number(slide) > -1) {
+        slideCore.setCurrentSlideWithIndex(Number(slide));
         renderSlide({slide: slideCore.getCurrentSlide()});
     }
     else {

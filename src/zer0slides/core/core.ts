@@ -15,7 +15,7 @@ const addSlide = (_slideName: string) => {
 }
 
 export const slideName = () => {
-    return slideCore.getCurrentSlide().name;
+    return slideCore.getCurrentSlide() ? slideCore.getCurrentSlide().name : undefined;
 }
 
 export const core = {

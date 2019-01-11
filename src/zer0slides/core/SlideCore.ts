@@ -11,11 +11,17 @@ export class SlideCore {
     private slides: {[key: string]: Slide} = {}
     private slideNames: string[] = []
 
+    public _0;
+
     public folderName: string;
     public autoStepIntervalInMs = -1;
     public newSlideCallback= () => {}
     public firstStepCallback = () => {}
     public nextSlideCallback = () => {}
+
+    public getSlideNames() {
+        return [...this.slideNames];
+    }
 
     public addSlide(name: string) {
         const slide = new Slide(name);
@@ -53,7 +59,7 @@ export class SlideCore {
     }
 
     public getCurrentIndex() {
-        const currentName = this.currentSlide.name;
+        const currentName = this.currentSlide ? this.currentSlide.name : undefined;
         return this.slideNames.indexOf(currentName);
     }
 

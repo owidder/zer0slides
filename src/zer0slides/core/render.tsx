@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 
 import {Slide} from "./Slide";
 import {HtmlSlide} from '../html/HtmlSlide';
+import {ContentSlide} from '../html/ContentSlide';
 import {Transformation} from '../html/transformations/Transformation';
 import {slideCore} from "./core";
 import {scrollToStart} from '../showCode/scroll';
@@ -76,6 +77,10 @@ const newSlideActions = (slide: Slide) => {
     })
 }
 
+const root = (): HTMLElement => {
+    return document.getElementById('root') as HTMLElement
+}
+
 export const renderSlide = (options: RenderOptions) => {
     if (options.oldSlide) {
         new Promise(resolve => {
@@ -100,9 +105,12 @@ export const renderSlide = (options: RenderOptions) => {
                 renderReadyCallback={() => {
                     newSlideActions(options.slide)
                 }}
-            />,
-            document.getElementById('root') as HTMLElement);
+            />, root());
     }
+}
+
+export const renderContentSlide = () => {
+    ReactDOM.render(<ContentSlide/>, root());
 }
 
 export const refreshSlide = (slide: Slide) => {
@@ -110,6 +118,5 @@ export const refreshSlide = (slide: Slide) => {
                                action="refresh"
                                renderReadyCallback={() => {
                                    newSlideActions(slide)
-                               }}/>,
-        document.getElementById('root') as HTMLElement);
+                               }}/>, root());
 }
