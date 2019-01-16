@@ -21,15 +21,17 @@ export class Slide {
     public description: string
     public autoStepIntervalId: number = -1
     public firstStepPromise = new SimplePromise()
+    public specialName
 
     public transformationInNext: Transformation
     public transformationOutNext: Transformation
     public transformationInPrev: Transformation
     public transformationOutPrev: Transformation
 
-    constructor(name: string, description?: string) {
+    constructor(name: string, description?: string, specialName?: string) {
         this.name = name;
         this.description = description;
+        this.specialName = specialName;
         this.createRandomTransformations();
     }
 

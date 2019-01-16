@@ -6,6 +6,7 @@ import {resetSlideReadyPromise, slideReadyPromise, cleanAfterSlideFinished} from
 import {showHideStepCtr} from './controlElements';
 import {Transformation} from './transformations/Transformation';
 
+import contentSlideCode from './specialSlides/contentSlide';
 import "./transformations/transformations.less";
 
 interface HtmlSlideProps {
@@ -17,6 +18,8 @@ interface HtmlSlideProps {
     transformType?: Transformation,
     transformOutType?: Transformation,
 }
+
+export const SPECIAL_NAME_CONTENT = "content";
 
 type OneOrTwo = "1" | "2";
 
@@ -159,6 +162,23 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
         })
     }
 
+    private getSlideCode(slide: Slide) {
+        return new Promise(resolve => {
+            if(slide.specialName) {
+                switch (slide.specialName) {
+                    case SPECIAL_NAME_CONTENT:
+                        resolve(contentSlideCode);
+                        break;
+                }
+            }
+            else {
+                $.get(slide.getPathToHtml(), (code: string) => {
+                    resolve(code);
+                })
+            }
+        })
+    }
+
     private show(container: OneOrTwo, slide: Slide) {
         if(checkIfContentAlreadyExists(container, slide)) {
             return Promise.resolve();
@@ -169,7 +189,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
             clean(container);
             $(selector(container)).append(`<div id="${slide.name}" class="${slide.name} ${SLIDE_CLASS}"></div>`);
-            $.get(slide.getPathToHtml(), (htmlCode: string) => {
+            this.getSlideCode(slide).then((htmlCode: string) => {
                 const replacedHtml = htmlCode.replace(/__0__/g, slide.name);
                 $(`${selector(container)} .${slide.name}`).html(replacedHtml);
 
@@ -180,6 +200,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
                         this.props.renderReadyCallback && this.props.renderReadyCallback();
                     }, 100)
                 })
+
             })
         })
     }

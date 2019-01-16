@@ -8,6 +8,7 @@ import {slideCore} from './zer0slides/core/core';
 import {Slide, isSpecialSlideName} from './zer0slides/core/Slide';
 import {bindKeyToFunction} from './zer0slides/core/keys';
 import {renderSlide} from './zer0slides/core/render';
+import {SPECIAL_NAME_CONTENT} from './zer0slides/html/HtmlSlide';
 import {paramValue} from './zer0slides/url/queryUtil';
 import {getParamValue} from './zer0slides/url/queryUtil2';
 import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
@@ -87,7 +88,7 @@ if(!_.isUndefined(initName) && initName.length > 0) {
 }
 
 initReadyPromise.then((startIndex) => {
-    //slideCore.addSlide("_0_content");
+    slideCore.addSlide("_0_content", "Content", SPECIAL_NAME_CONTENT);
     renderFirstSlide(startIndex);
     bindKeys();
     createControlElements();
