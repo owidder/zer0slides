@@ -63,6 +63,7 @@ export const createTooltip = (tooltip: Tooltip) => {
         .classed("protip", true)
         .attr("data-pt-title", tooltip.text.startsWith('.') ? q(tooltip.text) : tooltip.text)
         .attr("data-pt-gravity", false)
+        .attr("data-pt-scheme", "pink")
         .attr("data-pt-position", tooltip.position ? tooltip.position : "bottom")
         .attr("data-pt-trigger", "sticky")
         .attr("data-pt-auto-show", true)
@@ -75,8 +76,6 @@ export const createTooltip = (tooltip: Tooltip) => {
 export const addTooltipToDomNode = (selector: string, text: string, position: string, placement: string): Tooltip | undefined => {
     const _sel = q(selector);
     const old = getData(_sel);
-    console.log("add: " + selector);
-    console.log(old);
     const tooltip = {selector, text, position, placement};
     createTooltip(tooltip);
     setData(_sel, tooltip);

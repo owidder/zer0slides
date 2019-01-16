@@ -5,9 +5,9 @@ import * as _ from 'lodash';
 import {init} from './initZer0Slides';
 import {initReadyPromise} from './zer0slides/lifecycle/lifecycle';
 import {slideCore} from './zer0slides/core/core';
-import {Slide} from './zer0slides/core/Slide';
+import {Slide, isSpecialSlideName} from './zer0slides/core/Slide';
 import {bindKeyToFunction} from './zer0slides/core/keys';
-import {renderSlide, renderContentSlide} from './zer0slides/core/render';
+import {renderSlide} from './zer0slides/core/render';
 import {paramValue} from './zer0slides/url/queryUtil';
 import {getParamValue} from './zer0slides/url/queryUtil2';
 import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
@@ -18,13 +18,10 @@ import 'materialize-css/dist/css/materialize.css';
 import 'prismjs/themes/prism.css';
 import './zer0slides.less';
 
-const renderFirstSlide = (startIndex) => {
-    const slide = paramValue("slide");
-    if(slide == "content") {
-        renderContentSlide();
-    }
-    else if (slide != null && Number(slide) > -1) {
-        slideCore.setCurrentSlideWithIndex(Number(slide));
+const renderFirstSlide = (startIndex: number) => {
+    const slideIndex = paramValue("slide");
+    if (slideIndex != null && Number(slideIndex) > -1) {
+        slideCore.setCurrentSlideWithIndex(Number(slideIndex));
         renderSlide({slide: slideCore.getCurrentSlide()});
     }
     else {
@@ -90,6 +87,7 @@ if(!_.isUndefined(initName) && initName.length > 0) {
 }
 
 initReadyPromise.then((startIndex) => {
+    //slideCore.addSlide("_0_content");
     renderFirstSlide(startIndex);
     bindKeys();
     createControlElements();

@@ -10,8 +10,8 @@ export const getFolderName = () => {
     return slideCore.folderName;
 }
 
-const addSlide = (_slideName: string) => {
-    slideCore.addSlide(_slideName);
+const addSlide = (_slideName: string, description?: string) => {
+    slideCore.addSlide(_slideName, description);
 }
 
 export const slideName = () => {

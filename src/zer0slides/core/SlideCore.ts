@@ -23,8 +23,15 @@ export class SlideCore {
         return [...this.slideNames];
     }
 
-    public addSlide(name: string) {
-        const slide = new Slide(name);
+    public getDescription(slideName: string) {
+        return this.getSlide(slideName).description;
+    }
+
+    public addSlide(name: string, description?: string) {
+        const slide = new Slide(name, description ? description : name);
+        if(!this.currentSlide) {
+            this.currentSlide = slide;
+        }
         this.slideNames.push(name);
         this.slides[name] = slide;
 

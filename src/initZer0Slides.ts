@@ -60,6 +60,7 @@ export const init = () => {
         tooltip: tooltip.addTooltipToDomNode,
         tooltipStep: tooltip.addTooltipToDomNodeStep,
         metamaskLogo,
+        slideCore,
     };
 
     slideCore._0 = _0;

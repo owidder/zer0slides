@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import {Slide} from "./Slide";
+import {Slide, isSpecialSlideName, getSpecialSlideType} from "./Slide";
 import {HtmlSlide} from '../html/HtmlSlide';
 import {ContentSlide} from '../html/ContentSlide';
 import {Transformation} from '../html/transformations/Transformation';
@@ -109,8 +109,24 @@ export const renderSlide = (options: RenderOptions) => {
     }
 }
 
-export const renderContentSlide = () => {
-    ReactDOM.render(<ContentSlide/>, root());
+const renderSpecialSlide = (slide: Slide):boolean => {
+    if(isSpecialSlideName(slide.name)) {
+        switch (getSpecialSlideType(slide.name)) {
+            case "content":
+                renderContentSlide(slide.name);
+                break;
+
+            default:
+            // do nothing
+        }
+        return true;
+    }
+
+    return false;
+}
+
+const renderContentSlide = (slideName: string) => {
+    ReactDOM.render(<ContentSlide slideName={slideName}/>, root());
 }
 
 export const refreshSlide = (slide: Slide) => {

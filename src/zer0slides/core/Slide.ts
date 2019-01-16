@@ -6,10 +6,19 @@ import {Transformation} from '../html/transformations/Transformation';
 import {SimplePromise} from './SimplePromise';
 import {slideCore} from "./core";
 
+export const isSpecialSlideName = (name: string) => {
+    return name.startsWith("_0_");
+}
+
+export const getSpecialSlideType = (name: string) => {
+    return name.substr(3);
+}
+
 export class Slide {
     public steps: Step[] = []
     public currentStepNo: number = -1
     public name: string
+    public description: string
     public autoStepIntervalId: number = -1
     public firstStepPromise = new SimplePromise()
 
@@ -18,8 +27,9 @@ export class Slide {
     public transformationInPrev: Transformation
     public transformationOutPrev: Transformation
 
-    constructor(name: string) {
+    constructor(name: string, description?: string) {
         this.name = name;
+        this.description = description;
         this.createRandomTransformations();
     }
 
