@@ -8,21 +8,32 @@ import {slideCore} from './zer0slides/core/core';
 import {Slide, isSpecialSlideName} from './zer0slides/core/Slide';
 import {bindKeyToFunction} from './zer0slides/core/keys';
 import {renderSlide} from './zer0slides/core/render';
-import {SPECIAL_NAME_CONTENT} from './zer0slides/html/HtmlSlide';
+import {SPECIAL_NAME_CONTENT, SLIDE_NAME_CONTENT} from './zer0slides/html/HtmlSlide';
 import {paramValue} from './zer0slides/url/queryUtil';
 import {getParamValue} from './zer0slides/url/queryUtil2';
 import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
 import {createControlElements} from './zer0slides/html/controlElements';
 import {initTooltip} from './zer0slides/showCode/tooltip';
+import {openContentPage} from './zer0slides/shortcut/shortcut';
 
 import 'materialize-css/dist/css/materialize.css';
 import 'prismjs/themes/prism.css';
 import './zer0slides.less';
 
-const renderFirstSlide = (startIndex: number) => {
+const setStepNoOfCurrentSlideFromParam = () => {
+    const stepNo = paramValue("step");
+    if(stepNo != null && Number(stepNo) > -1) {
+        slideCore.getCurrentSlide().currentStepNo = Number(stepNo);
+    }
+}
+
+const renderFirstSlide = (startIndex: number, gotoStepNo?: string) => {
     const slideIndex = paramValue("slide");
     if (slideIndex != null && Number(slideIndex) > -1) {
         slideCore.setCurrentSlideWithIndex(Number(slideIndex));
+        if(gotoStepNo != null && Number(gotoStepNo) > -1) {
+            slideCore.getCurrentSlide().currentStepNo = Number(gotoStepNo);
+        }
         renderSlide({slide: slideCore.getCurrentSlide()});
     }
     else {
@@ -70,6 +81,7 @@ const bindKeys = () => {
 
     bindKeyToFunction("r", () => slideCore.refreshSlide())
     bindKeyToFunction("t", () => window.location.reload())
+    bindKeyToFunction("9", () => openContentPage())
     bindKeyToFunction("0", () => {
             slideCore.setCurrentSlideWithIndex(0);
             window.location.reload();
@@ -89,8 +101,9 @@ if(!_.isUndefined(initName) && initName.length > 0) {
 }
 
 initReadyPromise.then((startIndex) => {
-    slideCore.addSlide("_0_content", "Content", SPECIAL_NAME_CONTENT);
-    renderFirstSlide(startIndex);
+    const stepNo = paramValue("step");
+    slideCore.addSlide(SLIDE_NAME_CONTENT, "Content", SPECIAL_NAME_CONTENT);
+    renderFirstSlide(startIndex, stepNo);
     bindKeys();
     createControlElements();
 });
