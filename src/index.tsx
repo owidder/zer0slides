@@ -75,6 +75,7 @@ const bindKeys = () => {
             window.location.reload();
         }
     )
+    bindKeyToFunction("enter", () => {slideCore.openShortcutSlide()})
 
     bindKeyToFunction("b", () => switchCurrentSlideToBlack());
 }

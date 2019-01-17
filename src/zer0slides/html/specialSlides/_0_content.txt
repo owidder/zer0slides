@@ -32,10 +32,9 @@
             return "__0__-template" + index;
         }
 
-        const currentUrl = window.location.href;
         const templatesDiv = document.querySelector("#__0__ .templates");
         _0.slideCore.getSlideNames().forEach(function(slideName, i) {
-            const url = currentUrl.replace(/slide=\d+/,"slide=" + i);
+            const url = _0.slideCore.getSlideUrl(slideName);
 
             const divNode = document.createElement("div");
             divNode.setAttribute("class", templateClass(i) + " template");

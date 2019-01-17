@@ -4,6 +4,7 @@ import {setSlideNo} from '../html/controlElements';
 import {setHashValue} from '../url/queryUtil';
 import {Transformation} from '../html/transformations/Transformation';
 import {autoStepOn} from "../steps/steps";
+import {slideCore} from "./core";
 
 export class SlideCore {
 
@@ -13,11 +14,32 @@ export class SlideCore {
 
     public _0;
 
+    public shortcutSlideIndex = 0
     public folderName: string;
     public autoStepIntervalInMs = -1;
     public newSlideCallback= () => {}
     public firstStepCallback = () => {}
     public nextSlideCallback = () => {}
+
+    public openShortcutSlide() {
+        const url = this.getSlideUrlWithIndex(this.shortcutSlideIndex);
+        window.open(url, "_blank");
+    }
+
+    public getSlideUrl(slideName: string) {
+        const index = this.slideNames.indexOf(slideName);
+        return this.getSlideUrlWithIndex(index);
+    }
+
+    public getSlideUrlWithIndex(index: number) {
+        const currentUrl = window.location.href;
+        const url = currentUrl.replace(/slide=\d+/,"slide=" + index);
+        return url;
+    }
+
+    public getShortCutSlideUrl() {
+        return slideCore.getSlideUrlWithIndex(this.shortcutSlideIndex);
+    }
 
     public getSlideNames() {
         return [...this.slideNames];
