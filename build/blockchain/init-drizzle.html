@@ -1,0 +1,70 @@
+<style>
+
+    #__0__ .code {
+        font-size: 1.2em;
+    }
+
+    #__0__ .code pre {
+        background-color: white;
+    }
+
+    #__0__ .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["Step 3: Init Drizzle",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "...\n" +
+            "import {Drizzle, generateStore} from \"drizzle\";\n" +
+            "import HashStoreContract from \"./contracts/HashStore.json\";\n" +
+            "...\n" +
+            "export class HashStore extends React.Component {\n" +
+            "...\n" +
+            "    componentDidMount() {\n" +
+            "        const options = {contracts: [HashStoreContract]};\n" +
+            "        this.drizzle = new Drizzle(options, generateStore(options));\n" +
+            "\n" +
+            "        this.unsubscribe = this.drizzle.store.subscribe(() => {\n" +
+            "            const drizzleState = this.drizzle.store.getState();\n" +
+            "\n" +
+            "            if (drizzleState.drizzleStatus.initialized) {\n" +
+            "                this.setState({loaded: true, drizzleState});\n" +
+            "            }\n" +
+            "        });\n" +
+            "    }\n" +
+            "\n" +
+            "    compomentWillUnmount() {\n" +
+            "        this.unsubscribe();\n" +
+            "    }\n" +
+            "...\n" +
+            "}\n"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "2", "Under the Drizzles hood is a Redux store (but you can ignore this)"));
+        steps.push(_0.highlightLinesStep(codeSelector, "3", "We need the contract ABI", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "7-18", "Initialize Drizzle", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "8", "Create an object containing the contracts metadata"));
+        steps.push(_0.highlightLinesStep(codeSelector, "9", "Create a Drizzle thingy and store it in a component attribute", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "11-17", "Subscribe to changes of the contract"));
+        steps.push(_0.highlightLinesStep(codeSelector, "12", "Get the Drizzle state", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "14", "Check if Drizzle has successfully connected with the contract"));
+        steps.push(_0.highlightLinesStep(codeSelector, "15", "If so, put the Drizzle state into the component state", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "20-22", "Clean up your mess"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

@@ -1,0 +1,74 @@
+<style>
+
+    #__0__ .code {
+        font-size: 1.2em;
+    }
+
+    #__0__ .code pre {
+        background-color: white;
+    }
+
+    #__0__ .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["test/HashStore.js",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "const HashStore = artifacts.require(\"./HashStore.sol\");\n" +
+            "\n" +
+            "contract(\"HashStore\", accounts => {\n" +
+            "    it(\"It should get the correct account as source when asked for stored hash\", async () => {\n" +
+            "        const hashStore = await HashStore.deployed();\n" +
+            "        await hashStore.storeHash(\"123\", {from: accounts[0]});\n" +
+            "        const source = await hashStore.getSourceFromHash.call(\"123\");\n" +
+            "        assert.equal(source, accounts[0], \"Wrong source\");\n" +
+            "    });\n" +
+            "    it(\"It should get zero as source when ask for not stored hash\", async () => {\n" +
+            "        const hashStore = await HashStore.deployed();\n" +
+            "        const source = await hashStore.getSourceFromHash.call(\"1234\");\n" +
+            "        assert.equal(source, 0, \"Wrong source\");\n" +
+            "    });\n" +
+            "    it(\"It should throw exception when store hash twice\", async () => {\n" +
+            "        const hashStore = await HashStore.deployed();\n" +
+            "        let isThrown = false;\n" +
+            "        try {\n" +
+            "            await hashStore.storeHash(\"123456\", {from: accounts[0]});\n" +
+            "            await hashStore.storeHash(\"123456\", {from: accounts[0]});\n" +
+            "        }\n" +
+            "        catch (e) {\n" +
+            "            isThrown = true;\n" +
+            "        }\n" +
+            "        assert.equal(isThrown, true, \"No exception thrown\")\n" +
+            "    });\n" +
+            "});\n", true
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "1", "Deploy the contract in the local blockchain"));
+        steps.push(_0.highlightLinesStep(codeSelector, "3", "Almost Mocha. Just replace 'describe' with 'contract'", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "3", "'accounts' is an array of the 10 predefined accounts"));
+        steps.push(_0.highlightLinesStep(codeSelector, "4-9", "Just a Mocha test case", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "4", "Check that the contract returns the correct account ID", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "4", "Communication with local blockchain is async"));
+        steps.push(_0.highlightLinesStep(codeSelector, "5", "Get a handy proxy of the contract", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "6", "Call a transactional function of the contract"));
+        steps.push(_0.highlightLinesStep(codeSelector, "7", "Call a view function of the contract", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "8", "Normal Chai assert"));
+        steps.push(_0.highlightLinesStep(codeSelector, "10-14", "Check that it does not return an account ID when called with the wrong hash value", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "15-26", "Check that an exception is thrown when called with the same hash value twice"));
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
