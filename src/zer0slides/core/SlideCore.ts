@@ -50,7 +50,7 @@ export class SlideCore {
     }
 
     public addSlide(name: string, description?: string, specialName?: string) {
-        const slide = new Slide(name, description ? description : name);
+        const slide = new Slide(name, description ? description : name, specialName);
         if(!this.currentSlide) {
             this.currentSlide = slide;
         }
