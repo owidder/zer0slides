@@ -214,7 +214,7 @@ module.exports = (folderName = '.') => {
                             ],
                         },
                         {
-                            test: /\.txt$/,
+                            test: /\.special.html$/,
                             use: 'raw-loader'
                         },
                         // "file" loader makes sure those assets get served by WebpackDevServer.
