@@ -20,7 +20,7 @@ interface HtmlSlideProps {
 }
 
 export const SPECIAL_NAME_CONTENT = "content";
-export const SLIDE_NAME_CONTENT = "_0_content";
+export const SLIDE_NAME_CONTENT = "contentSlide";
 
 type OneOrTwo = "1" | "2";
 

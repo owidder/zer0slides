@@ -14,7 +14,7 @@ import {getParamValue} from './zer0slides/url/queryUtil2';
 import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
 import {createControlElements} from './zer0slides/html/controlElements';
 import {initTooltip} from './zer0slides/showCode/tooltip';
-import {openContentPage} from './zer0slides/shortcut/shortcut';
+import {openContentPage, openShortcutSlide} from './zer0slides/shortcut/shortcut';
 
 import 'materialize-css/dist/css/materialize.css';
 import 'prismjs/themes/prism.css';
@@ -87,7 +87,7 @@ const bindKeys = () => {
             window.location.reload();
         }
     )
-    bindKeyToFunction("enter", () => {slideCore.openShortcutSlide()})
+    bindKeyToFunction("enter", () => {openShortcutSlide()})
 
     bindKeyToFunction("b", () => switchCurrentSlideToBlack());
 }
