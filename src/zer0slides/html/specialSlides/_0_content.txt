@@ -51,7 +51,9 @@
         })
 
         const steps = _0.slideCore.getSlideNames().map(function(slideName, i) {
-            return _0.highlightLinesStep(".content", String(i+1), "." + templateClass(i), "bottom-right-corner")
+            const setShortcutStep = _0.shortcut.setShurtcutSlideIndexStep(i);
+            const highlightStep = _0.highlightLinesStep(".content", String(i+1), "." + templateClass(i), "bottom-right-corner");
+            return _0.steps.combineSteps(setShortcutStep, highlightStep);
         })
 
         _0.setSteps(steps);
