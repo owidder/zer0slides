@@ -86,6 +86,7 @@
     "rimraf": "^2.6.2",
     "typescript": "^3.1.1"
   },
+  "homepage": "https://owidder.github.io/zer0slides/build",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",

@@ -239,6 +239,10 @@ module.exports = (folderName = '.') => {
                             ),
                             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
                         },
+                        {
+                            test: /\.special.html$/,
+                            use: 'raw-loader'
+                        },
                         // "file" loader makes sure assets end up in the `build` folder.
                         // When you `import` an asset, you get its filename.
                         // This loader doesn't use a "test" so it will catch all modules
