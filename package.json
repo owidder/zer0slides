@@ -66,11 +66,14 @@
     "start:d3": "cross-env PORT=4000 node scripts/start.js d3",
     "start:promo": "cross-env PORT=4000 node scripts/start.js promo",
     "start:blockchain": "cross-env PORT=4000 node scripts/start.js blockchain",
+    "build:d3": "rimraf build && node scripts/build.js d3",
+    "build:promo": "rimraf build && node scripts/build.js promo",
+    "build:blockchain": "rimraf build && node scripts/build.js blockchain",
     "build": "rimraf build && node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "distjs": "copyfiles -f build/**/main.*.js* dist && mv dist/main.*.js dist/z0.js && cp dist/main.*.js.map dist/z0.js.map",
-    "distcss": "copyfiles -f build/**/main.*.css* dist && mv dist/main.*.css dist/z0.css && cp dist/main.*.css.map dist/z0.css.map",
-    "dist": "rimraf dist && npm run build && npm run distjs && npm run distcss"
+    "distjs": "copyfiles -f build/**/main.*.js* dist && mv dist/main.*.js dist/z0.js && mv dist/main.*.js.map dist/z0.js.map",
+    "distcss": "copyfiles -f build/**/main.*.css* dist && mv dist/main.*.css dist/z0.css && mv dist/main.*.css.map dist/z0.css.map",
+    "dist": "rimraf dist && npm run build:promo && npm run distjs && npm run distcss"
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",
