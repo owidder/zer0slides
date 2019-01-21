@@ -152,7 +152,8 @@ const buildFolder = (folderName) => {
     }
 }
 
-const folders = foldersToBuild('public');
+const folderName = process.argv.length > 1 ? process.argv[2] : undefined;
+const folders = folderName ? [folderName] : foldersToBuild('public');
 
 // Warn and crash if required files are missing
 if (folders.length == 0 && !checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
