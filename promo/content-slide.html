@@ -1,0 +1,33 @@
+<style>
+    /* __0__ will be replaced by the id of the div of this slide */
+
+    #__0__ .code {
+        font-size: 2.5em;
+    }
+
+</style>
+
+<h1>The content slide</h1>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.codeJs(".code",
+            "A content slide is automatically generated as the last slide\n" +
+            "In the content slide you can move the cursor ...\n" +
+            " ... press 'enter' ...\n" +
+            " ...or click on the 'Open in new tab'-link in the tooltip\n" +
+            "Try it out!");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", "Just press '9' to open it in a new tab", "top"));
+        steps.push(_0.highlightLinesStep(".code", "2", "With the up and down arrow keys"));
+        steps.push(_0.highlightLinesStep(".code", "3", "To open the highlighted slide in the same tab as the content slide", "top"));
+        steps.push(_0.highlightLinesStep(".code", "4", "To open the highlighted slide in another tab"));
+        steps.push(_0.highlightLinesStep(".code", "5", "Just press the '9'-key"));
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

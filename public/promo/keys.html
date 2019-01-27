@@ -14,12 +14,23 @@
 
     (function () {
         _0.codeJs(".code",
-            "'right'/'left': next slide, previous slide with transition\n" +
-            "'k'/'j': next slide, previous slide w/o transition effect\n" +
-            "'down'/'up' or 'm'/'i': next step, previous step\n" +
-            "'r': redraw current slide w/o reload of page\n" +
-            "'t': redraw current slide with reload of page\n" +
-            "'0': go to first slide");
+            "'right'/'left'\n" +
+            "'k'/'j'\n" +
+            "'down'/'up' or 'm'/'i'\n" +
+            "'r'\n" +
+            "'t'\n" +
+            "'0'\n" +
+            "'9'");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", "next slide, previous slide with transition", "bottom-right-corner"));
+        steps.push(_0.highlightLinesStep(".code", "2", "next slide, previous slide w/o transition effect", "top-right-corner"));
+        steps.push(_0.highlightLinesStep(".code", "3", "next step, previous step", "bottom-right-corner"));
+        steps.push(_0.highlightLinesStep(".code", "4", "redraw current slide w/o reload of page", "top-right-corner"));
+        steps.push(_0.highlightLinesStep(".code", "5", "redraw current slide with reload of page", "bottom-right-corner"));
+        steps.push(_0.highlightLinesStep(".code", "6", "go to first slide", "top-right-corner"));
+        steps.push(_0.highlightLinesStep(".code", "7", "open content slide in new tab", "bottom-right-corner"));
+        _0.setSteps(steps);
 
         ___();
     })()
