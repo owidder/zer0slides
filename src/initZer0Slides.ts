@@ -17,7 +17,7 @@ import {classUtil} from './zer0slides/util/classUtil';
 import {metamaskLogo} from './zer0slides/etc/metamaskLogo';
 import {cast} from './zer0slides/specials/cast';
 import {shortcut} from './zer0slides/shortcut/shortcut';
-import {granim} from './zer0slides/effects/granim';
+import {background} from './zer0slides/background/background';
 
 const createRoot = () => {
     const body = d3.select("body");
@@ -34,6 +34,7 @@ export const init = () => {
     const _0 = {
         addSlide: core.addSlide,
         autoStepOn: steps.autoStepOn,
+        backgroundImage: background.backgroundImage,
         click: click.setClickHandler,
         codeBash: showCode.bash,
         codeCss: showCode.css,
@@ -42,7 +43,6 @@ export const init = () => {
         createCast: cast.create,
         createCube: cube.create,
         glowText: glowText.create,
-        granim: granim.create,
         highlightLines: showCode.highlightLines,
         highlightLinesStep: showCode.highlightLinesStep,
         initReady: lifecycle.initReady,

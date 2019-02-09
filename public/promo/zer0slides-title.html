@@ -5,23 +5,6 @@
         font-size: 6em;
     }
 
-    #__0__ .background {
-        position: absolute;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        left: 0;
-
-        background-image: url("./img/fiumicino.jpg");
-
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-
-        filter: opacity(10%);
-    }
-
-
 </style>
 
 <div class="background"></div>
@@ -42,6 +25,8 @@
         steps.push(_0.highlightLinesStep(".code", "3", "Do anything you can do with HTML/CSS/JavaScript"));
 
         _0.setSteps(steps);
+
+        _0.backgroundImage(".background", "./img/fiumicino.jpg");
 
         ___();
     })()
