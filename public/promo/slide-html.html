@@ -1,0 +1,26 @@
+<h1>Create a small HTML file for each slide</h1>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.readFile("slide-html.html").then(function (code) {
+            _0.codeJs(".code", code);
+
+            const steps = [];
+            steps.push(_0.highlightLinesStep(".code", "1-29", "This is the code of this very slide", "top", "inside"));
+            steps.push(_0.highlightLinesStep(".code", "1", "The headline"));
+            steps.push(_0.highlightLinesStep(".code", "2", "The code will be rendered here"));
+            steps.push(_0.highlightLinesStep(".code", "6-25", "And the sausage's made here", "top"));
+            steps.push(_0.highlightLinesStep(".code", "7", "Step 1: Read the code from a file"));
+            steps.push(_0.highlightLinesStep(".code", "8", "Step 2: Show the code. " +
+                "The first parameter is a css selector inside this html file."));
+            steps.push(_0.highlightLinesStep(".code", "10-21", "Step 3: Define steps to highlight lines of code " +
+                "and show tooltips.", "top"));
+            steps.push(_0.highlightLinesStep(".code", "23", "Step 4: The snake has to be the last statement.", "top"));
+            _0.setSteps(steps);
+
+            ___();
+        })
+    })()
+</script>

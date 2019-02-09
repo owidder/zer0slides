@@ -1,0 +1,34 @@
+<style>
+
+    #__0__ .container {
+        position: relative;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    #__0__ .container canvas {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+</style>
+
+<div class="container">
+    <canvas class="granim-canvas"></canvas>
+</div>
+
+<script>
+
+    (function () {
+        setTimeout(function() {
+            _0.granim(".container canvas", "./img/gelaender.jpg")
+        }, 2000)
+        ___();
+    })()
+</script>
