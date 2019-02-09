@@ -11,7 +11,7 @@ const htmlWebpackPlugins = folders.map(folder => {
     return new HtmlWebpackPlugin({
         filename: `${folder}/index.html`,
         inject: true,
-        template: `${PUBLIC_PATH}/${folderName}/index.html`,
+        template: `${PUBLIC_PATH}/${folder}/index.html`,
     })
 })
 
@@ -19,7 +19,7 @@ module.exports = {
     entry: "./src/index.ts",
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, "dist")
+        path: path.resolve(__dirname, "build")
     },
     module: {
         rules: [
