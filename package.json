@@ -66,8 +66,7 @@
       "!**/*.d.ts"
     ],
     "setupFiles": [
-      "<rootDir>/scripts/jest/initJsdom.js",
-      "<rootDir>/scripts/jest/initMocks.js"
+      "<rootDir>/scripts/jest/initJsdom.js"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)"
