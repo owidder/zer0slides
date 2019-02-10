@@ -30,6 +30,11 @@ module.exports = {
         filename: 'static/js/[name].[contenthash:8].js',
         path: path.resolve(__dirname, "build")
     },
+    devServer: {
+        contentBase: path.join(__dirname, "build"),
+        compress: true,
+        port: 9000
+    },
     module: {
         strictExportPresence: true,
         rules: [
