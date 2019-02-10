@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const {foldersToBuild} = require("./scripts/searchFolders");
 
@@ -116,7 +117,8 @@ module.exports = {
             tsconfig: "tsconfig.json"
         }),
         new MiniCssExtractPlugin({
-            filename: "static/css/[name].[contenthash:8].css",})
+            filename: "static/css/[name].[contenthash:8].css",}),
+        new CopyWebpackPlugin(["public"])
     ],
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
