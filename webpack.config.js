@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const {foldersToBuild} = require("./scripts/searchFolders");
 
@@ -23,7 +25,7 @@ const htmlWebpackPlugins = folders.map(folder => {
 module.exports = {
     entry: "./src/index.tsx",
     output: {
-        filename: "bundle.js",
+        filename: 'static/js/[name].[contenthash:8].js',
         path: path.resolve(__dirname, "build")
     },
     module: {
@@ -72,7 +74,7 @@ module.exports = {
                     },
                     {
                         test: /\.css$/,
-                        use: ["style-loader", "css-loader"]
+                        use: [{loader: MiniCssExtractPlugin.loader}, "css-loader"]
                     },
                     {
                         test: /\.special.html$/,
@@ -107,6 +109,8 @@ module.exports = {
             watch: "src",
             tsconfig: "tsconfig.json"
         }),
+        new MiniCssExtractPlugin({
+            filename: "static/css/[name].[contenthash:8].css",})
     ],
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
