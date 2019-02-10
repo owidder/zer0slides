@@ -1,4 +1,4 @@
-import {q, selector} from "../selector/selector";
+import {q} from "../selector/selector";
 
 const BACKGROUND_IMAGE_CLASS = "_background_image_";
 

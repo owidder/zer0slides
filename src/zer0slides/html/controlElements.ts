@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
 
 import {slideCore} from '../core/core';
-import * as mojs from '../effects/mojs';
-import {timingSafeEqual} from "crypto";
+
+const mojs = require('../effects/mojs');
 
 const STEPCTR_SELECTOR = "#control-elements .stepctr";
 const SLIDENO_SELECTOR = "#control-elements .slideno";

@@ -23,7 +23,9 @@ const htmlWebpackPlugins = folders.map(folder => {
 })
 
 module.exports = {
-    entry: "./src/index.tsx",
+    entry: {
+        zer0slides: "./src/index.tsx"
+    },
     output: {
         filename: 'static/js/[name].[contenthash:8].js',
         path: path.resolve(__dirname, "build")

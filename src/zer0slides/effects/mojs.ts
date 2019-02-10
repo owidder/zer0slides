@@ -1,11 +1,14 @@
-import 'mo-js/build/mo';
-import {Simulate} from "react-dom/test-utils";
+import {isInJsdom} from "../util/browserUtil";
+
+if(!isInJsdom()) {
+    require('mo-js/build/mo');
+}
 
 /* ************************************************
 **** from https://github.com/legomushroom/mojs ****
 ************************************************* */
 
-const mojs = (window as any).mojs;
+const mojs = (window as any).mojs || {};
 
 export const startEffect = (timeline: any) => {
     timeline.replay();
