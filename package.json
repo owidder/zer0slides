@@ -13,6 +13,7 @@
   "devDependencies": {
     "css-loader": "^2.1.0",
     "html-webpack-plugin": "^3.2.0",
+    "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "style-loader": "^0.23.1",
     "ts-loader": "^5.3.3",
@@ -23,13 +24,17 @@
   "dependencies": {
     "d3": "^5.9.0",
     "jquery": "^3.3.1",
+    "keyboardjs": "^2.5.1",
     "lodash": "^4.17.11",
     "materialize-css": "^1.0.0",
     "metamask-logo": "^2.2.0",
     "mo-js": "^0.288.2",
+    "prismjs": "^1.15.0",
     "protip": "^1.4.21",
     "qrcode": "^1.3.3",
+    "query-string": "^6.2.0",
     "react": "^16.8.1",
-    "react-dom": "^16.8.1"
+    "react-dom": "^16.8.1",
+    "sprintf-js": "^1.1.2"
   }
 }

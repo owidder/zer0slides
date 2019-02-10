@@ -1,0 +1,62 @@
+@import "default";
+
+/* --- Left --- */
+
+@awayTransformLeft: translateX(-100vw);
+@hereTransformLeft: translateX(0);
+
+/* --- In --- */
+
+@keyframes kfMoveInLeft {
+  0% {transform: @awayTransformLeft}
+  100% { transform: @hereTransformLeft}
+}
+
+.moveInLeftInit {
+  transform: @awayTransformLeft;
+}
+
+.moveInLeft {
+  animation: kfMoveInLeft @defaultDuration @defaultTimingFunction;
+}
+
+/* --- Out --- */
+
+@keyframes kfMoveOutLeft {
+  100% { transform: @awayTransformLeft}
+}
+
+.moveOutLeft {
+  animation: kfMoveOutLeft @defaultDuration @defaultTimingFunction;
+}
+
+/* --- Right --- */
+
+@awayTransformRight: translateX(100vw);
+@hereTransformRight: translateX(0);
+
+/* --- In --- */
+
+@keyframes kfMoveInRight {
+  0% {transform: @awayTransformRight}
+  100% { transform: @hereTransformRight}
+}
+
+.moveInRightInit {
+  transform: @awayTransformRight;
+}
+
+.moveInRight {
+  animation: kfMoveInRight @defaultDuration @defaultTimingFunction;
+}
+
+/* --- Out --- */
+
+@keyframes kfMoveOutRight {
+  100% {transform: @awayTransformRight}
+}
+
+.moveOutRight {
+  animation: kfMoveOutRight @defaultDuration @defaultTimingFunction;
+}
+

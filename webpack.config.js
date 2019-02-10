@@ -16,7 +16,7 @@ const htmlWebpackPlugins = folders.map(folder => {
 })
 
 module.exports = {
-    entry: "./src/index.ts",
+    entry: "./src/index.tsx",
     output: {
         filename: "bundle.js",
         path: path.resolve(__dirname, "build")

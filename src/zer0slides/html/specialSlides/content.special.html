@@ -1,0 +1,61 @@
+<style>
+
+    #__0__ .template {
+        display: none;
+    }
+
+    .protip-content a {
+        color: white;
+    }
+</style>
+
+<div class="templates"></div>
+<div class="title"></div>
+<div class="content"></div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["Content"], "normal glow");
+
+        const slideNamesString = _0.slideCore.getSlideNames().reduce(function(slideNamesString, slideName) {
+            const description = _0.slideCore.getDescription(slideName);
+            const line = description;
+            return slideNamesString.length > 0 ? `${slideNamesString}\n${line}` : line;
+        }, "")
+
+        _0.codeJs(".content", slideNamesString);
+
+        function templateClass(index) {
+            return "__0__-template" + index;
+        }
+
+        const templatesDiv = document.querySelector("#__0__ .templates");
+        _0.slideCore.getSlideNames().forEach(function(slideName, i) {
+            const url = _0.slideCore.getSlideUrl(slideName);
+
+            const divNode = document.createElement("div");
+            divNode.setAttribute("class", templateClass(i) + " template");
+
+            const aNode = document.createElement("a");
+            aNode.setAttribute("target", "_blank");
+            aNode.setAttribute("href", url);
+            const textNode = document.createTextNode("Open in new tab");
+            aNode.appendChild(textNode);
+
+            divNode.appendChild(aNode);
+
+            templatesDiv.appendChild(divNode);
+        })
+
+        const steps = _0.slideCore.getSlideNames().map(function(slideName, i) {
+            const setShortcutStep = _0.shortcut.setShurtcutSlideIndexStep(i);
+            const highlightStep = _0.highlightLinesStep(".content", String(i+1), "." + templateClass(i), "bottom-right-corner");
+            return _0.steps.combineSteps(setShortcutStep, highlightStep);
+        })
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
