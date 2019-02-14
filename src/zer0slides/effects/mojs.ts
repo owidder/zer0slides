@@ -1,5 +1,4 @@
-import 'mo-js/build/mo';
-import {Simulate} from "react-dom/test-utils";
+require('mo-js/build/mo');
 
 /* ************************************************
 **** from https://github.com/legomushroom/mojs ****

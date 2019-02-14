@@ -34,7 +34,7 @@ export const init = () => {
     const _0 = {
         addSlide: core.addSlide,
         autoStepOn: steps.autoStepOn,
-        backgroundImage: background.backgroundImage,
+        backgroundImage: background.image,
         click: click.setClickHandler,
         codeBash: showCode.bash,
         codeCss: showCode.css,

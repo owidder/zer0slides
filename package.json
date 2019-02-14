@@ -132,7 +132,9 @@
     "globals": {
       "ts-jest": {
         "tsConfigFile": "/Users/oliver/dev/github/gapslides/tsconfig.test.json"
-      }
+      },
+      "window": true,
+      "document": true
     }
   },
   "babel": {
