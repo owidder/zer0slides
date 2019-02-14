@@ -30,6 +30,7 @@ module.exports = {
         filename: 'static/js/[name].[contenthash:8].js',
         path: path.resolve(__dirname, "build")
     },
+    devtool: 'source-map',
     devServer: {
         contentBase: path.join(__dirname, "build"),
         compress: true,
