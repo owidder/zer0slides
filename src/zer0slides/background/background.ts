@@ -10,8 +10,13 @@ const image = (selector: string, imgPath: string) => {
 }
 
 export const _addFilterToStyle = (currentStyle: string, filter: string) => {
-    const currentFilterMatch = currentStyle.match(/^.*filter\:(.*?);/);
-    console.log(currentFilterMatch);
+    const filterRegex = /(^.*)filter\:(.*?);(.*)$/;
+    if(filterRegex.test(currentStyle)) {
+        const currentFilterMatch = currentStyle.match(filterRegex);
+        return `${currentFilterMatch[1]}filter:${currentFilterMatch[2]} ${filter};${currentFilterMatch[3]}`;
+    }
+
+    return `${currentStyle} filter: ${filter};`
 }
 
 const opacity = (selector: string, filterName: string) => {
