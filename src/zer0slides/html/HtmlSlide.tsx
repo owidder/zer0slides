@@ -76,10 +76,6 @@ const startDelayed = (delay, fct: () => Promise<any>) => {
 
 export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
-    constructor(props: HtmlSlideProps) {
-        super(props);
-    }
-
     private currentContainer: OneOrTwo = "1";
 
     private otherContainer(): OneOrTwo {
