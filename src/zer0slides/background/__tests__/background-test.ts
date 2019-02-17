@@ -9,5 +9,7 @@ describe("background", () => {
     it("should add filter when there is no filter", () => {
         const currentStyle = "x: y; a: b;";
         expect(_addFilterToStyle(currentStyle, "blur(3px)")).toEqual("x: y; a: b; filter: blur(3px);")
+        expect(_addFilterToStyle(null, "blur(3px)")).toEqual("filter: blur(3px);")
+        expect(_addFilterToStyle("", "blur(3px)")).toEqual("filter: blur(3px);")
     })
 })

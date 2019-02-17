@@ -26,8 +26,11 @@
 
         _0.setSteps(steps);
 
-        _0.backgroundImage(".background", "./img/fiumicino.jpg");
-
+        const BACKGROUND_SELECTOR = ".background";
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/fiumicino.jpg");
+        _0.opacity(BACKGROUND_SELECTOR, 20);
+        _0.blur(BACKGROUND_SELECTOR, 30);
+        _0.saturate(300);
         ___();
     })()
 </script>
