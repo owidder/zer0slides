@@ -4,31 +4,28 @@
         position: relative;
         height: 100vh;
         width: 100vw;
-    }
-
-    #__0__ .container canvas {
-        position: absolute;
-        display: block;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
 </style>
 
+<div class="background"></div>
+<h1>Create a host page</h1>
 <div class="container">
-    <canvas class="granim-canvas"></canvas>
+    <h2><a href="https://github.com/owidder/zer0slides/tree/master/public/promo" target="_blank">The slides of this promo are here</a></h2>
 </div>
 
 <script>
 
     (function () {
-        setTimeout(function() {
-            _0.granim(".container canvas", "./img/gelaender.jpg")
-        }, 2000)
+        const BACKGROUND_SELECTOR = ".background";
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/dog.jpeg");
+        _0.opacity(BACKGROUND_SELECTOR, 5);
+        _0.startHueRotation(BACKGROUND_SELECTOR);
         ___();
     })()
+
 </script>
