@@ -61,6 +61,7 @@ export const init = () => {
         saturate: background.saturate,
         showText: text.showText,
         slideReady: lifecycle.slideReady,
+        startHueRotation: background.startHueRotation,
         startStopCube: cube.startStopAnimation,
         switchBetweenClasses: classUtil.switchBetweenClasses,
         tooltip: tooltip.addTooltipToDomNode,

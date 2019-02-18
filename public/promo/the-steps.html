@@ -6,6 +6,7 @@
 
 </style>
 
+<div class="background"></div>
 <h1>How to create your zer0slides code slide show?</h1>
 <div class="code"></div>
 
@@ -22,6 +23,10 @@
 
         _0.setSteps(steps);
 
+        const BACKGROUND_SELECTOR = ".background";
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/gelaender.jpg");
+        _0.opacity(BACKGROUND_SELECTOR, 15);
+        _0.startHueRotation(BACKGROUND_SELECTOR);
         ___();
     })()
 </script>
