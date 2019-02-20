@@ -1,93 +1,67 @@
 {
-  "name": "gapslides",
-  "version": "0.1.0",
-  "private": true,
+  "name": "zer0slides",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf build && cross-env NODE_ENV=production webpack",
+    "build:dev": "rimraf build && cross-env NODE_ENV=development webpack",
+    "test": "jest",
+    "start": "cross-env NODE_ENV=development webpack-dev-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^10.12.24",
+    "@types/react": "^16.8.2",
+    "@types/react-dom": "^16.8.0",
+    "babel-jest": "^24.1.0",
+    "babel-loader": "^8.0.5",
+    "babel-preset-react-app": "^7.0.0",
+    "copy-webpack-plugin": "^4.6.0",
+    "cross-env": "^5.2.0",
+    "css-loader": "^2.1.0",
+    "express": "^4.16.4",
+    "file-loader": "^3.0.1",
+    "fork-ts-checker-webpack-plugin": "^0.5.2",
+    "fs": "0.0.1-security",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.1.0",
+    "jest-css-modules-transform": "^2.1.1",
+    "jsdom": "^13.2.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "path": "^0.12.7",
+    "raw-loader": "^1.0.0",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^0.23.1",
+    "ts-jest": "^23.10.5",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
+  },
   "dependencies": {
-    "@types/jquery": "^3.3.10",
-    "@types/lodash": "^4.14.118",
-    "@types/qrcode": "^1.3.0",
-    "@types/query-string": "^6.1.1",
-    "autoprefixer": "7.1.6",
-    "babel-jest": "20.0.3",
-    "babel-loader": "7.1.2",
-    "babel-preset-react-app": "^3.1.2",
-    "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "chalk": "1.1.3",
-    "css-loader": "0.28.7",
-    "d3": "^5.7.0",
-    "dotenv": "4.0.0",
-    "dotenv-expand": "4.2.0",
-    "extract-text-webpack-plugin": "3.0.2",
-    "file-loader": "1.1.5",
-    "fork-ts-checker-webpack-plugin": "^0.2.8",
-    "fs-extra": "3.0.1",
-    "html-webpack-plugin": "2.29.0",
-    "jest": "20.0.4",
+    "d3": "^5.9.0",
     "jquery": "^3.3.1",
-    "keyboardjs": "^2.4.1",
+    "keyboardjs": "^2.5.1",
     "lodash": "^4.17.11",
-    "materialize-css": "^1.0.0-rc.2",
+    "materialize-css": "^1.0.0",
     "metamask-logo": "^2.2.0",
     "mo-js": "^0.288.2",
-    "npm": "^6.4.1",
-    "object-assign": "4.1.1",
-    "postcss-flexbugs-fixes": "3.2.0",
-    "postcss-loader": "2.0.8",
     "prismjs": "^1.15.0",
-    "promise": "8.0.1",
-    "protip": "^1.4.16",
-    "qrcode": "^1.3.2",
+    "protip": "^1.4.21",
+    "qrcode": "^1.3.3",
     "query-string": "^6.2.0",
-    "raf": "3.4.0",
-    "react": "^16.5.2",
-    "react-dev-utils": "^5.0.2",
-    "react-dom": "^16.5.2",
-    "resolve": "1.6.0",
-    "source-map-loader": "^0.2.1",
-    "sprintf-js": "^1.1.1",
-    "style-loader": "0.19.0",
-    "sw-precache-webpack-plugin": "0.11.4",
-    "ts-jest": "22.0.1",
-    "ts-loader": "^2.3.7",
-    "tsconfig-paths-webpack-plugin": "^2.0.0",
-    "tslint": "^5.7.0",
-    "tslint-config-prettier": "^1.10.0",
-    "tslint-react": "^3.2.0",
-    "uglifyjs-webpack-plugin": "1.2.5",
-    "url": "^0.11.0",
-    "url-loader": "0.6.2",
-    "webpack": "3.8.1",
-    "webpack-dev-server": "2.11.3",
-    "webpack-manifest-plugin": "1.3.2",
-    "whatwg-fetch": "2.0.3"
-  },
-  "scripts": {
-    "start": "cross-env PORT=4000 node scripts/start.js",
-    "start:d3": "cross-env PORT=4000 node scripts/start.js d3",
-    "start:promo": "cross-env PORT=4000 node scripts/start.js promo",
-    "start:blockchain": "cross-env PORT=4000 node scripts/start.js blockchain",
-    "build:d3": "rimraf build && node scripts/build.js d3",
-    "build:promo": "rimraf build && node scripts/build.js promo",
-    "build:blockchain": "rimraf build && node scripts/build.js blockchain",
-    "build": "rimraf build && node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
-    "distjs": "copyfiles -f build/**/main.*.js* dist && mv dist/main.*.js dist/z0.js && mv dist/main.*.js.map dist/z0.js.map",
-    "distcss": "copyfiles -f build/**/main.*.css* dist && mv dist/main.*.css dist/z0.css && mv dist/main.*.css.map dist/z0.css.map",
-    "dist": "rimraf dist && npm run build:promo && npm run distjs && npm run distcss"
-  },
-  "devDependencies": {
-    "@types/jest": "^23.3.2",
-    "@types/node": "^10.11.3",
-    "@types/react": "^16.4.14",
-    "@types/react-dom": "^16.0.8",
-    "copyfiles": "^2.1.0",
-    "cross-env": "^5.2.0",
-    "express": "^4.16.4",
-    "less": "^3.8.1",
-    "less-loader": "^4.1.0",
-    "raw-loader": "^1.0.0",
-    "rimraf": "^2.6.2",
-    "typescript": "^3.1.1"
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "sprintf-js": "^1.1.2"
   },
   "homepage": "https://owidder.github.io/zer0slides/build",
   "jest": {
@@ -96,26 +70,22 @@
       "!**/*.d.ts"
     ],
     "setupFiles": [
-      "<rootDir>/config/polyfills.js"
+      "<rootDir>/scripts/jest/initJsdom.js"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)"
+      "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)"
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
-      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^.+\\.(js|jsx|mjs)$": "babel-jest",
+      "^.+\\.tsx?$": "ts-jest",
+      "^.+\\.css$": "jest-css-modules-transform",
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/scripts/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$"
     ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
     "moduleFileExtensions": [
       "web.ts",
       "ts",
@@ -131,8 +101,11 @@
     ],
     "globals": {
       "ts-jest": {
-        "tsConfigFile": "/Users/oliver/dev/github/gapslides/tsconfig.test.json"
-      }
+        "tsConfigFile": "tsconfig.test.json",
+        "diagnostics": false
+      },
+      "window": true,
+      "document": true
     }
   },
   "babel": {

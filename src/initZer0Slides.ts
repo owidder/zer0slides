@@ -17,6 +17,7 @@ import {classUtil} from './zer0slides/util/classUtil';
 import {metamaskLogo} from './zer0slides/etc/metamaskLogo';
 import {cast} from './zer0slides/specials/cast';
 import {shortcut} from './zer0slides/shortcut/shortcut';
+import {background} from './zer0slides/background/background';
 
 const createRoot = () => {
     const body = d3.select("body");
@@ -33,6 +34,8 @@ export const init = () => {
     const _0 = {
         addSlide: core.addSlide,
         autoStepOn: steps.autoStepOn,
+        backgroundImage: background.image,
+        blur: background.blur,
         click: click.setClickHandler,
         codeBash: showCode.bash,
         codeCss: showCode.css,
@@ -44,6 +47,7 @@ export const init = () => {
         highlightLines: showCode.highlightLines,
         highlightLinesStep: showCode.highlightLinesStep,
         initReady: lifecycle.initReady,
+        opacity: background.opacity,
         q: selector.q,
         qr: qrUtil.makeQrCode,
         qrCurrentAddress: qrUtil.qrCurrentAddress,
@@ -54,8 +58,10 @@ export const init = () => {
         setAttribute: text.setAttribute,
         setClass: classUtil.setClass,
         setSteps: steps.setSteps,
+        saturate: background.saturate,
         showText: text.showText,
         slideReady: lifecycle.slideReady,
+        startHueRotation: background.startHueRotation,
         startStopCube: cube.startStopAnimation,
         switchBetweenClasses: classUtil.switchBetweenClasses,
         tooltip: tooltip.addTooltipToDomNode,

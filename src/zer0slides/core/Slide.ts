@@ -15,6 +15,8 @@ export const getSpecialSlideType = (name: string) => {
 }
 
 export class Slide {
+    public exitFunctions: Array<() => void> = []
+
     public steps: Step[] = []
     public currentStepNo: number = -1
     public name: string
@@ -122,5 +124,6 @@ export class Slide {
 
     public aboutToBeRemoved() {
         this.autoStepOff();
+        this.exitFunctions.forEach(exitFunction => exitFunction())
     }
 }

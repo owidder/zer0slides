@@ -7,6 +7,7 @@
 
 </style>
 
+<div class="background"></div>
 <h1>The content slide</h1>
 <div class="code"></div>
 
@@ -28,6 +29,10 @@
         steps.push(_0.highlightLinesStep(".code", "5", "Just press the '9'-key"));
         _0.setSteps(steps);
 
+        const BACKGROUND_SELECTOR = ".background";
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/ship.jpg");
+        _0.opacity(BACKGROUND_SELECTOR, 15);
+        _0.startHueRotation(BACKGROUND_SELECTOR);
         ___();
     })()
 </script>

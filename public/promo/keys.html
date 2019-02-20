@@ -7,6 +7,7 @@
 
 </style>
 
+<div class="background"></div>
 <h1>Some hotkeys</h1>
 <div class="code"></div>
 
@@ -32,6 +33,10 @@
         steps.push(_0.highlightLinesStep(".code", "7", "open content slide in new tab", "bottom-right-corner"));
         _0.setSteps(steps);
 
+        const BACKGROUND_SELECTOR = ".background";
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/sculpture.jpg");
+        _0.opacity(BACKGROUND_SELECTOR, 5);
+        _0.startHueRotation(BACKGROUND_SELECTOR);
         ___();
     })()
 </script>
