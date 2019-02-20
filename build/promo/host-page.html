@@ -4,20 +4,25 @@
 <script>
 
     (function () {
-        _0.readFile("index.html").then(function (code) {
+        // we use different host pages for dev and prod, so find out the name via the current url
+        const match = window.location.href.match(/\/([^/]*\.html)/);
+        const hostPageName = match ? match[1] : "index.html";
+        _0.readFile(hostPageName).then(function (code) {
             _0.codeJs(".code", code);
 
             const steps = [];
-            steps.push(_0.highlightLinesStep(".code", "1-21", "That's the host page of this very slide deck", "top"));
-            steps.push(_0.highlightLinesStep(".code", "9-18", "In an onload function the slides are added", "top"));
-            steps.push(_0.highlightLinesStep(".code", "10-17", "The '_0' object is your friend", "top"));
-            steps.push(_0.highlightLinesStep(".code", "10-15", "Just call 'addSlide' for each slide", "bottom"));
-            steps.push(_0.highlightLinesStep(".code", "10", "The parameter is the name of the html file of the slide (w/o the '.html' extension)"));
-            steps.push(_0.highlightLinesStep(".code", "18", "At the end just call 'initReady' (don't ask why!)", "top"));
-            steps.push(_0.highlightLinesStep(".code", "20", "The zer0slides script has to be the last script of the page", "top"));
+            steps.push(_0.highlightLinesStep(".code", "1-24", "That's the host page of this very slide deck", "top"));
+            steps.push(_0.highlightLinesStep(".code", "5", "We need Google's Material Icons"));
+            steps.push(_0.highlightLinesStep(".code", "6", "And the CSS from zer0slides itself", "top"));
+            steps.push(_0.highlightLinesStep(".code", "10-20", "In an onload function the slides are added", "top"));
+            steps.push(_0.highlightLinesStep(".code", "11-19", "The '_0' object is your friend", "top"));
+            steps.push(_0.highlightLinesStep(".code", "11-17", "Just call 'addSlide' for each slide", "bottom"));
+            steps.push(_0.highlightLinesStep(".code", "11", "The first parameter is the name of the html file of the slide (w/o the '.html' extension)", "top"));
+            steps.push(_0.highlightLinesStep(".code", "11", "The second parameter is a description of the slide"));
+            steps.push(_0.highlightLinesStep(".code", "19", "At the end just call 'initReady' (don't ask why!)", "top"));
+            steps.push(_0.highlightLinesStep(".code", "22", "The zer0slides script has to be the last script of the page", "top"));
 
             _0.setSteps(steps);
-
             ___();
         })
     })()

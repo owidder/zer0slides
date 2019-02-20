@@ -7,6 +7,7 @@
 
 </style>
 
+<div class="background"></div>
 <div class="code"></div>
 <h5>Use 'right'/'left' to change slides, 'down'/'up' to step forward/back.</h5>
 
@@ -20,11 +21,15 @@
 
         const steps = [];
         steps.push(_0.highlightLinesStep(".code", "1", "Super easy!", "top"));
-        steps.push(_0.highlightLinesStep(".code", "2", "Show your code and highlight lines with tooltips"));
-        steps.push(_0.highlightLinesStep(".code", "3", "Do anything you can do with HTML/CSS/JavaScript", "top"));
+        steps.push(_0.highlightLinesStep(".code", "2", "Show your code and highlight lines with tooltips", "bottom-right-corner"));
+        steps.push(_0.highlightLinesStep(".code", "3", "Do anything you can do with HTML/CSS/JavaScript"));
 
         _0.setSteps(steps);
 
+        const BACKGROUND_SELECTOR = ".background";
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/fiumicino.jpg");
+        _0.opacity(BACKGROUND_SELECTOR, 5);
+        _0.startHueRotation(BACKGROUND_SELECTOR);
         ___();
     })()
 </script>
