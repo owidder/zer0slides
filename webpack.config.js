@@ -14,23 +14,24 @@ const fs = require('fs');
 const appDirectory = fs.realpathSync(process.cwd());
 const absPath = relPath => path.resolve(appDirectory, relPath);
 
-const htmlWebpackPlugins = folders.map(folder => {
-    return new HtmlWebpackPlugin({
-        filename: `${folder}/index.html`,
-        inject: true,
-        template: `${PUBLIC_PATH}/${folder}/index.html`,
+const htmlWebpackPlugins = (name) => {
+    return folders.map(folder => {
+        return new HtmlWebpackPlugin({
+            filename: `${folder}/${name}.html`,
+            inject: true,
+            template: `${PUBLIC_PATH}/${folder}/index.html`,
+        })
     })
-})
+}
 
 console.log(`mode = ${process.env.NODE_ENV}`)
 
-module.exports = {
+const common = {
     mode: process.env.NODE_ENV,
     entry: {
         zer0slides: "./src/index.tsx"
     },
     output: {
-        filename: 'static/js/[name].[contenthash:8].js',
         path: path.resolve(__dirname, "build")
     },
     devtool: 'source-map',
@@ -114,17 +115,44 @@ module.exports = {
         ],
     },
     plugins: [
-        ...htmlWebpackPlugins,
         new ForkTsCheckerWebpackPlugin({
             async: false,
             watch: "src",
             tsconfig: "tsconfig.json"
         }),
-        new MiniCssExtractPlugin({
-            filename: "static/css/[name].[contenthash:8].css",}),
         new CopyWebpackPlugin(["public"])
     ],
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
     },
-};
+}
+
+const withHash = {
+    ...common,
+    output: {
+        ...common.output,
+        filename: 'static/js/[name].[contenthash:8].js',
+    },
+    plugins: [
+        ...common.plugins,
+        ...htmlWebpackPlugins("start"),
+        new MiniCssExtractPlugin({
+            filename: "static/css/[name].[contenthash:8].css",}),
+    ]
+}
+
+const withoutHash = {
+    ...common,
+    output: {
+        ...common.output,
+        filename: 'static/js/z0.js',
+    },
+    plugins: [
+        ...common.plugins,
+        ...htmlWebpackPlugins("indexPublic"),
+        new MiniCssExtractPlugin({
+            filename: "static/css/z0.css",}),
+    ]
+}
+
+module.exports = [withHash, withoutHash]
