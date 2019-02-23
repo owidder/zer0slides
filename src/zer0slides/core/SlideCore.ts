@@ -12,6 +12,8 @@ export class SlideCore {
     private slides: {[key: string]: Slide} = {}
     private slideNames: string[] = []
 
+    public version;
+
     public _0;
 
     public shortcutSlideIndex = 0
