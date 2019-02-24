@@ -20,6 +20,9 @@ import 'materialize-css/dist/css/materialize.css';
 import 'prismjs/themes/prism.css';
 import './zer0slides.less';
 
+const version = require("../package.json").version;
+slideCore.version = version;
+
 const setStepNoOfCurrentSlideFromParam = () => {
     const stepNo = paramValue("step");
     if(stepNo != null && Number(stepNo) > -1) {

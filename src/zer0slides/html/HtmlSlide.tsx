@@ -8,6 +8,7 @@ import {Transformation} from './transformations/Transformation';
 
 import contentSlideCode from './specialSlides/contentSlide';
 import "./transformations/transformations.less";
+import {slideCore} from "../core/core";
 
 interface HtmlSlideProps {
     slide: Slide,
@@ -191,7 +192,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
             clean(container);
             $(selector(container)).append(`<div id="${slide.name}" class="${slide.name} ${SLIDE_CLASS}"></div>`);
             this.getSlideCode(slide).then((htmlCode: string) => {
-                const replacedHtml = htmlCode.replace(/__0__/g, slide.name);
+                const replacedHtml = htmlCode.replace(/__0__/g, slide.name).replace(/__z0_VERSION__/g, slideCore.version);
                 $(`${selector(container)} .${slide.name}`).html(replacedHtml);
 
                 slideReadyPromise(slide.name).then(() => {

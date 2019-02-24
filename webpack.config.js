@@ -1,8 +1,10 @@
+const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ZipPlugin = require('zip-webpack-plugin');
 
 const {foldersToBuild} = require("./scripts/searchFolders");
 
@@ -24,6 +26,9 @@ const htmlWebpackPlugins = (name) => {
     })
 }
 
+const VERSION = require("./package.json").version;
+
+console.log(`version = ${VERSION}`);
 console.log(`mode = ${process.env.NODE_ENV}`)
 
 const common = {
@@ -145,14 +150,25 @@ const withoutHash = {
     ...common,
     output: {
         ...common.output,
-        filename: 'static/js/z0.js',
+        filename: `static/js/z0.${VERSION}.js`,
     },
     plugins: [
         ...common.plugins,
         ...htmlWebpackPlugins("indexPublic"),
         new MiniCssExtractPlugin({
-            filename: "static/css/z0.css",}),
+            filename: `static/css/z0.${VERSION}.css`,}),
     ]
+}
+
+if(process.env.NODE_ENV === "production") {
+    withoutHash.plugins.push(
+        new ZipPlugin({
+            path: "zip",
+            filename: `z0.${VERSION}`,
+            include: [/z0\.\d\.\d\.\d\.js/,/z0\.\d\.\d\.\d\.css/,],
+            pathMapper: (assetPath) => path.join('z0', path.basename(assetPath))
+        }),
+    )
 }
 
 module.exports = [withHash, withoutHash]
