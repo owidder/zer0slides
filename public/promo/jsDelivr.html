@@ -1,0 +1,36 @@
+<style>
+
+    #__0__ .code {
+        font-size: 1.5em;
+    }
+
+</style>
+
+<div class="background"></div>
+<h1>Or get the CSS and JS files directly from jsDelivr</h1>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        const cssUrl = "https://cdn.jsdelivr.net/gh/owidder/zer0slides@v__z0_VERSION__/build/static/css/z0.1.2.0.css";
+        const jsUrl = "https://cdn.jsdelivr.net/gh/owidder/zer0slides@v__z0_VERSION__/build/static/js/z0.1.2.0.js";
+
+        const bstart = "<";
+        const bend = ">";
+        // due to a weird WebStorm bug, I have to hide the script tag in this string
+        _0.codeJs(".code", `<link href="${cssUrl}">\n${bstart}script href="${jsUrl}"${bend}${bstart}/script${bend}`);
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", "__z0_VERSION__ is the current version", "top"));
+        steps.push(_0.highlightLinesStep(".code", "2", "Put the script tag at the end of the host pages body"));
+
+        _0.setSteps(steps);
+
+        const BACKGROUND_SELECTOR = ".background";
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/suns.jpeg");
+        _0.opacity(BACKGROUND_SELECTOR, 35);
+        _0.startHueRotation(BACKGROUND_SELECTOR);
+        ___();
+    })()
+</script>
