@@ -6,7 +6,7 @@ zer0slides is a small library to create HTML based slides especially (but not re
 
 ### Step 1: Create the host page
 
-The host page is the one and only full fledged HTML file you (with head and body and the whole enchilada):
+The host page is the one and only full fledged HTML file you need (with head and body and the whole enchilada):
 * The host page loads the needed CSS and JS files
 * The host page references all the slides. A slide is a file with a fragment of HTML code
 
