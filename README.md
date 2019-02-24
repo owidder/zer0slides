@@ -18,7 +18,7 @@ Here is the host page of the [helloworld example](https://owidder.github.io/zer0
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/gh/owidder/zer0slides@v1.2.2/build/static/css/z0.1.2.2.css" rel="stylesheet"></head>
+<link href="https://cdn.jsdelivr.net/gh/owidder/zer0slides@v1.2.3/build/static/css/z0.1.2.3.css" rel="stylesheet"></head>
 <body>
 <script>
     window.onload = function () {
@@ -27,7 +27,7 @@ Here is the host page of the [helloworld example](https://owidder.github.io/zer0
         _0.initReady();
     }
 </script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/owidder/zer0slides@v1.2.2/build/static/js/z0.1.2.2.js"></script></body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/owidder/zer0slides@v1.2.3/build/static/js/z0.1.2.3.js"></script></body>
 </html>
 
 ```
