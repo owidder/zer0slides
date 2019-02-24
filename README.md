@@ -10,7 +10,7 @@ The host page is the one and only full fledged HTML file you (with head and body
 * The host page loads the needed CSS and JS files
 * The host page references all the slides. A slide is a file with a fragment of HTML code
 
-Here is the host page of the [zer0slides promo](https://owidder.github.io/zer0slides/build/promo/indexPublic.html)
+Here is the host page of the [helloworld example](https://owidder.github.io/zer0slides/build/helloworld/indexPublic.html)
 
 ```
 <!DOCTYPE html>
@@ -22,15 +22,7 @@ Here is the host page of the [zer0slides promo](https://owidder.github.io/zer0sl
 <body>
 <script>
     window.onload = function () {
-        _0.addSlide("zer0slides-title", "Title");
-        _0.addSlide("the-steps", "How to create your zer0slides code slide show?");
-        _0.addSlide("host-page", "Create a host page");
-        _0.addSlide("slide-html", "Create a small HTML file for each slide");
-        _0.addSlide("content-slide", "The content slide");
-        _0.addSlide("keys", "Some hotkeys");
-        _0.addSlide("examples", "Some examples");
-        _0.addSlide("downloads", "Downloads");
-        _0.addSlide("credits", "Thanks to");
+        _0.addSlide("helloworld-title", "Title");
 
         _0.initReady();
     }
@@ -42,6 +34,11 @@ Here is the host page of the [zer0slides promo](https://owidder.github.io/zer0sl
 
 With `_0.addSlide("name of the slide HTML file w/o the extension", "description")` a slide is added to the slide show. 
 
-The first parameter is the name of the HTML file of the slide. It has to be in the same directory as the host page.
+* The first parameter is the name of the HTML file of the slide. 
+It has to be in the same directory as the host page.
+This file is explained in the next chapter.
+* The second parameter is a description of this slide. 
+Its main usage is for the automatically created content page (explained later)
 
 ### Step 2: Create the slide HTML files
+
