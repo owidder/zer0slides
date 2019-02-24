@@ -7,7 +7,8 @@
     "build": "rimraf build && cross-env NODE_ENV=production webpack",
     "build:dev": "rimraf build && cross-env NODE_ENV=development webpack",
     "test": "jest",
-    "start": "cross-env NODE_ENV=development webpack-dev-server"
+    "start": "cross-env NODE_ENV=development webpack-dev-server",
+    "readme": "node replaceVersionInReadme.js"
   },
   "keywords": [],
   "author": "",
