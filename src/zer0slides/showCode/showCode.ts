@@ -21,7 +21,7 @@ require("prismjs/components/prism-javascript");
 require("prismjs/components/prism-css");
 
 interface ShowCodeOptions {
-    backgroundColor?: boolean,
+    backgroundColor?: string,
     lineNumbers?: boolean
 }
 
