@@ -18,7 +18,7 @@ Here is the host page of the [helloworld example](https://owidder.github.io/zer0
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/gh/owidder/zer0slides@v1.2.3/build/static/css/z0.1.2.3.css" rel="stylesheet"></head>
+<link href="https://cdn.jsdelivr.net/gh/owidder/zer0slides@v1.2.4/build/static/css/z0.1.2.4.css" rel="stylesheet"></head>
 <body>
 <script>
     window.onload = function () {
@@ -27,7 +27,7 @@ Here is the host page of the [helloworld example](https://owidder.github.io/zer0
         _0.initReady();
     }
 </script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/owidder/zer0slides@v1.2.3/build/static/js/z0.1.2.3.js"></script></body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/owidder/zer0slides@v1.2.4/build/static/js/z0.1.2.4.js"></script></body>
 </html>
 
 ```
@@ -142,3 +142,19 @@ See the following example slides:
     * [Slides are here](https://github.com/owidder/zer0slides/tree/master/public/d3)
 
 ## More features of the `_0` object
+
+### Show code
+
+There are currently 3 functions to show code with different syntax coloring:
+
+* `_0.codeBash(selectorString, codeString, optionsObject)`
+* `_0.codeCss(selectorString, codeString, optionsObject)`
+* `_0.codeJs(selectorString, codeString, optionsObject)`
+    * `selectorString`: CSS selector where to place the code.
+    The selected element has to be inside the slide, since it'll
+    automatically be prepended by the ID of the slide
+    * `codeString`: String with the code to show. 
+    Lines have to be `\n`-delimited
+    * `optionsObject`
+        * `optionsObject.backgroundColor`: name of the background color (default is `"transparent"`)
+        * `optionsObject.lineNumbers`: `true` (default) to show line numbers
