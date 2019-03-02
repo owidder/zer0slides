@@ -44,7 +44,7 @@ At the end the `_0.initReady()` function has to be called.
 
 ### Step 2: Create the slide HTML files
 
-A slide is just a file with some HTML fragment.
+A slide is just a file with some HTML fragment. It has to be in the same directory as the host page.
 
 Here's the file `helloworld-title.html`:
 
@@ -77,24 +77,59 @@ Here's the file `helloworld-title.html`:
 </script>
 ```
 
-Normally a slides HTML file has 3 sections:
+Typically a slides HTML file has 3 sections:
 * In the `<style>` section you can style your page. You should always prefix your CSS selectors with `#__0__`.
-It will be replaced by the ID of your page such that your styles will not cross pollinate other slides.
-* After that put in any HTML code you want
+It will be replaced by the ID of your page (which is the first parameter of the `_0.addSlide`-function used in the host page)
+ such that your styles will not cross pollinate other slides. But you don't have to bother with the ID. 
+ A `div` with the ID will be automatically created around the HTML code of this file
+* After that put in any HTML code you want. 
 * In the `<script>` section you can put any JavaScript code you want
     * You should put the code in a function scope to make sure it does not interfere with the code of other slides
     * You have to call `___()` (the snake) when the code has run 
-    (in async cases call the snake when all promises have resolved)
-    * The `_0` object has a lot of useful methods. Here:
-        * `_0.codeJs`: Show JavaScript code. The first parameter is the CSS selector where to render the code 
-        (on the current slide). The second parameter is a string with the code (the lines are `\n` delimited)
-        * `_0.highlightLinesStep`: Create a step to highlight one or more lines of the code. 
-        The first parameter is the CSS selector (see above). The second parameter is the line number (e.g. "1")
-        or more lines (e.g. "1-2, 5-6")
-        * The third parameter is the text ot the tooltip
-        * The fourth parameter is the placement of the tooltip ("top", "bottom")
-        
-... TO BE CONTINUED ...
+    (in async cases call the snake when all promises have been resolved)
+    * The `_0` object has a lot of useful methods. Here are the following used:
+        * `_0.codeJs(cssSelectorString, codeString)`: Show code with JavaScript syntax coloring. 
+            * `cssSelectorString` is the CSS selector where to render the code 
+        (inside the current slide, i.e. the selector does not have to include the slide ID). 
+            * `codeString` is a string with the code (with `\n`-delimited lines)
+        * `_0.highlightLinesStep(cssSelectorString, lineNumberString, tooltipTextString, placementString)`: Create a step to highlight one or more lines of the code. 
+        A step is something that's performed by clicking the down arrow key. 
+        I.e. with each key click the lines of the next `highlightLinesStep`-lines are highlighted (and the previous are de-highlighted) 
+            * `cssSelectorString` is the CSS selector (same as above). 
+            * `lineNumberString` contains the line numbers to highlight (starts with 0) e.g. "1" or "1-2" or "1-2, 5-6".
+            Under the hood [Prism with the line highlight plugin](https://prismjs.com/plugins/line-highlight/) is used. 
+            WATIAH (What's allowed there is allowed here) 
+            * `tooltipTextString` is the text ot the tooltip
+            * `placementString` is the placement of the tooltip ("top", "bottom", ...).
+            Under the hood [Protip](https://github.com/wintercounter/Protip#list-of-available-positions) is used.
+            WATIAH
+         * `_0.setSteps(stepsArray)`: Set the steps of this slide. 
+
+### Step 3
+Nothing. That's all. When you now serve the direcory with the host page and the slide HTML file you 
+should see [this](https://owidder.github.io/zer0slides/build/helloworld/indexPublic.html).         
+
+## Hotkeys
+
+* -> / <- key
+    * next slide / previous slide (with slide transition)
+* 'k' / 'j'
+    * next slide / previous slide (w/o slide transition)
+* down / up key or 'm' / 'j'
+    * next step / previous step (only when the down / up arrows appear at the right top corner)
+* 'r'
+    * redraw the current slide (w/o reloading the page, current step stays)
+* 't'
+    * redraw the current (with reloading the page, goes back to step 0)
+* '0'
+    * go back to the first slide (with reloading the page)
+* '9'
+    * open the content slide in a new tab
+        * on the content slide move via up / down keys to the slide you wanna open
+        * press 'enter' to open the slide on the same tab
+        * click on the tooltip to open the slide in a new tab
+
+## Examples
 
 See the following example slides:
 * [Hello World](https://owidder.github.io/zer0slides/build/helloworld/indexPublic.html)
@@ -105,3 +140,5 @@ See the following example slides:
     * [Slides are here](https://github.com/owidder/zer0slides/tree/master/public/blockchain)
 * [D3 (unfinished)](https://owidder.github.io/zer0slides/build/d3/indexPublic.html)
     * [Slides are here](https://github.com/owidder/zer0slides/tree/master/public/d3)
+
+## More features of the `_0` object
