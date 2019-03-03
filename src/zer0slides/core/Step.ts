@@ -1,6 +1,8 @@
+export type StepFunction = () => undefined | Promise<void>
+
 export class Step {
-    public f: () => void
-    public b: () => void
+    public f: () => StepFunction
+    public b: () => StepFunction
 
     constructor(f, b) {
         this.f = f;

@@ -1,6 +1,4 @@
-import * as _ from 'lodash';
-
-import {Step} from "../core/Step";
+import {Step, StepFunction} from "../core/Step";
 import {slideCore} from '../core/core';
 
 const getCurrentSlide = () => {
@@ -47,13 +45,26 @@ const combineSteps2 = (...steps: Step[]): Step => {
     return new Step(f, b);
 }
 
+const _callFunctionsRecursive = (fcts: Array<StepFunction>, currentIndex: number) => {
+    if(currentIndex < fcts.length) {
+        const fct = fcts[currentIndex];
+        const promise = fct();
+        if(promise) {
+            promise.then(() => _callFunctionsRecursive(fcts, currentIndex+1));
+        }
+        else {
+            _callFunctionsRecursive(fcts, currentIndex+1)
+        }
+    }
+}
+
 const combineSteps = (...steps: Step[]): Step => {
     const f = () => {
-        steps.forEach(step => step.f());
+        _callFunctionsRecursive(steps.map(step => step.f), 0);
     }
 
     const b = () => {
-        const functions = [...steps].reverse().forEach(step => step.b());
+        _callFunctionsRecursive([...steps].reverse().map(step => step.b), 0);
     }
 
     return new Step(f, b);

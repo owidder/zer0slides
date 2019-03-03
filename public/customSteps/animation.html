@@ -1,3 +1,9 @@
+<style>
+    #__0__ .animate {
+        margin-top: 2em;
+    }
+</style>
+
 <div class="animate">
     <i class="material-icons">face</i>
 </div>
@@ -11,7 +17,7 @@
                 translateX: translateX,
                 translateY: translateY
             };
-            anime(animeConf);
+            return anime(animeConf).finished;
         }
 
         const moveStep = function(translateX, translateY) {
@@ -22,18 +28,36 @@
                     const matrix = new DOMMatrix(transform);
                     currentTranslateX = matrix.m41;
                     currentTranslateY = matrix.m42;
-                    move(translateX, translateY);
+                    return move(translateX, translateY);
                 },
                 function () {
-                    move(currentTranslateX, currentTranslateY);
+                    return move(currentTranslateX, currentTranslateY);
                 }
             )
         }
 
-        _0.addStep(moveStep(undefined, window.innerHeight - 30));
-        _0.addStep(moveStep(window.innerWidth - 30));
-        _0.addStep(moveStep(undefined, 0));
-        _0.addStep(moveStep(0));
+        _0.tooltip(".animate", "Press the down arrow key and watch me move", "right");
+
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(".animate"),
+            moveStep(undefined, window.innerHeight - 100),
+            _0.tooltipStep(".animate", "No I'm at the left bottom", "right")
+            ));
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(".animate"),
+            moveStep(window.innerWidth - 30),
+            _0.tooltipStep(".animate", "No I'm at the right bottom", "left")
+        ));
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(".animate"),
+            moveStep(undefined, 0),
+            _0.tooltipStep(".animate", "No I'm at the right top", "left")
+        ));
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(".animate"),
+            moveStep(0),
+            _0.tooltipStep(".animate", "No I'm back where I started", "right")
+        ));
 
         ___();
     })()
