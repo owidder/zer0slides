@@ -1,23 +1,29 @@
-import * as d3 from 'd3';
+import * as d3 from "d3";
+import * as $ from "jquery";
+import * as _ from "lodash";
 
-import {steps} from './zer0slides/steps/steps';
-import {lifecycle} from './zer0slides/lifecycle/lifecycle';
-import {click} from './zer0slides/click/click';
-import {core, slideCore} from './zer0slides/core/core';
-import {controlElements} from './zer0slides/html/controlElements';
-import {showCode} from './zer0slides/showCode/showCode';
-import {selector} from './zer0slides/selector/selector';
-import {tooltip} from './zer0slides/showCode/tooltip';
-import {file} from './zer0slides/file/file';
-import {qrUtil} from './zer0slides/qr/qr';
-import {text} from './zer0slides/text/text';
-import {cube} from './zer0slides/specials/cube';
-import {glowText} from './zer0slides/specials/GlowText';
-import {classUtil} from './zer0slides/util/classUtil';
-import {metamaskLogo} from './zer0slides/etc/metamaskLogo';
-import {cast} from './zer0slides/specials/cast';
-import {shortcut} from './zer0slides/shortcut/shortcut';
-import {background} from './zer0slides/background/background';
+import {steps} from "./zer0slides/steps/steps";
+import {lifecycle} from "./zer0slides/lifecycle/lifecycle";
+import {click} from "./zer0slides/click/click";
+import {core, slideCore} from "./zer0slides/core/core";
+import {controlElements} from "./zer0slides/html/controlElements";
+import {showCode} from "./zer0slides/showCode/showCode";
+import {selector} from "./zer0slides/selector/selector";
+import {tooltip} from "./zer0slides/showCode/tooltip";
+import {file} from "./zer0slides/file/file";
+import {qrUtil} from "./zer0slides/qr/qr";
+import {text} from "./zer0slides/text/text";
+import {cube} from "./zer0slides/specials/cube";
+import {glowText} from "./zer0slides/specials/GlowText";
+import {classUtil} from "./zer0slides/util/classUtil";
+import {metamaskLogo} from "./zer0slides/etc/metamaskLogo";
+import {cast} from "./zer0slides/specials/cast";
+import {shortcut} from "./zer0slides/shortcut/shortcut";
+import {background} from "./zer0slides/background/background";
+
+(window as any).d3 = d3;
+(window as any).$ = $;
+(window as any)._ = _;
 
 const createRoot = () => {
     const body = d3.select("body");
@@ -32,7 +38,9 @@ export const init = () => {
     createRoot();
 
     const _0 = {
+        $1: selector.$1,
         addSlide: core.addSlide,
+        addStep: steps.addStep,
         autoStepOn: steps.autoStepOn,
         backgroundImage: background.image,
         blur: background.blur,
@@ -55,6 +63,7 @@ export const init = () => {
         removeTooltip: tooltip.removeTooltipFromDomNode,
         removeTooltipStep: tooltip.removeTooltipFromDomNodeStep,
         reverse: steps.reverse,
+        selectFirst: selector.selectFirst,
         setAttribute: text.setAttribute,
         setClass: classUtil.setClass,
         setSteps: steps.setSteps,
@@ -63,6 +72,7 @@ export const init = () => {
         slideReady: lifecycle.slideReady,
         startHueRotation: background.startHueRotation,
         startStopCube: cube.startStopAnimation,
+        step: steps.createStep,
         switchBetweenClasses: classUtil.switchBetweenClasses,
         tooltip: tooltip.addTooltipToDomNode,
         tooltipStep: tooltip.addTooltipToDomNodeStep,

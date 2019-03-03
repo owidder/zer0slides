@@ -1,0 +1,41 @@
+<div class="animate">
+    <i class="material-icons">face</i>
+</div>
+
+<script>
+
+    (function () {
+        const move = function (translateX, translateY) {
+            const animeConf = {
+                targets: "#__0__ .animate",
+                translateX: translateX,
+                translateY: translateY
+            };
+            anime(animeConf);
+        }
+
+        const moveStep = function(translateX, translateY) {
+            var currentTranslateX, currentTranslateY;
+            return _0.step(
+                function () {
+                    const transform = _0.$1(".animate").css("transform");
+                    const matrix = new DOMMatrix(transform);
+                    currentTranslateX = matrix.m41;
+                    currentTranslateY = matrix.m42;
+                    move(translateX, translateY);
+                },
+                function () {
+                    move(currentTranslateX, currentTranslateY);
+                }
+            )
+        }
+
+        _0.addStep(moveStep(undefined, window.innerHeight - 30));
+        _0.addStep(moveStep(window.innerWidth - 30));
+        _0.addStep(moveStep(undefined, 0));
+        _0.addStep(moveStep(0));
+
+        ___();
+    })()
+
+</script>

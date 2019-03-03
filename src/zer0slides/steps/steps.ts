@@ -13,6 +13,11 @@ const setSteps = (_steps: Step[]) => {
     slide.steps = _steps;
 }
 
+const addStep = (_step: Step) => {
+    const slide = getCurrentSlide();
+    slide.addStep(_step);
+}
+
 const reverse = (step: Step) => new Step(step.b, step.f);
 
 const createReverseStep = (step: Step) => {
@@ -63,6 +68,7 @@ export const autoStepOn = (intervalInMs: number) => {
 }
 
 export const steps = {
+    addStep,
     createStep,
     createReverseStep,
     setSteps,

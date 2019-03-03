@@ -57,6 +57,10 @@ export class Slide {
         }
     }
 
+    public addStep(step: Step) {
+        this.steps.push(step);
+    }
+
     public showStepCtr() {
         setStepCtr(this.currentStepNo, this.steps.length);
         showHideUp(this.currentStepNo > -1);
