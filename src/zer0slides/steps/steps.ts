@@ -45,31 +45,35 @@ const combineSteps2 = (...steps: Step[]): Step => {
     return new Step(f, b);
 }
 
-const _callFunctionsRecursive = (fcts: Array<StepFunction>, currentIndex: number) => {
-    return new Promise(resolve => {
-        if(currentIndex < fcts.length) {
-            const fct = fcts[currentIndex];
-            const promise = fct();
-            if(promise) {
-                promise.then(() => _callFunctionsRecursive(fcts, currentIndex+1));
-            }
-            else {
-                _callFunctionsRecursive(fcts, currentIndex+1)
-            }
+const _callFunctionsRecursive = (fcts: Array<StepFunction>, resolve: () => void, currentIndex: number) => {
+    if(currentIndex < fcts.length) {
+        const fct = fcts[currentIndex];
+        const promise = fct();
+        if(promise) {
+            promise.then(() => _callFunctionsRecursive(fcts, resolve, currentIndex+1));
         }
         else {
-            resolve();
+            _callFunctionsRecursive(fcts, resolve, currentIndex+1)
         }
+    }
+    else {
+        resolve();
+    }
+}
+
+const _callFunctions = (fcts: Array<StepFunction>) => {
+    return new Promise(resolve => {
+        _callFunctionsRecursive(fcts, resolve, 0);
     })
 }
 
 const combineSteps = (...steps: Step[]): Step => {
     const f = () => {
-        return _callFunctionsRecursive(steps.map(step => step.f), 0);
+        return _callFunctions(steps.map(step => step.f));
     }
 
     const b = () => {
-        return _callFunctionsRecursive([...steps].reverse().map(step => step.b), 0);
+        return _callFunctions([...steps].reverse().map(step => step.b));
     }
 
     return new Step(f, b);
