@@ -72,36 +72,40 @@ export class Slide {
     }
 
     public nextStep(roundRobin = false) {
-        if(!(this.currentStepNo > 0)) {
-            slideCore.firstStepCallback();
-        }
-        if(this.currentStepNo >= this.steps.length - 1) {
-            if(roundRobin) {
-                this.currentStepNo = -1;
+        if(!slideCore.blockSteps) {
+            if(!(this.currentStepNo > 0)) {
+                slideCore.firstStepCallback();
             }
-            else {
-                return;
+            if(this.currentStepNo >= this.steps.length - 1) {
+                if(roundRobin) {
+                    this.currentStepNo = -1;
+                }
+                else {
+                    return;
+                }
             }
-        }
 
-        this.currentStepNo++;
-        this.steps[this.currentStepNo] && this.steps[this.currentStepNo].perform();
-        this.showStepCtr()
+            this.currentStepNo++;
+            this.steps[this.currentStepNo] && this.steps[this.currentStepNo].perform();
+            this.showStepCtr()
+        }
     }
 
     public prevStep(roundRobin = false) {
-        if(this.currentStepNo <= -1) {
-            if(roundRobin) {
-                this.currentStepNo = this.steps.length;
+        if(!slideCore.blockSteps) {
+            if(this.currentStepNo <= -1) {
+                if(roundRobin) {
+                    this.currentStepNo = this.steps.length;
+                }
+                else {
+                    return;
+                }
             }
-            else {
-                return;
-            }
-        }
 
-        this.steps[this.currentStepNo] && this.steps[this.currentStepNo].unperform();
-        this.currentStepNo--;
-        this.showStepCtr();
+            this.steps[this.currentStepNo] && this.steps[this.currentStepNo].unperform();
+            this.currentStepNo--;
+            this.showStepCtr();
+        }
     }
 
     public performToCurrentStep() {

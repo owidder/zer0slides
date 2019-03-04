@@ -46,25 +46,30 @@ const combineSteps2 = (...steps: Step[]): Step => {
 }
 
 const _callFunctionsRecursive = (fcts: Array<StepFunction>, currentIndex: number) => {
-    if(currentIndex < fcts.length) {
-        const fct = fcts[currentIndex];
-        const promise = fct();
-        if(promise) {
-            promise.then(() => _callFunctionsRecursive(fcts, currentIndex+1));
+    return new Promise(resolve => {
+        if(currentIndex < fcts.length) {
+            const fct = fcts[currentIndex];
+            const promise = fct();
+            if(promise) {
+                promise.then(() => _callFunctionsRecursive(fcts, currentIndex+1));
+            }
+            else {
+                _callFunctionsRecursive(fcts, currentIndex+1)
+            }
         }
         else {
-            _callFunctionsRecursive(fcts, currentIndex+1)
+            resolve();
         }
-    }
+    })
 }
 
 const combineSteps = (...steps: Step[]): Step => {
     const f = () => {
-        _callFunctionsRecursive(steps.map(step => step.f), 0);
+        return _callFunctionsRecursive(steps.map(step => step.f), 0);
     }
 
     const b = () => {
-        _callFunctionsRecursive([...steps].reverse().map(step => step.b), 0);
+        return _callFunctionsRecursive([...steps].reverse().map(step => step.b), 0);
     }
 
     return new Step(f, b);

@@ -19,6 +19,7 @@ export class SlideCore {
     public shortcutSlideIndex = 0
     public folderName: string;
     public autoStepIntervalInMs = -1;
+    public blockSteps = false;
     public newSlideCallback= () => {}
     public firstStepCallback = () => {}
     public nextSlideCallback = () => {}
