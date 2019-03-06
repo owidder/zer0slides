@@ -51,6 +51,7 @@ export const init = () => {
         combine: steps.combineSteps,
         createCast: cast.create,
         createCube: cube.create,
+        d3select: selector.d3select,
         glowText: glowText.create,
         highlightLines: showCode.highlightLines,
         highlightLinesStep: showCode.highlightLinesStep,
