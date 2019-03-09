@@ -129,34 +129,59 @@
             return data.find(function(d) {return d.Date == date}).Close;
         }
 
+        var currentName1, currentName2;
         function read2DataSets(name1, name2) {
-            d3.csv("./csv/" + name1 + ".csv").then(function (data1) {
-                d3.csv("./csv/" + name2 + ".csv").then(function (data2) {
-                    const dates1 = data1.map(function(d) {return d.Date});
-                    const dates2 = data2.map(function(d) {return d.Date});
-                    const commonDates = _.intersection(dates1, dates2);
+            currentName1 = name1;
+            currentName2 = name2;
+            return new Promise(function(resolve) {
+                d3.csv("./csv/" + name1 + ".csv").then(function (data1) {
+                    d3.csv("./csv/" + name2 + ".csv").then(function (data2) {
+                        const dates1 = data1.map(function(d) {return d.Date});
+                        const dates2 = data2.map(function(d) {return d.Date});
+                        const commonDates = _.intersection(dates1, dates2);
 
-                    const plotData = commonDates.map(function(date, i) {
-                        const xValue = closeValueForDate(data1, date);
-                        const yValue = closeValueForDate(data2, date);
-                        return {
-                            date: date,
-                            x: Number(xValue),
-                            y: Number(yValue),
-                            id: i
-                        }
+                        const plotData = commonDates.map(function(date, i) {
+                            const xValue = closeValueForDate(data1, date);
+                            const yValue = closeValueForDate(data2, date);
+                            return {
+                                date: date,
+                                x: Number(xValue),
+                                y: Number(yValue),
+                                id: i
+                            }
+                        })
+
+                        console.log("draw " + name1 + "-" + name2);
+                        draw(plotData, name1, name2);
+
+                        resolve();
                     })
-
-                    console.log("draw " + name1 + "-" + name2)
-                    draw(plotData, name1, name2)
                 })
             })
         }
 
-        read2DataSets("AAPL", "ETH-USD")
-        setTimeout(function () {
-            read2DataSets("BTC-USD", "FB")
-        }, 10000)
+        function changeDataStep(name1, name2) {
+            let oldName1;
+            let oldName2;
+
+            return _0.step(
+                function() {
+                    oldName1 = currentName1;
+                    oldName2 = currentName2;
+                    return read2DataSets(name1, name2);
+                },
+                function () {
+                    return read2DataSets(oldName1, oldName2);
+                }
+            )
+        }
+
+        read2DataSets("AAPL", "FB").then(function() {
+            _0.addStep(changeDataStep("BTC-USD", "ETH-USD"));
+            _0.addStep(changeDataStep("AAPL", "MSFT"));
+        })
+
+        ___();
     })()
 
 </script>
