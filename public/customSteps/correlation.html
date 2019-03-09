@@ -26,8 +26,16 @@
             .attr("height", height);
 
         const plotG = svg.append("g");
-        const meanxG = svg.append("g");
-        const meanyG = svg.append("g");
+        const meanG = svg.append("g");
+        const axis = svg.append("g");
+
+        axis.append("g")
+            .attr("class", "yaxis")
+            .attr("transform", "translate(" + (MARGIN_X - 10) + ",0)")
+
+        axis.append("g")
+            .attr("class", "xaxis")
+            .attr("transform", "translate(0," + (height - MARGIN_Y + 10) + ")")
 
         function attr(array, attrName) {
             return array.map(function (element) {
@@ -49,7 +57,7 @@
         }
 
         function drawMeanLine(name, startX1, startX2, startY1, startY2, endX1, endX2, endY1, endY2) {
-            meanyG.selectAll("line.mean" + name).data([1]).enter()
+            meanG.selectAll("line.mean" + name).data([1]).enter()
                 .append("line")
                 .attr("class", "mean" + name)
                 .attr("x1", startX1)
@@ -59,7 +67,7 @@
                 .attr("stroke", "grey")
                 .attr("stroke-dasharray", 4)
 
-            meanyG.selectAll("line.mean" + name)
+            meanG.selectAll("line.mean" + name)
                 .transition()
                 .duration(2000)
                 .attr("x1", endX1)
@@ -82,13 +90,23 @@
             drawMeanLine("x", leftX-width, rightX-width, yScale(meanY), yScale(meanY), leftX, rightX, yScale(meanY), yScale(meanY));
             drawMeanLine("y", xScale(meanX), xScale(meanX), upperY-height, lowerY-height, xScale(meanX), xScale(meanX), upperY, lowerY);
 
-            plotG.selectAll("circle.dot").data(plotData).enter()
+            axis.transition().duration(1000).selectAll(".xaxis").call(d3.axisBottom(xScale));
+            axis.transition().duration(1000).selectAll(".yaxis").call(d3.axisLeft(yScale));
+
+            const data = plotG.selectAll("circle.dot").data(plotData);
+
+            plotG.selectAll("title.dot").data(plotData);
+
+            data.enter()
                 .append("circle")
                 .attr("class", "dot")
                 .attr("r", 3)
                 .attr("cx", function() {return randomOutside(width)})
                 .attr("cy", function() {return randomOutside(height)})
                 .append("title")
+                .attr("class", "dot")
+
+            plotG.selectAll("title.dot")
                 .text(function(d) {return "[" + d.date + "] " + name1 + ": " + d.x + " / " + name2 + ": " + d.y})
 
             plotG.selectAll("circle.dot")
@@ -103,6 +121,8 @@
                 .attr("fill", function (d) {
                     return color(meanX, meanY, d.x, d.y)
                 })
+
+            data.exit().remove();
         }
 
         function closeValueForDate(data, date) {
@@ -134,6 +154,9 @@
         }
 
         read2DataSets("AAPL", "ETH-USD")
+        setTimeout(function () {
+            read2DataSets("BTC-USD", "FB")
+        }, 10000)
     })()
 
 </script>
