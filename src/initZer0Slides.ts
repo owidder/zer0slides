@@ -21,10 +21,6 @@ import {cast} from "./zer0slides/specials/cast";
 import {shortcut} from "./zer0slides/shortcut/shortcut";
 import {background} from "./zer0slides/background/background";
 
-(window as any).d3 = d3;
-(window as any).$ = $;
-(window as any)._ = _;
-
 const createRoot = () => {
     const body = d3.select("body");
     body.selectAll("#root")
@@ -81,6 +77,9 @@ export const init = () => {
         shortcut,
         slideCore,
         steps,
+        d3,
+        $,
+        _
     };
 
     slideCore._0 = _0;

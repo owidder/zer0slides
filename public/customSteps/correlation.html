@@ -1,0 +1,139 @@
+<style>
+
+</style>
+
+<div class="graph">
+
+</div>
+
+<script>
+
+    (function () {
+        const d3 = _0.d3;
+        const _ = _0._;
+
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const MARGIN_X = 100;
+        const MARGIN_Y = 100;
+        const leftX = MARGIN_X;
+        const rightX = width - MARGIN_X;
+        const upperY = MARGIN_Y;
+        const lowerY = height - MARGIN_Y;
+
+        const svg = d3.select("#__0__ .graph").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const plotG = svg.append("g");
+        const meanxG = svg.append("g");
+        const meanyG = svg.append("g");
+
+        function attr(array, attrName) {
+            return array.map(function (element) {
+                return element[attrName]
+            })
+        }
+
+        function scale(data, attrName, rangeMin, rangeMax) {
+            const min = _.minBy(data, attrName)[attrName];
+            const max = _.maxBy(data, attrName)[attrName];
+            return d3.scaleLinear().domain([min, max]).range([rangeMin, rangeMax]);
+        }
+
+        function color(meanX, meanY, x, y) {
+            if((x > meanX && y > meanY) || (x < meanX && y < meanY)) {
+                return "green";
+            }
+            return "red";
+        }
+
+        function drawMeanLine(name, startX1, startX2, startY1, startY2, endX1, endX2, endY1, endY2) {
+            meanyG.selectAll("line.mean" + name).data([1]).enter()
+                .append("line")
+                .attr("class", "mean" + name)
+                .attr("x1", startX1)
+                .attr("x2", startX2)
+                .attr("y1", startY1)
+                .attr("y2", startY2)
+                .attr("stroke", "grey")
+                .attr("stroke-dasharray", 4)
+
+            meanyG.selectAll("line.mean" + name)
+                .transition()
+                .duration(2000)
+                .attr("x1", endX1)
+                .attr("x2", endX2)
+                .attr("y1", endY1)
+                .attr("y2", endY2)
+        }
+
+        function randomOutside(max) {
+            return _.random(0, max) + Math.sign(_.random(-1000, 1000, true)) * max;
+        }
+
+        function draw(plotData, name1, name2) {
+            const xScale = scale(plotData, "x", leftX, rightX);
+            const yScale = scale(plotData, "y", lowerY, upperY);
+
+            const meanX = _.meanBy(plotData, "x");
+            const meanY = _.meanBy(plotData, "y");
+
+            drawMeanLine("x", leftX-width, rightX-width, yScale(meanY), yScale(meanY), leftX, rightX, yScale(meanY), yScale(meanY));
+            drawMeanLine("y", xScale(meanX), xScale(meanX), upperY-height, lowerY-height, xScale(meanX), xScale(meanX), upperY, lowerY);
+
+            plotG.selectAll("circle.dot").data(plotData).enter()
+                .append("circle")
+                .attr("class", "dot")
+                .attr("r", 3)
+                .attr("cx", function() {return randomOutside(width)})
+                .attr("cy", function() {return randomOutside(height)})
+                .append("title")
+                .text(function(d) {return "[" + d.date + "] " + name1 + ": " + d.x + " / " + name2 + ": " + d.y})
+
+            plotG.selectAll("circle.dot")
+                .transition()
+                .duration(function() {return _.random(1000, 2000)})
+                .attr("cx", function (d) {
+                    return xScale(d.x);
+                })
+                .attr("cy", function (d) {
+                    return yScale(d.y);
+                })
+                .attr("fill", function (d) {
+                    return color(meanX, meanY, d.x, d.y)
+                })
+        }
+
+        function closeValueForDate(data, date) {
+            return data.find(function(d) {return d.Date == date}).Close;
+        }
+
+        function read2DataSets(name1, name2) {
+            d3.csv("./csv/" + name1 + ".csv").then(function (data1) {
+                d3.csv("./csv/" + name2 + ".csv").then(function (data2) {
+                    const dates1 = data1.map(function(d) {return d.Date});
+                    const dates2 = data2.map(function(d) {return d.Date});
+                    const commonDates = _.intersection(dates1, dates2);
+
+                    const plotData = commonDates.map(function(date, i) {
+                        const xValue = closeValueForDate(data1, date);
+                        const yValue = closeValueForDate(data2, date);
+                        return {
+                            date: date,
+                            x: Number(xValue),
+                            y: Number(yValue),
+                            id: i
+                        }
+                    })
+
+                    console.log("draw " + name1 + "-" + name2)
+                    draw(plotData, name1, name2)
+                })
+            })
+        }
+
+        read2DataSets("AAPL", "ETH-USD")
+    })()
+
+</script>
