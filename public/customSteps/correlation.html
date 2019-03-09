@@ -1,5 +1,10 @@
 <style>
 
+    #__0__ .label {
+        font-size: 1em;
+        fill: black;
+        text-anchor: end;
+    }
 </style>
 
 <div class="graph">
@@ -29,13 +34,25 @@
         const meanG = svg.append("g");
         const axis = svg.append("g");
 
+        function translate(x, y) {
+            return "translate(" + x + "," + y + ")"
+        }
+
         axis.append("g")
             .attr("class", "yaxis")
-            .attr("transform", "translate(" + (MARGIN_X - 10) + ",0)")
+            .attr("transform", translate(MARGIN_X - 10, 0))
+            .append("g")
+            .attr("transform", translate(20, MARGIN_Y) + " rotate(-90)")
+            .append("text")
+            .attr("class", "label ylabel")
 
         axis.append("g")
             .attr("class", "xaxis")
-            .attr("transform", "translate(0," + (height - MARGIN_Y + 10) + ")")
+            .attr("transform", translate(0, height - MARGIN_Y + 10))
+            .append("g")
+            .attr("transform", translate(width - MARGIN_X, -10))
+            .append("text")
+            .attr("class", "label xlabel")
 
         function attr(array, attrName) {
             return array.map(function (element) {
@@ -92,6 +109,8 @@
 
             axis.transition().duration(1000).selectAll(".xaxis").call(d3.axisBottom(xScale));
             axis.transition().duration(1000).selectAll(".yaxis").call(d3.axisLeft(yScale));
+            axis.select(".xlabel").text(name1);
+            axis.select(".ylabel").text(name2);
 
             const data = plotG.selectAll("circle.dot").data(plotData);
 
@@ -176,9 +195,10 @@
             )
         }
 
-        read2DataSets("AAPL", "FB").then(function() {
-            _0.addStep(changeDataStep("BTC-USD", "ETH-USD"));
-            _0.addStep(changeDataStep("AAPL", "MSFT"));
+        read2DataSets("Apple", "Facebook").then(function() {
+            _0.addStep(changeDataStep("Bitcoin", "Ethereum"));
+            _0.addStep(changeDataStep("Apple", "Microsoft"));
+            _0.addStep(changeDataStep("Facebook", "Bitcoin"));
         })
 
         ___();
