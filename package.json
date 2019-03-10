@@ -8,7 +8,10 @@
     "build:dev": "rimraf build && cross-env NODE_ENV=development webpack",
     "test": "jest",
     "start": "cross-env NODE_ENV=development webpack-dev-server",
-    "readme": "node replaceVersionInReadme.js"
+    "readme": "node replaceVersionInReadme.js",
+    "copyhtml": "cpx 'public/**/*.html' build",
+    "copyhtml:watch": "cpx 'public/**/*.html' build --watch",
+    "server": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +26,7 @@
     "babel-loader": "^8.0.5",
     "babel-preset-react-app": "^7.0.0",
     "copy-webpack-plugin": "^4.6.0",
+    "cpx": "^1.5.0",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "express": "^4.16.4",

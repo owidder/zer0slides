@@ -54,7 +54,7 @@
             .append("text")
             .attr("class", "label xlabel")
 
-        function attr(array, attrName) {
+        function project(array, attrName) {
             return array.map(function (element) {
                 return element[attrName]
             })
@@ -95,6 +95,10 @@
 
         function randomOutside(max) {
             return _.random(0, max) + Math.sign(_.random(-1000, 1000, true)) * max;
+        }
+
+        function drawRegressionLine(plotData) {
+            /* comment abc */
         }
 
         function draw(plotData, name1, name2) {
@@ -155,8 +159,8 @@
             return new Promise(function(resolve) {
                 d3.csv("./csv/" + name1 + ".csv").then(function (data1) {
                     d3.csv("./csv/" + name2 + ".csv").then(function (data2) {
-                        const dates1 = data1.map(function(d) {return d.Date});
-                        const dates2 = data2.map(function(d) {return d.Date});
+                        const dates1 = project(data1, "Date");
+                        const dates2 = project(data2, "Date");
                         const commonDates = _.intersection(dates1, dates2);
 
                         const plotData = commonDates.map(function(date, i) {

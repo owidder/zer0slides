@@ -41,7 +41,7 @@ const common = {
     },
     devtool: 'source-map',
     devServer: {
-        contentBase: path.join(__dirname, "build"),
+        contentBase: path.join(__dirname, "public"),
         compress: true,
         port: 9000
     },
