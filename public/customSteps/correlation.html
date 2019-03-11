@@ -5,6 +5,11 @@
         fill: black;
         text-anchor: end;
     }
+
+    #__0__ .regression {
+        stroke-width: 3px;
+        stroke-dasharray: 3;
+    }
 </style>
 
 <div class="graph">
@@ -32,6 +37,7 @@
 
         const plotG = svg.append("g");
         const meanG = svg.append("g");
+        const linearRegressionG = svg.append("g");
         const axis = svg.append("g");
 
         function translate(x, y) {
@@ -66,6 +72,12 @@
             return d3.scaleLinear().domain([min, max]).range([rangeMin, rangeMax]);
         }
 
+        function unscale(data, attrName, domainMin, domainMax) {
+            const min = _.minBy(data, attrName)[attrName];
+            const max = _.maxBy(data, attrName)[attrName];
+            return d3.scaleLinear().domain([domainMin, domainMax]).range([min, max]);
+        }
+
         function color(meanX, meanY, x, y) {
             if((x > meanX && y > meanY) || (x < meanX && y < meanY)) {
                 return "green";
@@ -97,8 +109,45 @@
             return _.random(0, max) + Math.sign(_.random(-1000, 1000, true)) * max;
         }
 
-        function drawRegressionLine(plotData) {
-            /* comment abc */
+        function drawLinearRegressionLine(plotData, xScale, yScale) {
+            const xValues = project(plotData, "x");
+            const yValues = project(plotData, "y");
+            const allMax = _.max(_.union(xValues, yValues));
+            const normalizer = d3.scaleLinear().domain([0, allMax]).range([0, 1]);
+            const deNormalizer = d3.scaleLinear().domain([0, 1]).range([0, allMax]);
+            const normalizedXValues = xValues.map(normalizer);
+            const normalizedYValues = yValues.map(normalizer);
+
+            const linearRegressionObject = ss.linearRegression([normalizedXValues, normalizedYValues]);
+            const linearRegressionLineFunction = ss.linearRegressionLine(linearRegressionObject);
+
+            const normalizedLeftX = normalizer(_.min(xValues));
+            const normalizedLeftY = linearRegressionLineFunction(normalizedLeftX);
+            const normalizedRightX = normalizer(_.max(xValues))
+            const normalizedRightY = linearRegressionLineFunction(normalizedRightX);
+            const normalizedMidX = normalizer(_.mean(xValues));
+            const normalizedMidY = linearRegressionLineFunction(normalizedMidX);
+
+            const leftX = deNormalizer(normalizedLeftX);
+            const leftY = deNormalizer(normalizedLeftY);
+            const rightX = deNormalizer(normalizedRightX);
+            const rightY = deNormalizer(normalizedRightY);
+            const midX = deNormalizer(normalizedMidX);
+            const midY = deNormalizer(normalizedMidY);
+
+            const linearRegressionLinePath = d3.line()([[xScale(leftX), yScale(leftY)], [xScale(rightX), yScale(rightY)]]);
+            const startLinePath = d3.line()([[xScale(leftX), yScale(midY)], [xScale(rightX), yScale(midY)]]);
+
+            linearRegressionG.selectAll("path.regression").data([1]).enter()
+                .append("path")
+                .attr("class", "regression")
+                .attr("stroke", "black")
+                .attr("d", startLinePath)
+
+            linearRegressionG.selectAll("path.regression")
+                .transition()
+                .duration(1000)
+                .attr("d", linearRegressionLinePath)
         }
 
         function draw(plotData, name1, name2) {
@@ -110,6 +159,8 @@
 
             drawMeanLine("x", leftX-width, rightX-width, yScale(meanY), yScale(meanY), leftX, rightX, yScale(meanY), yScale(meanY));
             drawMeanLine("y", xScale(meanX), xScale(meanX), upperY-height, lowerY-height, xScale(meanX), xScale(meanX), upperY, lowerY);
+
+            drawLinearRegressionLine(plotData, xScale, yScale);
 
             axis.transition().duration(1000).selectAll(".xaxis").call(d3.axisBottom(xScale));
             axis.transition().duration(1000).selectAll(".yaxis").call(d3.axisLeft(yScale));
@@ -203,6 +254,9 @@
             _0.addStep(changeDataStep("Bitcoin", "Ethereum"));
             _0.addStep(changeDataStep("Apple", "Microsoft"));
             _0.addStep(changeDataStep("Facebook", "Bitcoin"));
+            _0.addStep(changeDataStep("Apple", "HewlettPackard"));
+            _0.addStep(changeDataStep("Bitcoin", "HewlettPackard"));
+            _0.addStep(changeDataStep("Ethereum", "HewlettPackard"));
         })
 
         ___();
