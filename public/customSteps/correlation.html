@@ -112,28 +112,14 @@
         function drawLinearRegressionLine(plotData, xScale, yScale) {
             const xValues = project(plotData, "x");
             const yValues = project(plotData, "y");
-            const allMax = _.max(_.union(xValues, yValues));
-            const normalizer = d3.scaleLinear().domain([0, allMax]).range([0, 1]);
-            const deNormalizer = d3.scaleLinear().domain([0, 1]).range([0, allMax]);
-            const normalizedXValues = xValues.map(normalizer);
-            const normalizedYValues = yValues.map(normalizer);
 
-            const linearRegressionObject = ss.linearRegression([normalizedXValues, normalizedYValues]);
-            const linearRegressionLineFunction = ss.linearRegressionLine(linearRegressionObject);
+            const linearRegressionObject = ss.linearRegression([xValues, yValues]);
 
-            const normalizedLeftX = normalizer(_.min(xValues));
-            const normalizedLeftY = linearRegressionLineFunction(normalizedLeftX);
-            const normalizedRightX = normalizer(_.max(xValues))
-            const normalizedRightY = linearRegressionLineFunction(normalizedRightX);
-            const normalizedMidX = normalizer(_.mean(xValues));
-            const normalizedMidY = linearRegressionLineFunction(normalizedMidX);
-
-            const leftX = deNormalizer(normalizedLeftX);
-            const leftY = deNormalizer(normalizedLeftY);
-            const rightX = deNormalizer(normalizedRightX);
-            const rightY = deNormalizer(normalizedRightY);
-            const midX = deNormalizer(normalizedMidX);
-            const midY = deNormalizer(normalizedMidY);
+            const leftX = _.min(xValues);
+            const leftY = linearRegressionObject.b + _.min(yValues) * linearRegressionObject.m;
+            const rightX = _.max(xValues);
+            const rightY = leftY + (_.max(yValues) - _.min(yValues)) * linearRegressionObject.m;
+            const midY = (rightY - leftY) / 2;
 
             const linearRegressionLinePath = d3.line()([[xScale(leftX), yScale(leftY)], [xScale(rightX), yScale(rightY)]]);
             const startLinePath = d3.line()([[xScale(leftX), yScale(midY)], [xScale(rightX), yScale(midY)]]);
