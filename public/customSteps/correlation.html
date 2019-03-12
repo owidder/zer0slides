@@ -165,7 +165,7 @@
 
             plotG.selectAll("circle.dot")
                 .transition()
-                .duration(function() {return _.random(1000, 2000)})
+                .duration(function() {return _.random(2000, 3000)})
                 .attr("cx", function (d) {
                     return xScale(d.x);
                 })
@@ -230,13 +230,14 @@
             )
         }
 
-        draw2DataSets("Apple", "Facebook").then(function() {
-            _0.addStep(changeDataStep("Bitcoin", "Ethereum"));
-            _0.addStep(changeDataStep("Apple", "Microsoft"));
-            _0.addStep(changeDataStep("Facebook", "Bitcoin"));
-            _0.addStep(changeDataStep("Apple", "HewlettPackard"));
-            _0.addStep(changeDataStep("Bitcoin", "HewlettPackard"));
-            _0.addStep(changeDataStep("Ethereum", "HewlettPackard"));
+        draw2DataSets("AAPL", "GE").then(function() {
+            _0.addStep(changeDataStep("GE", "GM"));
+            _0.addStep(changeDataStep("BTC-USD", "ETH-USD"));
+            _0.addStep(changeDataStep("AAPL", "BTC-USD"));
+            _0.addStep(changeDataStep("AAPL", "FB"));
+            _0.addStep(changeDataStep("AAPL", "MSFT"));
+            _0.addStep(changeDataStep("FB", "MSFT"));
+            _0.addStep(changeDataStep("FB", "GM"));
         })
 
         ___();
