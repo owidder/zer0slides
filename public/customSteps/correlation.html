@@ -72,12 +72,6 @@
             return d3.scaleLinear().domain([min, max]).range([rangeMin, rangeMax]);
         }
 
-        function unscale(data, attrName, domainMin, domainMax) {
-            const min = _.minBy(data, attrName)[attrName];
-            const max = _.maxBy(data, attrName)[attrName];
-            return d3.scaleLinear().domain([domainMin, domainMax]).range([min, max]);
-        }
-
         function color(meanX, meanY, x, y) {
             if((x > meanX && y > meanY) || (x < meanX && y < meanY)) {
                 return "green";
@@ -112,14 +106,16 @@
         function drawLinearRegressionLine(plotData, xScale, yScale) {
             const xValues = project(plotData, "x");
             const yValues = project(plotData, "y");
+            const points = plotData.map(function(d) {return [d.x, d.y]})
 
-            const linearRegressionObject = ss.linearRegression([xValues, yValues]);
+            const linearRegressionObject = ss.linearRegression(points);
 
             const leftX = _.min(xValues);
-            const leftY = linearRegressionObject.b + _.min(yValues) * linearRegressionObject.m;
             const rightX = _.max(xValues);
-            const rightY = leftY + (_.max(yValues) - _.min(yValues)) * linearRegressionObject.m;
-            const midY = (rightY - leftY) / 2;
+
+            const leftY = linearRegressionObject.b + leftX * linearRegressionObject.m;
+            const rightY = leftY + (rightX - leftX) * linearRegressionObject.m;
+            const midY = _.mean([rightY, leftY]);
 
             const linearRegressionLinePath = d3.line()([[xScale(leftX), yScale(leftY)], [xScale(rightX), yScale(rightY)]]);
             const startLinePath = d3.line()([[xScale(leftX), yScale(midY)], [xScale(rightX), yScale(midY)]]);
