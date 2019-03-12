@@ -239,6 +239,30 @@
             setTimeout(function () {
                 _0.tooltip("._2016-07-19", "These are the stock prices from Apple and General Electric from 2014 to 2018", "top");
             }, 1000);
+            _0.addStep(_0.combine(
+                _0.removeTooltipStep("._2016-07-19"),
+                _0.tooltipStep("._2015-01-28", "Each dot represents the EOD price of one day...")
+            ));
+            _0.addStep(_0.combine(
+                _0.removeTooltipStep("._2015-01-28"),
+                _0.tooltipStep(".ylabel", " ... y-axis = GE price", "right")
+            ));
+            _0.addStep(_0.combine(
+                _0.removeTooltipStep(".ylabel"),
+                _0.tooltipStep(".xlabel", " ... x-axis = Apple price", "top")
+            ));
+            _0.addStep(_0.combine(
+                _0.removeTooltipStep(".xlabel"),
+                _0.tooltipStep(".meanx", "The horizontal thin dotted line shows the mean GE stock price", "right")
+            ));
+            _0.addStep(_0.combine(
+                _0.removeTooltipStep(".meanx"),
+                _0.tooltipStep(".meany", "The vertical thin dotted line shows the mean Apple stock price", "right")
+            ));
+            _0.addStep(_0.combine(
+                _0.removeTooltipStep(".meany"),
+                _0.tooltipStep(".regression", "The thick dotted line is the linear regression through all the dots", "bottom-left")
+            ));
             _0.addStep(changeDataStep("GE", "GM"));
             _0.addStep(changeDataStep("BTC-USD", "ETH-USD"));
             _0.addStep(changeDataStep("AAPL", "BTC-USD"));
