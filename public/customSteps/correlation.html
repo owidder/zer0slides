@@ -104,14 +104,12 @@
         }
 
         function drawLinearRegressionLine(plotData, xScale, yScale) {
-            const xValues = project(plotData, "x");
-            const yValues = project(plotData, "y");
             const points = plotData.map(function(d) {return [d.x, d.y]})
 
             const linearRegressionObject = ss.linearRegression(points);
 
-            const leftX = _.min(xValues);
-            const rightX = _.max(xValues);
+            const leftX = _.minBy(plotData, "x").x;
+            const rightX = _.maxBy(plotData, "x").x;
 
             const leftY = linearRegressionObject.b + leftX * linearRegressionObject.m;
             const rightY = leftY + (rightX - leftX) * linearRegressionObject.m;
