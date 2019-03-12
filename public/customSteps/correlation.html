@@ -131,52 +131,57 @@
         }
 
         function draw(plotData, name1, name2) {
-            const xScale = scale(plotData, "x", leftX, rightX);
-            const yScale = scale(plotData, "y", lowerY, upperY);
+            return new Promise(function (resolve) {
+                const xScale = scale(plotData, "x", leftX, rightX);
+                const yScale = scale(plotData, "y", lowerY, upperY);
 
-            const meanX = _.meanBy(plotData, "x");
-            const meanY = _.meanBy(plotData, "y");
+                const meanX = _.meanBy(plotData, "x");
+                const meanY = _.meanBy(plotData, "y");
 
-            drawMeanLine("x", leftX-width, rightX-width, yScale(meanY), yScale(meanY), leftX, rightX, yScale(meanY), yScale(meanY));
-            drawMeanLine("y", xScale(meanX), xScale(meanX), upperY-height, lowerY-height, xScale(meanX), xScale(meanX), upperY, lowerY);
+                drawMeanLine("x", leftX-width, rightX-width, yScale(meanY), yScale(meanY), leftX, rightX, yScale(meanY), yScale(meanY));
+                drawMeanLine("y", xScale(meanX), xScale(meanX), upperY-height, lowerY-height, xScale(meanX), xScale(meanX), upperY, lowerY);
 
-            drawLinearRegressionLine(plotData, xScale, yScale);
+                drawLinearRegressionLine(plotData, xScale, yScale);
 
-            axis.transition().duration(1000).selectAll(".xaxis").call(d3.axisBottom(xScale));
-            axis.transition().duration(1000).selectAll(".yaxis").call(d3.axisLeft(yScale));
-            axis.select(".xlabel").text(name1);
-            axis.select(".ylabel").text(name2);
+                axis.transition().duration(1000).selectAll(".xaxis").call(d3.axisBottom(xScale));
+                axis.transition().duration(1000).selectAll(".yaxis").call(d3.axisLeft(yScale));
+                axis.select(".xlabel").text(name1);
+                axis.select(".ylabel").text(name2);
 
-            const data = plotG.selectAll("circle.dot").data(plotData);
+                const data = plotG.selectAll("circle.dot").data(plotData);
 
-            plotG.selectAll("title.dot").data(plotData);
+                plotG.selectAll("title.dot").data(plotData);
 
-            data.enter()
-                .append("circle")
-                .attr("class", "dot")
-                .attr("r", 3)
-                .attr("cx", function() {return randomOutside(width)})
-                .attr("cy", function() {return randomOutside(height)})
-                .append("title")
-                .attr("class", "dot")
+                data.enter()
+                    .append("circle")
+                    .attr("class", function(d) {
+                        return  "dot _" + d.date;
+                    })
+                    .attr("r", 3)
+                    .attr("cx", function() {return randomOutside(width)})
+                    .attr("cy", function() {return randomOutside(height)})
+                    .append("title")
+                    .attr("class", "dot")
 
-            plotG.selectAll("title.dot")
-                .text(function(d) {return "[" + d.date + "] " + name1 + ": " + d.x + " / " + name2 + ": " + d.y})
+                plotG.selectAll("title.dot")
+                    .text(function(d) {return "[" + d.date + "] " + name1 + ": " + d.x + " / " + name2 + ": " + d.y})
 
-            plotG.selectAll("circle.dot")
-                .transition()
-                .duration(function() {return _.random(2000, 3000)})
-                .attr("cx", function (d) {
-                    return xScale(d.x);
-                })
-                .attr("cy", function (d) {
-                    return yScale(d.y);
-                })
-                .attr("fill", function (d) {
-                    return color(meanX, meanY, d.x, d.y)
-                })
+                plotG.selectAll("circle.dot")
+                    .transition()
+                    .duration(function() {return _.random(3000, 4000)})
+                    .attr("cx", function (d) {
+                        return xScale(d.x);
+                    })
+                    .attr("cy", function (d) {
+                        return yScale(d.y);
+                    })
+                    .attr("fill", function (d) {
+                        return color(meanX, meanY, d.x, d.y)
+                    })
+                    .on("end", resolve)
 
-            data.exit().remove();
+                data.exit().remove();
+            })
         }
 
         function closeValueForDate(data, date) {
@@ -206,9 +211,9 @@
                         })
 
                         console.log("draw " + name1 + "-" + name2);
-                        draw(plotData, name1, name2);
-
-                        resolve();
+                        draw(plotData, name1, name2).then(function () {
+                            resolve();
+                        });
                     })
                 })
             })
@@ -231,6 +236,9 @@
         }
 
         draw2DataSets("AAPL", "GE").then(function() {
+            setTimeout(function () {
+                _0.tooltip("._2016-07-19", "These are the stock prices from Apple and General Electric from 2014 to 2018", "top");
+            }, 1000);
             _0.addStep(changeDataStep("GE", "GM"));
             _0.addStep(changeDataStep("BTC-USD", "ETH-USD"));
             _0.addStep(changeDataStep("AAPL", "BTC-USD"));
@@ -238,9 +246,8 @@
             _0.addStep(changeDataStep("AAPL", "MSFT"));
             _0.addStep(changeDataStep("FB", "MSFT"));
             _0.addStep(changeDataStep("FB", "GM"));
+            ___();
         })
-
-        ___();
     })()
 
 </script>
