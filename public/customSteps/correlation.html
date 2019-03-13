@@ -10,6 +10,11 @@
         stroke-width: 3px;
         stroke-dasharray: 3;
     }
+
+    #__0__ .correlation {
+        font-size: 10em;
+        opacity: .1;
+    }
 </style>
 
 <div class="graph">
@@ -35,6 +40,7 @@
             .attr("width", width)
             .attr("height", height);
 
+        const correlationG = svg.append("g");
         const plotG = svg.append("g");
         const meanG = svg.append("g");
         const linearRegressionG = svg.append("g");
@@ -129,6 +135,19 @@
                 .duration(1000)
                 .attr("d", linearRegressionLinePath)
         }
+        
+        function showCorrelation(plotData) {
+            const correlation = ss.sampleCorrelation(project(plotData, "x"), project(plotData, "y")).toFixed(1);
+
+            const selection = correlationG.selectAll("text.correlation").data([1]);
+
+            selection.enter()
+                .append("text")
+                .attr("class", "correlation")
+                .attr("transform", translate(width/2, height/2))
+                .merge(selection)
+                .text(correlation)
+        }
 
         function draw(plotData, name1, name2) {
             return new Promise(function (resolve) {
@@ -142,6 +161,7 @@
                 drawMeanLine("y", xScale(meanX), xScale(meanX), upperY-height, lowerY-height, xScale(meanX), xScale(meanX), upperY, lowerY);
 
                 drawLinearRegressionLine(plotData, xScale, yScale);
+                showCorrelation(plotData);
 
                 axis.transition().duration(1000).selectAll(".xaxis").call(d3.axisBottom(xScale));
                 axis.transition().duration(1000).selectAll(".yaxis").call(d3.axisLeft(yScale));
@@ -241,15 +261,15 @@
             }, 1000);
             _0.addStep(_0.combine(
                 _0.removeTooltipStep("._2016-07-19"),
-                _0.tooltipStep("._2015-01-28", "Each dot represents the EOD price of one day...")
+                _0.tooltipStep("._2015-01-28", "Each dot represents the EOD price of one day (hover over one to see the respective values)")
             ));
             _0.addStep(_0.combine(
                 _0.removeTooltipStep("._2015-01-28"),
-                _0.tooltipStep(".ylabel", " ... y-axis = GE price", "right")
+                _0.tooltipStep(".ylabel", "y-axis = GE price", "right")
             ));
             _0.addStep(_0.combine(
                 _0.removeTooltipStep(".ylabel"),
-                _0.tooltipStep(".xlabel", " ... x-axis = Apple price", "top")
+                _0.tooltipStep(".xlabel", "x-axis = Apple price", "top")
             ));
             _0.addStep(_0.combine(
                 _0.removeTooltipStep(".xlabel"),
