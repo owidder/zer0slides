@@ -12,8 +12,10 @@
     }
 
     #__0__ .correlation {
-        font-size: 10em;
+        font-size: 30em;
         opacity: .1;
+        text-anchor: middle;
+        alignment-baseline: central;
     }
 </style>
 
@@ -147,6 +149,7 @@
                 .attr("transform", translate(width/2, height/2))
                 .merge(selection)
                 .text(correlation)
+                .attr("fill", correlation < 0 ? "red" : "green")
         }
 
         function draw(plotData, name1, name2) {
@@ -208,13 +211,13 @@
             return data.find(function(d) {return d.Date == date}).Close;
         }
 
-        var currentName1, currentName2;
-        function draw2DataSets(name1, name2) {
-            currentName1 = name1;
-            currentName2 = name2;
+        var currentSymbol1, currentSymbol2;
+        function draw2DataSets(symbol1, symbol2) {
+            currentSymbol1 = symbol1;
+            currentSymbol2 = symbol2;
             return new Promise(function(resolve) {
-                d3.csv("./csv/" + name1 + ".csv").then(function (data1) {
-                    d3.csv("./csv/" + name2 + ".csv").then(function (data2) {
+                d3.csv("./csv/" + symbol1 + ".csv").then(function (data1) {
+                    d3.csv("./csv/" + symbol2 + ".csv").then(function (data2) {
                         const dates1 = project(data1, "Date");
                         const dates2 = project(data2, "Date");
                         const commonDates = _.intersection(dates1, dates2);
@@ -230,8 +233,8 @@
                             }
                         })
 
-                        console.log("draw " + name1 + "-" + name2);
-                        draw(plotData, name1, name2).then(function () {
+                        console.log("draw " + symbol1 + "-" + symbol2);
+                        draw(plotData, symbolMap[symbol1], symbolMap[symbol2]).then(function () {
                             resolve();
                         });
                     })
@@ -245,8 +248,8 @@
 
             return _0.step(
                 function() {
-                    oldName1 = currentName1;
-                    oldName2 = currentName2;
+                    oldName1 = currentSymbol1;
+                    oldName2 = currentSymbol2;
                     return draw2DataSets(name1, name2);
                 },
                 function () {
@@ -255,42 +258,48 @@
             )
         }
 
-        draw2DataSets("AAPL", "GE").then(function() {
-            setTimeout(function () {
-                _0.tooltip("._2016-07-19", "These are the stock prices from Apple and General Electric from 2014 to 2018", "top");
-            }, 1000);
-            _0.addStep(_0.combine(
-                _0.removeTooltipStep("._2016-07-19"),
-                _0.tooltipStep("._2015-01-28", "Each dot represents the EOD price of one day (hover over one to see the respective values)")
-            ));
-            _0.addStep(_0.combine(
-                _0.removeTooltipStep("._2015-01-28"),
-                _0.tooltipStep(".ylabel", "y-axis = GE price", "right")
-            ));
-            _0.addStep(_0.combine(
-                _0.removeTooltipStep(".ylabel"),
-                _0.tooltipStep(".xlabel", "x-axis = Apple price", "top")
-            ));
-            _0.addStep(_0.combine(
-                _0.removeTooltipStep(".xlabel"),
-                _0.tooltipStep(".meanx", "The horizontal thin dotted line shows the mean GE stock price", "right")
-            ));
-            _0.addStep(_0.combine(
-                _0.removeTooltipStep(".meanx"),
-                _0.tooltipStep(".meany", "The vertical thin dotted line shows the mean Apple stock price", "right")
-            ));
-            _0.addStep(_0.combine(
-                _0.removeTooltipStep(".meany"),
-                _0.tooltipStep(".regression", "The thick dotted line is the linear regression through all the dots", "bottom-left")
-            ));
-            _0.addStep(changeDataStep("GE", "GM"));
-            _0.addStep(changeDataStep("BTC-USD", "ETH-USD"));
-            _0.addStep(changeDataStep("AAPL", "BTC-USD"));
-            _0.addStep(changeDataStep("AAPL", "FB"));
-            _0.addStep(changeDataStep("AAPL", "MSFT"));
-            _0.addStep(changeDataStep("FB", "MSFT"));
-            _0.addStep(changeDataStep("FB", "GM"));
-            ___();
+        var symbolMap = {};
+        d3.csv("csv/symbols.csv").then(function(_symbolMap) {
+            _symbolMap.forEach(function(symbolName) {
+                symbolMap[symbolName.symbol] = symbolName.name;
+            });
+            draw2DataSets("AAPL", "GE").then(function() {
+                setTimeout(function () {
+                    _0.tooltip("._2016-07-19", "These are the stock prices from Apple and General Electric from 2014 to 2018", "top");
+                }, 1000);
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep("._2016-07-19"),
+                    _0.tooltipStep("._2015-01-28", "Each dot represents the EOD price of one day (hover over one to see the respective values)")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep("._2015-01-28"),
+                    _0.tooltipStep(".ylabel", "y-axis = GE price", "right")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".ylabel"),
+                    _0.tooltipStep(".xlabel", "x-axis = Apple price", "top")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".xlabel"),
+                    _0.tooltipStep(".meanx", "The horizontal thin dotted line shows the mean GE stock price", "right")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".meanx"),
+                    _0.tooltipStep(".meany", "The vertical thin dotted line shows the mean Apple stock price", "right")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".meany"),
+                    _0.tooltipStep(".regression", "The thick dotted line is the linear regression through all the dots", "bottom-left")
+                ));
+                _0.addStep(changeDataStep("GE", "GM"));
+                _0.addStep(changeDataStep("BTC-USD", "ETH-USD"));
+                _0.addStep(changeDataStep("AAPL", "BTC-USD"));
+                _0.addStep(changeDataStep("AAPL", "FB"));
+                _0.addStep(changeDataStep("AAPL", "MSFT"));
+                _0.addStep(changeDataStep("FB", "MSFT"));
+                _0.addStep(changeDataStep("FB", "GM"));
+                ___();
+            })
         })
     })()
 
