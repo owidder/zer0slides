@@ -281,7 +281,7 @@
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep(".xlabel"),
-                    _0.tooltipStep(".meanx", "The horizontal thin dotted line shows the mean GE stock price", "right")
+                    _0.tooltipStep(".meanx", "The horizontal thin dotted line shows the mean GE stock price", "bottom-left")
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep(".meanx"),
@@ -289,9 +289,25 @@
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep(".meany"),
-                    _0.tooltipStep(".regression", "The thick dotted line is the linear regression through all the dots", "bottom-left")
+                    _0.tooltipStep(".regression", "The thick dotted line is the linear regression line through all the dots", "top-left")
                 ));
-                _0.addStep(changeDataStep("GE", "GM"));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".regression"),
+                    _0.tooltipStep(".correlation", "The big number is the correlation coefficient (green = positive correlation / red = negative correlation)"
+                         , "top" , "inside")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".correlation"),
+                    _0.tooltipStep("._2017-10-27", "Red dots are more on the negative correlation side (i.e. one stock is below the other is above its median)")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep("._2017-10-27"),
+                    _0.tooltipStep("._2015-08-25", "Green dots are more on the psoitive correlation side (i.e. one stock is below the other is above its median)")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep("._2015-08-25"),
+                    changeDataStep("GE", "GM")
+                ));
                 _0.addStep(changeDataStep("BTC-USD", "ETH-USD"));
                 _0.addStep(changeDataStep("AAPL", "BTC-USD"));
                 _0.addStep(changeDataStep("AAPL", "FB"));
