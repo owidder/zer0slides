@@ -67,7 +67,8 @@
     "query-string": "^6.2.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "sprintf-js": "^1.1.2"
+    "sprintf-js": "^1.1.2",
+    "tippy.js": "^4.2.0"
   },
   "homepage": "https://owidder.github.io/zer0slides/build",
   "jest": {
