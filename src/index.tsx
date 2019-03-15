@@ -13,7 +13,7 @@ import {paramValue} from './zer0slides/url/queryUtil';
 import {getParamValue} from './zer0slides/url/queryUtil2';
 import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
 import {createControlElements} from './zer0slides/html/controlElements';
-import {initTooltip} from './zer0slides/showCode/tooltip';
+import {initTooltip} from './zer0slides/tooltip/tooltip';
 import {openContentPage, openShortcutSlide} from './zer0slides/shortcut/shortcut';
 
 import 'materialize-css/dist/css/materialize.css';

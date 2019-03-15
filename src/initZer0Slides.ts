@@ -9,7 +9,7 @@ import {core, slideCore} from "./zer0slides/core/core";
 import {controlElements} from "./zer0slides/html/controlElements";
 import {showCode} from "./zer0slides/showCode/showCode";
 import {selector} from "./zer0slides/selector/selector";
-import {tooltip} from "./zer0slides/showCode/tooltip";
+import {tooltip} from "./zer0slides/tooltip/tooltip";
 import {file} from "./zer0slides/file/file";
 import {qrUtil} from "./zer0slides/qr/qr";
 import {text} from "./zer0slides/text/text";

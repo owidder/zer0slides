@@ -7,7 +7,7 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import {steps} from '../steps/steps';
 import {Step} from '../core/Step';
 import {scrollToCurrentLine} from './scroll';
-import {createTooltips, reset} from './tooltip';
+import {createTooltips, reset} from '../tooltip/tooltip';
 import {getData, setData, resetData} from '../core/data';
 import {q} from "../selector/selector";
 
