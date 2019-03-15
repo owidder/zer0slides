@@ -17,6 +17,27 @@
         text-anchor: middle;
         alignment-baseline: central;
     }
+
+    .tippy-tooltip.tomato-theme {
+        background-color: tomato;
+        color: white;
+    }
+
+    .tippy-tooltip.tomato-theme .tippy-backdrop {
+        background-color: tomato;
+    }
+    .tippy-tooltip.tomato-theme[x-placement^='top'] .tippy-arrow {
+        border-top-color: tomato;
+    }
+    .tippy-tooltip.tomato-theme[x-placement^='bottom'] .tippy-arrow {
+        border-bottom-color: tomato;
+    }
+    .tippy-tooltip.tomato-theme[x-placement^='left'] .tippy-arrow {
+        border-left-color: tomato;
+    }
+    .tippy-tooltip.tomato-theme[x-placement^='right'] .tippy-arrow {
+        border-right-color: tomato;
+    }
 </style>
 
 <div class="graph">
@@ -265,6 +286,17 @@
             });
             draw2DataSets("AAPL", "GE").then(function() {
                 setTimeout(function () {
+                    const instances = tippy("#__0__ .correlation", {
+                        content: "Hi there",
+                        sticky: true,
+                        hideOnClick: false,
+                        trigger: "manual",
+                        theme: "tomato",
+                        animateFill: false,
+                        arrow: true,
+                    });
+                    instances[0].show();
+
                     _0.tooltip("._2016-07-19", "These are the stock prices of Apple and General Electric from 2014 to 2018", "top");
                     _0.addStep(_0.combine(
                         _0.removeTooltipStep("._2016-07-19"),
