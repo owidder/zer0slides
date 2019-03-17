@@ -196,13 +196,9 @@
                     .attr("r", 3)
                     .attr("cx", function() {return randomOutside(width)})
                     .attr("cy", function() {return randomOutside(height)})
-                    .attr("data-tippy-followCursor", "true")
-                    .attr("data-tippy-dynamicTitle", "true")
+                    .attr("data-tippy-content", "init")
 
                 plotG.selectAll("circle.dot")
-                    .attr("data-tippy-content", function (d) {
-                        return d.date + ":<br>" + name1 + ": " + d.x + "<br>" + name2 + ": " + d.y
-                    })
                     .transition()
                     .duration(function() {return _.random(3000, 4000)})
                     .attr("cx", function (d) {
@@ -216,8 +212,14 @@
                     })
                     .on("end", resolve)
 
-                setTimeout(function () {
-                    _0.tippy("circle.dot");
+                _0.tippy("circle.dot", {
+                    followCursor: true
+                });
+
+                document.querySelectorAll("circle.dot").forEach(function (node) {
+                    const instance = node._tippy;
+                    const d = node.__data__;
+                    instance.setContent(d.date + ":<br>" + name1 + ": " + d.x + "<br>" + name2 + ": " + d.y);
                 })
 
                 data.exit().remove();
