@@ -249,9 +249,8 @@
                         })
 
                         console.log("draw " + symbol1 + "-" + symbol2);
-                        draw(plotData, symbolMap[symbol1], symbolMap[symbol2]).then(function () {
-                            resolve();
-                        });
+                        draw(plotData, symbolMap[symbol1], symbolMap[symbol2]);
+                        resolve();
                     })
                 })
             })
