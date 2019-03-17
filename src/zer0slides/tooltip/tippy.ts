@@ -1,5 +1,4 @@
 import tippy, {Instance, Placement} from 'tippy.js';
-import {slideCore} from "../core/core";
 import {getData, setData, resetData} from '../core/data';
 import {Step} from '../core/Step';
 import {Tooltip, createTooltipSelector} from "./_tooltip";

@@ -188,8 +188,6 @@
 
                 const data = plotG.selectAll("circle.dot").data(plotData);
 
-                plotG.selectAll("title.dot").data(plotData);
-
                 data.enter()
                     .append("circle")
                     .attr("class", function(d) {
@@ -198,13 +196,13 @@
                     .attr("r", 3)
                     .attr("cx", function() {return randomOutside(width)})
                     .attr("cy", function() {return randomOutside(height)})
-                    .append("title")
-                    .attr("class", "dot")
-
-                plotG.selectAll("title.dot")
-                    .text(function(d) {return "[" + d.date + "] " + name1 + ": " + d.x + " / " + name2 + ": " + d.y})
+                    .attr("data-tippy-followCursor", "true")
+                    .attr("data-tippy-dynamicTitle", "true")
 
                 plotG.selectAll("circle.dot")
+                    .attr("data-tippy-content", function (d) {
+                        return d.date + ":<br>" + name1 + ": " + d.x + "<br>" + name2 + ": " + d.y
+                    })
                     .transition()
                     .duration(function() {return _.random(3000, 4000)})
                     .attr("cx", function (d) {
@@ -217,6 +215,10 @@
                         return color(meanX, meanY, d.x, d.y)
                     })
                     .on("end", resolve)
+
+                setTimeout(function () {
+                    _0.tippy("circle.dot");
+                })
 
                 data.exit().remove();
             })

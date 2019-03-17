@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import * as $ from "jquery";
 import * as _ from "lodash";
+import tippy from 'tippy.js';
 
 import {steps} from "./zer0slides/steps/steps";
 import {lifecycle} from "./zer0slides/lifecycle/lifecycle";
@@ -80,6 +81,7 @@ export const init = () => {
         slideCore,
         steps,
         d3,
+        tippy,
         $,
         _
     };
