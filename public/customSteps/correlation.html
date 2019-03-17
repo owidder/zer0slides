@@ -199,6 +199,10 @@
                     .attr("data-tippy-content", "init")
 
                 plotG.selectAll("circle.dot")
+                    .on("mouseover", function(d) {
+                        const instance = this._tippy;
+                        instance && instance.setContent(d.date + ":<br>" + name1 + ": $ " + Number(d.x).toFixed(1) + "<br>" + name2 + ": $ " + Number(d.y).toFixed(1));
+                    })
                     .transition()
                     .duration(function() {return _.random(3000, 4000)})
                     .attr("cx", function (d) {
@@ -213,14 +217,9 @@
                     .on("end", resolve)
 
                 _0.tippy("circle.dot", {
-                    followCursor: true
+                    followCursor: true,
+                    arrow: true
                 });
-
-                document.querySelectorAll("circle.dot").forEach(function (node) {
-                    const instance = node._tippy;
-                    const d = node.__data__;
-                    instance.setContent(d.date + ":<br>" + name1 + ": " + d.x + "<br>" + name2 + ": " + d.y);
-                })
 
                 data.exit().remove();
             })
