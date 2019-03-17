@@ -278,6 +278,8 @@
                 symbolMap[symbolName.symbol] = symbolName.name;
             });
             draw2DataSets("AAPL", "GE").then(function() {
+                _0.enableTippy();
+
                 _0.tooltip("._2016-07-19", "These are the stock prices of Apple and General Electric from 2014 to 2018", "top");
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep("._2016-07-19"),
@@ -326,6 +328,8 @@
                 _0.addStep(changeDataStep("AAPL", "MSFT"));
                 _0.addStep(changeDataStep("FB", "MSFT"));
                 _0.addStep(changeDataStep("FB", "GM"));
+
+                _0.disableTippy();
                 ___();
             })
         })

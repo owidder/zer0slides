@@ -48,6 +48,7 @@ export const init = () => {
         createCast: cast.create,
         createCube: cube.create,
         d3select: selector.d3select,
+        disableTippy: tooltip.disableTippy,
         enableTippy: tooltip.enableTippy,
         glowText: glowText.create,
         highlightLines: showCode.highlightLines,
