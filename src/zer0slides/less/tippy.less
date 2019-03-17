@@ -44,3 +44,56 @@
   }
 }
 
+@basic-color: lightgrey;
+
+.tippy-tooltip.basic-theme {
+  background-color: @basic-color;
+  color: black;
+
+  & .tippy-backdrop {
+    background-color: @basic-color;
+  }
+  &[x-placement^='top'] .tippy-arrow {
+    border-top-color: @basic-color;
+  }
+  &[x-placement^='bottom'] .tippy-arrow {
+    border-bottom-color: @basic-color;
+  }
+  &[x-placement^='left'] .tippy-arrow {
+    border-left-color: @basic-color;
+  }
+  &[x-placement^='right'] .tippy-arrow {
+    border-right-color: @basic-color;
+  }
+}
+
+@transparent-color: black;
+@transparent-opacity: .6;
+
+.tippy-tooltip.transparent-theme {
+  background-color: @transparent-color;
+  opacity: @transparent-opacity;
+  color: white;
+
+  & .tippy-backdrop {
+    background-color: @transparent-color;
+    opacity: @transparent-opacity;
+  }
+  &[x-placement^='top'] .tippy-arrow {
+    border-top-color: @transparent-color;
+    opacity: @transparent-opacity;
+  }
+  &[x-placement^='bottom'] .tippy-arrow {
+    border-bottom-color: @transparent-color;
+    opacity: @transparent-opacity;
+  }
+  &[x-placement^='left'] .tippy-arrow {
+    border-left-color: @transparent-color;
+    opacity: @transparent-opacity;
+  }
+  &[x-placement^='right'] .tippy-arrow {
+    border-right-color: @transparent-color;
+    opacity: @transparent-opacity;
+  }
+}
+

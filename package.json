@@ -6,6 +6,7 @@
   "scripts": {
     "build": "rimraf build && cross-env NODE_ENV=production webpack",
     "build:dev": "rimraf build && cross-env NODE_ENV=development webpack",
+    "build:local": "rimraf build && cross-env NODE_ENV=development INDEX=indexLocal webpack",
     "test": "jest",
     "start": "cross-env NODE_ENV=development webpack-dev-server",
     "readme": "node replaceVersionInReadme.js",
@@ -54,6 +55,7 @@
     "zip-webpack-plugin": "^3.0.0"
   },
   "dependencies": {
+    "animejs": "^3.0.1",
     "d3": "^5.9.0",
     "jquery": "^3.3.1",
     "keyboardjs": "^2.5.1",
@@ -67,6 +69,7 @@
     "query-string": "^6.2.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
+    "simple-statistics": "^7.0.2",
     "sprintf-js": "^1.1.2",
     "tippy.js": "^4.2.0"
   },
