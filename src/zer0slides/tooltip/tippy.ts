@@ -10,7 +10,7 @@ import {q} from "../selector/selector";
 export const createTooltip = (tooltip: Tooltip) => {
     const selector = q(createTooltipSelector(tooltip));
 
-    const tippies = tippy(selector, {
+    const options = {
         content: tooltip.text,
         sticky: true,
         hideOnClick: false,
@@ -19,9 +19,16 @@ export const createTooltip = (tooltip: Tooltip) => {
         animateFill: false,
         arrow: true,
         placement: (tooltip.position ? tooltip.position : "bottom") as Placement
-    })
+    }
 
-    tippies[0].show();
+    let instance = (document.querySelector(selector) as any)._tippy;
+    if(instance) {
+        instance.set(options);
+    } else {
+        instance = tippy(selector, options)[0];
+    }
+
+    instance.show();
 }
 
 export const addTooltipToDomNode = (selector: string, text: string, position: string, placement: string): Tooltip | undefined => {
