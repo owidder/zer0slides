@@ -17,11 +17,12 @@ const absPath = relPath => path.resolve(appDirectory, relPath);
 const VERSION = require("./package.json").version;
 const INDEX = (process.env.INDEX && process.env.INDEX.length > 0 ? process.env.INDEX : "index");
 
+const folders = foldersToBuild(PUBLIC_PATH, INDEX);
+
 console.log(`version = ${VERSION}`);
 console.log(`mode = ${process.env.NODE_ENV}`)
 console.log(`index = ${INDEX}`)
-
-const folders = foldersToBuild(PUBLIC_PATH, INDEX);
+console.log(folders);
 
 const htmlWebpackPlugins = (name) => {
     return folders.map(folder => {
