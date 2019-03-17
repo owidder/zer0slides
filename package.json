@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf build && cross-env NODE_ENV=production webpack",
-    "build:dev": "rimraf build && cross-env NODE_ENV=development webpack",
-    "build:local": "rimraf build && cross-env NODE_ENV=development INDEX=indexLocal webpack",
+    "clean": "rimraf build",
+    "build": "npm run clean && cross-env NODE_ENV=production webpack",
+    "build:dev": "npm run clean && cross-env NODE_ENV=development webpack",
+    "build:local": "cross-env INDEX=indexLocal npm run build:dev",
     "test": "jest",
     "start": "cross-env NODE_ENV=development webpack-dev-server",
     "readme": "node replaceVersionInReadme.js",
