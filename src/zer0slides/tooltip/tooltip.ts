@@ -14,9 +14,10 @@ import {Tooltip, createTooltipSelector} from "./_tooltip";
 
 require('protip/main');
 
-let tippyEnabled = false;
-export const enableTippy = (_tippy = true) => {
-    tippyEnabled = _tippy;
+let tippyEnabled;
+export const enableTippy = (theme = "transparent") => {
+    tippyEnabled = (theme && theme.length > 0);
+    tippy.setTheme(theme);
 }
 
 export const initTooltip = () => {

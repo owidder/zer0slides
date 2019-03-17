@@ -7,6 +7,11 @@ import {Tooltip, createTooltipSelector} from "./_tooltip";
 import '../less/tippy.less';
 import {q} from "../selector/selector";
 
+let theme = "magenta";
+export const setTheme = (_theme: string) => {
+    theme = _theme;
+}
+
 export const createTooltip = (tooltip: Tooltip) => {
     const selector = q(createTooltipSelector(tooltip));
 
@@ -15,7 +20,7 @@ export const createTooltip = (tooltip: Tooltip) => {
         sticky: true,
         hideOnClick: false,
         trigger: "manual",
-        theme: "magenta",
+        theme,
         animateFill: false,
         arrow: true,
         placement: (tooltip.position ? tooltip.position : "bottom") as Placement
