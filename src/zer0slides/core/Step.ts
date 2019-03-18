@@ -10,6 +10,8 @@ const callWithBlockSteps = (stepFunction: StepFunction) => {
             slideCore.blockSteps = false;
         })
     }
+
+    return promise
 }
 
 export class Step {
@@ -22,10 +24,10 @@ export class Step {
     }
 
     public perform() {
-        callWithBlockSteps(this.f);
+        return callWithBlockSteps(this.f);
     }
 
     public unperform() {
-        callWithBlockSteps(this.b);
+        return callWithBlockSteps(this.b);
     }
 }

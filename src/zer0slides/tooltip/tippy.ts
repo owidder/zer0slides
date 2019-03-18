@@ -1,3 +1,4 @@
+import * as d3 from "d3";
 import tippy, {Instance, Placement} from 'tippy.js';
 import {getData, setData, resetData} from '../core/data';
 import {Step} from '../core/Step';
@@ -5,10 +6,19 @@ import {Tooltip, createTooltipSelector} from "./_tooltip";
 
 import '../less/tippy.less';
 import {q} from "../selector/selector";
+import {addCleanFunction} from "../lifecycle/lifecycle";
 
 let theme = "magenta";
 export const setTheme = (_theme: string) => {
     theme = _theme;
+}
+
+export const initTooltip = () => {
+    addCleanFunction(cleanAfterSlideFinished);
+}
+
+const cleanAfterSlideFinished = () => {
+    d3.selectAll(".tippy-popper").remove();
 }
 
 export const createTooltip = (tooltip: Tooltip) => {

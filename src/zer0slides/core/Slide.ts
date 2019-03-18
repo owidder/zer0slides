@@ -24,6 +24,7 @@ export class Slide {
     public autoStepIntervalId: number = -1
     public firstStepPromise = new SimplePromise()
     public specialName
+    public doPerformToCurrentStep
 
     public transformationInNext: Transformation
     public transformationOutNext: Transformation
@@ -59,6 +60,10 @@ export class Slide {
 
     public addStep(step: Step) {
         this.steps.push(step);
+    }
+
+    public clearSteps() {
+        this.steps.length = 0;
     }
 
     public showStepCtr() {
@@ -108,13 +113,35 @@ export class Slide {
         }
     }
 
-    public performToCurrentStep() {
-        if(this.currentStepNo > -1) {
-            for(let i = 0; i <= this.currentStepNo; i++) {
-                (this.steps[i] != null) && this.steps[i].perform();
+    private _performToCurrentStepRecursively = (steps: Step[], counter: number, resolve: () => void) => {
+        const next = () => this._performToCurrentStepRecursively(steps, counter + 1, resolve);
+
+        if (counter >= steps.length || counter > this.currentStepNo) {
+            resolve();
+        }
+        else {
+            if (steps[counter] == null) next();
+
+            const promise = steps[counter].perform();
+            if (promise) {
+                promise.then(() => next())
+            } else {
+                next();
             }
         }
-        this.showStepCtr();
+    }
+
+
+    public performToCurrentStep(): Promise<void> {
+        const promise = this.currentStepNo > -1 ?
+            new Promise<void>(resolve => {
+                this._performToCurrentStepRecursively(this.steps, 0, resolve);
+            }) :
+            Promise.resolve();
+
+        promise.then(() => this.showStepCtr());
+
+        return promise;
     }
 
     public autoStepOn(intervalInMs: number) {

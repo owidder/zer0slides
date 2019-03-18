@@ -26,9 +26,14 @@ export const disableTippy = () => {
     tippyEnabled = false;
 }
 
-export const initTooltip = () => {
+const _initTooltip = () => {
     addCleanFunction(cleanAfterSlideFinished);
     refresh();
+}
+
+export const initTooltip = () => {
+    _initTooltip();
+    tippy.initTooltip();
 }
 
 const cleanAfterSlideFinished = () => {
