@@ -1,0 +1,348 @@
+<style>
+
+    #__0__ .label {
+        font-size: 2em;
+        fill: black;
+        text-anchor: end;
+    }
+
+    #__0__ .regression {
+        stroke-width: 3px;
+        stroke-dasharray: 3;
+    }
+
+    #__0__ .correlation {
+        font-size: 40vh;
+        opacity: .1;
+        text-anchor: middle;
+        alignment-baseline: central;
+    }
+
+</style>
+
+<div class="graph">
+
+</div>
+
+<script>
+
+    (function () {
+        const d3 = _0.d3;
+        const _ = _0._;
+
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const MARGIN_X = 100;
+        const MARGIN_Y = 100;
+        const leftX = MARGIN_X;
+        const rightX = width - MARGIN_X;
+        const upperY = MARGIN_Y;
+        const lowerY = height - MARGIN_Y;
+
+        const svg = d3.select("#__0__ .graph").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const correlationG = svg.append("g");
+        const plotG = svg.append("g");
+        const meanG = svg.append("g");
+        const linearRegressionG = svg.append("g");
+        const linearRegressionMiddleG = svg.append("g");
+        const axis = svg.append("g");
+
+        function translate(x, y) {
+            return "translate(" + x + "," + y + ")"
+        }
+
+        axis.append("g")
+            .attr("class", "yaxis")
+            .attr("transform", translate(MARGIN_X - 10, 0))
+            .append("g")
+            .attr("transform", translate(20, MARGIN_Y) + " rotate(-90)")
+            .append("text")
+            .attr("class", "label ylabel")
+
+        axis.append("g")
+            .attr("class", "xaxis")
+            .attr("transform", translate(0, height - MARGIN_Y + 10))
+            .append("g")
+            .attr("transform", translate(width - MARGIN_X, -10))
+            .append("text")
+            .attr("class", "label xlabel")
+
+        function project(array, attrName) {
+            return array.map(function (element) {
+                return element[attrName]
+            })
+        }
+
+        function scale(data, attrName, rangeMin, rangeMax) {
+            const min = _.minBy(data, attrName)[attrName];
+            const max = _.maxBy(data, attrName)[attrName];
+            return d3.scaleLinear().domain([min, max]).range([rangeMin, rangeMax]);
+        }
+
+        function color(meanX, meanY, x, y) {
+            if((x > meanX && y > meanY) || (x < meanX && y < meanY)) {
+                return "green";
+            }
+            return "red";
+        }
+
+        function drawMeanLine(name, startX1, startX2, startY1, startY2, endX1, endX2, endY1, endY2) {
+            meanG.selectAll("line.mean" + name).data([1]).enter()
+                .append("line")
+                .attr("class", "mean" + name)
+                .attr("x1", startX1)
+                .attr("x2", startX2)
+                .attr("y1", startY1)
+                .attr("y2", startY2)
+                .attr("stroke", "grey")
+                .attr("stroke-dasharray", 4)
+
+            meanG.selectAll("line.mean" + name)
+                .transition()
+                .duration(2000)
+                .attr("x1", endX1)
+                .attr("x2", endX2)
+                .attr("y1", endY1)
+                .attr("y2", endY2)
+        }
+
+        function randomOutside(max) {
+            return _.random(0, max) + Math.sign(_.random(-1000, 1000, true)) * max;
+        }
+
+        function drawLinearRegressionLine(plotData, xScale, yScale) {
+            const points = plotData.map(function(d) {return [d.x, d.y]})
+
+            const linearRegressionObject = ss.linearRegression(points);
+
+            const leftX = _.minBy(plotData, "x").x;
+            const rightX = _.maxBy(plotData, "x").x;
+
+            const leftY = linearRegressionObject.b + leftX * linearRegressionObject.m;
+            const rightY = leftY + (rightX - leftX) * linearRegressionObject.m;
+            const midY = _.mean([rightY, leftY]);
+            const midX = _.mean([rightX, leftX]);
+
+            const linearRegressionLinePath = d3.line()([[xScale(leftX), yScale(leftY)], [xScale(rightX), yScale(rightY)]]);
+            const startLinePath = d3.line()([[xScale(leftX), yScale(midY)], [xScale(rightX), yScale(midY)]]);
+
+            const pathSelection = linearRegressionG.selectAll("path.regression").data([1])
+
+            pathSelection.enter()
+                .append("path")
+                .attr("class", "regression")
+                .attr("stroke", "black")
+                .attr("d", startLinePath)
+                .merge(pathSelection)
+                .transition()
+                .duration(1000)
+                .attr("d", linearRegressionLinePath)
+
+            const middleOfPathSelection = linearRegressionMiddleG.selectAll("circle.regressionMiddle").data([1]);
+
+            middleOfPathSelection.enter()
+                .append("circle")
+                .attr("r", 5)
+                .attr("class", "regressionMiddle")
+                .style("opacity", 0)
+                .merge(middleOfPathSelection)
+                .attr("cx", xScale(midX))
+                .attr("cy", yScale(midY))
+        }
+        
+        function showCorrelation(plotData) {
+            const correlation = ss.sampleCorrelation(project(plotData, "x"), project(plotData, "y")).toFixed(1);
+
+            const selection = correlationG.selectAll("text.correlation").data([1]);
+
+            selection.enter()
+                .append("text")
+                .attr("class", "correlation")
+                .attr("transform", translate(width/2, height/2))
+                .merge(selection)
+                .text(correlation)
+                .attr("fill", correlation < 0 ? "red" : "green")
+        }
+
+        function draw(plotData, name1, name2) {
+            return new Promise(function (resolve) {
+                const xScale = scale(plotData, "x", leftX, rightX);
+                const yScale = scale(plotData, "y", lowerY, upperY);
+
+                const meanX = _.meanBy(plotData, "x");
+                const meanY = _.meanBy(plotData, "y");
+
+                drawMeanLine("x", leftX-width, rightX-width, yScale(meanY), yScale(meanY), leftX, rightX, yScale(meanY), yScale(meanY));
+                drawMeanLine("y", xScale(meanX), xScale(meanX), upperY-height, lowerY-height, xScale(meanX), xScale(meanX), upperY, lowerY);
+
+                drawLinearRegressionLine(plotData, xScale, yScale);
+                showCorrelation(plotData);
+
+                axis.transition().duration(1000).selectAll(".xaxis").call(d3.axisBottom(xScale));
+                axis.transition().duration(1000).selectAll(".yaxis").call(d3.axisLeft(yScale));
+                axis.select(".xlabel").text(name1);
+                axis.select(".ylabel").text(name2);
+
+                const data = plotG.selectAll("circle.dot").data(plotData);
+
+                data.enter()
+                    .append("circle")
+                    .attr("class", function(d) {
+                        return  "dot _" + d.date;
+                    })
+                    .attr("r", 3)
+                    .attr("cx", function() {return randomOutside(width)})
+                    .attr("cy", function() {return randomOutside(height)})
+                    .attr("data-tippy-content", "init")
+
+                plotG.selectAll("circle.dot")
+                    .on("mouseover", function(d) {
+                        const instance = this._tippy;
+                        instance && instance.setContent(d.date + ":<br>" + name1 + ": $ " + Number(d.x).toFixed(1) + "<br>" + name2 + ": $ " + Number(d.y).toFixed(1));
+                    })
+                    .transition()
+                    .duration(function() {return _.random(3000, 4000)})
+                    .attr("cx", function (d) {
+                        return xScale(d.x);
+                    })
+                    .attr("cy", function (d) {
+                        return yScale(d.y);
+                    })
+                    .attr("fill", function (d) {
+                        return color(meanX, meanY, d.x, d.y)
+                    })
+                    .on("end", resolve)
+
+                _0.tippy("circle.dot", {
+                    followCursor: true,
+                    arrow: true
+                });
+
+                data.exit().remove();
+            })
+        }
+
+        function closeValueForDate(data, date) {
+            return data.find(function(d) {return d.Date == date}).Close;
+        }
+
+        var currentSymbol1, currentSymbol2;
+        function draw2DataSets(symbol1, symbol2) {
+            currentSymbol1 = symbol1;
+            currentSymbol2 = symbol2;
+            return new Promise(function(resolve) {
+                d3.csv("./csv/" + symbol1 + ".csv").then(function (data1) {
+                    d3.csv("./csv/" + symbol2 + ".csv").then(function (data2) {
+                        const dates1 = project(data1, "Date");
+                        const dates2 = project(data2, "Date");
+                        const commonDates = _.intersection(dates1, dates2);
+
+                        const plotData = commonDates.map(function(date, i) {
+                            const xValue = closeValueForDate(data1, date);
+                            const yValue = closeValueForDate(data2, date);
+                            return {
+                                date: date,
+                                x: Number(xValue),
+                                y: Number(yValue),
+                                id: i
+                            }
+                        })
+
+                        console.log("draw " + symbol1 + "-" + symbol2);
+                        draw(plotData, symbolMap[symbol1], symbolMap[symbol2]);
+                        resolve();
+                    })
+                })
+            })
+        }
+
+        function changeDataStep(name1, name2) {
+            let oldName1;
+            let oldName2;
+
+            return _0.step(
+                function() {
+                    oldName1 = currentSymbol1;
+                    oldName2 = currentSymbol2;
+                    return draw2DataSets(name1, name2);
+                },
+                function () {
+                    return draw2DataSets(oldName1, oldName2);
+                }
+            )
+        }
+
+        var symbolMap = {};
+        d3.csv("csv/symbols.csv").then(function(_symbolMap) {
+            _symbolMap.forEach(function(symbolName) {
+                symbolMap[symbolName.symbol] = symbolName.name;
+            });
+            draw2DataSets("AAPL", "GE").then(function() {
+                _0.useTippy("transparent");
+
+                _0.tooltip("._2016-07-19", "These are the stock prices of Apple and General Electric from 2014 to 2018", "top");
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep("._2016-07-19"),
+                    _0.tooltipStep("._2015-01-28", "Each dot represents the EOD price of one day (hover over one to see the respective values)")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep("._2015-01-28"),
+                    _0.tooltipStep(".ylabel", "y-axis = GE price", "right")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".ylabel"),
+                    _0.tooltipStep(".xlabel", "x-axis = Apple price", "top")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".xlabel"),
+                    _0.tooltipStep(".meanx", "The horizontal thin dotted line shows the mean GE stock price")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".meanx"),
+                    _0.tooltipStep(".meany", "The vertical thin dotted line shows the mean Apple stock price", "right")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".meany"),
+                    _0.tooltipStep(".regressionMiddle", "The thick dotted line is the linear regression line through all the dots")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".regressionMiddle"),
+                    _0.tooltipStep(".correlation", "The big number is the correlation coefficient (green = positive correlation / red = negative correlation)"
+                        , "right")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".correlation"),
+                    _0.tooltipStep("._2018-02-08", "Red dots are more on the negative correlation side (i.e. one stock is below the other is above its respective mean)")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep("._2018-02-08"),
+                    _0.tooltipStep("._2015-08-25", "Green dots are more on the positive correlation side (i.e. both stock are below or both stocks are above its respective mean)")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep("._2015-08-25"),
+                    _0.tooltipStep(".graph", "Now step further to see more stock correlation<br>All from 2014 - 2018", "bottom")
+                ));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".graph"),
+                    changeDataStep("BTC-USD", "ETH-USD")
+                ));
+                _0.addStep(changeDataStep("BTC-USD", "^DJI"));
+                _0.addStep(changeDataStep("BTC-USD", "^IXIC"));
+                _0.addStep(changeDataStep("^DJI", "^IXIC"));
+                _0.addStep(changeDataStep("AAPL", "BTC-USD"));
+                _0.addStep(changeDataStep("AAPL", "FB"));
+                _0.addStep(changeDataStep("AAPL", "MSFT"));
+                _0.addStep(changeDataStep("FB", "MSFT"));
+                _0.addStep(changeDataStep("FB", "GM"));
+                _0.addStep(changeDataStep("GE", "GM"));
+
+                _0.doNotUseTippy();
+                ___();
+            })
+        })
+    })()
+
+</script>
