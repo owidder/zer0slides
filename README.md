@@ -141,7 +141,7 @@ See the following example slides:
 * [D3 (unfinished)](https://owidder.github.io/zer0slides/build/d3/indexPublic.html)
     * [Slides are here](https://github.com/owidder/zer0slides/tree/master/public/d3)
 
-## More features of the `_0` object
+## All features of the `_0` object
 
 ### Show code
 

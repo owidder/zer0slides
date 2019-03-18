@@ -1,6 +1,4 @@
-import * as _ from 'lodash';
-
-import {Step} from "../core/Step";
+import {Step, StepFunction} from "../core/Step";
 import {slideCore} from '../core/core';
 
 const getCurrentSlide = () => {
@@ -11,6 +9,11 @@ const getCurrentSlide = () => {
 const setSteps = (_steps: Step[]) => {
     const slide = getCurrentSlide();
     slide.steps = _steps;
+}
+
+const addStep = (_step: Step) => {
+    const slide = getCurrentSlide();
+    slide.addStep(_step);
 }
 
 const reverse = (step: Step) => new Step(step.b, step.f);
@@ -42,13 +45,35 @@ const combineSteps2 = (...steps: Step[]): Step => {
     return new Step(f, b);
 }
 
+const _callFunctionsRecursive = (fcts: Array<StepFunction>, resolve: () => void, currentIndex: number) => {
+    if(currentIndex < fcts.length) {
+        const fct = fcts[currentIndex];
+        const promise = fct();
+        if(promise) {
+            promise.then(() => _callFunctionsRecursive(fcts, resolve, currentIndex+1));
+        }
+        else {
+            _callFunctionsRecursive(fcts, resolve, currentIndex+1)
+        }
+    }
+    else {
+        resolve();
+    }
+}
+
+const _callFunctions = (fcts: Array<StepFunction>) => {
+    return new Promise(resolve => {
+        _callFunctionsRecursive(fcts, resolve, 0);
+    })
+}
+
 const combineSteps = (...steps: Step[]): Step => {
     const f = () => {
-        steps.forEach(step => step.f());
+        return _callFunctions(steps.map(step => step.f));
     }
 
     const b = () => {
-        const functions = [...steps].reverse().forEach(step => step.b());
+        return _callFunctions([...steps].reverse().map(step => step.b));
     }
 
     return new Step(f, b);
@@ -63,6 +88,7 @@ export const autoStepOn = (intervalInMs: number) => {
 }
 
 export const steps = {
+    addStep,
     createStep,
     createReverseStep,
     setSteps,

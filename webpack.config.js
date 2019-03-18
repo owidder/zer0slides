@@ -10,26 +10,29 @@ const {foldersToBuild} = require("./scripts/searchFolders");
 
 const PUBLIC_PATH = "public";
 
-const folders = foldersToBuild(PUBLIC_PATH);
-
 const fs = require('fs');
 const appDirectory = fs.realpathSync(process.cwd());
 const absPath = relPath => path.resolve(appDirectory, relPath);
+
+const VERSION = require("./package.json").version;
+const INDEX = (process.env.INDEX && process.env.INDEX.length > 0 ? process.env.INDEX : "index");
+
+const folders = foldersToBuild(PUBLIC_PATH, INDEX);
+
+console.log(`version = ${VERSION}`);
+console.log(`mode = ${process.env.NODE_ENV}`)
+console.log(`index = ${INDEX}`)
+console.log(folders);
 
 const htmlWebpackPlugins = (name) => {
     return folders.map(folder => {
         return new HtmlWebpackPlugin({
             filename: `${folder}/${name}.html`,
             inject: true,
-            template: `${PUBLIC_PATH}/${folder}/index.html`,
+            template: `${PUBLIC_PATH}/${folder}/${INDEX}.html`,
         })
     })
 }
-
-const VERSION = require("./package.json").version;
-
-console.log(`version = ${VERSION}`);
-console.log(`mode = ${process.env.NODE_ENV}`)
 
 const common = {
     mode: process.env.NODE_ENV,
@@ -41,7 +44,7 @@ const common = {
     },
     devtool: 'source-map',
     devServer: {
-        contentBase: path.join(__dirname, "build"),
+        contentBase: path.join(__dirname, "public"),
         compress: true,
         port: 9000
     },

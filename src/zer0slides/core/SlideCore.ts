@@ -19,6 +19,7 @@ export class SlideCore {
     public shortcutSlideIndex = 0
     public folderName: string;
     public autoStepIntervalInMs = -1;
+    public blockSteps = false;
     public newSlideCallback= () => {}
     public firstStepCallback = () => {}
     public nextSlideCallback = () => {}
@@ -51,8 +52,9 @@ export class SlideCore {
         return this.getSlide(slideName).description;
     }
 
-    public addSlide(name: string, description?: string, specialName?: string) {
+    public addSlide(name: string, description?: string, specialName?: string, doPerformToCurrentStep = true) {
         const slide = new Slide(name, description ? description : name, specialName);
+        slide.doPerformToCurrentStep = doPerformToCurrentStep;
         if(!this.currentSlide) {
             this.currentSlide = slide;
         }

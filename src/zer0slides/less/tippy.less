@@ -1,0 +1,101 @@
+@tomato-color: tomato;
+
+.tippy-tooltip.tomato-theme {
+  background-color: @tomato-color;
+  color: white;
+
+  & .tippy-backdrop {
+    background-color: @tomato-color;
+  }
+  &[x-placement^='top'] .tippy-arrow {
+    border-top-color: @tomato-color;
+  }
+  &[x-placement^='bottom'] .tippy-arrow {
+    border-bottom-color: @tomato-color;
+  }
+  &[x-placement^='left'] .tippy-arrow {
+    border-left-color: @tomato-color;
+  }
+  &[x-placement^='right'] .tippy-arrow {
+    border-right-color: @tomato-color;
+  }
+}
+
+@magenta-color: #D457AA;
+
+.tippy-tooltip.magenta-theme {
+  background-color: @magenta-color;
+  color: black;
+
+  & .tippy-backdrop {
+    background-color: @magenta-color;
+  }
+  &[x-placement^='top'] .tippy-arrow {
+    border-top-color: @magenta-color;
+  }
+  &[x-placement^='bottom'] .tippy-arrow {
+    border-bottom-color: @magenta-color;
+  }
+  &[x-placement^='left'] .tippy-arrow {
+    border-left-color: @magenta-color;
+  }
+  &[x-placement^='right'] .tippy-arrow {
+    border-right-color: @magenta-color;
+  }
+}
+
+@basic-color: lightgrey;
+
+.tippy-tooltip.basic-theme {
+  background-color: @basic-color;
+  color: black;
+
+  & .tippy-backdrop {
+    background-color: @basic-color;
+  }
+  &[x-placement^='top'] .tippy-arrow {
+    border-top-color: @basic-color;
+  }
+  &[x-placement^='bottom'] .tippy-arrow {
+    border-bottom-color: @basic-color;
+  }
+  &[x-placement^='left'] .tippy-arrow {
+    border-left-color: @basic-color;
+  }
+  &[x-placement^='right'] .tippy-arrow {
+    border-right-color: @basic-color;
+  }
+}
+
+@transparent-color: lightgrey;
+@transparent-opacity: .9;
+@arrow-color: black;
+
+.tippy-tooltip.transparent-theme {
+  background-color: @transparent-color;
+  border: solid black 2px;
+  opacity: @transparent-opacity;
+  color: black;
+
+  & .tippy-backdrop {
+    background-color: @transparent-color;
+    opacity: @transparent-opacity;
+  }
+  &[x-placement^='top'] .tippy-arrow {
+    border-top-color: @arrow-color;
+    opacity: @transparent-opacity;
+  }
+  &[x-placement^='bottom'] .tippy-arrow {
+    border-bottom-color: @arrow-color;
+    opacity: @transparent-opacity;
+  }
+  &[x-placement^='left'] .tippy-arrow {
+    border-left-color: @arrow-color;
+    opacity: @transparent-opacity;
+  }
+  &[x-placement^='right'] .tippy-arrow {
+    border-right-color: @arrow-color;
+    opacity: @transparent-opacity;
+  }
+}
+

@@ -1,14 +1,19 @@
 {
   "name": "zer0slides",
-  "version": "1.2.4",
+  "version": "1.3.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf build && cross-env NODE_ENV=production webpack",
-    "build:dev": "rimraf build && cross-env NODE_ENV=development webpack",
+    "clean": "rimraf build",
+    "build": "npm run clean && cross-env NODE_ENV=production webpack",
+    "build:dev": "npm run clean && cross-env NODE_ENV=development webpack",
+    "build:local": "cross-env INDEX=indexLocal npm run build:dev",
     "test": "jest",
     "start": "cross-env NODE_ENV=development webpack-dev-server",
-    "readme": "node replaceVersionInReadme.js"
+    "readme": "node replaceVersionInReadme.js",
+    "copyhtml": "cpx 'public/**/*.html' build",
+    "copyhtml:watch": "cpx 'public/**/*.html' build --watch",
+    "server": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +28,7 @@
     "babel-loader": "^8.0.5",
     "babel-preset-react-app": "^7.0.0",
     "copy-webpack-plugin": "^4.6.0",
+    "cpx": "^1.5.0",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "express": "^4.16.4",
@@ -50,6 +56,7 @@
     "zip-webpack-plugin": "^3.0.0"
   },
   "dependencies": {
+    "animejs": "^3.0.1",
     "d3": "^5.9.0",
     "jquery": "^3.3.1",
     "keyboardjs": "^2.5.1",
@@ -63,7 +70,9 @@
     "query-string": "^6.2.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "sprintf-js": "^1.1.2"
+    "simple-statistics": "^7.0.2",
+    "sprintf-js": "^1.1.2",
+    "tippy.js": "^4.2.0"
   },
   "homepage": "https://owidder.github.io/zer0slides/build",
   "jest": {

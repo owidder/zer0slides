@@ -6,23 +6,34 @@ import {addCleanFunction} from "../lifecycle/lifecycle";
 import {getData, setData, resetData} from '../core/data';
 import {Step} from '../core/Step';
 
+import '../less/tippy.less';
 import 'protip/protip.min.css';
-import {q, selector} from "../selector/selector";
+import {q} from "../selector/selector";
+import * as tippy from "./tippy";
+import {Tooltip, createTooltipSelector} from "./_tooltip";
 
 require('protip/main');
 
+let tippyEnabled = false;
+export const useTippy = (_tippy: boolean | string = true) => {
+    tippyEnabled = !!_tippy;
+    if(typeof _tippy == "string") {
+        tippy.setTheme(_tippy);
+    }
+}
 
-interface Tooltip {
-    lineIndex?: number,
-    selector?: string,
-    text: string,
-    position?: string,
-    placement?: string,
+export const doNotUseTippy = () => {
+    tippyEnabled = false;
+}
+
+const _initTooltip = () => {
+    addCleanFunction(cleanAfterSlideFinished);
+    refresh();
 }
 
 export const initTooltip = () => {
-    addCleanFunction(cleanAfterSlideFinished);
-    refresh();
+    _initTooltip();
+    tippy.initTooltip();
 }
 
 const cleanAfterSlideFinished = () => {
@@ -44,19 +55,7 @@ export const reset = () => {
     ($(selector) as any).protipHide();
 }
 
-const createTooltipSelector = (tooltip: Tooltip) => {
-    if(tooltip.selector) {
-        return tooltip.selector;
-    }
-
-    const nth = tooltip.lineIndex > 0 ? tooltip.lineIndex + 1 : 1;
-    const slideSelector = slideCore.getCurrentSlideSelector();
-    const selector = `${slideSelector} .line-highlight:nth-of-type(${nth})`;
-
-    return selector;
-}
-
-export const createTooltip = (tooltip: Tooltip) => {
+const _createTooltip = (tooltip: Tooltip) => {
     const selector = q(createTooltipSelector(tooltip));
 
     d3.selectAll(selector)
@@ -73,7 +72,11 @@ export const createTooltip = (tooltip: Tooltip) => {
     ($(selector) as any).protipShow();
 }
 
-export const addTooltipToDomNode = (selector: string, text: string, position: string, placement: string): Tooltip | undefined => {
+export const createTooltip = (tooltip: Tooltip, _tippyEnabled = false) => {
+    return ((tippyEnabled || _tippyEnabled) ? tippy.createTooltip(tooltip) : _createTooltip(tooltip))
+}
+
+const _addTooltipToDomNode = (selector: string, text: string, position: string, placement: string): Tooltip | undefined => {
     const _sel = q(selector);
     const old = getData(_sel);
     const tooltip = {selector, text, position, placement};
@@ -83,7 +86,13 @@ export const addTooltipToDomNode = (selector: string, text: string, position: st
     return old;
 }
 
-export const removeTooltipFromDomNode = (selector: string): Tooltip | undefined => {
+export const addTooltipToDomNode = (selector: string, text: string, position: string, placement: string, _tippyEnabled = false): Tooltip | undefined => {
+    return ((tippyEnabled || _tippyEnabled) ?
+        tippy.addTooltipToDomNode(selector, text, position, placement) :
+        _addTooltipToDomNode(selector, text, position, placement))
+}
+
+const _removeTooltipFromDomNode = (selector: string): Tooltip | undefined => {
     const _sel = q(selector);
     const old = getData(_sel);
     console.log("remove: " + selector);
@@ -94,7 +103,11 @@ export const removeTooltipFromDomNode = (selector: string): Tooltip | undefined 
     return old;
 }
 
-export const addTooltipToDomNodeStep = (selector: string, text: string, position: string, placement: string): Step => {
+export const removeTooltipFromDomNode = (selector: string, _tippyEnabled = false): Tooltip | undefined => {
+    return ((tippyEnabled || _tippyEnabled) ? tippy.removeTooltipFromDomNode(selector) : _removeTooltipFromDomNode(selector))
+}
+
+const _addTooltipToDomNodeStep = (selector: string, text: string, position: string, placement: string): Step => {
     let old: Tooltip;
 
     const f = () => {
@@ -113,7 +126,13 @@ export const addTooltipToDomNodeStep = (selector: string, text: string, position
     return new Step(f, b);
 }
 
-export const removeTooltipFromDomNodeStep = (selector: string): Step => {
+export const addTooltipToDomNodeStep = (selector: string, text: string, position: string, placement: string, _tippyEnabled = false): Step => {
+    return ((tippyEnabled || _tippyEnabled) ?
+        tippy.addTooltipToDomNodeStep(selector, text, position, placement) :
+        _addTooltipToDomNodeStep(selector, text, position, placement))
+}
+
+const _removeTooltipFromDomNodeStep = (selector: string): Step => {
     let old: Tooltip;
 
     const f = () => {
@@ -129,11 +148,19 @@ export const removeTooltipFromDomNodeStep = (selector: string): Step => {
     return new Step(f, b);
 }
 
-export const createTooltips = (tooltips: Tooltip[]) => {
+export const removeTooltipFromDomNodeStep = (selector: string, _tippyEnabled = false): Step => {
+    return ((tippyEnabled || _tippyEnabled) ? tippy.removeTooltipFromDomNodeStep(selector) : _removeTooltipFromDomNodeStep(selector))
+}
+
+const _createTooltips = (tooltips: Tooltip[]) => {
     reset();
     tooltips.forEach(tooltip => {
         tooltip && createTooltip(tooltip)
     })
+}
+
+export const createTooltips = (tooltips: Tooltip[], _tippyEnabled = false) => {
+    return ((tippyEnabled || _tippyEnabled) ? tippy.createTooltips(tooltips) : _createTooltips(tooltips))
 }
 
 export const tooltip = {
@@ -142,4 +169,6 @@ export const tooltip = {
     addTooltipToDomNodeStep,
     removeTooltipFromDomNode,
     removeTooltipFromDomNodeStep,
+    useTippy,
+    doNotUseTippy,
 }

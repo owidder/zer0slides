@@ -192,6 +192,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
             clean(container);
             $(selector(container)).append(`<div id="${slide.name}" class="${slide.name} ${SLIDE_CLASS}"></div>`);
             this.getSlideCode(slide).then((htmlCode: string) => {
+                slide.clearSteps();
                 const replacedHtml = htmlCode.replace(/__0__/g, slide.name).replace(/__z0_VERSION__/g, slideCore.version);
                 $(`${selector(container)} .${slide.name}`).html(replacedHtml);
 

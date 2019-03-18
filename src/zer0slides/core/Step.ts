@@ -1,6 +1,22 @@
+import {slideCore} from "./core";
+
+export type StepFunction = () => undefined | Promise<void>
+
+const callWithBlockSteps = (stepFunction: StepFunction) => {
+    const promise = stepFunction();
+    if(promise) {
+        slideCore.blockSteps = true;
+        promise.then(() => {
+            slideCore.blockSteps = false;
+        })
+    }
+
+    return promise
+}
+
 export class Step {
-    public f: () => void
-    public b: () => void
+    public f: StepFunction
+    public b: StepFunction
 
     constructor(f, b) {
         this.f = f;
@@ -8,10 +24,10 @@ export class Step {
     }
 
     public perform() {
-        this.f()
+        return callWithBlockSteps(this.f);
     }
 
     public unperform() {
-        this.b()
+        return callWithBlockSteps(this.b);
     }
 }
