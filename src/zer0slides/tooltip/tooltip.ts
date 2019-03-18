@@ -15,14 +15,14 @@ import {Tooltip, createTooltipSelector} from "./_tooltip";
 require('protip/main');
 
 let tippyEnabled = false;
-export const enableTippy = (_tippy: boolean | string = true) => {
+export const useTippy = (_tippy: boolean | string = true) => {
     tippyEnabled = !!_tippy;
     if(typeof _tippy == "string") {
         tippy.setTheme(_tippy);
     }
 }
 
-export const disableTippy = () => {
+export const doNotUseTippy = () => {
     tippyEnabled = false;
 }
 
@@ -169,6 +169,6 @@ export const tooltip = {
     addTooltipToDomNodeStep,
     removeTooltipFromDomNode,
     removeTooltipFromDomNodeStep,
-    enableTippy,
-    disableTippy,
+    useTippy,
+    doNotUseTippy,
 }
