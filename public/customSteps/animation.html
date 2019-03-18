@@ -36,6 +36,8 @@
             )
         }
 
+        _0.useTippy();
+
         _0.tooltip(".animate", "Press the down arrow key and watch me move", "right");
 
         _0.addStep(_0.combine(
@@ -58,6 +60,8 @@
             moveStep(0),
             _0.tooltipStep(".animate", "No I'm back where I started", "right")
         ));
+
+        _0.doNotUseTippy();
 
         ___();
     })()
