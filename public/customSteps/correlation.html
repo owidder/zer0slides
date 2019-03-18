@@ -1,7 +1,7 @@
 <style>
 
     #__0__ .label {
-        font-size: 1em;
+        font-size: 2em;
         fill: black;
         text-anchor: end;
     }
@@ -281,7 +281,7 @@
                 symbolMap[symbolName.symbol] = symbolName.name;
             });
             draw2DataSets("AAPL", "GE").then(function() {
-                _0.useTippy();
+                _0.useTippy("transparent");
 
                 _0.tooltip("._2016-07-19", "These are the stock prices of Apple and General Electric from 2014 to 2018", "top");
                 _0.addStep(_0.combine(
@@ -323,14 +323,21 @@
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep("._2015-08-25"),
-                    changeDataStep("GE", "GM")
+                    _0.tooltipStep(".graph", "Now step further to see more stock correlation<br>All from 2014 - 2018", "bottom")
                 ));
-                _0.addStep(changeDataStep("BTC-USD", "ETH-USD"));
+                _0.addStep(_0.combine(
+                    _0.removeTooltipStep(".graph"),
+                    changeDataStep("BTC-USD", "ETH-USD")
+                ));
+                _0.addStep(changeDataStep("BTC-USD", "^DJI"));
+                _0.addStep(changeDataStep("BTC-USD", "^IXIC"));
+                _0.addStep(changeDataStep("^DJI", "^IXIC"));
                 _0.addStep(changeDataStep("AAPL", "BTC-USD"));
                 _0.addStep(changeDataStep("AAPL", "FB"));
                 _0.addStep(changeDataStep("AAPL", "MSFT"));
                 _0.addStep(changeDataStep("FB", "MSFT"));
                 _0.addStep(changeDataStep("FB", "GM"));
+                _0.addStep(changeDataStep("GE", "GM"));
 
                 _0.doNotUseTippy();
                 ___();
