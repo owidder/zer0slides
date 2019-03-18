@@ -3,16 +3,14 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@4/themes/light-border.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@4/themes/google.css"/>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
     <script src='https://unpkg.com/simple-statistics@7.0.2/dist/simple-statistics.min.js'></script>
 </head>
 <body>
 <script>
     window.onload = function () {
-        _0.addSlide("animation", "Animation");
-        _0.addSlide("correlation", "Correlation");
+        _0.addSlide("correlation", "Correlation", false);
+        _0.addSlide("animation", "Animation", false);
 
         _0.initReady();
     }

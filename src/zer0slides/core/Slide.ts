@@ -64,6 +64,9 @@ export class Slide {
 
     public clearSteps() {
         this.steps.length = 0;
+        if(!this.doPerformToCurrentStep) {
+            this.currentStepNo = -1;
+        }
     }
 
     public showStepCtr() {
@@ -133,7 +136,7 @@ export class Slide {
 
 
     public performToCurrentStep(): Promise<void> {
-        const promise = this.currentStepNo > -1 ?
+        const promise = (this.doPerformToCurrentStep && this.currentStepNo > -1) ?
             new Promise<void>(resolve => {
                 this._performToCurrentStepRecursively(this.steps, 0, resolve);
             }) :
