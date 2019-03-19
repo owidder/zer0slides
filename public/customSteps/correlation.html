@@ -22,6 +22,12 @@
         font-size: 1.5em;
     }
 
+    #__0__ svg {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
 </style>
 
 <div class="graph">
@@ -334,10 +340,10 @@
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep("._2015-08-25"),
-                    _0.tooltipStep(".graph", "Now <span class='__0__ big'>step further</span> to see <span class='__0__ big'>more stock correlations</span><br>All from 2014 - 2018", "bottom")
+                    _0.tooltipStep("._2017-02-21", "Now <span class='__0__ big'>step further</span> to see <span class='__0__ big'>more stock correlations</span><br>All from 2014 - 2018", "top")
                 ));
                 _0.addStep(_0.combine(
-                    _0.removeTooltipStep(".graph"),
+                    _0.removeTooltipStep("._2017-02-21"),
                     changeDataStep("BTC-USD", "ETH-USD")
                 ));
                 _0.addStep(changeDataStep("^DJI", "BTC-USD"));
