@@ -18,6 +18,10 @@
         alignment-baseline: central;
     }
 
+    .__0__.big {
+        font-size: 1.5em;
+    }
+
 </style>
 
 <div class="graph">
@@ -283,60 +287,66 @@
             draw2DataSets("AAPL", "GE").then(function() {
                 _0.useTippy("transparent");
 
-                _0.tooltip("._2016-07-19", "These are the stock prices of Apple and General Electric from 2014 to 2018", "top");
+                _0.tooltip("._2016-07-19", "These are the <span class='__0__ big'>stock prices</span> of " +
+                    "<span class='__0__ big'>Apple</span> and <span class='__0__ big'>General Electric</span> from " +
+                    "<span class='__0__ big'>2014</span> to <span class='__0__ big'>2018</span>", "top");
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep("._2016-07-19"),
-                    _0.tooltipStep("._2015-01-28", "Each dot represents the EOD price of one day (hover over one to see the respective values)")
+                    _0.tooltipStep("._2015-01-28", "Each dot represents the <span class='__0__ big'>end-of-day price of one day</span> (hover over one to see the respective values)")
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep("._2015-01-28"),
-                    _0.tooltipStep(".ylabel", "y-axis = GE price", "right")
+                    _0.tooltipStep(".ylabel", "<span class='__0__ big'>y-axis</span> = GE price", "right")
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep(".ylabel"),
-                    _0.tooltipStep(".xlabel", "x-axis = Apple price", "top")
+                    _0.tooltipStep(".xlabel", "<span class='__0__ big'>x-axis</span> = Apple price", "top")
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep(".xlabel"),
-                    _0.tooltipStep(".meanx", "The horizontal thin dotted line shows the mean GE stock price")
+                    _0.tooltipStep(".meanx", "The <span class='__0__ big'>horizontal</span> thin dotted line " +
+                        "shows the <span class='__0__ big'>mean GE stock price</span>")
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep(".meanx"),
-                    _0.tooltipStep(".meany", "The vertical thin dotted line shows the mean Apple stock price", "right")
+                    _0.tooltipStep(".meany", "The <span class='__0__ big'>vertical</span> thin dotted line " +
+                        "shows the <span class='__0__ big'>mean Apple stock price</span>", "right")
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep(".meany"),
-                    _0.tooltipStep(".regressionMiddle", "The thick dotted line is the linear regression line through all the dots")
+                    _0.tooltipStep(".regressionMiddle", "The thick dotted line is the " +
+                        "<span class='__0__ big'>linear regression line</span> through all the dots")
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep(".regressionMiddle"),
-                    _0.tooltipStep(".correlation", "The big number is the correlation coefficient (green = positive correlation / red = negative correlation)"
+                    _0.tooltipStep(".correlation", "The big number is the <span class='__0__ big'>correlation coefficient</span> (green = positive correlation / red = negative correlation)"
                         , "right")
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep(".correlation"),
-                    _0.tooltipStep("._2018-02-08", "Red dots are more on the negative correlation side (i.e. one stock is below the other is above its respective mean)")
+                    _0.tooltipStep("._2018-02-08", "<span class='__0__ big'>Red dots</span> are more on the " +
+                        "<span class='__0__ big'>negative correlation</span> side (i.e. one stock is below the other is above its respective mean)")
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep("._2018-02-08"),
-                    _0.tooltipStep("._2015-08-25", "Green dots are more on the positive correlation side (i.e. both stock are below or both stocks are above its respective mean)")
+                    _0.tooltipStep("._2015-08-25", "<span class='__0__ big'>Green dots</span> are more on the " +
+                        "<span class='__0__ big'>positive correlation</span> side (i.e. both stock are below or both stocks are above its respective mean)")
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep("._2015-08-25"),
-                    _0.tooltipStep(".graph", "Now step further to see more stock correlation<br>All from 2014 - 2018", "bottom")
+                    _0.tooltipStep(".graph", "Now <span class='__0__ big'>step further</span> to see <span class='__0__ big'>more stock correlations</span><br>All from 2014 - 2018", "bottom")
                 ));
                 _0.addStep(_0.combine(
                     _0.removeTooltipStep(".graph"),
                     changeDataStep("BTC-USD", "ETH-USD")
                 ));
-                _0.addStep(changeDataStep("BTC-USD", "^DJI"));
-                _0.addStep(changeDataStep("BTC-USD", "^IXIC"));
+                _0.addStep(changeDataStep("^DJI", "BTC-USD"));
                 _0.addStep(changeDataStep("^DJI", "^IXIC"));
                 _0.addStep(changeDataStep("AAPL", "BTC-USD"));
+                _0.addStep(changeDataStep("BTC-USD", "WMT"));
+                _0.addStep(changeDataStep("XOM", "ETH-USD"));
                 _0.addStep(changeDataStep("AAPL", "FB"));
-                _0.addStep(changeDataStep("AAPL", "MSFT"));
-                _0.addStep(changeDataStep("FB", "MSFT"));
-                _0.addStep(changeDataStep("FB", "GM"));
+                _0.addStep(changeDataStep("MSFT", "GM"));
                 _0.addStep(changeDataStep("GE", "GM"));
 
                 _0.doNotUseTippy();
