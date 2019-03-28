@@ -1,0 +1,121 @@
+<style>
+
+    #__0__ line.link {
+        stroke: black;
+    }
+
+</style>
+
+<div class="graph"></div>
+
+<script>
+
+    (function () {
+        const d3 = _0.d3;
+        const _ = _0._;
+
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const svg = d3.select("#__0__ .graph").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const gLinks = svg.append("g");
+        const gTexts = svg.append("g");
+
+        const simulation = d3.forceSimulation()
+            .force("link", d3.forceLink().id(function (d) {
+                return d.name;
+            }).distance(function (d) {
+                return -d.count;
+            }))
+            .force("charge", d3.forceManyBody().strength(-300))
+            .force("center", d3.forceCenter(width / 2, height / 2));
+
+        function drawLinks(links) {
+            var selectionWithData = gLinks.selectAll("line.link")
+                .data(links, function (d) {
+                    return d.a + "#" + d.b;
+                });
+
+            selectionWithData.enter()
+                .append("line")
+                .attr("class", "link")
+                .style("stroke-width", function (d) {
+                    return d.count
+                });
+
+            selectionWithData.exit().remove();
+        }
+
+        function drawTexts(nodes) {
+            var selectionWithData = gTexts.selectAll("text.node")
+                .data(nodes, function (d) {
+                    return d.name;
+                });
+
+            selectionWithData.enter()
+                .append("text")
+                .attr("class", "node")
+                .text(function (d) {
+                    return d.name;
+                });
+
+            selectionWithData.exit().remove();
+        }
+
+        function updateLinks() {
+            gLinks.selectAll("line.link")
+                .attr("x1", function (d) {
+                    return d.source.x;
+                })
+                .attr("y1", function (d) {
+                    return d.source.y;
+                })
+                .attr("x2", function (d) {
+                    return d.target.x;
+                })
+                .attr("y2", function (d) {
+                    return d.target.y;
+                });
+        }
+
+        function updateTexts() {
+            gTexts.selectAll("text.node")
+                .attr("x", function (d) {
+                    return d.x;
+                })
+                .attr("y", function (d) {
+                    return d.y;
+                });
+        }
+
+        function ticked() {
+            updateTexts();
+            updateLinks();
+        }
+
+        function startForce(data) {
+            simulation
+                .nodes(data.nodes)
+                .on("tick", function () {
+                    ticked(data);
+                });
+
+            simulation.force("link")
+                .links(data.links);
+
+            simulation.alpha(1).restart();
+        }
+
+        d3.json("pactData.json").then(function (data) {
+            console.log("start")
+            drawTexts(data.nodes);
+            drawLinks(data.links);
+            startForce(data);
+            ___();
+        })
+
+    })()
+</script>
