@@ -2,7 +2,7 @@
 
     #__0__ line.link {
         stroke: black;
-        opacity: .3;
+        opacity: .2;
     }
 
     #__0__ circle.node {
@@ -27,8 +27,8 @@
             .attr("width", width*3)
             .attr("height", height*3);
 
-        const gLinks = svg.append("g");
         const gTexts = svg.append("g");
+        const gLinks = svg.append("g");
         const gNodes = svg.append("g");
 
         const drag = function(selection) {
@@ -73,6 +73,11 @@
             selectionWithData.enter()
                 .append("line")
                 .attr("class", "link");
+
+            _0.tippy("line.link", {
+                followCursor: true,
+                arrow: true
+            });
 
             selectionWithData.exit().remove();
         }
@@ -125,6 +130,10 @@
             gLinks.selectAll("line.link")
                 .style("stroke-width", function (d) {
                     return Math.sqrt(d.count);
+                })
+                .on("mouseover", function(d) {
+                    const instance = this._tippy;
+                    instance && instance.setContent(d.source.name + " <-> " + d.target.name + ": " + d.count);
                 })
                 .attr("x1", function (d) {
                     return tx(d.source.x);
