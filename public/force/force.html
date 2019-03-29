@@ -2,6 +2,12 @@
 
     #__0__ line.link {
         stroke: black;
+        opacity: .3;
+    }
+
+    #__0__ circle.node {
+        fill: black;
+        opacity: .1;
     }
 
 </style>
@@ -18,19 +24,44 @@
         const height = window.innerHeight;
 
         const svg = d3.select("#__0__ .graph").append("svg")
-            .attr("width", width)
-            .attr("height", height);
+            .attr("width", width*3)
+            .attr("height", height*3);
 
         const gLinks = svg.append("g");
         const gTexts = svg.append("g");
+        const gNodes = svg.append("g");
+
+        const drag = function(selection) {
+            function dragstarted(d) {
+                if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+
+            function dragged(d) {
+                d.fx = d3.event.x;
+                d.fy = d3.event.y;
+            }
+
+            function dragended(d) {
+                if (!d3.event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+
+            selection.call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+        };
 
         const simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function (d) {
                 return d.name;
             }).distance(function (d) {
-                return -d.count;
+                return 100 / Math.max(d.count, 1);
             }))
-            .force("charge", d3.forceManyBody().strength(-300))
+            .force("charge", d3.forceManyBody().strength(-400))
             .force("center", d3.forceCenter(width / 2, height / 2));
 
         function drawLinks(links) {
@@ -65,35 +96,69 @@
             selectionWithData.exit().remove();
         }
 
+        function tx(x) {
+            return x;
+        }
+
+        function ty(y) {
+            return y + 100;
+        }
+
+        function drawNodes(nodes) {
+            var selectionWithData = gNodes.selectAll("circle.node")
+                .data(nodes, function (d) {
+                    return d.name;
+                });
+
+            selectionWithData.enter()
+                .append("circle")
+                .attr("class", "node")
+                .attr("r", 10)
+                .call(drag);
+
+            selectionWithData.exit().remove();
+        }
+
         function updateLinks() {
             gLinks.selectAll("line.link")
                 .attr("x1", function (d) {
-                    return d.source.x;
+                    return tx(d.source.x);
                 })
                 .attr("y1", function (d) {
-                    return d.source.y;
+                    return ty(d.source.y);
                 })
                 .attr("x2", function (d) {
-                    return d.target.x;
+                    return tx(d.target.x);
                 })
                 .attr("y2", function (d) {
-                    return d.target.y;
+                    return ty(d.target.y);
                 });
         }
 
         function updateTexts() {
             gTexts.selectAll("text.node")
                 .attr("x", function (d) {
-                    return d.x;
+                    return tx(d.x);
                 })
                 .attr("y", function (d) {
-                    return d.y;
+                    return ty(d.y);
+                });
+        }
+
+        function updateNodes() {
+            gNodes.selectAll("circle.node")
+                .attr("cx", function (d) {
+                    return tx(d.x);
+                })
+                .attr("cy", function (d) {
+                    return ty(d.y);
                 });
         }
 
         function ticked() {
             updateTexts();
             updateLinks();
+            updateNodes();
         }
 
         function startForce(data) {
@@ -112,6 +177,7 @@
         d3.json("pactData.json").then(function (data) {
             console.log("start")
             drawTexts(data.nodes);
+            drawNodes(data.nodes);
             drawLinks(data.links);
             startForce(data);
             ___();
