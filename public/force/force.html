@@ -67,15 +67,12 @@
         function drawLinks(links) {
             var selectionWithData = gLinks.selectAll("line.link")
                 .data(links, function (d) {
-                    return d.a + "#" + d.b;
+                    return d.source + "#" + d.target;
                 });
 
             selectionWithData.enter()
                 .append("line")
-                .attr("class", "link")
-                .style("stroke-width", function (d) {
-                    return d.count
-                });
+                .attr("class", "link");
 
             selectionWithData.exit().remove();
         }
@@ -116,11 +113,19 @@
                 .attr("r", 10)
                 .call(drag);
 
+            _0.tippy("circle.node", {
+                followCursor: true,
+                arrow: true
+            });
+
             selectionWithData.exit().remove();
         }
 
         function updateLinks() {
             gLinks.selectAll("line.link")
+                .style("stroke-width", function (d) {
+                    return Math.sqrt(d.count);
+                })
                 .attr("x1", function (d) {
                     return tx(d.source.x);
                 })
@@ -147,6 +152,10 @@
 
         function updateNodes() {
             gNodes.selectAll("circle.node")
+                .on("mouseover", function(d) {
+                    const instance = this._tippy;
+                    instance && instance.setContent(d.name + ": " + d.count);
+                })
                 .attr("cx", function (d) {
                     return tx(d.x);
                 })
