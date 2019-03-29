@@ -7,7 +7,7 @@
 
     #__0__ circle.node {
         fill: black;
-        opacity: .1;
+        opacity: .5;
     }
 
 </style>
@@ -24,12 +24,14 @@
         const height = window.innerHeight;
 
         const svg = d3.select("#__0__ .graph").append("svg")
-            .attr("width", width*3)
-            .attr("height", height*3);
+            .attr("width", width)
+            .attr("height", height*2);
 
         const gTexts = svg.append("g");
         const gLinks = svg.append("g");
         const gNodes = svg.append("g");
+
+        const color = d3.scaleOrdinal(d3.schemeCategory10);
 
         const drag = function(selection) {
             function dragstarted(d) {
@@ -106,7 +108,13 @@
             return y + 100;
         }
 
-        function drawNodes(nodes) {
+        function teamName(node, teams) {
+            const teamNode = teams.find(function(t) {return t.app === node.name});
+            const team = teamNode ? teamNode.team : "none";
+            return team;
+        }
+
+        function drawNodes(nodes, teams) {
             var selectionWithData = gNodes.selectAll("circle.node")
                 .data(nodes, function (d) {
                     return d.name;
@@ -115,6 +123,11 @@
             selectionWithData.enter()
                 .append("circle")
                 .attr("class", "node")
+                .style("fill", function (d) {
+                    const _teamName = teamName(d, teams);
+                    d.teamName = _teamName;
+                    return color(_teamName);
+                })
                 .attr("r", 10)
                 .call(drag);
 
@@ -163,7 +176,7 @@
             gNodes.selectAll("circle.node")
                 .on("mouseover", function(d) {
                     const instance = this._tippy;
-                    instance && instance.setContent(d.name + ": " + d.count);
+                    instance && instance.setContent(d.name + " (" + d.teamName +  ") : " + d.count);
                 })
                 .attr("cx", function (d) {
                     return tx(d.x);
@@ -193,12 +206,14 @@
         }
 
         d3.json("pactData.json").then(function (data) {
-            console.log("start")
-            drawTexts(data.nodes);
-            drawNodes(data.nodes);
-            drawLinks(data.links);
-            startForce(data);
-            ___();
+            d3.csv("teams.csv").then(function (teams) {
+                console.log("start")
+                drawTexts(data.nodes);
+                drawNodes(data.nodes, teams);
+                drawLinks(data.links);
+                startForce(data);
+                ___();
+            })
         })
 
     })()
