@@ -25,7 +25,7 @@
 
         const svg = d3.select("#__0__ .graph").append("svg")
             .attr("width", width)
-            .attr("height", height*2);
+            .attr("height", height * 2);
 
         const gTexts = svg.append("g");
         const gLinks = svg.append("g");
@@ -33,7 +33,7 @@
 
         const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-        const drag = function(selection) {
+        const drag = function (selection) {
             function dragstarted(d) {
                 if (!d3.event.active) simulation.alphaTarget(0.3).restart();
                 d.fx = d.x;
@@ -100,21 +100,25 @@
             selectionWithData.exit().remove();
         }
 
+        let translateX = 0;
         function tx(x) {
-            return x;
+            return x + translateX + 10;
         }
 
+        let translateY = 0;
         function ty(y) {
-            return y + 100;
+            return y + translateY + 10;
         }
 
         function teamName(node, teams) {
-            const teamNode = teams.find(function(t) {return t.app === node.name});
+            const teamNode = teams.find(function (t) {
+                return t.app === node.name
+            });
             const team = teamNode ? teamNode.team : "none";
             return team;
         }
 
-        function drawNodes(nodes, teams) {
+        function drawNodes(nodes) {
             var selectionWithData = gNodes.selectAll("circle.node")
                 .data(nodes, function (d) {
                     return d.name;
@@ -124,9 +128,7 @@
                 .append("circle")
                 .attr("class", "node")
                 .style("fill", function (d) {
-                    const _teamName = teamName(d, teams);
-                    d.teamName = _teamName;
-                    return color(_teamName);
+                    return color(d.teamName);
                 })
                 .attr("r", 10)
                 .call(drag);
@@ -144,7 +146,7 @@
                 .style("stroke-width", function (d) {
                     return Math.sqrt(d.count);
                 })
-                .on("mouseover", function(d) {
+                .on("mouseover", function (d) {
                     const instance = this._tippy;
                     instance && instance.setContent(d.source.name + " <-> " + d.target.name + ": " + d.count);
                 })
@@ -174,9 +176,9 @@
 
         function updateNodes() {
             gNodes.selectAll("circle.node")
-                .on("mouseover", function(d) {
+                .on("mouseover", function (d) {
                     const instance = this._tippy;
-                    instance && instance.setContent(d.name + " (" + d.teamName +  ") : " + d.count);
+                    instance && instance.setContent(d.name + " (" + d.teamName + ") : " + d.count);
                 })
                 .attr("cx", function (d) {
                     return tx(d.x);
@@ -186,7 +188,21 @@
                 });
         }
 
-        function ticked() {
+        function updateTranslate(data) {
+            translateY = 0;
+            translateX = 0;
+            data.nodes.forEach(function (node) {
+                if(node.y < -translateY) {
+                    translateY = -node.y;
+                }
+                if(node.x < -translateX) {
+                    translateX = -node.x;
+                }
+            })
+        }
+
+        function ticked(data) {
+            updateTranslate(data);
             updateTexts();
             updateLinks();
             updateNodes();
@@ -205,14 +221,42 @@
             simulation.alpha(1).restart();
         }
 
-        d3.json("pactData.json").then(function (data) {
-            d3.csv("teams.csv").then(function (teams) {
-                console.log("start")
-                drawTexts(data.nodes);
-                drawNodes(data.nodes, teams);
-                drawLinks(data.links);
-                startForce(data);
-                ___();
+        let currentData;
+        function draw(data, teams) {
+            data.nodes.forEach(function (node) {
+                node.teamName = teamName(node, teams);
+            })
+            currentData = data;
+            drawTexts(data.nodes);
+            drawNodes(data.nodes);
+            drawLinks(data.links);
+            startForce(data);
+        }
+
+        function nextDataStep(nextData, teams) {
+            let lastData;
+            return _0.step(
+                function () {
+                    lastData = currentData;
+                    draw(nextData, teams);
+                },
+                function () {
+                    draw(lastData, teams);
+                }
+            )
+        }
+
+        d3.json("pactData-both.json").then(function (bothData) {
+            d3.json("pactData-sync.json").then(function (syncData) {
+                d3.json("pactData-async.json").then(function (asyncData) {
+                    d3.csv("teams.csv").then(function (teams) {
+                        console.log("start")
+                        draw(bothData, teams);
+                        _0.addStep(nextDataStep(asyncData, teams));
+                        _0.addStep(nextDataStep(syncData, teams));
+                        ___();
+                    })
+                })
             })
         })
 
