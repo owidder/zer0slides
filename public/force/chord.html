@@ -40,7 +40,9 @@
 
         const color = d3.scaleOrdinal(d3.schemeCategory10);
 
+        let currentData;
         function redrawChord(data, duration) {
+            currentData = data;
 
             svgG.transition()
                 .duration(duration)
@@ -228,6 +230,21 @@
             }
         }
 
+        function nextDataStep(nextData) {
+            let lastData;
+            return _0.step(
+                function () {
+                    lastData = currentData;
+                    reset();
+                    redrawChord(nextData, 500);
+                },
+                function () {
+                    reset();
+                    redrawChord(lastData, 500);
+                }
+            )
+        }
+
         d3.json("pactMatrix-both.json").then(function (bothMatrix) {
             d3.json("pactMatrix-sync.json").then(function (syncMatrix) {
                 d3.json("pactMatrix-async.json").then(function (asyncMatrix) {
@@ -235,6 +252,7 @@
                         console.log(bothMatrix)
                         reset();
                         redrawChord(bothMatrix, 1000);
+                        _0.addStep(nextDataStep(asyncMatrix));
                         ___();
                     })
                 })
