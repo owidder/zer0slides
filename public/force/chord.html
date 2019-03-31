@@ -64,12 +64,14 @@
                 .attr("class", "group")
                 .attr("d", d3.arc().innerRadius(innerRadius*10).outerRadius(outerRadius*10))
                 .on("mouseover", function (d, i) {
-                    fade(.1)(d, i);
+                    fadeGroup(.1)(i);
                     const instance = this._tippy;
                     const node = data.nodes[d.index];
                     instance && instance.setContent(node.name + ": " + node.count);
                 })
-                .on("mouseout", fade(1));
+                .on("mouseout", function (d, i) {
+                    fadeGroup(1)(i)
+                });
 
             _0.tippy("path.group", {
                 followCursor: true,
@@ -156,6 +158,23 @@
                     const team = data.nodes[d.source.index].team;
                     return color(team);
                 })
+                .on("mouseover", function (d) {
+                    fadeChord(.1)(d.source.index, d.target.index)
+                    const instance = this._tippy;
+                    const sourceNode = data.nodes[d.source.index];
+                    const targetNode = data.nodes[d.target.index];
+                    instance && instance
+                        .setContent(sourceNode.name + " -> " + targetNode.name + ": " + d.source.value + "<br>" +
+                            targetNode.name + " -> " + sourceNode.name + ": " + d.target.value);
+                })
+                .on("mouseout", function (d) {
+                    fadeChord(1)(d.source.index, d.target.index)
+                })
+
+            _0.tippy("path.chord", {
+                followCursor: true,
+                arrow: true
+            });
 
             chordG.selectAll("path")
                 .transition()
@@ -164,11 +183,22 @@
 
             chordData.exit().remove();
 
-            function fade(opacity) {
-                return function(g, i) {
+            function fadeGroup(opacity) {
+                return function(i) {
                     svgG.selectAll("path.chord")
                         .filter(function(d) {
                             return d.source.index != i && d.target.index != i;
+                        })
+                        .transition()
+                        .style("opacity", opacity);
+                };
+            }
+
+            function fadeChord(opacity) {
+                return function(iSource, iTarget) {
+                    svgG.selectAll("path.chord")
+                        .filter(function(d) {
+                            return d.source.index != iSource || d.target.index != iTarget;
                         })
                         .transition()
                         .style("opacity", opacity);
