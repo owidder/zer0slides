@@ -4,6 +4,10 @@
         stroke: black;
     }
 
+    #__0__ path.chord {
+        stroke: black;
+    }
+
 </style>
 
 <div class="graph"></div>
@@ -18,8 +22,8 @@
         const height = window.innerHeight;
 
         const svg = d3.select("#__0__ .graph").append("svg")
-            .attr("width", width)
-            .attr("height", height);
+            .attr("width", width*2)
+            .attr("height", height*2);
 
         const svgG = svg.append("g");
         const rootG = svgG.append("g");
@@ -40,17 +44,12 @@
 
             svgG.transition()
                 .duration(duration)
-                .attr("transform", "translate(" + width / 2 + "," + ((height / 2) + 50) + ")");
+                .attr("transform", "translate(" + width / 2 + "," + ((height / 2) + 100) + ")");
 
             const innerRadius = Math.min(width, height) * .41,
                 outerRadius = innerRadius * 1.1;
 
-            const chord = d3.chord()
-                .sortSubgroups(function(a, b) {
-                    const label1 = data.nodes[a].name;
-                    const label2 = data.nodes[b].name;
-                    return label1.localeCompare(label2);
-                })(data.matrix);
+            const chord = d3.chord()(data.matrix);
 
             // group
             const groupPathData = groupG
@@ -69,8 +68,8 @@
 
             groupG.selectAll("path")
                 .style("fill", function (d) {
-                    const label = data.nodes[d.index].name;
-                    return color(label);
+                    const team = data.nodes[d.index].team;
+                    return color(team);
                 })
                 .transition()
                 .duration(duration)
@@ -134,14 +133,19 @@
             // chords
             const chordData = chordG
                 .datum(chord)
-                .selectAll("path")
+                .selectAll("path.chord")
                 .data(function (d) {
                     return d;
                 });
 
             chordData.enter()
                 .append("path")
+                .attr("class", "chord")
                 .attr("d", d3.ribbon().radius(innerRadius/10))
+                .style("fill", function (d) {
+                    const team = data.nodes[d.source.index].team;
+                    return color(team);
+                })
 
             chordG.selectAll("path")
                 .transition()
@@ -152,7 +156,7 @@
 
             function fade(opacity) {
                 return function(g, i) {
-                    svgG.selectAll(".chord path")
+                    svgG.selectAll("path.chord")
                         .filter(function(d) {
                             return d.source.index != i && d.target.index != i;
                         })
