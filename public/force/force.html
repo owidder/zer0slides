@@ -23,7 +23,6 @@
 
     (function () {
         const d3 = _0.d3;
-        const _ = _0._;
 
         const width = window.innerWidth;
         const height = window.innerHeight;
@@ -124,7 +123,7 @@
 
         let translateX = 0;
         function tx(x) {
-            return x + translateX + 10;
+            return x + translateX + 50;
         }
 
         let translateY = 0;
@@ -211,16 +210,8 @@
         }
 
         function updateTranslate(data) {
-            translateY = 0;
-            translateX = 0;
-            data.nodes.forEach(function (node) {
-                if(node.y < -translateY) {
-                    translateY = -node.y;
-                }
-                if(node.x < -translateX) {
-                    translateX = -node.x;
-                }
-            })
+            translateX = _.minBy(data.nodes, "x").x * -1;
+            translateY = _.minBy(data.nodes, "y").y * -1;
         }
 
         function ticked(data) {
