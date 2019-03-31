@@ -63,8 +63,18 @@
                 .append("path")
                 .attr("class", "group")
                 .attr("d", d3.arc().innerRadius(innerRadius*10).outerRadius(outerRadius*10))
-                .on("mouseover", fade(.1))
+                .on("mouseover", function (d, i) {
+                    fade(.1)(d, i);
+                    const instance = this._tippy;
+                    const node = data.nodes[d.index];
+                    instance && instance.setContent(node.name + ": " + node.count);
+                })
                 .on("mouseout", fade(1));
+
+            _0.tippy("path.group", {
+                followCursor: true,
+                arrow: true
+            });
 
             groupG.selectAll("path")
                 .style("fill", function (d) {
