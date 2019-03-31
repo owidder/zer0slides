@@ -2,12 +2,18 @@
 
     #__0__ path.group {
         stroke: black;
+        opacity: .5;
     }
 
     #__0__ path.chord {
         stroke: black;
+        opacity: .5;
     }
 
+    #__0__ text.title {
+        font-size: 10em;
+        opacity: .2;
+    }
 </style>
 
 <div class="graph"></div>
@@ -25,6 +31,7 @@
             .attr("width", width*2)
             .attr("height", height*2);
 
+        const gTitle = svg.append("g");
         const svgG = svg.append("g");
         const rootG = svgG.append("g");
         let groupG;
@@ -41,8 +48,10 @@
         const color = d3.scaleOrdinal(d3.schemeCategory10);
 
         let currentData;
-        function redrawChord(data, duration) {
+        function redrawChord(data, duration, title) {
             currentData = data;
+
+            drawTitle(title);
 
             svgG.transition()
                 .duration(duration)
@@ -72,7 +81,7 @@
                     instance && instance.setContent(node.name + ": " + node.count);
                 })
                 .on("mouseout", function (d, i) {
-                    fadeGroup(1)(i)
+                    fadeGroup(.5)(i)
                 });
 
             _0.tippy("path.group", {
@@ -166,11 +175,11 @@
                     const sourceNode = data.nodes[d.source.index];
                     const targetNode = data.nodes[d.target.index];
                     instance && instance
-                        .setContent(sourceNode.name + " -> " + targetNode.name + ": " + d.source.value + "<br>" +
-                            targetNode.name + " -> " + sourceNode.name + ": " + d.target.value);
+                        .setContent(sourceNode.name + " -> " + targetNode.name + ": " + d.target.value + "<br>" +
+                            targetNode.name + " -> " + sourceNode.name + ": " + d.source.value);
                 })
                 .on("mouseout", function (d) {
-                    fadeChord(1)(d.source.index, d.target.index)
+                    fadeChord(.5)(d.source.index, d.target.index)
                 })
 
             _0.tippy("path.chord", {
@@ -230,17 +239,35 @@
             }
         }
 
-        function nextDataStep(nextData) {
+        let currentTitle;
+        function drawTitle(title) {
+            currentTitle = title;
+            const selection = gTitle.selectAll("text.title");
+
+            selection.data([{id: 1, title: title}]).enter()
+                .append("text")
+                .attr("class", "title")
+                .attr("x", width * .01)
+                .attr("y", height * .3)
+                .merge(selection)
+                .text(function (d) {
+                    return d.title;
+                })
+        }
+
+        function nextDataStep(nextData, nextTitle) {
             let lastData;
+            let lastTitle;
             return _0.step(
                 function () {
                     lastData = currentData;
+                    lastTitle = currentTitle;
                     reset();
-                    redrawChord(nextData, 500);
+                    redrawChord(nextData, 500, nextTitle);
                 },
                 function () {
                     reset();
-                    redrawChord(lastData, 500);
+                    redrawChord(lastData, 500, lastTitle);
                 }
             )
         }
@@ -251,9 +278,9 @@
                     d3.csv("teams.csv").then(function (teams) {
                         console.log(bothMatrix)
                         reset();
-                        redrawChord(bothMatrix, 1000);
-                        _0.addStep(nextDataStep(asyncMatrix));
-                        _0.addStep(nextDataStep(syncMatrix));
+                        redrawChord(bothMatrix, 1000, "sync & async");
+                        _0.addStep(nextDataStep(asyncMatrix, "async"));
+                        _0.addStep(nextDataStep(syncMatrix, "sync"));
                         ___();
                     })
                 })
