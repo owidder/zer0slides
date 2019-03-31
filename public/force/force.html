@@ -131,14 +131,6 @@
             return y + translateY + 50;
         }
 
-        function teamName(node, teams) {
-            const teamNode = teams.find(function (t) {
-                return t.app === node.name
-            });
-            const team = teamNode ? teamNode.team : "none";
-            return team;
-        }
-
         function drawNodes(nodes) {
             var selectionWithData = gNodes.selectAll("circle.node")
                 .data(nodes, function (d) {
@@ -149,7 +141,7 @@
                 .append("circle")
                 .attr("class", "node")
                 .style("fill", function (d) {
-                    return color(d.teamName);
+                    return color(d.team);
                 })
                 .attr("r", 10)
                 .call(drag);
@@ -199,7 +191,7 @@
             gNodes.selectAll("circle.node")
                 .on("mouseover", function (d) {
                     const instance = this._tippy;
-                    instance && instance.setContent(d.name + " (" + d.teamName + ") : " + d.count);
+                    instance && instance.setContent(d.name + " (" + d.team + ") : " + d.count);
                 })
                 .attr("cx", function (d) {
                     return tx(d.x);
@@ -235,11 +227,8 @@
         }
 
         let currentData;
-        function draw(data, teams, title) {
+        function draw(data, title) {
             currentData = data;
-            data.nodes.forEach(function (node) {
-                node.teamName = teamName(node, teams);
-            });
             drawTitle(title);
             drawTexts(data.nodes);
             drawNodes(data.nodes);
@@ -247,17 +236,17 @@
             startForce(data);
         }
 
-        function nextDataStep(nextData, teams, nextTitle) {
+        function nextDataStep(nextData, nextTitle) {
             let lastData;
             let lastTitle;
             return _0.step(
                 function () {
                     lastData = currentData;
                     lastTitle = currentTitle;
-                    draw(nextData, teams, nextTitle);
+                    draw(nextData, nextTitle);
                 },
                 function () {
-                    draw(lastData, teams, lastTitle);
+                    draw(lastData, lastTitle);
                 }
             )
         }
@@ -265,13 +254,11 @@
         d3.json("pactData-both.json").then(function (bothData) {
             d3.json("pactData-sync.json").then(function (syncData) {
                 d3.json("pactData-async.json").then(function (asyncData) {
-                    d3.csv("teams.csv").then(function (teams) {
-                        console.log("start")
-                        draw(bothData, teams, "sync & async");
-                        _0.addStep(nextDataStep(asyncData, teams, "async"));
-                        _0.addStep(nextDataStep(syncData, teams, "sync"));
-                        ___();
-                    })
+                    console.log("start")
+                    draw(bothData, "sync & async");
+                    _0.addStep(nextDataStep(asyncData, "async"));
+                    _0.addStep(nextDataStep(syncData, "sync"));
+                    ___();
                 })
             })
         })

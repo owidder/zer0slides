@@ -1,5 +1,9 @@
 <style>
 
+    #__0__ path.group {
+        stroke: black;
+    }
+
 </style>
 
 <div class="graph"></div>
@@ -30,6 +34,8 @@
             chordG = rootG.append("g").attr("class", "chord");
         }
 
+        const color = d3.scaleOrdinal(d3.schemeCategory10);
+
         function redrawChord(data, duration) {
 
             svgG.transition()
@@ -40,23 +46,32 @@
                 outerRadius = innerRadius * 1.1;
 
             const chord = d3.chord()
-                .sortSubgroups(d3.descending)(data.matrix);
+                .sortSubgroups(function(a, b) {
+                    const label1 = data.nodes[a].name;
+                    const label2 = data.nodes[b].name;
+                    return label1.localeCompare(label2);
+                })(data.matrix);
 
             // group
             const groupPathData = groupG
                 .datum(chord)
-                .selectAll("path")
+                .selectAll("path.group")
                 .data(function (d) {
                     return d.groups;
                 });
 
             groupPathData.enter()
                 .append("path")
+                .attr("class", "group")
                 .attr("d", d3.arc().innerRadius(innerRadius*10).outerRadius(outerRadius*10))
                 .on("mouseover", fade(.1))
                 .on("mouseout", fade(1));
 
             groupG.selectAll("path")
+                .style("fill", function (d) {
+                    const label = data.nodes[d.index].name;
+                    return color(label);
+                })
                 .transition()
                 .duration(duration)
                 .attr("d", d3.arc().innerRadius(innerRadius).outerRadius(outerRadius));
@@ -151,8 +166,8 @@
                 const range = d3.range(0, d.value, 1000);
                 let gt;
                 if(range.length > 0) {
-                    gt = d3.range(0, d.value, 1000).map(function(v, i) {
-                        const label = i == 0 ? data.nodes[d.index].name : v / 1000 + "";
+                    gt = d3.range(0, d.value, 10).map(function(v, i) {
+                        const label = i == 0 ? data.nodes[d.index].name : v + "";
                         return {
                             angle: v * k + d.startAngle,
                             label: label
@@ -162,7 +177,7 @@
                 else {
                     gt = [{
                         angle: d.startAngle,
-                        label: scope.objects[d.index].symbol
+                        label: data.nodes[d.index].name
                     }]
                 }
                 return gt;
@@ -173,7 +188,7 @@
             d3.json("pactMatrix-sync.json").then(function (syncMatrix) {
                 d3.json("pactMatrix-async.json").then(function (asyncMatrix) {
                     d3.csv("teams.csv").then(function (teams) {
-                        console.log("start")
+                        console.log(bothMatrix)
                         reset();
                         redrawChord(bothMatrix, 1000);
                         ___();
