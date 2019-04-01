@@ -78,7 +78,7 @@
                     fadeGroup(.1)(i);
                     const instance = this._tippy;
                     const node = data.nodes[d.index];
-                    instance && instance.setContent(node.name + ": " + node.count);
+                    instance && instance.setContent(node.name + " (" + node.team +  "): " + node.count);
                 })
                 .on("mouseout", function (d, i) {
                     fadeGroup(.5)(i)
@@ -218,9 +218,9 @@
 
             function groupTicks(d) {
                 const k = (d.endAngle - d.startAngle) / d.value;
-                const range = d3.range(0, d.value, 1000);
+                const range = d3.range(0, d.value, 1);
                 let gt;
-                if(range.length > 0) {
+                if(range.length > 1) {
                     gt = d3.range(0, d.value, 10).map(function(v, i) {
                         const label = i == 0 ? data.nodes[d.index].name : v + "";
                         return {
@@ -232,7 +232,7 @@
                 else {
                     gt = [{
                         angle: d.startAngle,
-                        label: data.nodes[d.index].name
+                        label: ""
                     }]
                 }
                 return gt;
