@@ -1,0 +1,628 @@
+{
+  "nodes": [
+    {
+      "name": "rgis"
+    },
+    {
+      "name": "parma"
+    },
+    {
+      "name": "agta"
+    },
+    {
+      "name": "auri"
+    },
+    {
+      "name": "epro"
+    },
+    {
+      "name": "zata"
+    },
+    {
+      "name": "arvo"
+    },
+    {
+      "name": "gin"
+    },
+    {
+      "name": "belma"
+    },
+    {
+      "name": "babu"
+    },
+    {
+      "name": "zama"
+    },
+    {
+      "name": "zate"
+    },
+    {
+      "name": "banca"
+    },
+    {
+      "name": "bugv"
+    },
+    {
+      "name": "foko"
+    },
+    {
+      "name": "gurt"
+    },
+    {
+      "name": "mdan"
+    },
+    {
+      "name": "rave"
+    },
+    {
+      "name": "debu"
+    },
+    {
+      "name": "destra"
+    },
+    {
+      "name": "doko"
+    },
+    {
+      "name": "foma"
+    },
+    {
+      "name": "gina"
+    },
+    {
+      "name": "mdanp"
+    },
+    {
+      "name": "kobe"
+    },
+    {
+      "name": "kobu"
+    },
+    {
+      "name": "kolumna"
+    },
+    {
+      "name": "ottopc"
+    },
+    {
+      "name": "mdinv"
+    },
+    {
+      "name": "mdmes"
+    },
+    {
+      "name": "mdrue"
+    },
+    {
+      "name": "orwell"
+    },
+    {
+      "name": "tardis"
+    },
+    {
+      "name": "zaau"
+    },
+    {
+      "name": "zaba"
+    },
+    {
+      "name": "bugvdep"
+    },
+    {
+      "name": "gebuehr"
+    },
+    {
+      "name": "zinsen"
+    },
+    {
+      "name": "dokdep"
+    },
+    {
+      "name": "mdruedep"
+    },
+    {
+      "name": "orwelldep"
+    },
+    {
+      "name": "peter"
+    },
+    {
+      "name": "parma-scheduler"
+    },
+    {
+      "name": "volla"
+    }
+  ],
+  "links": [
+    {
+      "a": "rgis",
+      "b": "parma",
+      "count": 2
+    },
+    {
+      "a": "agta",
+      "b": "auri",
+      "count": 1
+    },
+    {
+      "a": "agta",
+      "b": "epro",
+      "count": 1
+    },
+    {
+      "a": "agta",
+      "b": "zata",
+      "count": 1
+    },
+    {
+      "a": "arvo",
+      "b": "gin",
+      "count": 1
+    },
+    {
+      "a": "auri",
+      "b": "belma",
+      "count": 1
+    },
+    {
+      "a": "babu",
+      "b": "zama",
+      "count": 1
+    },
+    {
+      "a": "babu",
+      "b": "zate",
+      "count": 1
+    },
+    {
+      "a": "banca",
+      "b": "zama",
+      "count": 1
+    },
+    {
+      "a": "belma",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "belma",
+      "b": "foko",
+      "count": 2
+    },
+    {
+      "a": "bugv",
+      "b": "gin",
+      "count": 2
+    },
+    {
+      "a": "bugv",
+      "b": "gurt",
+      "count": 2
+    },
+    {
+      "a": "bugv",
+      "b": "mdan",
+      "count": 2
+    },
+    {
+      "a": "bugv",
+      "b": "parma",
+      "count": 2
+    },
+    {
+      "a": "bugv",
+      "b": "rave",
+      "count": 2
+    },
+    {
+      "a": "bugv",
+      "b": "zama",
+      "count": 2
+    },
+    {
+      "a": "debu",
+      "b": "auri",
+      "count": 1
+    },
+    {
+      "a": "debu",
+      "b": "epro",
+      "count": 1
+    },
+    {
+      "a": "debu",
+      "b": "zata",
+      "count": 1
+    },
+    {
+      "a": "destra",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "doko",
+      "b": "foma",
+      "count": 4
+    },
+    {
+      "a": "epro",
+      "b": "belma",
+      "count": 1
+    },
+    {
+      "a": "foma",
+      "b": "arvo",
+      "count": 1
+    },
+    {
+      "a": "foma",
+      "b": "bugv",
+      "count": 2
+    },
+    {
+      "a": "foma",
+      "b": "gin",
+      "count": 3
+    },
+    {
+      "a": "foma",
+      "b": "mdan",
+      "count": 2
+    },
+    {
+      "a": "foma",
+      "b": "parma",
+      "count": 2
+    },
+    {
+      "a": "foma",
+      "b": "rave",
+      "count": 1
+    },
+    {
+      "a": "gin",
+      "b": "gina",
+      "count": 2
+    },
+    {
+      "a": "gin",
+      "b": "parma",
+      "count": 3
+    },
+    {
+      "a": "gurt",
+      "b": "mdanp",
+      "count": 1
+    },
+    {
+      "a": "kobe",
+      "b": "gin",
+      "count": 1
+    },
+    {
+      "a": "kobu",
+      "b": "kobe",
+      "count": 1
+    },
+    {
+      "a": "kolumna",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "kolumna",
+      "b": "doko",
+      "count": 1
+    },
+    {
+      "a": "kolumna",
+      "b": "foma",
+      "count": 1
+    },
+    {
+      "a": "kolumna",
+      "b": "mdan",
+      "count": 1
+    },
+    {
+      "a": "kolumna",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "mdan",
+      "b": "mdanp",
+      "count": 1
+    },
+    {
+      "a": "mdan",
+      "b": "parma",
+      "count": 2
+    },
+    {
+      "a": "mdanp",
+      "b": "ottopc",
+      "count": 2
+    },
+    {
+      "a": "mdinv",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "mdinv",
+      "b": "mdan",
+      "count": 1
+    },
+    {
+      "a": "mdmes",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "mdmes",
+      "b": "mdan",
+      "count": 1
+    },
+    {
+      "a": "mdmes",
+      "b": "zama",
+      "count": 1
+    },
+    {
+      "a": "mdrue",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "mdrue",
+      "b": "mdan",
+      "count": 1
+    },
+    {
+      "a": "mdrue",
+      "b": "zama",
+      "count": 1
+    },
+    {
+      "a": "orwell",
+      "b": "bugv",
+      "count": 2
+    },
+    {
+      "a": "orwell",
+      "b": "foma",
+      "count": 1
+    },
+    {
+      "a": "orwell",
+      "b": "mdan",
+      "count": 1
+    },
+    {
+      "a": "orwell",
+      "b": "parma",
+      "count": 2
+    },
+    {
+      "a": "parma",
+      "b": "mdanp",
+      "count": 1
+    },
+    {
+      "a": "parma",
+      "b": "zama",
+      "count": 3
+    },
+    {
+      "a": "tardis",
+      "b": "banca",
+      "count": 1
+    },
+    {
+      "a": "tardis",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "zaau",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "zama",
+      "b": "zate",
+      "count": 1
+    },
+    {
+      "a": "zata",
+      "b": "belma",
+      "count": 1
+    },
+    {
+      "a": "zate",
+      "b": "mdanp",
+      "count": 1
+    },
+    {
+      "a": "zate",
+      "b": "zaba",
+      "count": 1
+    },
+    {
+      "a": "auri",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "banca",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "bugv",
+      "b": "bugvdep",
+      "count": 1
+    },
+    {
+      "a": "bugv",
+      "b": "gebuehr",
+      "count": 1
+    },
+    {
+      "a": "bugv",
+      "b": "zinsen",
+      "count": 1
+    },
+    {
+      "a": "bugvdep",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "debu",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "destra",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "destra",
+      "b": "foma",
+      "count": 2
+    },
+    {
+      "a": "destra",
+      "b": "rave",
+      "count": 2
+    },
+    {
+      "a": "dokdep",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "doko",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "doko",
+      "b": "dokdep",
+      "count": 1
+    },
+    {
+      "a": "doko",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "epro",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "gurt",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "kobu",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "mdanp",
+      "b": "mdrue",
+      "count": 1
+    },
+    {
+      "a": "mdinv",
+      "b": "mdrue",
+      "count": 1
+    },
+    {
+      "a": "mdinv",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "mdmes",
+      "b": "mdrue",
+      "count": 1
+    },
+    {
+      "a": "mdmes",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "mdrue",
+      "b": "mdruedep",
+      "count": 1
+    },
+    {
+      "a": "mdrue",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "mdruedep",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "orwelldep",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "ottopc",
+      "b": "mdrue",
+      "count": 1
+    },
+    {
+      "a": "parma",
+      "b": "peter",
+      "count": 1
+    },
+    {
+      "a": "parma-scheduler",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "volla",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "zaau",
+      "b": "banca",
+      "count": 1
+    },
+    {
+      "a": "zaau",
+      "b": "parma",
+      "count": 1
+    },
+    {
+      "a": "zaau",
+      "b": "zama",
+      "count": 1
+    },
+    {
+      "a": "zata",
+      "b": "bugv",
+      "count": 1
+    },
+    {
+      "a": "zate",
+      "b": "parma",
+      "count": 1
+    }
+  ]
+}
