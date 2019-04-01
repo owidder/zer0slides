@@ -1,0 +1,267 @@
+<style>
+
+    #__0__ line.link {
+        stroke: black;
+        opacity: .2;
+    }
+
+    #__0__ circle.node {
+        fill: black;
+        opacity: .5;
+    }
+
+    #__0__ text.title {
+        font-size: 10em;
+        opacity: .2;
+    }
+
+</style>
+
+<div class="graph"></div>
+
+<script>
+
+    (function () {
+        const d3 = _0.d3;
+
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const svg = d3.select("#__0__ .graph").append("svg")
+            .attr("width", width*2)
+            .attr("height", height*2);
+
+        const gTitle = svg.append("g");
+        const gTexts = svg.append("g");
+        const gLinks = svg.append("g");
+        const gNodes = svg.append("g");
+
+        const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        const drag = function (selection) {
+            function dragstarted(d) {
+                if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+
+            function dragged(d) {
+                d.fx = d3.event.x;
+                d.fy = d3.event.y;
+            }
+
+            function dragended(d) {
+                if (!d3.event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+
+            selection.call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+        };
+
+        const simulation = d3.forceSimulation()
+            .force("link", d3.forceLink().id(function (d) {
+                return d.name;
+            }).distance(function (d) {
+                return 100 / Math.max(d.count, 1);
+            }))
+            .force("charge", d3.forceManyBody().strength(-500))
+            .force("center", d3.forceCenter(width / 2, height / 2));
+
+        let currentTitle;
+        function drawTitle(title) {
+            currentTitle = title;
+            const selection = gTitle.selectAll("text.title");
+
+            selection.data([{id: 1, title: title}]).enter()
+                .append("text")
+                .attr("class", "title")
+                .attr("x", width * .01)
+                .attr("y", height * .3)
+                .merge(selection)
+                .text(function (d) {
+                    return d.title;
+                })
+        }
+
+        function drawLinks(links) {
+            const selectionWithData = gLinks.selectAll("line.link")
+                .data(links, function (d) {
+                    return d.source + "#" + d.target;
+                });
+
+            selectionWithData.enter()
+                .append("line")
+                .attr("class", "link");
+
+            _0.tippy("line.link", {
+                followCursor: true,
+                arrow: true
+            });
+
+            selectionWithData.exit().remove();
+        }
+
+        function drawTexts(nodes) {
+            var selectionWithData = gTexts.selectAll("text.node")
+                .data(nodes, function (d) {
+                    return d.name;
+                });
+
+            selectionWithData.enter()
+                .append("text")
+                .attr("class", "node")
+                .text(function (d) {
+                    return d.name;
+                });
+
+            selectionWithData.exit().remove();
+        }
+
+        let translateX = 0;
+        function tx(x) {
+            return x + translateX + 50;
+        }
+
+        let translateY = 0;
+        function ty(y) {
+            return y + translateY + 50;
+        }
+
+        function drawNodes(nodes) {
+            var selectionWithData = gNodes.selectAll("circle.node")
+                .data(nodes, function (d) {
+                    return d.name;
+                });
+
+            selectionWithData.enter()
+                .append("circle")
+                .attr("class", "node")
+                .style("fill", function (d) {
+                    return color(d.team);
+                })
+                .attr("r", 10)
+                .call(drag);
+
+            _0.tippy("circle.node", {
+                followCursor: true,
+                arrow: true
+            });
+
+            selectionWithData.exit().remove();
+        }
+
+        function updateLinks() {
+            gLinks.selectAll("line.link")
+                .style("stroke-width", function (d) {
+                    return Math.sqrt(d.count);
+                })
+                .on("mouseover", function (d) {
+                    const instance = this._tippy;
+                    instance && instance.setContent(d.source.name + " <-> " + d.target.name + ": " + d.count);
+                })
+                .attr("x1", function (d) {
+                    return tx(d.source.x);
+                })
+                .attr("y1", function (d) {
+                    return ty(d.source.y);
+                })
+                .attr("x2", function (d) {
+                    return tx(d.target.x);
+                })
+                .attr("y2", function (d) {
+                    return ty(d.target.y);
+                });
+        }
+
+        function updateTexts() {
+            gTexts.selectAll("text.node")
+                .attr("x", function (d) {
+                    return tx(d.x);
+                })
+                .attr("y", function (d) {
+                    return ty(d.y);
+                });
+        }
+
+        function updateNodes() {
+            gNodes.selectAll("circle.node")
+                .on("mouseover", function (d) {
+                    const instance = this._tippy;
+                    instance && instance.setContent(d.name + " (" + d.team + ") : " + d.count);
+                })
+                .attr("cx", function (d) {
+                    return tx(d.x);
+                })
+                .attr("cy", function (d) {
+                    return ty(d.y);
+                });
+        }
+
+        function updateTranslate(data) {
+            translateX = _.minBy(data.nodes, "x").x * -1;
+            translateY = _.minBy(data.nodes, "y").y * -1;
+        }
+
+        function ticked(data) {
+            updateTranslate(data);
+            updateTexts();
+            updateLinks();
+            updateNodes();
+        }
+
+        function startForce(data) {
+            simulation
+                .nodes(data.nodes)
+                .on("tick", function () {
+                    ticked(data);
+                });
+
+            simulation.force("link")
+                .links(data.links);
+
+            simulation.alpha(1).restart();
+        }
+
+        let currentData;
+        function draw(data, title) {
+            currentData = data;
+            drawTitle(title);
+            drawTexts(data.nodes);
+            drawNodes(data.nodes);
+            drawLinks(data.links);
+            startForce(data);
+        }
+
+        function nextDataStep(nextData, nextTitle) {
+            let lastData;
+            let lastTitle;
+            return _0.step(
+                function () {
+                    lastData = currentData;
+                    lastTitle = currentTitle;
+                    draw(nextData, nextTitle);
+                },
+                function () {
+                    draw(lastData, lastTitle);
+                }
+            )
+        }
+
+        d3.json("pactData-both.json").then(function (bothData) {
+            d3.json("pactData-sync.json").then(function (syncData) {
+                d3.json("pactData-async.json").then(function (asyncData) {
+                    console.log("start")
+                    draw(bothData, "sync & async");
+                    _0.addStep(nextDataStep(asyncData, "async"));
+                    _0.addStep(nextDataStep(syncData, "sync"));
+                    ___();
+                })
+            })
+        })
+
+    })()
+</script>
