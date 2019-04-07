@@ -1,0 +1,73 @@
+<style>
+    #__0__ .animate {
+        margin-top: 2em;
+    }
+</style>
+
+<div class="screencontainer">
+    <h1>Define your own steps</h1>
+</div>
+
+<div class="animate">
+    <i class="material-icons">face</i>
+</div>
+
+<script>
+
+    (function () {
+        const move = function (translateX, translateY) {
+            const animeConf = {
+                targets: "#__0__ .animate",
+                translateX: translateX,
+                translateY: translateY
+            };
+            return anime(animeConf).finished;
+        }
+
+        const moveStep = function(translateX, translateY) {
+            var currentTranslateX, currentTranslateY;
+            return _0.step(
+                function () {
+                    const transform = _0.$1(".animate").css("transform");
+                    const matrix = new DOMMatrix(transform);
+                    currentTranslateX = matrix.m41;
+                    currentTranslateY = matrix.m42;
+                    return move(translateX, translateY);
+                },
+                function () {
+                    return move(currentTranslateX, currentTranslateY);
+                }
+            )
+        }
+
+        _0.useTippy("magenta");
+
+        _0.tooltip(".animate", "Press the down arrow key and watch me move", "right");
+
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(".animate"),
+            moveStep(undefined, window.innerHeight - 100),
+            _0.tooltipStep(".animate", "No I'm at the left bottom", "right")
+            ));
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(".animate"),
+            moveStep(window.innerWidth - 30),
+            _0.tooltipStep(".animate", "No I'm at the right bottom", "left")
+        ));
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(".animate"),
+            moveStep(undefined, 0),
+            _0.tooltipStep(".animate", "No I'm at the right top", "left")
+        ));
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(".animate"),
+            moveStep(0),
+            _0.tooltipStep(".animate", "No I'm back where I started", "right")
+        ));
+
+        _0.doNotUseTippy();
+
+        ___();
+    })()
+
+</script>
