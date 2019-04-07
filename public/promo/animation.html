@@ -42,27 +42,29 @@
 
         _0.useTippy("magenta");
 
-        _0.tooltip(".animate", "Press the down arrow key and watch me move", "right");
+        _0.tooltip(".animate", "Press the down arrow key for the first step and watch me move", "right");
 
         _0.addStep(_0.combine(
             _0.removeTooltipStep(".animate"),
             moveStep(undefined, window.innerHeight - 100),
-            _0.tooltipStep(".animate", "No I'm at the left bottom", "right")
+            _0.tooltipStep(".animate", "Now I'm at the left bottom. Press the down arrow key again and I'll move my way further", "right")
             ));
         _0.addStep(_0.combine(
             _0.removeTooltipStep(".animate"),
             moveStep(window.innerWidth - 30),
-            _0.tooltipStep(".animate", "No I'm at the right bottom", "left")
+            _0.tooltipStep(".animate", "Wow! Now I'm at the right bottom. Btw.: The up arrow key gets me one step back. " +
+                "Or just press the down arrow key again", "left")
         ));
         _0.addStep(_0.combine(
             _0.removeTooltipStep(".animate"),
             moveStep(undefined, 0),
-            _0.tooltipStep(".animate", "No I'm at the right top", "left")
+            _0.tooltipStep(".animate", "Now I'm at the right top. The is one step left. Again: It's the down arrow key.", "left")
         ));
         _0.addStep(_0.combine(
             _0.removeTooltipStep(".animate"),
             moveStep(0),
-            _0.tooltipStep(".animate", "No I'm back where I started", "right")
+            _0.tooltipStep(".animate", "Now I'm back where I started. No step left. If you do not have enough " +
+                "just press the up arrow key and watch me move back", "right")
         ));
 
         _0.doNotUseTippy();
