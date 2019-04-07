@@ -87,7 +87,7 @@ img._70 {
 }
 
 .controlcontainer {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 90vw;
@@ -178,3 +178,30 @@ img._70 {
   background-size: cover;
 }
 
+@keyframes shining {
+  0% {width: 0;background-color: rgba(255,255,255,0.4);}
+  30% {width: 120%;background-color: rgba(255,255,255,0);}
+  100% {width: 120%;background-color: rgba(255,255,255,0);}
+}
+
+.controlButton {
+  width: 3em;
+  height: 2em;
+  background-color:lightgray;
+  text-align: center;
+  color: #FFF;
+  position: relative;
+  margin: 2px;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    animation-name: shining;
+    animation-duration: 3s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+  }
+}
