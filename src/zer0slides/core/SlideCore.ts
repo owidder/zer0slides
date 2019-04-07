@@ -24,24 +24,18 @@ export class SlideCore {
     public firstStepCallback = () => {}
     public nextSlideCallback = () => {}
 
-    public openShortcutSlide() {
-        const url = this.getSlideUrlWithIndex(this.shortcutSlideIndex);
-        window.open(url, "_blank");
-    }
-
     public getSlideUrl(slideName: string) {
         const index = this.slideNames.indexOf(slideName);
-        return this.getSlideUrlWithIndex(index);
+        return SlideCore.getSlideUrlWithIndex(index);
     }
 
-    public getSlideUrlWithIndex(index: number) {
+    public static getSlideUrlWithIndex(index: number) {
         const currentUrl = window.location.href;
-        const url = currentUrl.replace(/slide=\d+/,"slide=" + index);
-        return url;
+        return currentUrl.replace(/slide=\d+/,"slide=" + index);
     }
 
     public getShortCutSlideUrl() {
-        return slideCore.getSlideUrlWithIndex(this.shortcutSlideIndex);
+        return SlideCore.getSlideUrlWithIndex(this.shortcutSlideIndex);
     }
 
     public getSlideNames() {

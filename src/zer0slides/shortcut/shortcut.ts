@@ -19,6 +19,33 @@ export const openShortcutSlide = () => {
     openUrl(url, true, true);
 }
 
+const setShortcutFunction = (shortcutFunction: () => void) => {
+    slideCore.getCurrentSlide().shortcutFunction = shortcutFunction;
+}
+
+const getShortcutFunction = () => {
+    return slideCore.getCurrentSlide().shortcutFunction;
+}
+
+const setShortcutFunctionStep = (shortcutFunction: () => void) => {
+    let oldShortcutFunction;
+    return new Step(() => {
+        oldShortcutFunction = getShortcutFunction();
+        setShortcutFunction(shortcutFunction);
+    }, () => {
+        setShortcutFunction(oldShortcutFunction);
+    })
+}
+
+export const doShortcut = () => {
+    const shortcutFunction = getShortcutFunction();
+    if(shortcutFunction) {
+        shortcutFunction()
+    } else {
+        openShortcutSlide();
+    }
+}
+
 export const openContentPage = () => {
     const url = slideCore.getSlideUrl(SLIDE_NAME_CONTENT);
     const stepNo = slideCore.getCurrentIndex();
@@ -37,6 +64,6 @@ const setShurtcutSlideIndexStep = (index: number) => {
 }
 
 export const shortcut = {
-    openShortcutSlide,
     setShurtcutSlideIndexStep,
+    setShortcutFunctionStep,
 }

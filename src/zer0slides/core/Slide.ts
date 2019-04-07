@@ -25,6 +25,7 @@ export class Slide {
     public firstStepPromise = new SimplePromise()
     public specialName
     public doPerformToCurrentStep
+    public shortcutFunction: () => void
 
     public transformationInNext: Transformation
     public transformationOutNext: Transformation

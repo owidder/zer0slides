@@ -1,0 +1,77 @@
+<style>
+
+    #__0__ .container {
+        position: relative;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+</style>
+
+<div class="code"></div>
+
+<div class="background"></div>
+<h1>Examples</h1>
+<div class="container">
+    <h3><i class="material-icons">favorite_border</i>
+        <a href="https://github.com/owidder/zer0slides/tree/master/public/promo" target="_blank">The slides of this promo are here</a>
+        <i class="material-icons">favorite_border</i></h3>
+    <h3><i class="material-icons">child_care</i>
+        <a href="https://owidder.github.io/zer0slides/build/helloworld/indexPublic.html" target="_blank">Hello World</a>
+        <i class="material-icons">child_care</i></h3>
+    <div><a href="https://github.com/owidder/zer0slides/tree/gh-pages/build/helloworld" target="_blank">And here are the slides</a></div>
+    <h3><i class="material-icons">star_border</i>
+        <a href="https://owidder.github.io/zer0slides/build/blockchain/indexPublic.html" target="_blank">Presentation about building a JavaScript blockchain client</a>
+        <i class="material-icons">star_border</i></h3>
+    <div><a href="https://github.com/owidder/zer0slides/tree/gh-pages/build/blockchain" target="_blank">And here are the slides</a></div>
+    <h3><i class="material-icons">face</i>
+        <a href="https://owidder.github.io/zer0slides/build/d3/indexPublic.html" target="_blank">Presentation about D3 (not finished)</a>
+        <i class="material-icons">face</i></h3>
+    <div><a href="https://github.com/owidder/zer0slides/tree/gh-pages/build/d3" target="_blank">And here are the slides</a></div>
+</div>
+
+<script>
+
+    (function () {
+        const BACKGROUND_SELECTOR = ".background";
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/dog.jpeg");
+        _0.opacity(BACKGROUND_SELECTOR, 5);
+        _0.startHueRotation(BACKGROUND_SELECTOR);
+
+        _0.codeJs(".code",
+            "The slides of this promo\n" +
+            "Hello World\n" +
+            "Hello World slides\n" +
+            "Presentation about building a JavaScript blockchain client...\n" +
+            " ... and here are the slides")
+
+        const steps = [];
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "1", "Click 'Enter' to see the slides of this promo"),
+            _0.shortcutFunctionStep(function() {window.open("https://github.com/owidder/zer0slides/tree/master/public/promo", "_blank")})
+        ));
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "2", "Click 'Enter' to see a Hello World example"),
+            _0.shortcutFunctionStep(function() {window.open("https://owidder.github.io/zer0slides/build/helloworld/indexPublic.html", "_blank")})
+        ));
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "3", "Click 'Enter' to see the slides of the Hello World example"),
+            _0.shortcutFunctionStep(function() {window.open("https://github.com/owidder/zer0slides/tree/gh-pages/build/helloworld", "_blank")})
+        ));
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "4", "Click 'Enter' to see a presentation how to build a JavaScript blockchain client"),
+            _0.shortcutFunctionStep(function() {window.open("https://owidder.github.io/zer0slides/build/blockchain/indexPublic.html", "_blank")})
+        ));
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "5", "Click 'Enter' to see the slides of the JavaScript/blockchain presentation"),
+            _0.shortcutFunctionStep(function() {window.open("https://github.com/owidder/zer0slides/tree/gh-pages/build/blockchain", "_blank")})
+        ));
+
+        ___();
+    })()
+
+</script>
