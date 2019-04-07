@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-import {slideCore} from '../core/core';
+import {slideCore, core} from '../core/core';
 
 const mojs = require('../effects/mojs');
 
@@ -8,6 +8,8 @@ const STEPCTR_SELECTOR = "#control-elements .stepctr";
 const SLIDENO_SELECTOR = "#control-elements .slideno";
 const UP_SELECTOR = "#control-elements .up";
 const DOWN_SELECTOR = "#control-elements .down";
+
+export const MOJS = "mojs";
 
 export const setStepCtr = (currentStepNo: number, noOfSteps: number) => {
     const stepCtrString = `[${currentStepNo + 1}/${noOfSteps}]`;
@@ -59,7 +61,7 @@ const createCounter = (root: any) => {
 
 const createArrow = (root: any, className: string, onClick: () => void, text: string) => {
     root.append("a")
-        .attr("class", `controlButton ${className}`)
+        .attr("class", `${isMojs() ? "" : "controlButton"} ${className}`)
         .attr("href", "#")
         .on("click", onClick)
         .append("i")
@@ -69,14 +71,14 @@ const createArrow = (root: any, className: string, onClick: () => void, text: st
 
 const createControlElementsDefaultContainer = () => {
     const body = d3.select("body");
-    body.selectAll(".screencontainer")
+    body.selectAll(".controlcontainer")
         .data([1])
         .enter()
         .append("div")
         .attr("id", "control-elements")
         .attr("class", "controlcontainer")
 
-    d3.selectAll(".screencontainer").raise();
+    d3.selectAll(".controlcontainer").raise();
 }
 
 let effectInterval;
@@ -136,13 +138,21 @@ export const createControlElements = () => {
     createArrow(root, "down", downArrowClicked, "arrow_downward");
 
 
-/*
-    slideCore.newSlideCallback = startEffect;
-    slideCore.firstStepCallback = stopEffect;
-    slideCore.nextSlideCallback = stopEffect;
-*/
+    if(isMojs()) {
+        slideCore.newSlideCallback = startEffect;
+        slideCore.firstStepCallback = stopEffect;
+        slideCore.nextSlideCallback = stopEffect;
+    }
 
     slideCore.showCurrentIndex();
+}
+
+const switchOnMojs = () => {
+    slideCore.setAttribute(MOJS, "1");
+}
+
+const isMojs = () => {
+    return !!slideCore.getAttribute(MOJS);
 }
 
 export const controlElements = {
@@ -150,4 +160,5 @@ export const controlElements = {
     leftArrowClicked,
     rightArrowClicked,
     upArrowClicked,
+    switchOnMojs,
 }

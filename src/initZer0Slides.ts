@@ -77,6 +77,7 @@ export const init = () => {
         tooltip: tooltip.addTooltipToDomNode,
         tooltipStep: tooltip.addTooltipToDomNodeStep,
         useTippy: tooltip.useTippy,
+        controlElements,
         metamaskLogo,
         shortcut,
         slideCore,

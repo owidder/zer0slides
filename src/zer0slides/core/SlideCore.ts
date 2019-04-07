@@ -10,6 +10,7 @@ export class SlideCore {
 
     private currentSlide: Slide
     private slides: {[key: string]: Slide} = {}
+    private attributes: {[key: string]: string} = {}
     private slideNames: string[] = []
 
     public version;
@@ -23,6 +24,14 @@ export class SlideCore {
     public newSlideCallback= () => {}
     public firstStepCallback = () => {}
     public nextSlideCallback = () => {}
+
+    public setAttribute = (attributeName: string, value: string) => {
+        this.attributes[attributeName] = value;
+    }
+
+    public getAttribute = (attributeName: string): string => {
+        return this.attributes[attributeName];
+    }
 
     public getSlideUrl(slideName: string) {
         const index = this.slideNames.indexOf(slideName);
