@@ -59,7 +59,7 @@ const createCounter = (root: any) => {
 
 const createArrow = (root: any, className: string, onClick: () => void, text: string) => {
     root.append("a")
-        .attr("class", className)
+        .attr("class", `controlButton ${className}`)
         .attr("href", "#")
         .on("click", onClick)
         .append("i")
@@ -136,9 +136,11 @@ export const createControlElements = () => {
     createArrow(root, "down", downArrowClicked, "arrow_downward");
 
 
+/*
     slideCore.newSlideCallback = startEffect;
     slideCore.firstStepCallback = stopEffect;
     slideCore.nextSlideCallback = stopEffect;
+*/
 
     slideCore.showCurrentIndex();
 }
