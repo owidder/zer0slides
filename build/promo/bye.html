@@ -21,7 +21,7 @@
 
 </style>
 
-<div class="background"></div>
+<div class="background rotating-background"></div>
 <div class="container">
     <span class="big"><a href="https://github.com/owidder/zer0slides" target="_blank">See you on <img src="img/GitHub-Mark-Light-120px-plus.png"></a></span>
 </div>
@@ -29,8 +29,7 @@
 
     (function () {
         const BACKGROUND_SELECTOR = ".background";
-        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/springbrunnen.jpg");
-        _0.startHueRotation(BACKGROUND_SELECTOR);
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/springbrunnen.jpg", 1, 200);
         ___();
     })()
 
