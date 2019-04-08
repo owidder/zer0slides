@@ -2,15 +2,25 @@ import {q} from "../selector/selector";
 import {styleFromElement, setStyleOfElement} from "../util/styleUtil";
 import {slideCore} from "../core/core";
 
+import "./hueRotate.less";
+
 const BACKGROUND_IMAGE_CLASS = "_background_image_";
 
-const image = (selector: string, imgPath: string) => {
+const hueRotateAnimationStyle = (rotateIntervalInSec: number) => {
+    return rotateIntervalInSec ? `animation-name: huerotate; animation-duration: ${rotateIntervalInSec}s; animation-iteration-count: infinite;` : "";
+}
+
+const opacityStyle = (opacity: number) => {
+    return opacity ? `opacity: ${opacity};` : "";
+}
+
+const image = (selector: string, imgPath: string, opacity?: number, rotateIntervalInSec?: number) => {
 
     const backgroundContainer = document.querySelector(q(selector));
     const currentClass = backgroundContainer.getAttribute("class");
     const currentStyle = backgroundContainer.getAttribute("style") || "";
     backgroundContainer.setAttribute("class", `${currentClass} ${BACKGROUND_IMAGE_CLASS}`);
-    backgroundContainer.setAttribute("style", `${currentStyle} background-image: url("${imgPath}");`);
+    backgroundContainer.setAttribute("style", `${currentStyle} background-image: url("${imgPath}"); ${hueRotateAnimationStyle(rotateIntervalInSec)} ${opacityStyle(opacity)}`);
 }
 
 export const _addFilterToStyle = (currentStyle: string, filter: string): string => {

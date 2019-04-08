@@ -5,6 +5,10 @@
         font-size: 2.5em;
     }
 
+    #__0__ .background {
+        opacity: .05;
+    }
+
 </style>
 
 <div class="background"></div>
@@ -30,9 +34,7 @@
         _0.setSteps(steps);
 
         const BACKGROUND_SELECTOR = ".background";
-        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/ship.jpg");
-        _0.opacity(BACKGROUND_SELECTOR, 15);
-        _0.startHueRotation(BACKGROUND_SELECTOR);
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/ship.jpg", .3, 200);
         ___();
     })()
 </script>
