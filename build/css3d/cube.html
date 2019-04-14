@@ -1,0 +1,73 @@
+<style>
+
+    #__0__ .code {
+        height: 100vh;
+        overflow-y: scroll;
+    }
+
+    #__0__ .sandbox {
+        background-color: lightgray;
+        height: 100vh;
+    }
+
+    #__0__ .code {
+        font-size: 5em;
+    }
+
+    #__0__ .content {
+        width: 100vw;
+    }
+
+</style>
+
+<div class="content">
+    <div class="row">
+        <div class="col s8">
+            <div class="code"></div>
+        </div>
+        <div class="col s4">
+            <div class="sandbox">
+                1234
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const _ = _0._;
+
+    _0.codeJs(".code",
+        "a\n" +
+        "b\n" +
+        "c\n" +
+        "d\n" +
+        "e\n" +
+        "f\n" +
+        "g\n" +
+        "h\n" +
+        "i\n" +
+        "j\n" +
+        "k\n" +
+        "l\n" +
+        "m\n" +
+        "n\n" +
+        "o\n" +
+        "p\n" +
+        "q\n" +
+        "r\n" +
+        "s\n" +
+        "t\n" +
+        "u\n" +
+        "v\n" +
+        "w\n" +
+        "x\n" +
+        "y\n" +
+        "z");
+
+    const steps = _.range(0, 25).map(function (i) {
+        return _0.highlightLinesStep(".code", String(i+1));
+    });
+    _0.setSteps(steps);
+
+    ___()
+</script>
