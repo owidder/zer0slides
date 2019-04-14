@@ -20,7 +20,7 @@
 <script>
 
     (function () {
-        _0.glowText(".title", ["Step 4: Start transaction",], "small glow");
+        _0.glowText(".title", ["Start transaction",], "small glow");
 
         const codeSelector = ".code";
 
@@ -46,7 +46,7 @@
 
         const steps = [];
         steps.push(_0.highlightLinesStep(codeSelector, "2", "Just to create the hash value"));
-        steps.push(_0.highlightLinesStep(codeSelector, "6-15", "Call the contract method 'storeHash'", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "6-15", "Call the contract method 'storeHash' (1)", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "7", "Use the Drizzle thingy to get a contract proxy "));
         steps.push(_0.highlightLinesStep(codeSelector, "8", "Get the hash value"));
         steps.push(_0.highlightLinesStep(codeSelector, "10-12", "Call the transactional contract method and get a key as return", "top"));
