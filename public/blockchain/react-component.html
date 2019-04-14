@@ -20,7 +20,7 @@
 <script>
 
     (function () {
-        _0.glowText(".title", ["Step 2: Simple React component",], "small glow");
+        _0.glowText(".title", ["Simple React component",], "small glow");
 
         const codeSelector = ".code";
 
@@ -60,7 +60,7 @@
         steps.push(_0.highlightLinesStep(codeSelector, "1,8", "It's a React component"));
         steps.push(_0.highlightLinesStep(codeSelector, "2,6", "We use the Ant Design components library"));
         steps.push(_0.highlightLinesStep(codeSelector, "11", "The React component state will be used to hold the (so called) Drizzle state (which holds the state of the contract)"));
-        steps.push(_0.highlightLinesStep(codeSelector, "13-28", "When the state of the contract changes -> the Drizzle state changes -> the React component state changes -> the render method is called", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "13-28", "When the state of the contract changes -> the Drizzle state changes -> the React component state changes -> the render method is called (3)", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "14", "We'll store in the React component state whether Drizzle is already initialized (i.e. connected to the smart contract)"));
         steps.push(_0.highlightLinesStep(codeSelector, "19", "We'll store the text of the TextArea in a simple attribute or the component", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "20", "The component method 'storeHashedText' calls the contract method 'storeHash'"));
