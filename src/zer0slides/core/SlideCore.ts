@@ -3,8 +3,6 @@ import {renderSlide, refreshSlide, InOut} from './render';
 import {setSlideNo} from '../html/controlElements';
 import {setHashValue} from '../url/queryUtil';
 import {Transformation} from '../html/transformations/Transformation';
-import {autoStepOn} from "../steps/steps";
-import {slideCore} from "./core";
 
 export class SlideCore {
 
@@ -55,9 +53,10 @@ export class SlideCore {
         return this.getSlide(slideName).description;
     }
 
-    public addSlide(name: string, description?: string, specialName?: string, doPerformToCurrentStep = true) {
+    public addSlide(name: string, description?: string, specialName?: string, doPerformToCurrentStep = true, centerCurrentLine = false) {
         const slide = new Slide(name, description ? description : name, specialName);
         slide.doPerformToCurrentStep = doPerformToCurrentStep;
+        slide.centerCurrentLine = centerCurrentLine;
         if(!this.currentSlide) {
             this.currentSlide = slide;
         }
