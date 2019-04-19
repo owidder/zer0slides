@@ -13,6 +13,7 @@
     "readme": "node replaceVersionInReadme.js",
     "copyhtml": "cpx 'public/**/*.html' build",
     "copyhtml:watch": "cpx 'public/**/*.html' build --watch",
+    "copyjs:watch": "cpx 'public/**/*.js' build --watch",
     "server": "node server.js"
   },
   "keywords": [],

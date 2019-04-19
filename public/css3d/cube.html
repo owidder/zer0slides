@@ -83,12 +83,12 @@
             "/* Back */\n" +
             ".back {\n" +
             "   transform: rotateY: -180deg;\n" +
-            "   translateZ: 100px;\n" +
+            "   translateZ: 50px;\n" +
             "}\n" +
             "/* Top */\n" +
             ".top {\n" +
             "   transform: rotateY: 90deg;\n" +
-            "   translateZ: 100px;\n" +
+            "   translateZ: 50px;\n" +
             "}");
 
 
@@ -108,33 +108,18 @@
 
         const steps = [];
 
+        const tooltipsSteps = createTooltipSteps();
+        const animeSteps = createAnimeSteps();
+
         steps.push(_0.combine(
             _0.highlightLinesStep(".code", "1"),
-            _0.tooltipStep(".back", "class='back'<br>height: 100px;<br>width: 100px;", undefined, undefined, true),
-            animateStep({
-                targets: "#__0__ .back",
-                translateY: window.innerHeight/2,
-                duration: 2000,
-            }, {
-                targets: "#__0__ .back",
-                translateY: -window.innerHeight/2,
-                duration: 2000,
-            })
+            tooltipsSteps.back,
+            animeSteps.back1
         ))
 
         steps.push(_0.combine(
             _0.highlightLinesStep(".code", "2-5"),
-            animateStep({
-                targets: "#__0__ .back",
-                rotateY: "-180deg",
-                translateZ: "2.5em",
-                duration: 2000,
-            }, {
-                targets: "#__0__ .back",
-                rotateY: "0deg",
-                translateZ: "0em",
-                duration: 2000,
-            })
+            animeSteps.back2
         ))
 
         steps.push(_0.combine(
