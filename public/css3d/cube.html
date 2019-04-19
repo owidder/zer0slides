@@ -6,16 +6,49 @@
     }
 
     #__0__ .sandbox {
-        background-color: lightgray;
+        background-color: #F4F6F9;
         height: 100vh;
     }
 
     #__0__ .code {
-        font-size: 5em;
+        font-size: 2em;
     }
 
     #__0__ .content {
         width: 100vw;
+    }
+
+    #__0__ .cube-outer-container {
+        width: 5em;
+        height: 5em;
+        position: absolute;
+        top: -5em;
+        left: 80vw;
+        font-size: 3em;
+        perspective: 800px;
+    }
+
+    #__0__ .cube-inner-container {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        transform-style: preserve-3d;
+    }
+
+    #__0__ .side {
+        opacity: .5;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+    }
+
+    #__0__ .back {
+        background-color: red;
+    }
+
+    #__0__ .top {
+        background-color: blue;
     }
 
 </style>
@@ -27,47 +60,115 @@
         </div>
         <div class="col s4">
             <div class="sandbox">
-                1234
             </div>
         </div>
     </div>
 </div>
 
+<div class="cube-outer-container">
+    <div class="cube-inner-container">
+        <div class="side back">
+            Back
+        </div>
+        <div class="side top">
+            Top
+        </div>
+    </div>
+</div>
 <script>
-    const _ = _0._;
+    (function() {
+        const _ = _0._;
 
-    _0.codeJs(".code",
-        "a\n" +
-        "b\n" +
-        "c\n" +
-        "d\n" +
-        "e\n" +
-        "f\n" +
-        "g\n" +
-        "h\n" +
-        "i\n" +
-        "j\n" +
-        "k\n" +
-        "l\n" +
-        "m\n" +
-        "n\n" +
-        "o\n" +
-        "p\n" +
-        "q\n" +
-        "r\n" +
-        "s\n" +
-        "t\n" +
-        "u\n" +
-        "v\n" +
-        "w\n" +
-        "x\n" +
-        "y\n" +
-        "z");
+        _0.codeCss(".code",
+            "/* Back */\n" +
+            ".back {\n" +
+            "   transform: rotateY: -180deg;\n" +
+            "   translateZ: 100px;\n" +
+            "}\n" +
+            "/* Top */\n" +
+            ".top {\n" +
+            "   transform: rotateY: 90deg;\n" +
+            "   translateZ: 100px;\n" +
+            "}");
 
-    const steps = _.range(0, 26).map(function (i) {
-        return _0.highlightLinesStep(".code", String(i+1));
-    });
-    _0.setSteps(steps);
 
-    ___()
+        function animateStep(animationObject, _deAnimationObject) {
+            var deAnimationObject = _deAnimationObject;
+            return _0.step(
+                function () {
+                    anime(animationObject);
+                },
+                function () {
+                    anime(deAnimationObject);
+                }
+            )
+        }
+
+        _0.setTippyTheme("transparent");
+
+        const steps = [];
+
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "1"),
+            _0.tooltipStep(".back", "class='back'", undefined, undefined, true),
+            animateStep({
+                targets: "#__0__ .back",
+                translateY: window.innerHeight/2,
+                duration: 2000,
+            }, {
+                targets: "#__0__ .back",
+                translateY: -window.innerHeight/2,
+                duration: 2000,
+            })
+        ))
+
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "2-5"),
+            animateStep({
+                targets: "#__0__ .back",
+                rotateY: "-180deg",
+                translateZ: "2.5em",
+                duration: 2000,
+            }, {
+                targets: "#__0__ .back",
+                rotateY: "0deg",
+                translateZ: "0em",
+                duration: 2000,
+            })
+        ))
+
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "6"),
+            _0.removeTooltipStep(".back", true),
+            _0.tooltipStep(".top", "class='top'", undefined, undefined, true),
+            animateStep({
+                targets: "#__0__ .top",
+                translateY: window.innerHeight/2,
+                duration: 2000,
+            }, {
+                targets: "#__0__ .top",
+                translateY: -window.innerHeight/2,
+                duration: 2000,
+            })
+        ))
+
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "7-10"),
+            animateStep({
+                targets: "#__0__ .top",
+                rotateX: "90deg",
+                translateZ: "2.5em",
+                duration: 2000,
+            }, {
+                targets: "#__0__ .top",
+                rotateX: "0deg",
+                translateZ: "0em",
+                duration: 2000,
+            })
+        ))
+
+        _0.setSteps(steps);
+
+        ___()
+    })()
 </script>
