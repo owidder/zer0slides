@@ -124,32 +124,13 @@
 
         steps.push(_0.combine(
             _0.highlightLinesStep(".code", "6"),
-            _0.removeTooltipStep(".back", true),
-            _0.tooltipStep(".top", "class='top'", undefined, undefined, true),
-            animateStep({
-                targets: "#__0__ .top",
-                translateY: window.innerHeight/2,
-                duration: 2000,
-            }, {
-                targets: "#__0__ .top",
-                translateY: -window.innerHeight/2,
-                duration: 2000,
-            })
+            tooltipsSteps.top,
+            animeSteps.top1
         ))
 
         steps.push(_0.combine(
             _0.highlightLinesStep(".code", "7-10"),
-            animateStep({
-                targets: "#__0__ .top",
-                rotateX: "90deg",
-                translateZ: "2.5em",
-                duration: 2000,
-            }, {
-                targets: "#__0__ .top",
-                rotateX: "0deg",
-                translateZ: "0em",
-                duration: 2000,
-            })
+            animeSteps.top2
         ))
 
         _0.setSteps(steps);
