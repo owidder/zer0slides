@@ -81,7 +81,7 @@ export class Slide {
         return pathToHtml(this.name);
     }
 
-    public nextStep(roundRobin = false) {
+    public async nextStep(roundRobin = false) {
         if(!slideCore.blockSteps) {
             if(!(this.currentStepNo > 0)) {
                 slideCore.firstStepCallback();
@@ -94,6 +94,15 @@ export class Slide {
                     return;
                 }
             }
+
+            let exitFPromise = Promise.resolve();
+            if(this.steps[this.currentStepNo]) {
+                exitFPromise = this.steps[this.currentStepNo].doExitF();
+            }
+
+            console.log("before")
+            await exitFPromise;
+            console.log("after")
 
             this.currentStepNo++;
             this.steps[this.currentStepNo] && this.steps[this.currentStepNo].perform();
@@ -112,7 +121,10 @@ export class Slide {
                 }
             }
 
-            this.steps[this.currentStepNo] && this.steps[this.currentStepNo].unperform();
+            if(this.steps[this.currentStepNo]) {
+                this.steps[this.currentStepNo].exitB();
+                this.steps[this.currentStepNo].unperform();
+            }
             this.currentStepNo--;
             this.showStepCtr();
         }

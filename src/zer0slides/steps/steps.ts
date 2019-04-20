@@ -76,11 +76,19 @@ const combineSteps = (...steps: Step[]): Step => {
         return _callFunctions([...steps].reverse().map(step => step.b));
     }
 
-    return new Step(f, b);
+    const exitF = () => {
+        return _callFunctions(steps.map(step => step.exitF));
+    }
+
+    const exitB = () => {
+        return _callFunctions([...steps].reverse().map(step => step.exitB));
+    }
+
+    return new Step(f, b, exitF, exitB);
 }
 
-const createStep = (f: () => void, b: () => void) => {
-    return new Step(f, b);
+const createStep = (f: () => void, b: () => void, exitF: () => void, exitB: () => void) => {
+    return new Step(f, b, exitF, exitB);
 }
 
 export const autoStepOn = (intervalInMs: number) => {
