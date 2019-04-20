@@ -165,8 +165,9 @@ const highlightLinesNoTooltip = (selector: string, lineString: string, callbackW
     if(lineString) {
         $(_sel).attr("data-line", lineString);
         refresh().then(() => {
-            callbackWhenFinished && callbackWhenFinished();
-            scrollToCurrentLine();
+            scrollToCurrentLine().then(() => {
+                callbackWhenFinished && callbackWhenFinished();
+            })
         })
     }
     else {

@@ -13,7 +13,9 @@ export const scrollToCurrentLine = (): Promise<void> => {
     if(slideCore.getCurrentSlide().centerCurrentLine) {
         const element = document.querySelector(q(".line-highlight"));
         element.scrollIntoView({behavior: "smooth", block: "center"});
-        return Promise.resolve();
+        return new Promise<void>(resolve => {
+            setTimeout(resolve, 300);
+        })
     }
     else {
         const slideSelector = slideCore.getCurrentSlideSelector();

@@ -68,6 +68,17 @@
         background-color: gray;
     }
 
+    @keyframes spin-cube {
+        100% {transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg)}
+    }
+
+    #__0__ .animate-cube {
+        animation-name: spin-cube;
+        animation-duration: 10s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+    }
+
 </style>
 
 <div class="content">
@@ -109,9 +120,10 @@
         const _ = _0._;
 
         _0.codeCss(".code",
+            "/* Let's make a cube */\n" +
             "/* Back */\n" +
             ".back {\n" +
-            "   transform: rotateY: -180deg;\n" +
+            "   transform: rotateY: 180deg;\n" +
             "   translateZ: 50px;\n" +
             "}\n" +
             "/* Top */\n" +
@@ -121,7 +133,7 @@
             "}\n" +
             "/* Left */\n" +
             ".left {\n" +
-            "   transform: rotateY: -90deg;\n" +
+            "   transform: rotateY: 270deg;\n" +
             "   translateZ: 50px;\n" +
             "}\n" +
             "/* Right */\n" +
@@ -131,12 +143,24 @@
             "}\n" +
             "/* Bottom */\n" +
             ".bottom {\n" +
-            "   transform: rotateX: -90deg;\n" +
+            "   transform: rotateX: 270deg;\n" +
             "   translateZ: 50px;\n" +
             "}\n" +
             "/* Front */\n" +
             ".front {\n" +
             "   translateZ: 50px;\n" +
+            "}\n" +
+            "/* Spin */\n" +
+            "@keyframes spin-cube {\n" +
+            "   100% {transform: rotateX(360deg)\n" +
+            "                    rotateY(360deg)\n" +
+            "                    rotateZ(360deg)}\n" +
+            "}\n" +
+            ".cube-inner-container {\n" +
+            "   animation-name: spin-cube;\n" +
+            "   animation-duration: 10s;\n" +
+            "   animation-timing-function: ease-in-out;\n" +
+            "   animation-iteration-count: infinite;\n" +
             "}"
         );
 
@@ -160,64 +184,71 @@
         const tooltipsSteps = createTooltipSteps();
         const animeSteps = createAnimeSteps();
 
+        steps.push(_0.highlightLinesStep(".code", "1", "We wanna create a cube solely with CSS"))
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "1"),
+            _0.highlightLinesStep(".code", "2", "We begin with the back side of the cube", "top"),
             tooltipsSteps.back,
             animeSteps.back1
         ))
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "2-5"),
+            _0.highlightLinesStep(".code", "3-6", "Spin it around the Y axes by 180 degree and it move back by the half of the side length " +
+                "(translateZ always moves in the current direction of the element)", "top"),
             animeSteps.back2
         ))
 
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "6"),
+            _0.highlightLinesStep(".code", "7", "The top side", "top"),
             tooltipsSteps.top,
             animeSteps.top1
         ))
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "7-10"),
+            _0.highlightLinesStep(".code", "8-11", "Spin it around the X axes by 90 degree at move it up by the half of the side length", "top"),
             animeSteps.top2
         ))
 
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "11"),
+            _0.highlightLinesStep(".code", "12", "The left side", "top"),
             tooltipsSteps.left,
             animeSteps.left1
         ))
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "12-15"),
+            _0.highlightLinesStep(".code", "13-16", "Spin it around the Y axes by 270 degree and move it to the left by the half of the side length", "top"),
             animeSteps.left2
         ))
 
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "16"),
+            _0.highlightLinesStep(".code", "17", "The right side", "top"),
             tooltipsSteps.right,
             animeSteps.right1
         ))
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "17-20"),
+            _0.highlightLinesStep(".code", "18-21", "Spin it around the X axes by 270 degree and move it to the right by the half of the side length", "top"),
             animeSteps.right2
         ))
 
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "21"),
+            _0.highlightLinesStep(".code", "22", "The bottom side", "top"),
             tooltipsSteps.bottom,
             animeSteps.bottom1
         ))
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "22-25"),
+            _0.highlightLinesStep(".code", "23-26", "Spin it around the X axes by 270 degree and move it to the bottom by the half of the side length", "top"),
             animeSteps.bottom2
         ))
 
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "26"),
+            _0.highlightLinesStep(".code", "27", "The front side", "top"),
             tooltipsSteps.front,
             animeSteps.front1
         ))
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "27-29"),
+            _0.highlightLinesStep(".code", "28-30", "No spin needed. Just move it to the front by the half of the side length", "top"),
             animeSteps.front2
+        ))
+
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "31", "Now let the cube spin around all axes"),
+            tooltipsSteps.finish,
         ))
 
         _0.setSteps(steps);

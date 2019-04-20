@@ -66,6 +66,7 @@ export const init = () => {
         selectFirst: selector.selectFirst,
         setAttribute: text.setAttribute,
         setClass: classUtil.setClass,
+        setClassStep: classUtil.setClassStep,
         setSteps: steps.setSteps,
         setTippyTheme: tooltip.setTippyTheme,
         shortcutFunctionStep: shortcut.setShortcutFunctionStep,
