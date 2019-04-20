@@ -72,7 +72,7 @@
         100% {transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg)}
     }
 
-    #__0__ .animate-cube {
+    #__0__ .spin-cube {
         animation-name: spin-cube;
         animation-duration: 10s;
         animation-timing-function: ease-in-out;
@@ -247,8 +247,15 @@
         ))
 
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "31", "Now let the cube spin around all axes"),
+            _0.highlightLinesStep(".code", "31", "Now let the cube spin..."),
             tooltipsSteps.finish,
+        ))
+
+        steps.push(_0.highlightLinesStep(".code", "32-36", " ... around all axes", "top"))
+
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "37-42", "Let's go!!!"),
+            _0.setClassStep(".cube-inner-container", "spin-cube"),
         ))
 
         _0.setSteps(steps);

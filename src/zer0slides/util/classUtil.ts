@@ -2,11 +2,12 @@ import * as d3 from 'd3';
 
 import {steps} from '../steps/steps';
 import {Step} from '../core/Step';
+import {q} from "../selector/selector";
 
 const {createReverseStep} = steps;
 
 export const setRemoveClass = (selector: string, className: string, trueToSet: boolean, intervalInMs = 0) => {
-    d3.selectAll(selector)
+    d3.selectAll(q(selector))
         .each(function(_, i) {
             const element = this;
             const fct = () => {
