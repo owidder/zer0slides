@@ -60,6 +60,10 @@
         background-color: orange;
     }
 
+    #__0__ .bottom {
+        background-color: gray;
+    }
+
 </style>
 
 <div class="content">
@@ -88,6 +92,9 @@
         <div class="side right">
             Right
         </div>
+        <div class="side bottom">
+            Bottom
+        </div>
     </div>
 </div>
 <script>
@@ -113,6 +120,11 @@
             "/* Right */\n" +
             ".right {\n" +
             "   transform: rotateY: 90deg;\n" +
+            "   translateZ: 50px;\n" +
+            "}\n" +
+            "/* Bottom */\n" +
+            ".bottom {\n" +
+            "   transform: rotateX: -90deg;\n" +
             "   translateZ: 50px;\n" +
             "}"
         );
@@ -175,6 +187,16 @@
         steps.push(_0.combine(
             _0.highlightLinesStep(".code", "17-20"),
             animeSteps.right2
+        ))
+
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "21"),
+            tooltipsSteps.bottom,
+            animeSteps.bottom1
+        ))
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "22-25"),
+            animeSteps.bottom2
         ))
 
         _0.setSteps(steps);
