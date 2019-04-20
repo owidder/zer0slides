@@ -51,6 +51,10 @@
         background-color: blue;
     }
 
+    #__0__ .left {
+        background-color: green;
+    }
+
 </style>
 
 <div class="content">
@@ -73,6 +77,9 @@
         <div class="side top">
             Top
         </div>
+        <div class="side left">
+            Left
+        </div>
     </div>
 </div>
 <script>
@@ -87,9 +94,15 @@
             "}\n" +
             "/* Top */\n" +
             ".top {\n" +
-            "   transform: rotateY: 90deg;\n" +
+            "   transform: rotateX: 90deg;\n" +
             "   translateZ: 50px;\n" +
-            "}");
+            "}\n" +
+            "/* Left */\n" +
+            ".top {\n" +
+            "   transform: rotateY: -90deg;\n" +
+            "   translateZ: 50px;\n" +
+            "}"
+        );
 
 
         function animateStep(animationObject, _deAnimationObject) {
@@ -116,7 +129,6 @@
             tooltipsSteps.back,
             animeSteps.back1
         ))
-
         steps.push(_0.combine(
             _0.highlightLinesStep(".code", "2-5"),
             animeSteps.back2
@@ -127,10 +139,19 @@
             tooltipsSteps.top,
             animeSteps.top1
         ))
-
         steps.push(_0.combine(
             _0.highlightLinesStep(".code", "7-10"),
             animeSteps.top2
+        ))
+
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "11"),
+            tooltipsSteps.left,
+            animeSteps.left1
+        ))
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "12-15"),
+            animeSteps.left2
         ))
 
         _0.setSteps(steps);
