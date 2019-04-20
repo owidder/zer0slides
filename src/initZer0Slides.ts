@@ -16,7 +16,7 @@ import {qrUtil} from "./zer0slides/qr/qr";
 import {text} from "./zer0slides/text/text";
 import {cube} from "./zer0slides/specials/cube";
 import {glowText} from "./zer0slides/specials/GlowText";
-import {classUtil} from "./zer0slides/util/classUtil";
+import {classUtil, removeClassStep} from "./zer0slides/util/classUtil";
 import {metamaskLogo} from "./zer0slides/etc/metamaskLogo";
 import {cast} from "./zer0slides/specials/cast";
 import {shortcut} from "./zer0slides/shortcut/shortcut";
@@ -58,6 +58,7 @@ export const init = () => {
         q: selector.q,
         qr: qrUtil.makeQrCode,
         qrCurrentAddress: qrUtil.qrCurrentAddress,
+        removeClassStep: classUtil.removeClassStep,
         readFile: file.read,
         removeTooltip: tooltip.removeTooltipFromDomNode,
         removeTooltipStep: tooltip.removeTooltipFromDomNodeStep,

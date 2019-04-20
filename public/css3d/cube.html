@@ -22,7 +22,7 @@
         width: 5em;
         height: 5em;
         position: absolute;
-        top: -5em;
+        top: -50vh;
         left: 80vw;
         font-size: 3em;
         perspective: 800px;
@@ -73,9 +73,21 @@
     }
 
     #__0__ .spin-cube {
-        transform-origin: center 50vh;
+        transform-origin: center 70vh;
         animation-name: spin-cube;
         animation-duration: 10s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes orbit-cube {
+        100% {transform: rotateY(3600deg)}
+    }
+
+    #__0__ .orbit-cube {
+        transform-origin: -30vw 70vh -50px;
+        animation-name: orbit-cube;
+        animation-duration: 30s;
         animation-timing-function: ease-in-out;
         animation-iteration-count: infinite;
     }
@@ -162,9 +174,17 @@
             "   animation-duration: 10s;\n" +
             "   animation-timing-function: ease-in-out;\n" +
             "   animation-iteration-count: infinite;\n" +
+            "}\n" +
+            "/* Orbit */\n" +
+            "@keyframes orbit-cube {\n" +
+            "   100% {transform: rotateY(3600deg)}\n" +
+            ".cube-inner-container {\n" +
+            "   animation-name: orbit-cube;\n" +
+            "   animation-duration: 10s;\n" +
+            "   animation-timing-function: ease-in-out;\n" +
+            "   animation-iteration-count: infinite;\n" +
             "}"
         );
-
 
         function animateStep(animationObject, _deAnimationObject) {
             var deAnimationObject = _deAnimationObject;
@@ -255,8 +275,18 @@
         steps.push(_0.highlightLinesStep(".code", "32-36", " ... around all axes", "top"))
 
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "37-42", "'cube-inner-container' is the class of a div around all the whole cube", "top"),
+            _0.highlightLinesStep(".code", "37-42", "'cube-inner-container' is the class of a div around the whole cube", "top"),
             _0.setClassStep(".cube-inner-container", "spin-cube"),
+        ))
+
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "43", " Now let the cube orbit around a far away center", "top"),
+            _0.removeClassStep(".cube-inner-container", "spin-cube")
+        ))
+        steps.push(_0.highlightLinesStep(".code", "44-45", "3600deg = 10 revolutions", "top"))
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "47-51", "3s per revolution", "top"),
+            _0.setClassStep(".cube-inner-container", "orbit-cube"),
         ))
 
         _0.setSteps(steps);
