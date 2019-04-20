@@ -100,9 +100,7 @@ export class Slide {
                 exitFPromise = this.steps[this.currentStepNo].doExitF();
             }
 
-            console.log("before")
             await exitFPromise;
-            console.log("after")
 
             this.currentStepNo++;
             this.steps[this.currentStepNo] && this.steps[this.currentStepNo].perform();
@@ -110,7 +108,7 @@ export class Slide {
         }
     }
 
-    public prevStep(roundRobin = false) {
+    public async prevStep(roundRobin = false) {
         if(!slideCore.blockSteps) {
             if(this.currentStepNo <= -1) {
                 if(roundRobin) {
@@ -122,7 +120,7 @@ export class Slide {
             }
 
             if(this.steps[this.currentStepNo]) {
-                this.steps[this.currentStepNo].exitB();
+                await this.steps[this.currentStepNo].doExitB();
                 this.steps[this.currentStepNo].unperform();
             }
             this.currentStepNo--;
