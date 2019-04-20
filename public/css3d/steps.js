@@ -49,6 +49,7 @@
         steps.back = createTooltipStep("back");
         steps.top = _0.combine(_0.removeTooltipStep(".back", true), createTooltipStep("top"));
         steps.left = _0.combine(_0.removeTooltipStep(".top", true), createTooltipStep("left"));
+        steps.right = _0.combine(_0.removeTooltipStep(".left", true), createTooltipStep("right"));
 
         return steps;
     }
@@ -81,6 +82,15 @@
         steps.left2 = animeStep(
             createAnimationObject(".left", {rotateY: "-90deg", translateZ: "2.5em",}),
             createAnimationObject(".left", {rotateY: "0deg", translateZ: "0em"})
+        );
+
+        steps.right1 = animeStep(
+            createAnimationObject(".right", {translateY: window.innerHeight/2}),
+            createAnimationObject(".right", {translateY: -window.innerHeight/2})
+        );
+        steps.right2 = animeStep(
+            createAnimationObject(".right", {rotateY: "90deg", translateZ: "2.5em",}),
+            createAnimationObject(".right", {rotateY: "0deg", translateZ: "0em"})
         );
 
         return  steps;

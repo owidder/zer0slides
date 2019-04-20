@@ -56,6 +56,10 @@
         background-color: green;
     }
 
+    #__0__ .right {
+        background-color: orange;
+    }
+
 </style>
 
 <div class="content">
@@ -81,6 +85,9 @@
         <div class="side left">
             Left
         </div>
+        <div class="side right">
+            Right
+        </div>
     </div>
 </div>
 <script>
@@ -99,8 +106,13 @@
             "   translateZ: 50px;\n" +
             "}\n" +
             "/* Left */\n" +
-            ".top {\n" +
+            ".left {\n" +
             "   transform: rotateY: -90deg;\n" +
+            "   translateZ: 50px;\n" +
+            "}\n" +
+            "/* Right */\n" +
+            ".right {\n" +
+            "   transform: rotateY: 90deg;\n" +
             "   translateZ: 50px;\n" +
             "}"
         );
@@ -153,6 +165,16 @@
         steps.push(_0.combine(
             _0.highlightLinesStep(".code", "12-15"),
             animeSteps.left2
+        ))
+
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "16"),
+            tooltipsSteps.right,
+            animeSteps.right1
+        ))
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "17-20"),
+            animeSteps.right2
         ))
 
         _0.setSteps(steps);
