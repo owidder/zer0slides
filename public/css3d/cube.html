@@ -73,6 +73,7 @@
     }
 
     #__0__ .spin-cube {
+        transform-origin: center 50vh;
         animation-name: spin-cube;
         animation-duration: 10s;
         animation-timing-function: ease-in-out;
@@ -254,7 +255,7 @@
         steps.push(_0.highlightLinesStep(".code", "32-36", " ... around all axes", "top"))
 
         steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "37-42", "Let's go!!!"),
+            _0.highlightLinesStep(".code", "37-42", "'cube-inner-container' is the class of a div around all the whole cube", "top"),
             _0.setClassStep(".cube-inner-container", "spin-cube"),
         ))
 

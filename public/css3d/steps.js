@@ -63,8 +63,8 @@
         const steps = {};
 
         steps.back1 = animeStep(
-            createAnimationObject(".back", {translateY: window.innerHeight/2}),
-            createAnimationObject(".back", {translateY: -window.innerHeight/2})
+            createAnimationObject(".back", {translateY: "50vh"}),
+            createAnimationObject(".back", {translateY: "-50vh"})
         );
         steps.back2 = animeStep(
             createAnimationObject(".back", {rotateY: "180deg", translateZ: "2.5em",}),
@@ -72,8 +72,8 @@
         );
 
         steps.top1 = animeStep(
-            createAnimationObject(".top", {translateY: window.innerHeight/2}),
-            createAnimationObject(".top", {translateY: -window.innerHeight/2})
+            createAnimationObject(".top", {translateY: "50vh"}),
+            createAnimationObject(".top", {translateY: "-50vh"})
         );
         steps.top2 = animeStep(
             createAnimationObject(".top", {rotateX: "90deg", translateZ: "2.5em",}),
@@ -81,8 +81,8 @@
         );
 
         steps.left1 = animeStep(
-            createAnimationObject(".left", {translateY: window.innerHeight/2}),
-            createAnimationObject(".left", {translateY: -window.innerHeight/2})
+            createAnimationObject(".left", {translateY: "50vh"}),
+            createAnimationObject(".left", {translateY: "-50vh"})
         );
         steps.left2 = animeStep(
             createAnimationObject(".left", {rotateY: "270deg", translateZ: "2.5em",}),
@@ -90,8 +90,8 @@
         );
 
         steps.right1 = animeStep(
-            createAnimationObject(".right", {translateY: window.innerHeight/2}),
-            createAnimationObject(".right", {translateY: -window.innerHeight/2})
+            createAnimationObject(".right", {translateY: "50vh"}),
+            createAnimationObject(".right", {translateY: "-50vh"})
         );
         steps.right2 = animeStep(
             createAnimationObject(".right", {rotateY: "90deg", translateZ: "2.5em",}),
@@ -99,8 +99,8 @@
         );
 
         steps.bottom1 = animeStep(
-            createAnimationObject(".bottom", {translateY: window.innerHeight/2}),
-            createAnimationObject(".bottom", {translateY: -window.innerHeight/2})
+            createAnimationObject(".bottom", {translateY: "50vh"}),
+            createAnimationObject(".bottom", {translateY: "-50vh"})
         );
         steps.bottom2 = animeStep(
             createAnimationObject(".bottom", {rotateX: "270deg", translateZ: "2.5em",}),
@@ -108,8 +108,8 @@
         );
 
         steps.front1 = animeStep(
-            createAnimationObject(".front", {translateY: window.innerHeight/2}),
-            createAnimationObject(".front", {translateY: -window.innerHeight/2})
+            createAnimationObject(".front", {translateY: "50vh"}),
+            createAnimationObject(".front", {translateY: "-50vh"})
         );
         steps.front2 = animeStep(
             createAnimationObject(".front", {translateZ: "2.5em",}),
