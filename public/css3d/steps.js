@@ -1,7 +1,7 @@
 (function () {
-    function timeoutPromise() {
+    function timeoutPromise(duration) {
         return new Promise(function (resolve) {
-            setTimeout(resolve, 10);
+            setTimeout(resolve, duration);
         })
     }
 
@@ -10,18 +10,20 @@
         var animation;
         return _0.step(
             function () {
-                animation = anime(animationObject)
+                animation = anime(animationObject);
+                return timeoutPromise(100)
             },
             function () {
-                animation = anime(deAnimationObject)
+                animation = anime(deAnimationObject);
+                return timeoutPromise(100)
             },
             function () {
                 animation.seek(animationObject.duration);
-                return timeoutPromise()
+                return timeoutPromise(10)
             },
             function () {
                 animation.seek(deAnimationObject.duration);
-                return timeoutPromise()
+                return timeoutPromise(10)
             },
         )
     }
