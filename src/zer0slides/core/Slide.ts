@@ -22,6 +22,7 @@ export interface SlideConfig {
     useTippyAsDefault?: boolean;
     lineTooltipDelay?: number;
     afterStepDelay?: number;
+    hideToRemoveTippy?: boolean;
 }
 
 export class Slide {
@@ -42,6 +43,7 @@ export class Slide {
     public useTippyAsDefault = false
     public lineTooltipDelay = -1
     public afterStepDelay = -1
+    public hideToRemoveTippy = false
 
     public transformationInNext: Transformation
     public transformationOutNext: Transformation
