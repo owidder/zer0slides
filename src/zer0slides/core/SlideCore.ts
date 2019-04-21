@@ -1,4 +1,4 @@
-import {Slide} from './Slide';
+import {Slide, SlideConfig} from './Slide';
 import {renderSlide, refreshSlide, InOut} from './render';
 import {setSlideNo} from '../html/controlElements';
 import {setHashValue} from '../url/queryUtil';
@@ -53,10 +53,14 @@ export class SlideCore {
         return this.getSlide(slideName).description;
     }
 
-    public addSlide(name: string, description?: string, specialName?: string, doPerformToCurrentStep = true, centerCurrentLine = false) {
-        const slide = new Slide(name, description ? description : name, specialName);
-        slide.doPerformToCurrentStep = doPerformToCurrentStep;
-        slide.centerCurrentLine = centerCurrentLine;
+    public addSlide(name: string, description?: string, specialName?: string, doPerformToCurrentStep = true, centerCurrentLine = false, useTippyAsDefault = false) {
+        return this.addSlideWithConfig(name, description, {
+            specialName, doPerformToCurrentStep, centerCurrentLine, useTippyAsDefault
+        })
+    }
+
+    public addSlideWithConfig(name: string, description?: string, slideConfig?: SlideConfig) {
+        const slide = new Slide(name, description ? description : name, slideConfig);
         if(!this.currentSlide) {
             this.currentSlide = slide;
         }

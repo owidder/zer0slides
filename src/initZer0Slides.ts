@@ -37,6 +37,7 @@ export const init = () => {
     const _0 = {
         $1: selector.$1,
         addSlide: core.addSlide,
+        addSlideWithConfig: core.addSlideWithConfig,
         addStep: steps.addStep,
         autoStepOn: steps.autoStepOn,
         backgroundImage: background.image,

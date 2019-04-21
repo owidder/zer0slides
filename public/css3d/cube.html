@@ -25,7 +25,7 @@
         top: -50vh;
         left: 80vw;
         font-size: 3em;
-        perspective: 800px;
+        perspective: 1500px;
     }
 
     #__0__ .cube-inner-container {
@@ -85,7 +85,7 @@
     }
 
     #__0__ .orbit-cube {
-        transform-origin: -30vw 70vh -50px;
+        transform-origin: -30vw 70vh -500px;
         animation-name: orbit-cube;
         animation-duration: 30s;
         animation-timing-function: ease-in-out;
@@ -179,6 +179,7 @@
             "@keyframes orbit-cube {\n" +
             "   100% {transform: rotateY(3600deg)}\n" +
             ".cube-inner-container {\n" +
+            "   transform-origin: -500px;\n" +
             "   animation-name: orbit-cube;\n" +
             "   animation-duration: 10s;\n" +
             "   animation-timing-function: ease-in-out;\n" +
@@ -198,98 +199,94 @@
             )
         }
 
-        _0.setTippyTheme("transparent");
-
-        const steps = [];
+        _0.highlightLines(".code", "1", "We wanna create a cube solely with CSS. Press the down arrow key to step forward")
 
         const tooltipsSteps = createTooltipSteps();
         const animeSteps = createAnimeSteps();
 
-        steps.push(_0.highlightLinesStep(".code", "1", "We wanna create a cube solely with CSS"))
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "2", "We begin with the back side of the cube", "top"),
             tooltipsSteps.back,
             animeSteps.back1
         ))
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "3-6", "Spin it around the Y axes by 180 degree and it move back by the half of the side length " +
                 "(translateZ always moves in the current direction of the element)", "top"),
             animeSteps.back2
         ))
 
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "7", "The top side", "top"),
             tooltipsSteps.top,
             animeSteps.top1
         ))
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "8-11", "Spin it around the X axes by 90 degree at move it up by the half of the side length", "top"),
             animeSteps.top2
         ))
 
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "12", "The left side", "top"),
             tooltipsSteps.left,
             animeSteps.left1
         ))
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "13-16", "Spin it around the Y axes by 270 degree and move it to the left by the half of the side length", "top"),
             animeSteps.left2
         ))
 
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "17", "The right side", "top"),
             tooltipsSteps.right,
             animeSteps.right1
         ))
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "18-21", "Spin it around the X axes by 270 degree and move it to the right by the half of the side length", "top"),
             animeSteps.right2
         ))
 
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "22", "The bottom side", "top"),
             tooltipsSteps.bottom,
             animeSteps.bottom1
         ))
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "23-26", "Spin it around the X axes by 270 degree and move it to the bottom by the half of the side length", "top"),
             animeSteps.bottom2
         ))
 
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "27", "The front side", "top"),
             tooltipsSteps.front,
             animeSteps.front1
         ))
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "28-30", "No spin needed. Just move it to the front by the half of the side length", "top"),
             animeSteps.front2
         ))
 
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "31", "Now let the cube spin..."),
             tooltipsSteps.finish,
         ))
 
-        steps.push(_0.highlightLinesStep(".code", "32-36", " ... around all axes", "top"))
+        _0.addStep(_0.highlightLinesStep(".code", "32-36", " ... around all axes", "top"))
 
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "37-42", "'cube-inner-container' is the class of a div around the whole cube", "top"),
             _0.setClassStep(".cube-inner-container", "spin-cube"),
         ))
+        _0.addStep(_0.highlightLinesStep(".code", "32-36", " ... around all axes", "top"))
 
-        steps.push(_0.combine(
+        _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "43", " Now let the cube orbit around a far away center", "top"),
             _0.removeClassStep(".cube-inner-container", "spin-cube")
         ))
-        steps.push(_0.highlightLinesStep(".code", "44-45", "3600deg = 10 revolutions", "top"))
-        steps.push(_0.combine(
-            _0.highlightLinesStep(".code", "47-51", "3s per revolution", "top"),
+        _0.addStep(_0.highlightLinesStep(".code", "44-45", "3600deg = 10 revolutions", "top"))
+        _0.addStep(_0.combine(
+            _0.highlightLinesStep(".code", "47-52", "3s per revolution", "top"),
             _0.setClassStep(".cube-inner-container", "orbit-cube"),
         ))
-
-        _0.setSteps(steps);
 
         ___()
     })()

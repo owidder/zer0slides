@@ -1,4 +1,5 @@
 import {SlideCore} from './SlideCore';
+import {SlideConfig} from "./Slide";
 
 export const slideCore = new SlideCore();
 
@@ -10,8 +11,12 @@ export const getFolderName = () => {
     return slideCore.folderName;
 }
 
-const addSlide = (_slideName: string, description?: string, doPerformToCurrentStep = true, centerCurrentSlide = false) => {
-    slideCore.addSlide(_slideName, description, undefined, doPerformToCurrentStep, centerCurrentSlide);
+const addSlide = (_slideName: string, description?: string, doPerformToCurrentStep = true, centerCurrentLine = false, useTippyAsDefault = false) => {
+    slideCore.addSlide(_slideName, description, undefined, doPerformToCurrentStep, centerCurrentLine, useTippyAsDefault);
+}
+
+const addSlideWithConfig = (slideName: string, description?: string, slideConfig?: SlideConfig) => {
+    slideCore.addSlideWithConfig(slideName, description, slideConfig);
 }
 
 export const slideName = () => {
@@ -20,6 +25,7 @@ export const slideName = () => {
 
 export const core = {
     addSlide,
+    addSlideWithConfig,
     setFolderName,
     slideName,
 }

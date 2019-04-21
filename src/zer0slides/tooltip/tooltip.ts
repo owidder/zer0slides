@@ -31,7 +31,7 @@ export const doNotUseTippy = () => {
 }
 
 const isTippyEnabled = () => {
-    return tippyEnabled;
+    return tippyEnabled || slideCore.getCurrentSlide().useTippyAsDefault;
 }
 
 const _initTooltip = () => {
@@ -54,7 +54,9 @@ const refresh = () => {
 
 export const reset = () => {
     const slideSelector = slideCore.getCurrentSlideSelector();
-    const selector = `${slideSelector} .line-highlight`;
+    const selector = q(".line-highlight");
+
+    tippy.removeTooltipFromDomNode(selector);
 
     d3.selectAll(selector)
         .classed("protip", false)

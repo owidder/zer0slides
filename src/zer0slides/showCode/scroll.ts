@@ -13,9 +13,15 @@ export const scrollToCurrentLine = (): Promise<void> => {
     if(slideCore.getCurrentSlide().centerCurrentLine) {
         const element = document.querySelector(q(".line-highlight"));
         element.scrollIntoView({behavior: "smooth", block: "center"});
-        return new Promise<void>(resolve => {
-            setTimeout(resolve, 300);
-        })
+
+        if(slideCore.getCurrentSlide().lineTooltipDelay >= 0) {
+            return new Promise<void>(resolve => {
+                setTimeout(resolve, 300);
+            })
+        }
+        else {
+            return  Promise.resolve();
+        }
     }
     else {
         const slideSelector = slideCore.getCurrentSlideSelector();

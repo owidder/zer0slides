@@ -89,6 +89,7 @@ export const highlightLines = (selector: string,
                                tooltip?: string,
                                position?: string,
                                placement?: string): string | HighlightLinesOptions[] => {
+    reset();
     let old = getData(selector);
     if(!old) {
        old =  dataLine(selector);
@@ -133,7 +134,6 @@ const highlightLinesWithSimpleTooltip = (selector: string, lines: string, toolti
     const simpleOptionsArray = [{lines, tooltip, position, placement}];
     setData(q(selector), simpleOptionsArray);
 
-    reset();
     highlightLinesNoTooltip(selector, lines, () => {
         createTooltipsForHighlights(simpleOptionsArray);
     });
@@ -147,7 +147,6 @@ const highlightLinesWithComplexTooltip = (selector: string, optionsArray: Highli
     }, []);
     const allLinesString = allLinesArray.join(",");
 
-    reset();
     highlightLinesNoTooltip(selector, allLinesString, () => {
         createTooltipsForHighlights(optionsArray);
     });
