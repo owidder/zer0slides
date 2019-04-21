@@ -21,6 +21,7 @@ export interface SlideConfig {
     centerCurrentLine?: boolean;
     useTippyAsDefault?: boolean;
     lineTooltipDelay: number;
+    afterStepDelay: number;
 }
 
 export class Slide {
@@ -40,6 +41,7 @@ export class Slide {
     public centerCurrentLine = false
     public useTippyAsDefault = false
     public lineTooltipDelay = -1
+    public afterStepDelay = -1
 
     public transformationInNext: Transformation
     public transformationOutNext: Transformation

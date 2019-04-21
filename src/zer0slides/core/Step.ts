@@ -3,7 +3,14 @@ import {slideCore} from "./core";
 export type StepFunction = () => undefined | Promise<void>
 
 const callWithBlockSteps = (stepFunction: StepFunction) => {
-    const promise = stepFunction();
+    let promise = stepFunction();
+
+    if(!promise && slideCore.getCurrentSlide().afterStepDelay >= 0) {
+        promise = new Promise<void>(resolve => {
+            setTimeout(resolve, slideCore.getCurrentSlide().afterStepDelay)
+        })
+    }
+
     if(promise) {
         slideCore.blockSteps = true;
         promise.then(() => {
