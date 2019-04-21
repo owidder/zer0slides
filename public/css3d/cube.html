@@ -199,7 +199,7 @@
             )
         }
 
-        _0.highlightLines(".code", "1", "We wanna create a cube solely with CSS. Press the down arrow key to step forward")
+        _0.highlightLines(".code", "1", "We wanna create a cube solely with CSS.<br>Use <b>down</b> and <b>up</b> arrow keys to step forward and back")
 
         const tooltipsSteps = createTooltipSteps();
         const animeSteps = createAnimeSteps();
@@ -211,7 +211,7 @@
         ))
         _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "3-6", "Spin it around the Y axes by 180 degree and it move back by the half of the side length " +
-                "(translateZ always moves in the current direction of the element)", "top"),
+                "<br><code>translateZ</code> always moves in the current direction of the element", "top"),
             animeSteps.back2
         ))
 
@@ -270,13 +270,16 @@
             tooltipsSteps.finish,
         ))
 
-        _0.addStep(_0.highlightLinesStep(".code", "32-36", " ... around all axes", "top"))
+        _0.addStep(_0.highlightLinesStep(".code", "32-36", " ... around all axes by 360 degree", "top"))
 
         _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "37-42", "'cube-inner-container' is the class of a div around the whole cube", "top"),
             _0.setClassStep(".cube-inner-container", "spin-cube"),
         ))
-        _0.addStep(_0.highlightLinesStep(".code", "32-36", " ... around all axes", "top"))
+        _0.addStep(_0.highlightLinesStep(".code", "38", "The name of the keyframe animation", "top"))
+        _0.addStep(_0.highlightLinesStep(".code", "39", "Duration of one animation", "top"))
+        _0.addStep(_0.highlightLinesStep(".code", "40", "Start and stop each animnation smoothely", "top"))
+        _0.addStep(_0.highlightLinesStep(".code", "41", "Do one animation after another endlessly", "top"))
 
         _0.addStep(_0.combine(
             _0.highlightLinesStep(".code", "43", " Now let the cube orbit around a far away center", "top"),
@@ -284,7 +287,7 @@
         ))
         _0.addStep(_0.highlightLinesStep(".code", "44-45", "3600deg = 10 revolutions", "top"))
         _0.addStep(_0.combine(
-            _0.highlightLinesStep(".code", "47-52", "3s per revolution", "top"),
+            _0.highlightLinesStep(".code", "47", "The center is 500px inside the screen", "top"),
             _0.setClassStep(".cube-inner-container", "orbit-cube"),
         ))
 
