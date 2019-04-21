@@ -20,8 +20,8 @@ export interface SlideConfig {
     doPerformToCurrentStep?: boolean;
     centerCurrentLine?: boolean;
     useTippyAsDefault?: boolean;
-    lineTooltipDelay: number;
-    afterStepDelay: number;
+    lineTooltipDelay?: number;
+    afterStepDelay?: number;
 }
 
 export class Slide {
