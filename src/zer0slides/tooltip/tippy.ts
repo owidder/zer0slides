@@ -61,7 +61,7 @@ export const removeTooltipFromDomNode = (selector: string): Tooltip | undefined 
     const element: any = (document.querySelector(_sel) as any);
     if(element) {
         const instance = element._tippy;
-        instance && instance.hide();
+        instance && instance.destroy();
     }
     resetData(_sel);
 
