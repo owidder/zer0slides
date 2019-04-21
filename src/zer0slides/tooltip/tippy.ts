@@ -7,6 +7,7 @@ import {Tooltip, createTooltipSelector} from "./_tooltip";
 import '../less/tippy.less';
 import {q} from "../selector/selector";
 import {addCleanFunction} from "../lifecycle/lifecycle";
+import {slideCore} from "../core/core";
 
 let theme = "transparent";
 export const setTheme = (_theme: string) => {
@@ -61,7 +62,11 @@ export const removeTooltipFromDomNode = (selector: string): Tooltip | undefined 
     const element: any = (document.querySelector(_sel) as any);
     if(element) {
         const instance = element._tippy;
-        instance && instance.destroy();
+        if(slideCore.getCurrentSlide().hideToRemoveTippy) {
+            instance && instance.hide();
+        } else {
+            instance && instance.destroy();
+        }
     }
     resetData(_sel);
 
