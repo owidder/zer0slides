@@ -92,6 +92,18 @@
         animation-iteration-count: infinite;
     }
 
+    @keyframes byebye-cube {
+        100% {transform: translateX(-20000vw) translateY(40000vh) translateZ(-1000000px)}
+    }
+
+    #__0__ .byebye-cube {
+        animation-name: byebye-cube;
+        animation-duration: 30s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
 </style>
 
 <div class="content">
@@ -184,6 +196,18 @@
             "   animation-duration: 10s;\n" +
             "   animation-timing-function: ease-in-out;\n" +
             "   animation-iteration-count: infinite;\n" +
+            "}\n" +
+            "/* Bye bye */\n" +
+            "@keyframes byebye-cube {\n" +
+            "   100% {transform: translateX(-40000vw)\n" +
+            "         translateY(50000vh)\n" +
+            "         translateZ(-1000000px)}\n" +
+            ".cube-inner-container {\n" +
+            "   animation-name: byebye-cube;\n" +
+            "   animation-duration: 10s;\n" +
+            "   animation-timing-function: ease-in-out;\n" +
+            "   animation-iteration-count: 1;\n" +
+            "   animation-fill-mode: forwards;\n" +
             "}"
         );
 
@@ -290,6 +314,16 @@
             _0.highlightLinesStep(".code", "47", "The center is 500px inside the screen", "top"),
             _0.setClassStep(".cube-inner-container", "orbit-cube"),
         ))
+
+        _0.addStep(_0.combine(
+            _0.highlightLinesStep(".code", "53", "Time to say goodbye", "top"),
+            _0.removeClassStep(".cube-inner-container", "orbit-cube")
+        ))
+        _0.addStep(_0.combine(
+            _0.highlightLinesStep(".code", "54-64", "Bye bye cube, it's been nice to be with you", "top"),
+            _0.setClassStep(".cube-inner-container", "byebye-cube"),
+        ))
+        _0.addStep(_0.highlightLinesStep(".code", "63", "Make sure the cube will stay far away after the animation has finished", "top"))
 
         ___()
     })()
