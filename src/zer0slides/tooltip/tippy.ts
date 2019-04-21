@@ -8,7 +8,7 @@ import '../less/tippy.less';
 import {q} from "../selector/selector";
 import {addCleanFunction} from "../lifecycle/lifecycle";
 
-let theme = "magenta";
+let theme = "transparent";
 export const setTheme = (_theme: string) => {
     theme = _theme;
 }
@@ -58,8 +58,11 @@ export const addTooltipToDomNode = (selector: string, text: string, position: st
 export const removeTooltipFromDomNode = (selector: string): Tooltip | undefined => {
     const _sel = q(selector);
     const old = getData(_sel);
-    const instance = (document.querySelector(_sel) as any)._tippy;
-    instance && instance.hide();
+    const element: any = (document.querySelector(_sel) as any);
+    if(element) {
+        const instance = element._tippy;
+        instance && instance.destroy();
+    }
     resetData(_sel);
 
     return old;

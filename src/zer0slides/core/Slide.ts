@@ -5,6 +5,7 @@ import {setStepCtr, showHideUp, showHideDown} from '../html/controlElements';
 import {Transformation} from '../html/transformations/Transformation';
 import {SimplePromise} from './SimplePromise';
 import {slideCore} from "./core";
+import {string} from "prop-types";
 
 export const isSpecialSlideName = (name: string) => {
     return name.startsWith("_0_");
@@ -12,6 +13,15 @@ export const isSpecialSlideName = (name: string) => {
 
 export const getSpecialSlideType = (name: string) => {
     return name.substr(3);
+}
+
+export interface SlideConfig {
+    specialName?: string;
+    doPerformToCurrentStep?: boolean;
+    centerCurrentLine?: boolean;
+    useTippyAsDefault?: boolean;
+    lineTooltipDelay: number;
+    afterStepDelay: number;
 }
 
 export class Slide {
@@ -23,20 +33,36 @@ export class Slide {
     public description: string
     public autoStepIntervalId: number = -1
     public firstStepPromise = new SimplePromise()
-    public specialName
-    public doPerformToCurrentStep
     public shortcutFunction: () => void
+
+    // config
+    public specialName: string
+    public doPerformToCurrentStep = true
+    public centerCurrentLine = false
+    public useTippyAsDefault = false
+    public lineTooltipDelay = -1
+    public afterStepDelay = -1
 
     public transformationInNext: Transformation
     public transformationOutNext: Transformation
     public transformationInPrev: Transformation
     public transformationOutPrev: Transformation
 
-    constructor(name: string, description?: string, specialName?: string) {
+    constructor(name: string, description?: string, specialNameOrConfig?: string | SlideConfig) {
         this.name = name;
         this.description = description;
-        this.specialName = specialName;
         this.createRandomTransformations();
+
+        if(typeof specialNameOrConfig === "string") {
+            this.specialName = specialNameOrConfig;
+        }
+        else {
+            this.copyFromSlideConfig(specialNameOrConfig);
+        }
+    }
+
+    private copyFromSlideConfig(slideConfig: SlideConfig) {
+        Object.assign(this, slideConfig);
     }
 
     public createRandomTransformations() {
@@ -80,7 +106,7 @@ export class Slide {
         return pathToHtml(this.name);
     }
 
-    public nextStep(roundRobin = false) {
+    public async nextStep(roundRobin = false) {
         if(!slideCore.blockSteps) {
             if(!(this.currentStepNo > 0)) {
                 slideCore.firstStepCallback();
@@ -94,13 +120,20 @@ export class Slide {
                 }
             }
 
+            let exitFPromise = Promise.resolve();
+            if(this.steps[this.currentStepNo]) {
+                exitFPromise = this.steps[this.currentStepNo].doExitF();
+            }
+
+            await exitFPromise;
+
             this.currentStepNo++;
             this.steps[this.currentStepNo] && this.steps[this.currentStepNo].perform();
             this.showStepCtr()
         }
     }
 
-    public prevStep(roundRobin = false) {
+    public async prevStep(roundRobin = false) {
         if(!slideCore.blockSteps) {
             if(this.currentStepNo <= -1) {
                 if(roundRobin) {
@@ -111,7 +144,10 @@ export class Slide {
                 }
             }
 
-            this.steps[this.currentStepNo] && this.steps[this.currentStepNo].unperform();
+            if(this.steps[this.currentStepNo]) {
+                await this.steps[this.currentStepNo].doExitB();
+                this.steps[this.currentStepNo].unperform();
+            }
             this.currentStepNo--;
             this.showStepCtr();
         }

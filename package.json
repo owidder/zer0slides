@@ -1,18 +1,21 @@
 {
   "name": "zer0slides",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf build",
     "build": "npm run clean && cross-env NODE_ENV=production webpack",
     "build:dev": "npm run clean && cross-env NODE_ENV=development webpack",
+    "build:dev:watch": "npm run clean && cross-env NODE_ENV=development webpack --watch",
     "build:local": "cross-env INDEX=indexLocal npm run build:dev",
     "test": "jest",
     "start": "cross-env NODE_ENV=development webpack-dev-server",
     "readme": "node replaceVersionInReadme.js",
     "copyhtml": "cpx 'public/**/*.html' build",
     "copyhtml:watch": "cpx 'public/**/*.html' build --watch",
+    "copyjs:watch": "cpx 'public/**/*.js' build --watch",
+    "copyfiles:watch": "cpx 'public/**/*.{js,html}' build --watch",
     "server": "node server.js"
   },
   "keywords": [],
