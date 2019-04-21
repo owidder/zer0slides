@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="../static/css/z0.1.7.1.css" rel="stylesheet"></head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+    <script src="./steps.js"></script>
+<link href="../static/css/z0.1.8.0.css" rel="stylesheet"></head>
 <body>
 <script>
     window.onload = function () {
-        _0.addSlide("cube", "Cube");
+        _0.addSlideWithConfig("cube", "Cube", {doPerformToCurrentStep: false, centerCurrentLine: true, useTippyAsDefault: true, afterStepDelay: 100});
 
         _0.initReady();
     }
 </script>
-<script type="text/javascript" src="../static/js/z0.1.7.1.js"></script></body>
+<script type="text/javascript" src="../static/js/z0.1.8.0.js"></script></body>
 </html>
