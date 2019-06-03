@@ -16,13 +16,21 @@ const successfullResponse = {
 const fetch = require("node-fetch");
 fetch.Promise = Bluebird;
 
+const nowAsString = () => {
+    const now = new Date();
+    return now.toString() + " ms: " + String(now.getMilliseconds());
+}
+
 const connect = async (event, context, callback) => {
-    console.log("start connect");
+    const timestamp = nowAsString();
+    console.log("start connect: " + timestamp);
+
     try {
         const putParams = {
             TableName: process.env.Z0CONNECTION_TABLE,
             Item: {
-                connectionId: {S: event.requestContext.connectionId}
+                connectionId: {S: event.requestContext.connectionId},
+                timestamp: {S: timestamp}
             }
         };
 
