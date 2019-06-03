@@ -50,11 +50,14 @@ provider:
   websocketApiRouteSelectionExpression: $request.body.action
 
 functions:
-  connectionManager:
-    handler: handler.connectionManager
+  connect:
+    handler: handler.connect
     events:
       - websocket:
           route: $connect
+  disconnect:
+    handler: handler.disconnect
+    events:
       - websocket:
           route: $disconnect
   defaultMessages:
@@ -62,11 +65,11 @@ functions:
     events:
       - websocket:
           route: $default
-  sendMessage:
-    handler: handler.sendMessage
+  sendCommand:
+    handler: handler.sendCommand
     events:
       - websocket:
-          route: sendMessage
+          route: sendCommand
 resources:
   Resources:
     Z0ConnectionTable:

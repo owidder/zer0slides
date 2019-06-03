@@ -16,41 +16,53 @@ const successfullResponse = {
 const fetch = require("node-fetch");
 fetch.Promise = Bluebird;
 
-module.exports.connectionManager = (event, context, callback) => {
-    console.log(`-> connect: ${JSON.stringify(event)}`);
-    console.log("connection!!!!!!!");
-    if (event.requestContext.eventType === "CONNECT") {
-        addConnection(event.requestContext.connectionId)
-            .then(() => {
-                console.log("addConnection promise resolved: " + JSON.stringify(successfullResponse));
-                callback(null, successfullResponse);
-            })
-            .catch(err => {
-                console.log("addConnection promise err: " + err);
-                callback(null, JSON.stringify(err));
-            });
-    } else if (event.requestContext.eventType === "DISCONNECT") {
-        deleteConnection(event.requestContext.connectionId)
-            .then(() => {
-                callback(null, successfullResponse);
-            })
-            .catch(err => {
-                callback(null, {
-                    statusCode: 500,
-                    body: "Failed to connect: " + JSON.stringify(err)
-                });
-            });
-    }
-};
+const connect = async (event, context, callback) => {
+    console.log("start connect");
+    try {
+        const putParams = {
+            TableName: process.env.Z0CONNECTION_TABLE,
+            Item: {
+                connectionId: {S: event.requestContext.connectionId}
+            }
+        };
 
-module.exports.defaultMessage = (event, context, callback) => {
+        await DDB.putItem(putParams, function(err, data) {
+            console.log("err: " + err);
+            console.log("data: " + data);
+        }).promise();
+
+        callback(null, {statusCode: 200, body: "CONNECTED"});
+    } catch (e) {
+        console.log(e);
+        callback(null, {statusCode: 500, body: e});
+    }
+}
+
+const disconnect = async (event, context, callback) => {
+    try {
+        const deleteParams = {
+            TableName: process.env.Z0CONNECTION_TABLE,
+            Key: {
+                connectionId: {S: event.requestContext.connectionId}
+            }
+        };
+
+        await DDB.deleteItem(deleteParams).promise();
+
+        callback(null, {statusCode: 200, body: "DISCONNECTED"});
+    } catch (e) {
+        callback(null, {statusCode: 500, body: JSON.stringify(e)});
+    }
+}
+
+const defaultMessage = (event, context, callback) => {
     console.log("defaultMessage");
     console.log("event: " + JSON.stringify(event));
     console.log("context: " + JSON.stringify(context));
     callback(null);
 };
 
-module.exports.sendMessage = async (event, context, callback) => {
+const sendCommand = async (event, context, callback) => {
     console.log("sendMessage");
     console.log("event: " + JSON.stringify(event));
     console.log("context: " + JSON.stringify(context));
@@ -68,9 +80,6 @@ module.exports.sendMessage = async (event, context, callback) => {
         try {
             return await send(event, connectionId.S);
         } catch (err) {
-            if (err.statusCode === 410) {
-                return await deleteConnection(connectionId.S);
-            }
             console.log(JSON.stringify(err));
             throw err;
         }
@@ -96,30 +105,9 @@ const send = (event, connectionId) => {
         .promise();
 };
 
-const addConnection = connectionId => {
-    const putParams = {
-        TableName: process.env.CHATCONNECTION_TABLE,
-        Item: {
-            connectionId: {S: connectionId}
-        }
-    };
-
-    console.log("addConnection: " + JSON.stringify(putParams));
-
-    return DDB.putItem(putParams, function (err, data) {
-        console.log("err = " + JSON.stringify(err));
-        console.log("data = " + JSON.stringify(data));
-    }).promise();
-
-};
-
-const deleteConnection = connectionId => {
-    const deleteParams = {
-        TableName: process.env.CHATCONNECTION_TABLE,
-        Key: {
-            connectionId: {S: connectionId}
-        }
-    };
-
-    return DDB.deleteItem(deleteParams).promise();
-};
+module.exports = {
+    connect,
+    disconnect,
+    sendCommand,
+    defaultMessage
+}
