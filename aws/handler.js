@@ -28,7 +28,7 @@ const connect = async (event, context, callback) => {
 
         await DDB.putItem(putParams, function(err, data) {
             console.log("err: " + err);
-            console.log("data: " + data);
+            console.log("data: " + JSON.stringify(data));
         }).promise();
 
         callback(null, {statusCode: 200, body: "CONNECTED"});
@@ -51,7 +51,7 @@ const disconnect = async (event, context, callback) => {
 
         callback(null, {statusCode: 200, body: "DISCONNECTED"});
     } catch (e) {
-        callback(null, {statusCode: 500, body: JSON.stringify(e)});
+        callback(null, {statusCode: 500, body: e});
     }
 }
 
