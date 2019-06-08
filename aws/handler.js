@@ -21,60 +21,62 @@ const nowAsString = () => {
     return now.toString() + " ms: " + String(now.getMilliseconds());
 }
 
-const putItem = async (tableName, item) => {
+const response = (statusCode, body) => {
+    return {statusCode, body}
+}
+
+const putItem = (tableName, item) => {
     const timestamp = nowAsString();
     const itemWithTimestamp = {...item, timestamp: {S: timestamp}};
     console.log(`putItem: ${JSON.stringify(itemWithTimestamp)}`);
 
-    try {
-        const putParams = {
-            TableName: tableName,
-            Item: itemWithTimestamp
-        };
+    const putParams = {
+        TableName: tableName,
+        Item: itemWithTimestamp
+    };
 
-        await DDB.putItem(putParams, function(err, data) {
-            if(err) {
-                console.log("err: " + err);
-            }
-            console.log("data: " + JSON.stringify(data));
-        }).promise();
-    } catch (e) {
-        console.log(e);
-        callback(null, {statusCode: 500, body: e});
-    }
+    return DDB.putItem(putParams, function(err, data) {
+        if(err) {
+            console.log("err: " + err);
+        }
+        console.log("data: " + JSON.stringify(data));
+    }).promise();
 }
 
 const connect = async (event, context, callback) => {
-    putItem(process.env.Z0CONNECTION_TABLE, {
+    await putItem(process.env.Z0CONNECTION_TABLE, {
         connectionId: {S: event.requestContext.connectionId},
         syncId: {S: "N/A"}
     });
 
-    callback(null, {statusCode: 200, body: "CONNECTED"});
+    callback(null, response(200, "CONNECTED"));
 }
 
 const disconnect = async (event, context, callback) => {
-    try {
-        const deleteParams = {
-            TableName: process.env.Z0CONNECTION_TABLE,
-            Key: {
-                connectionId: {S: event.requestContext.connectionId}
-            }
-        };
+    const deleteParams = {
+        TableName: process.env.Z0CONNECTION_TABLE,
+        Key: {
+            connectionId: {S: event.requestContext.connectionId}
+        }
+    };
 
-        await DDB.deleteItem(deleteParams).promise();
+    await DDB.deleteItem(deleteParams).promise();
 
-        callback(null, {statusCode: 200, body: "DISCONNECTED"});
-    } catch (e) {
-        callback(null, {statusCode: 500, body: e});
-    }
+    callback(null, response(200, "DISCONNECTED"));
 }
 
-const register = (event, context, callback) => {
-    console.log(`connectionId: ${event.requestContext.connectionId}`);
+const register = async (event, context, callback) => {
+
+    console.log(`register: ${JSON.stringify(event)}`)
     const body = JSON.parse(event.body);
-    console.log(`data: ${body.data}`);
-    callback(null, {statusCode: 200, body: "registered"});
+    console.log(`syncId: ${body.syncId}`)
+
+    await putItem(process.env.Z0CONNECTION_TABLE, {
+        connectionId: {S: event.requestContext.connectionId},
+        syncId: {S: body.syncId}
+    });
+
+    callback(null, response(200, "REGISTERED"));
 }
 
 const defaultMessage = (event, context, callback) => {

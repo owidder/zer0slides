@@ -83,13 +83,9 @@ resources:
         AttributeDefinitions:
           - AttributeName: connectionId
             AttributeType: S
-          - AttributeName: syncId
-            AttributeType: S
         KeySchema:
           - AttributeName: connectionId
             KeyType: HASH
-          - AttributeName: syncId
-            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
