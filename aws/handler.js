@@ -21,29 +21,36 @@ const nowAsString = () => {
     return now.toString() + " ms: " + String(now.getMilliseconds());
 }
 
-const connect = async (event, context, callback) => {
+const putItem = async (tableName, item) => {
     const timestamp = nowAsString();
-    console.log("start connect: " + timestamp);
+    const itemWithTimestamp = {...item, timestamp: {S: timestamp}};
+    console.log(`putItem: ${JSON.stringify(itemWithTimestamp)}`);
 
     try {
         const putParams = {
-            TableName: process.env.Z0CONNECTION_TABLE,
-            Item: {
-                connectionId: {S: event.requestContext.connectionId},
-                timestamp: {S: timestamp}
-            }
+            TableName: tableName,
+            Item: itemWithTimestamp
         };
 
         await DDB.putItem(putParams, function(err, data) {
-            console.log("err: " + err);
+            if(err) {
+                console.log("err: " + err);
+            }
             console.log("data: " + JSON.stringify(data));
         }).promise();
-
-        callback(null, {statusCode: 200, body: "CONNECTED"});
     } catch (e) {
         console.log(e);
         callback(null, {statusCode: 500, body: e});
     }
+}
+
+const connect = async (event, context, callback) => {
+    putItem(process.env.Z0CONNECTION_TABLE, {
+        connectionId: {S: event.requestContext.connectionId},
+        syncId: {S: "N/A"}
+    });
+
+    callback(null, {statusCode: 200, body: "CONNECTED"});
 }
 
 const disconnect = async (event, context, callback) => {
@@ -63,10 +70,14 @@ const disconnect = async (event, context, callback) => {
     }
 }
 
+const register = (event, context, callback) => {
+    console.log(`connectionId: ${event.requestContext.connectionId}`);
+    const body = JSON.parse(event.body);
+    console.log(`data: ${body.data}`);
+    callback(null, {statusCode: 200, body: "registered"});
+}
+
 const defaultMessage = (event, context, callback) => {
-    console.log("defaultMessage");
-    console.log("event: " + JSON.stringify(event));
-    console.log("context: " + JSON.stringify(context));
     callback(null);
 };
 
@@ -117,5 +128,6 @@ module.exports = {
     connect,
     disconnect,
     sendCommand,
-    defaultMessage
+    defaultMessage,
+    register
 }

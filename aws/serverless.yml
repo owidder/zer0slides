@@ -70,6 +70,11 @@ functions:
     events:
       - websocket:
           route: sendCommand
+  register:
+    handler: handler.register
+    events:
+      - websocket:
+          route: register
 resources:
   Resources:
     Z0ConnectionTable:
@@ -78,9 +83,13 @@ resources:
         AttributeDefinitions:
           - AttributeName: connectionId
             AttributeType: S
+          - AttributeName: syncId
+            AttributeType: S
         KeySchema:
           - AttributeName: connectionId
             KeyType: HASH
+          - AttributeName: syncId
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
