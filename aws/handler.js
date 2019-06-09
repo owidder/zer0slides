@@ -27,17 +27,32 @@ const response = (statusCode, body) => {
     return {statusCode, body}
 }
 
-const ddbCall = (fct, params) => {
-    console.log(`ddbCall: ${fct}`);
+const logFunctionIn = (functionName, obj) => {
+    console.log(`>>>> ${functionName}: ${JSON.stringify(obj)}`);
+}
 
-    return DDB[fct](params, (err, data) => {
-        if(err) {
-            console.log(err);
-        }
-        console.log(">>> data");
-        console.log(data);
-        console.log("<<< data");
-    }).promise();
+const logFunctionOut = (functionName, obj) => {
+    console.log(`<<<< ${functionName}: ${JSON.stringify(obj)}`);
+}
+
+const ddbCall = (fct, params) => {
+    console.log(`ddbCall: '${fct}' with params: ${JSON.stringify(params)}`);
+
+    /*
+     * Use own promise, since the callback is sometimes called more than once
+     * (Do not ask why!)
+     */
+    return new Promise(resolve => {
+        DDB[fct](params, (err, data) => {
+            if(err) {
+                console.log(err);
+            }
+            console.log(">>> data");
+            console.log(data);
+            console.log("<<< data");
+            resolve(data);
+        });
+    })
 }
 
 const connectionIdFromEvent = event => event.requestContext.connectionId;
@@ -56,6 +71,8 @@ const putItem = (tableName, item) => {
 }
 
 const connect = async (event, context, callback) => {
+    logFunctionIn("connect", event);
+
     const connectionId = connectionIdFromEvent(event);
     await putItem(Z0CONNECTION_TABLE, {
         connectionId: {S: connectionId},
@@ -63,9 +80,13 @@ const connect = async (event, context, callback) => {
     });
 
     callback(null, response(200, "CONNECTED"));
+
+    logFunctionOut("connect", event);
 }
 
 const disconnect = async (event, context, callback) => {
+    logFunctionIn("disconnect", event);
+
     const deleteParams = {
         TableName: Z0CONNECTION_TABLE,
         Key: {
@@ -76,9 +97,12 @@ const disconnect = async (event, context, callback) => {
     await ddbCall('deleteItem', deleteParams);
 
     callback(null, response(200, "DISCONNECTED"));
+
+    logFunctionOut("disconnect", event);
 }
 
 const register = async (event, context, callback) => {
+    logFunctionIn("register", event);
 
     console.log(`register: ${JSON.stringify(event)}`)
     const body = JSON.parse(event.body);
@@ -92,6 +116,8 @@ const register = async (event, context, callback) => {
     send(event, `registered: ${body.syncId}`, connectionIdFromEvent(event));
 
     callback(null, response(200, "REGISTERED"));
+
+    logFunctionOut("register", event);
 }
 
 const defaultMessage = (event, context, callback) => {
@@ -99,6 +125,8 @@ const defaultMessage = (event, context, callback) => {
 };
 
 const getSyncIdForConnectionId = async (connectionId) => {
+    logFunctionIn("getSyncIdForConnectionId", {connectionId});
+
     const params = {
         Key: {connectionId: {S: connectionId}},
         TableName: process.env.Z0CONNECTION_TABLE
@@ -107,6 +135,7 @@ const getSyncIdForConnectionId = async (connectionId) => {
     const result = await ddbCall('getItem', params);
     console.log(`result: ${JSON.stringify(result)}`);
 
+    logFunctionOut("getSyncIdForConnectionId", {connectionId});
     if(result) {
         return result.Item.syncId.S;
     } else {
@@ -129,13 +158,17 @@ const getConnectionIdsForSyncId = (syncId) => {
 }
 
 const sendCommand = async (event, context, callback) => {
+    logFunctionIn("sendCommand", event);
+
+    console.log(`event: ${JSON.stringify(event)}`);
     const syncId = await getSyncIdForConnectionId(connectionIdFromEvent(event));
 
     console.log(`syncId: ${syncId}`);
     send(event, syncId, connectionIdFromEvent(event));
-    getSyncIdForConnectionId(syncId);
 
     callback(null, response(200, "COMMAND SENT"));
+
+    logFunctionOut("sendCommand", event);
 }
 
 const __sendCommand = async (event, context, callback) => {
