@@ -34,7 +34,9 @@ const ddbCall = (fct, params) => {
         if(err) {
             console.log(err);
         }
+        console.log(">>> data");
         console.log(data);
+        console.log("<<< data");
     }).promise();
 }
 
@@ -54,8 +56,9 @@ const putItem = (tableName, item) => {
 }
 
 const connect = async (event, context, callback) => {
+    const connectionId = connectionIdFromEvent(event);
     await putItem(Z0CONNECTION_TABLE, {
-        connectionId: {S: connectionIdFromEvent(event)},
+        connectionId: {S: connectionId},
         syncId: {S: "N/A"}
     });
 
@@ -86,7 +89,7 @@ const register = async (event, context, callback) => {
         syncId: {S: body.syncId}
     });
 
-    send(event, `syncId: ${body.syncId}`, connectionIdFromEvent(event));
+    send(event, `registered: ${body.syncId}`, connectionIdFromEvent(event));
 
     callback(null, response(200, "REGISTERED"));
 }
@@ -113,7 +116,16 @@ const getSyncIdForConnectionId = async (connectionId) => {
 }
 
 const getConnectionIdsForSyncId = (syncId) => {
+    const params = {
+        TableName: Z0CONNECTION_TABLE,
+        ProjectionExpression: "connectionId",
+        FilterExpression: "syncId = :syncId",
+        ExpressionAttributeValues: {
+            ":syncId": {S: syncId}
+        }
+    }
 
+    ddbCall('scan', params);
 }
 
 const sendCommand = async (event, context, callback) => {
@@ -121,6 +133,7 @@ const sendCommand = async (event, context, callback) => {
 
     console.log(`syncId: ${syncId}`);
     send(event, syncId, connectionIdFromEvent(event));
+    getSyncIdForConnectionId(syncId);
 
     callback(null, response(200, "COMMAND SENT"));
 }

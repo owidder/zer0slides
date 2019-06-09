@@ -34,7 +34,7 @@
     }
 
     function onError(event) {
-        $("#error").val(event);
+        $("#error").val(JSON.stringify(event));
     }
 
     let socket;
