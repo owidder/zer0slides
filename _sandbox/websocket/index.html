@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="../../public/font/css/material-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../node_modules/materialize-css/dist/css/materialize.css">
+
+    <script src="../../node_modules/jquery/dist/jquery.js"></script>
+
+    <style>
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <span>Address: <input type="text" id="address" value="wss://0lw31ottub.execute-api.eu-central-1.amazonaws.com/dev"></span>
+    <textarea id="display" rows="50" cols="100"></textarea>
+    <button id="connect" onclick="connect()">Connect</button>
+</div>
+<script>
+    function connect() {
+        const address = $("#address").val();
+        $("#display").val(address);
+    }
+
+
+</script>
+</body>
+</html>
