@@ -23,13 +23,37 @@
     <span>Address: <input type="text" id="address" value="wss://0lw31ottub.execute-api.eu-central-1.amazonaws.com/dev"></span>
     <textarea id="display" rows="50" cols="100"></textarea>
     <button id="connect" onclick="connect()">Connect</button>
+    <button id="register" onclick="register()">Register</button>
 </div>
 <script>
-    function connect() {
-        const address = $("#address").val();
-        $("#display").val(address);
+    function onMessage(message) {
+        const currentVal = $("#display").val();
+        $("#display").val(`${currentVal}\n${message}`);
     }
 
+    let socket;
+    function connect() {
+        const address = $("#address").val();
+        socket = new WebSocket(address);
+
+        socket.onopen = function() {
+            $("#display").val("CONNECTED");
+        }
+
+        socket.onmessage = function (event) {
+            const messageString = event.data;
+            onMessage(messageString);
+        }
+    }
+    
+    function register() {
+        const param = {
+            action: "register",
+            syncId: "123"
+        }
+
+        socket.send(JSON.stringify(param));
+    }
 
 </script>
 </body>
