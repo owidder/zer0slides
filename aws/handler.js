@@ -86,6 +86,8 @@ const register = async (event, context, callback) => {
         syncId: {S: body.syncId}
     });
 
+    send(event, `syncId: ${body.syncId}`, connectionIdFromEvent(event));
+
     callback(null, response(200, "REGISTERED"));
 }
 
@@ -100,12 +102,25 @@ const getSyncIdForConnectionId = async (connectionId) => {
     }
 
     const result = await ddbCall('getItem', params);
-
     console.log(`result: ${JSON.stringify(result)}`);
+
+    if(result) {
+        return result.Item.syncId.S;
+    } else {
+        console.error(`Not found any syncId for connectionId: ${connectionId}`);
+        return "";
+    }
+}
+
+const getConnectionIdsForSyncId = (syncId) => {
+
 }
 
 const sendCommand = async (event, context, callback) => {
-    await getSyncIdForConnectionId(connectionIdFromEvent(event));
+    const syncId = await getSyncIdForConnectionId(connectionIdFromEvent(event));
+
+    console.log(`syncId: ${syncId}`);
+    send(event, syncId, connectionIdFromEvent(event));
 
     callback(null, response(200, "COMMAND SENT"));
 }
@@ -142,14 +157,13 @@ const __sendCommand = async (event, context, callback) => {
     callback(null, successfullResponse);
 };
 
-const send = (event, connectionId) => {
-    const postData = JSON.parse(event.body).data;
+const send = (event, text, connectionId) => {
     const apigwManagementApi = new AWS.ApiGatewayManagementApi({
         apiVersion: "2018-11-29",
         endpoint: event.requestContext.domainName + "/" + event.requestContext.stage
     });
     return apigwManagementApi
-        .postToConnection({ConnectionId: connectionId, Data: postData})
+        .postToConnection({ConnectionId: connectionId, Data: text})
         .promise();
 };
 
