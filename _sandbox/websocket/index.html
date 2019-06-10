@@ -22,6 +22,12 @@
             justify-content: space-around;
         }
 
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
         #display {
             flex-grow: .3;
         }
@@ -36,8 +42,14 @@
     <textarea id="error" rows="50" cols="100"></textarea>
     <div class="row-container">
         <button id="connect" onclick="connect()">Connect</button>
-        <button id="register" onclick="register()">Register</button>
-        <button id="sendCommand" onclick="sendCommand()">Send command</button>
+        <div class="button-container">
+            <input type="text" id="syncId">
+            <button id="register" onclick="register()">Register</button>
+        </div>
+        <div class="button-container">
+            <input type="text" id="command">
+            <button id="sendCommand" onclick="sendCommand()">Send command</button>
+        </div>
     </div>
 </div>
 <script>
@@ -68,18 +80,20 @@
     }
     
     function register() {
+        const syncId = $("#syncId").val();
         const param = {
             action: "register",
-            syncId: "123"
+            syncId
         }
 
         socket.send(JSON.stringify(param));
     }
 
     function sendCommand() {
+        const command = $("#command").val();
         const param = {
             action: "sendCommand",
-            command: "abcde"
+            command
         }
 
         socket.send(JSON.stringify(param));
