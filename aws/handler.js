@@ -6,12 +6,6 @@ AWS.config.update({region: process.env.AWS_REGION});
 const DDB = new AWS.DynamoDB({apiVersion: "2012-10-08"});
 AWS.config.setPromisesDependency(Bluebird);
 require("aws-sdk/clients/apigatewaymanagementapi");
-const ddb = new AWS.DynamoDB.DocumentClient();
-
-const successfullResponse = {
-    statusCode: 200,
-    body: "Connected, hell'ya"
-};
 
 const fetch = require("node-fetch");
 fetch.Promise = Bluebird;
@@ -56,6 +50,8 @@ const ddbCall = (fct, params) => {
 }
 
 const connectionIdFromEvent = event => event.requestContext.connectionId;
+
+const bodyFromEvent = event => JSON.parse(event.body);
 
 const putItem = (tableName, item) => {
     const timestamp = nowAsString();
@@ -105,7 +101,7 @@ const register = async (event, context, callback) => {
     logFunctionIn("register", event);
 
     console.log(`register: ${JSON.stringify(event)}`)
-    const body = JSON.parse(event.body);
+    const body = bodyFromEvent(event);
     console.log(`syncId: ${body.syncId}`)
 
     await putItem(Z0CONNECTION_TABLE, {
@@ -113,7 +109,7 @@ const register = async (event, context, callback) => {
         syncId: {S: body.syncId}
     });
 
-    send(event, `registered: ${body.syncId}`, connectionIdFromEvent(event));
+    send(event, connectionIdFromEvent(event), `registered: ${body.syncId}`);
 
     callback(null, response(200, "REGISTERED"));
 
@@ -169,51 +165,38 @@ const sendCommand = async (event, context, callback) => {
     console.log(`event: ${JSON.stringify(event)}`);
     const syncId = await getSyncIdForConnectionId(connectionIdFromEvent(event));
 
+    const body = bodyFromEvent(event);
+    const command = body.command;
+    console.log(`command: ${command}`);
+
     console.log(`syncId: ${syncId}`);
-    send(event, syncId, connectionIdFromEvent(event));
+    send(event, connectionIdFromEvent(event), syncId);
 
-    const connectionIds = await getConnectionIdsForSyncId(syncId);
-    console.log(`connectionIds: ${JSON.stringify(connectionIds)}`);
-    send(event, JSON.stringify(connectionIds), connectionIdFromEvent(event));
+    const connectionIdsResult = await getConnectionIdsForSyncId(syncId);
+    console.log(`connectionIds: ${JSON.stringify(connectionIdsResult)}`);
+    send(event, connectionIdFromEvent(event), JSON.stringify(connectionIdsResult));
 
-    callback(null, response(200, "COMMAND SENT"));
+    await sendToAllConnections(event, connectionIdsResult.Items, command);
+
+    callback(null, response(200, "COMMAND_SENT"));
 
     logFunctionOut("sendCommand", event);
 }
 
-const __sendCommand = async (event, context, callback) => {
-    console.log("sendMessage");
-    console.log("event: " + JSON.stringify(event));
-    console.log("context: " + JSON.stringify(context));
-    let connectionData;
-    try {
-        connectionData = await DDB.scan({
-            TableName: process.env.Z0CONNECTION_TABLE,
-            ProjectionExpression: "connectionId"
-        }).promise();
-    } catch (err) {
-        console.log(err);
-        return {statusCode: 500};
-    }
-    const postCalls = connectionData.Items.map(async ({connectionId}) => {
+const sendToAllConnections = (event, connectionIds, text) => {
+    const sendPromises = connectionIds.map(async ({connectionId}) => {
         try {
-            return await send(event, connectionId.S);
+            return await send(event, connectionId.S, text);
         } catch (err) {
             console.log(JSON.stringify(err));
             throw err;
         }
     });
 
-    try {
-        await Promise.all(postCalls);
-    } catch (err) {
-        console.log(err);
-        callback(null, JSON.stringify(err));
-    }
-    callback(null, successfullResponse);
-};
+    return Promise.all(sendPromises);
+}
 
-const send = (event, text, connectionId) => {
+const send = (event, connectionId, text) => {
     const apigwManagementApi = new AWS.ApiGatewayManagementApi({
         apiVersion: "2018-11-29",
         endpoint: event.requestContext.domainName + "/" + event.requestContext.stage
