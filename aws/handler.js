@@ -116,8 +116,9 @@ const register = async (event, context, callback) => {
     }
 
     const result = await ddbCall('getItem', params);
+    const lastCommand = (result && result.Item) ? result.Item.command.S : "";
 
-    send(event, connectionIdFromEvent(event), `last command: ${JSON.stringify(result)}`);
+    send(event, connectionIdFromEvent(event), lastCommand);
 
     callback(null, response(200, "REGISTERED"));
 
