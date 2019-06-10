@@ -145,6 +145,8 @@ const getSyncIdForConnectionId = async (connectionId) => {
 }
 
 const getConnectionIdsForSyncId = (syncId) => {
+    logFunctionIn("getConnectionIdsForSyncId", {syncId});
+
     const params = {
         TableName: Z0CONNECTION_TABLE,
         ProjectionExpression: "connectionId",
@@ -154,7 +156,11 @@ const getConnectionIdsForSyncId = (syncId) => {
         }
     }
 
-    ddbCall('scan', params);
+    const connectionIdsPromise = ddbCall('scan', params);
+
+    logFunctionOut("getConnectionIdsForSyncId", {syncId});
+
+    return connectionIdsPromise
 }
 
 const sendCommand = async (event, context, callback) => {
@@ -165,6 +171,10 @@ const sendCommand = async (event, context, callback) => {
 
     console.log(`syncId: ${syncId}`);
     send(event, syncId, connectionIdFromEvent(event));
+
+    const connectionIds = await getConnectionIdsForSyncId(syncId);
+    console.log(`connectionIds: ${JSON.stringify(connectionIds)}`);
+    send(event, JSON.stringify(connectionIds), connectionIdFromEvent(event));
 
     callback(null, response(200, "COMMAND SENT"));
 
