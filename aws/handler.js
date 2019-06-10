@@ -11,6 +11,7 @@ const fetch = require("node-fetch");
 fetch.Promise = Bluebird;
 
 const Z0CONNECTION_TABLE = process.env.Z0CONNECTION_TABLE
+const Z0COMMAND_TABLE = process.env.Z0COMMAND_TABLE
 
 const nowAsString = () => {
     const now = new Date();
@@ -109,7 +110,14 @@ const register = async (event, context, callback) => {
         syncId: {S: body.syncId}
     });
 
-    send(event, connectionIdFromEvent(event), `registered: ${body.syncId}`);
+    const params = {
+        Key: {syncId: {S: body.syncId}},
+        TableName: Z0COMMAND_TABLE
+    }
+
+    const result = await ddbCall('getItem', params);
+
+    send(event, connectionIdFromEvent(event), `last command: ${JSON.stringify(result)}`);
 
     callback(null, response(200, "REGISTERED"));
 
@@ -125,7 +133,7 @@ const getSyncIdForConnectionId = async (connectionId) => {
 
     const params = {
         Key: {connectionId: {S: connectionId}},
-        TableName: process.env.Z0CONNECTION_TABLE
+        TableName: Z0CONNECTION_TABLE
     }
 
     const result = await ddbCall('getItem', params);
@@ -159,6 +167,19 @@ const getConnectionIdsForSyncId = (syncId) => {
     return connectionIdsPromise
 }
 
+const putIntoCommandTable = async (syncId, command) => {
+    logFunctionIn("putIntoCommandTable", {syncId, command});
+
+    const promise =  putItem(Z0COMMAND_TABLE, {
+        syncId: {S: syncId},
+        command: {S: command}
+    });
+
+    logFunctionOut("putIntoCommandTable", {syncId, command});
+
+    return promise;
+}
+
 const sendCommand = async (event, context, callback) => {
     logFunctionIn("sendCommand", event);
 
@@ -175,6 +196,8 @@ const sendCommand = async (event, context, callback) => {
     const connectionIdsResult = await getConnectionIdsForSyncId(syncId);
     console.log(`connectionIds: ${JSON.stringify(connectionIdsResult)}`);
     send(event, connectionIdFromEvent(event), JSON.stringify(connectionIdsResult));
+
+    await putIntoCommandTable(syncId, command);
 
     await sendToAllConnections(event, connectionIdsResult.Items, command);
 
