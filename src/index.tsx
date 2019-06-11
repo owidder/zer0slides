@@ -1,24 +1,24 @@
-import 'materialize-css/dist/css/materialize.css';
-import * as React from 'react';
-import * as _ from 'lodash';
+import "materialize-css/dist/css/materialize.css";
+import * as React from "react";
 
-import {init} from './initZer0Slides';
-import {initReadyPromise} from './zer0slides/lifecycle/lifecycle';
-import {slideCore} from './zer0slides/core/core';
-import {Slide, isSpecialSlideName} from './zer0slides/core/Slide';
-import {bindKeyToFunction} from './zer0slides/core/keys';
-import {renderSlide} from './zer0slides/core/render';
-import {SPECIAL_NAME_CONTENT, SLIDE_NAME_CONTENT} from './zer0slides/html/HtmlSlide';
-import {paramValue} from './zer0slides/url/queryUtil';
-import {getParamValue} from './zer0slides/url/queryUtil2';
-import {switchCurrentSlideToBlack} from './zer0slides/showCode/controlShowCode';
-import {createControlElements} from './zer0slides/html/controlElements';
-import {initTooltip} from './zer0slides/tooltip/tooltip';
-import {openContentPage, openShortcutSlide, doShortcut} from './zer0slides/shortcut/shortcut';
+import {init} from "./initZer0Slides";
+import {initReadyPromise} from "./zer0slides/lifecycle/lifecycle";
+import {slideCore} from "./zer0slides/core/core";
+import {Slide, isSpecialSlideName} from "./zer0slides/core/Slide";
+import {bindKeyToFunction} from "./zer0slides/core/keys";
+import {renderSlide} from "./zer0slides/core/render";
+import {SPECIAL_NAME_CONTENT, SLIDE_NAME_CONTENT} from "./zer0slides/html/HtmlSlide";
+import {paramValue} from "./zer0slides/url/queryUtil";
+import {getParamValue} from "./zer0slides/url/queryUtil2";
+import {switchCurrentSlideToBlack} from "./zer0slides/showCode/controlShowCode";
+import {createControlElements} from "./zer0slides/html/controlElements";
+import {initTooltip} from "./zer0slides/tooltip/tooltip";
+import {openContentPage, openShortcutSlide, doShortcut} from "./zer0slides/shortcut/shortcut";
+import {initSync} from "./zer0slides/sync/initSync";
 
-import 'materialize-css/dist/css/materialize.css';
-import 'prismjs/themes/prism.css';
-import './zer0slides.less';
+import "materialize-css/dist/css/materialize.css";
+import "prismjs/themes/prism.css";
+import "./zer0slides.less";
 
 const version = require("../package.json").version;
 slideCore.version = version;
@@ -97,9 +97,10 @@ const bindKeys = () => {
 
 initTooltip();
 init();
+initSync();
 
 const initName = getParamValue("init", true);
-if(!_.isUndefined(initName) && initName.length > 0) {
+if(initName && initName.length > 0) {
     renderSlide({slide: new Slide(initName)});
 }
 
