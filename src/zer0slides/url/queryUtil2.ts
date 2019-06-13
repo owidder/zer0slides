@@ -1,5 +1,10 @@
 const queryString = require('query-string');
 
+const getHashParamMap = () => {
+    const hash = window.location.hash;
+    return queryString.parse(hash);
+}
+
 export const getSearchParamValue = (paramName: string) => {
     const search = window.location.search;
     const parsed = queryString.parse(search);
@@ -29,4 +34,10 @@ export const getParamValue = (paramName: string, cutTrailingSlash = false) => {
     }
 
     return doCutTrailingSlash(getHashParamValue(paramName), cutTrailingSlash);
+}
+
+export const setHashValue = (name: string, value: string | number) => {
+    const hashParamMap = getHashParamMap();
+    const newHashParamMap = {...hashParamMap, [name]: value};
+    window.location.hash = queryString.stringify(newHashParamMap);
 }

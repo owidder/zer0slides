@@ -1,7 +1,7 @@
 import {Slide, SlideConfig} from './Slide';
 import {renderSlide, refreshSlide, InOut} from './render';
 import {setSlideNo} from '../html/controlElements';
-import {setHashValue} from '../url/queryUtil';
+import {setHashValue} from '../url/queryUtil2';
 import {Transformation} from '../html/transformations/Transformation';
 
 export class SlideCore {
