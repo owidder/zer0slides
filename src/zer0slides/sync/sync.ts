@@ -1,4 +1,5 @@
-import {paramValue} from '../url/queryUtil';
+import {paramValue} from "../url/queryUtil";
+import {slideCore} from "../core/core";
 
 const getWebsocketEndpoint = async () => {
     const wse = paramValue("wse");
@@ -12,6 +13,8 @@ const register = (socket: WebSocket, syncId: string) => {
     }
 
     socket.send(JSON.stringify(param));
+
+    slideCore.socketPromise.resolve(socket);
 }
 
 export const initSync = async () => {
@@ -23,4 +26,10 @@ export const initSync = async () => {
             register(socket, syncId);
         }
     }
+}
+
+export const sendCommand = (command: string) => {
+    slideCore.socketPromise.then((socket) => {
+        socket.send(command);
+    })
 }

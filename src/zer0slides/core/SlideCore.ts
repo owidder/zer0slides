@@ -3,6 +3,7 @@ import {renderSlide, refreshSlide, InOut} from './render';
 import {setSlideNo} from '../html/controlElements';
 import {setHashValue} from '../url/queryUtil2';
 import {Transformation} from '../html/transformations/Transformation';
+import {SimplePromise} from "./SimplePromise";
 
 export class SlideCore {
 
@@ -14,6 +15,9 @@ export class SlideCore {
     public version;
 
     public _0;
+
+    public socket: WebSocket;
+    public socketPromise: SimplePromise<WebSocket> = new SimplePromise();
 
     public shortcutSlideIndex = 0
     public folderName: string;
