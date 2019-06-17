@@ -14,7 +14,7 @@ import {switchCurrentSlideToBlack} from "./zer0slides/showCode/controlShowCode";
 import {createControlElements} from "./zer0slides/html/controlElements";
 import {initTooltip} from "./zer0slides/tooltip/tooltip";
 import {openContentPage, openShortcutSlide, doShortcut} from "./zer0slides/shortcut/shortcut";
-import {initSync, sendCommand} from "./zer0slides/sync/sync";
+import {initSync, sendCommand, firstMessagePromise} from "./zer0slides/sync/sync";
 
 import "materialize-css/dist/css/materialize.css";
 import "prismjs/themes/prism.css";
@@ -98,7 +98,7 @@ const bindKeys = () => {
 initTooltip();
 init();
 initSync();
-sendCommand("first command");
+sendCommand(`first command: ${new Date().toString()}`);
 
 
 const initName = getParamValue("init", true);
