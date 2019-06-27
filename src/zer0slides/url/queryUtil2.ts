@@ -36,6 +36,11 @@ export const getParamValue = (paramName: string, cutTrailingSlash = false) => {
     return doCutTrailingSlash(getHashParamValue(paramName), cutTrailingSlash);
 }
 
+export const getParamValueWithDefault = (paramName: string, defaultValue: string) => {
+    const param = getParamValue(paramName);
+    return param ? param : defaultValue;
+}
+
 export const setHashValue = (name: string, value: string | number) => {
     const hashParamMap = getHashParamMap();
     const newHashParamMap = {...hashParamMap, [name]: value};
