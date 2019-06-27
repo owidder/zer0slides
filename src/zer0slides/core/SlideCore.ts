@@ -114,20 +114,16 @@ export class SlideCore {
         refreshSlide(this.getCurrentSlide());
     }
 
-    private doWithOldSlide(oldSlide: Slide) {
+    private processOldSlide(): Slide {
+        const oldSlide = this.getCurrentSlide();
         oldSlide.aboutToBeRemoved();
-    }
 
-    private doWithNewSlide(newSlide: Slide) {
-        if(this.autoStepIntervalInMs > -1) {
-            newSlide.autoStepOn(this.autoStepIntervalInMs)
-        }
+        return oldSlide;
     }
 
     public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
         this.nextSlideCallback();
-        const oldSlide = this.getCurrentSlide();
-        this.doWithOldSlide(oldSlide);
+        const oldSlide = this.processOldSlide();
 
         const currentIndex = this.getCurrentIndex();
         if(currentIndex < (this.slideNames.length - 1)) {
@@ -148,8 +144,7 @@ export class SlideCore {
     }
 
     public prevSlide(withTransformation = true, transformInType: Transformation = "Right", transformOutType: Transformation = "Left", inOut: InOut = "outAndInAtOnce") {
-        const oldSlide = this.getCurrentSlide();
-        oldSlide.aboutToBeRemoved();
+        const oldSlide = this.processOldSlide();
 
         const currentIndex = this.getCurrentIndex();
         if(currentIndex > 0) {
