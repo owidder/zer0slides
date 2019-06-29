@@ -62,7 +62,7 @@ const createCounter = (root: any) => {
 const createArrow = (root: any, className: string, onClick: () => void, text: string) => {
     root.append("a")
         .attr("class", `${isMojs() ? "" : "controlButton"} ${className}`)
-        .attr("href", "#")
+        .style("cursor", "pointer")
         .on("click", onClick)
         .append("i")
         .attr("class", "material-icons icon-" + className)

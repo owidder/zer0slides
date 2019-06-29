@@ -8,7 +8,6 @@ import {Slide, isSpecialSlideName} from "./zer0slides/core/Slide";
 import {bindKeyToFunction} from "./zer0slides/core/keys";
 import {renderSlide} from "./zer0slides/core/render";
 import {SPECIAL_NAME_CONTENT, SLIDE_NAME_CONTENT} from "./zer0slides/html/HtmlSlide";
-import {paramValue} from "./zer0slides/url/queryUtil";
 import {getParamValue} from "./zer0slides/url/queryUtil2";
 import {switchCurrentSlideToBlack} from "./zer0slides/showCode/controlShowCode";
 import {createControlElements} from "./zer0slides/html/controlElements";
@@ -23,15 +22,8 @@ import "./zer0slides.less";
 const version = require("../package.json").version;
 slideCore.version = version;
 
-const setStepNoOfCurrentSlideFromParam = () => {
-    const stepNo = paramValue("step");
-    if(stepNo != null && Number(stepNo) > -1) {
-        slideCore.getCurrentSlide().currentStepNo = Number(stepNo);
-    }
-}
-
 const renderFirstSlide = (startIndex: number, gotoStepNo?: string) => {
-    const slideIndex = paramValue("slide");
+    const slideIndex = getParamValue("slide");
     if (slideIndex != null && Number(slideIndex) > -1) {
         slideCore.setCurrentSlideWithIndex(Number(slideIndex));
         if(gotoStepNo != null && Number(gotoStepNo) > -1) {
@@ -107,7 +99,7 @@ if(initName && initName.length > 0) {
 }
 
 initReadyPromise.then((startIndex) => {
-    const stepNo = paramValue("step");
+    const stepNo = getParamValue("step");
     slideCore.addSlide(SLIDE_NAME_CONTENT, "Content", SPECIAL_NAME_CONTENT);
     renderFirstSlide(startIndex, stepNo);
     bindKeys();
