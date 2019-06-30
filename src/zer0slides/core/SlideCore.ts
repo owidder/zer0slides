@@ -121,6 +121,18 @@ export class SlideCore {
         return oldSlide;
     }
 
+    private callRenderSlide = (oldSlide: Slide, withTransformation, transformInType: Transformation, transformOutType: Transformation, inOut: InOut) => {
+        const slide = this.getCurrentSlide();
+        renderSlide({
+            slide,
+            oldSlide: withTransformation ? oldSlide : undefined,
+            inOut,
+            transformInType: transformInType === "Slide" ? slide.transformationInNext : transformInType,
+            transformOutType: transformOutType === "Slide" ? oldSlide.transformationOutNext : transformOutType
+        });
+        this.showCurrentIndex();
+    }
+
     public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
         this.nextSlideCallback();
         const oldSlide = this.processOldSlide();
@@ -132,15 +144,8 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(0);
         }
-        const slide = this.getCurrentSlide();
-        renderSlide({
-            slide,
-            oldSlide: withTransformation ? oldSlide : undefined,
-            inOut,
-            transformInType: transformInType === "Slide" ? slide.transformationInNext : transformInType,
-            transformOutType: transformOutType === "Slide" ? oldSlide.transformationOutNext : transformOutType
-        });
-        this.showCurrentIndex();
+
+        this.callRenderSlide(oldSlide, withTransformation, transformInType, transformOutType, inOut);
     }
 
     public prevSlide(withTransformation = true, transformInType: Transformation = "Right", transformOutType: Transformation = "Left", inOut: InOut = "outAndInAtOnce") {
@@ -153,14 +158,7 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(this.slideNames.length - 1);
         }
-        const slide = this.getCurrentSlide();
-        renderSlide({
-            slide,
-            oldSlide: withTransformation ? oldSlide : undefined,
-            inOut,
-            transformInType: transformInType === "Slide" ? slide.transformationInPrev : transformInType,
-            transformOutType: transformOutType === "Slide" ? oldSlide.transformationOutPrev : transformOutType
-        });
-        this.showCurrentIndex();
+
+        this.callRenderSlide(oldSlide, withTransformation, transformInType, transformOutType, inOut);
     }
 }

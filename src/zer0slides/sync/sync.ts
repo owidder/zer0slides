@@ -29,10 +29,10 @@ const register = (socket: WebSocket, syncId: string) => {
 
 export const firstMessagePromise = new SimplePromise();
 
-export const initSync = () => {
-    return new Promise(resolve => {
-        const syncId = getParamValue("syncId");
-        if(syncId && syncId.length > 0) {
+export const initSync = (): Promise<void> => {
+    const syncId = getParamValue("syncId");
+    if(syncId && syncId.length > 0) {
+        return new Promise(resolve => {
             const wse = getWebsocketEndpoint();
             const socket = new WebSocket(wse);
 
@@ -42,8 +42,10 @@ export const initSync = () => {
             }
 
             socket.onmessage = onMessage;
-        }
-    })
+        })
+    }
+
+    return Promise.resolve();
 }
 
 export const onMessage = () => {
