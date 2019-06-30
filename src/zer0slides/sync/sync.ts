@@ -59,7 +59,7 @@ export const onMessage = () => {
     firstMessagePromise.resolve();
 }
 
-export const sendCommand = (slideNo: number, stepNo = -1) => {
+export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {
     if(doSync()) {
         const command = {slideNo, stepNo};
         firstMessagePromise.then(() => {

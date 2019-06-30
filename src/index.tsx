@@ -13,7 +13,7 @@ import {switchCurrentSlideToBlack} from "./zer0slides/showCode/controlShowCode";
 import {createControlElements} from "./zer0slides/html/controlElements";
 import {initTooltip} from "./zer0slides/tooltip/tooltip";
 import {openContentPage, openShortcutSlide, doShortcut} from "./zer0slides/shortcut/shortcut";
-import {initSync, sendCommand, firstMessagePromise} from "./zer0slides/sync/sync";
+import {initSync} from "./zer0slides/sync/sync";
 
 import "materialize-css/dist/css/materialize.css";
 import "prismjs/themes/prism.css";

@@ -4,7 +4,7 @@ import {setSlideNo} from '../html/controlElements';
 import {setHashValue} from '../url/queryUtil2';
 import {Transformation} from '../html/transformations/Transformation';
 import {SimplePromise} from "./SimplePromise";
-import {sendCommand} from "../sync/sync";
+import {sendSlideNoAndStepNo} from "../sync/sync";
 
 export class SlideCore {
 
@@ -132,6 +132,7 @@ export class SlideCore {
             transformOutType: transformOutType === "Slide" ? oldSlide.transformationOutNext : transformOutType
         });
         this.showCurrentIndex();
+        sendSlideNoAndStepNo(this.getCurrentIndex());
     }
 
     public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
