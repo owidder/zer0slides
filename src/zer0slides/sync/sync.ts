@@ -29,9 +29,16 @@ const register = (socket: WebSocket, syncId: string) => {
 
 export const firstMessagePromise = new SimplePromise();
 
+const getSyncId = () => getParamValue("syncId");
+
+const doSync = (syncId?: string) => {
+    const _syncId = syncId ? syncId : getSyncId();
+    return (_syncId && _syncId.length > 0)
+}
+
 export const initSync = (): Promise<void> => {
-    const syncId = getParamValue("syncId");
-    if(syncId && syncId.length > 0) {
+    const syncId = getSyncId();
+    if(doSync(syncId)) {
         return new Promise(resolve => {
             const wse = getWebsocketEndpoint();
             const socket = new WebSocket(wse);
@@ -52,10 +59,13 @@ export const onMessage = () => {
     firstMessagePromise.resolve();
 }
 
-export const sendCommand = (command: string) => {
-    firstMessagePromise.then(() => {
-        slideCore.socketPromise.then((socket) => {
-            socket.send(JSON.stringify({action: "sendCommand", command}));
+export const sendCommand = (slideNo: number, stepNo = -1) => {
+    if(doSync()) {
+        const command = {slideNo, stepNo};
+        firstMessagePromise.then(() => {
+            slideCore.socketPromise.then((socket) => {
+                socket.send(JSON.stringify({action: "sendCommand", command}));
+            })
         })
-    })
+    }
 }

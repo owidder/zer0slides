@@ -4,6 +4,7 @@ import {setSlideNo} from '../html/controlElements';
 import {setHashValue} from '../url/queryUtil2';
 import {Transformation} from '../html/transformations/Transformation';
 import {SimplePromise} from "./SimplePromise";
+import {sendCommand} from "../sync/sync";
 
 export class SlideCore {
 

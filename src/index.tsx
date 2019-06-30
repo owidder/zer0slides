@@ -90,7 +90,6 @@ const bindKeys = () => {
 initTooltip();
 init();
 initSync();
-sendCommand(`first command: ${new Date().toString()}`);
 
 
 const initName = getParamValue("init", true);

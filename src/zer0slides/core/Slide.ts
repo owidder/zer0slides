@@ -110,7 +110,7 @@ export class Slide {
 
     public async nextStep(roundRobin = false) {
         if(!slideCore.blockSteps) {
-            if(!(this.currentStepNo > 0)) {
+            if(this.currentStepNo < 0) {
                 slideCore.firstStepCallback();
             }
             if(this.currentStepNo >= this.steps.length - 1) {
