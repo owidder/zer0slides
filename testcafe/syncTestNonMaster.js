@@ -5,7 +5,7 @@ const WebSocket = require("ws");
 const randomstring = require("randomstring");
 const syncId = randomstring.generate(7);
 
-fixture `sync test`
+fixture `sync test (non master)`
     .page `http://localhost:9000/smoketest/start.html?syncId=${syncId}#slide=1&step=1`;
 
 test("get correct lastCommand after registering", async t => {
