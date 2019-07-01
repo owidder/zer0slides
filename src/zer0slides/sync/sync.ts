@@ -61,7 +61,7 @@ export const onMessage = () => {
 
 export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {
     if(doSync()) {
-        const command = {slideNo, stepNo};
+        const command = JSON.stringify({slideNo, stepNo});
         firstMessagePromise.then(() => {
             slideCore.socketPromise.then((socket) => {
                 socket.send(JSON.stringify({action: "sendCommand", command}));

@@ -103,5 +103,6 @@ initReadyPromise.then((startIndex) => {
     renderFirstSlide(startIndex, stepNo);
     bindKeys();
     createControlElements();
+    slideCore.syncCurrentSlideNoAndStepNo();
 });
 

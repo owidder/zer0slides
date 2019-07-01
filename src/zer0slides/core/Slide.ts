@@ -131,7 +131,8 @@ export class Slide {
 
             this.currentStepNo++;
             this.steps[this.currentStepNo] && this.steps[this.currentStepNo].perform();
-            this.showStepCtr()
+            this.showStepCtr();
+            slideCore.syncCurrentSlideNoAndStepNo();
         }
     }
 
@@ -152,6 +153,7 @@ export class Slide {
             }
             this.currentStepNo--;
             this.showStepCtr();
+            slideCore.syncCurrentSlideNoAndStepNo();
         }
     }
 

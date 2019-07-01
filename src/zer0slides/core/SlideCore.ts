@@ -122,6 +122,12 @@ export class SlideCore {
         return oldSlide;
     }
 
+    public syncCurrentSlideNoAndStepNo() {
+        const slideNo = this.getCurrentIndex();
+        const stepNo = this.getCurrentSlide().currentStepNo;
+        sendSlideNoAndStepNo(slideNo, stepNo);
+    }
+
     private callRenderSlide = (oldSlide: Slide, withTransformation, transformInType: Transformation, transformOutType: Transformation, inOut: InOut) => {
         const slide = this.getCurrentSlide();
         renderSlide({
@@ -132,7 +138,7 @@ export class SlideCore {
             transformOutType: transformOutType === "Slide" ? oldSlide.transformationOutNext : transformOutType
         });
         this.showCurrentIndex();
-        sendSlideNoAndStepNo(this.getCurrentIndex());
+        this.syncCurrentSlideNoAndStepNo();
     }
 
     public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
