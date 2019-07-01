@@ -84,38 +84,22 @@ const connect = async (event, context, callback) => {
 const disconnect = async (event, context, callback) => {
     logFunctionIn("disconnect", event);
 
+    const connectionId = connectionIdFromEvent(event);
+    const syncId = await getSyncIdForConnectionId(connectionId);
+
     const deleteParams = {
         TableName: Z0CONNECTION_TABLE,
         Key: {
-            connectionId: {S: connectionIdFromEvent(event)}
+            connectionId: {S: connectionId}
         }
     };
 
     await ddbCall('deleteItem', deleteParams);
-    await cleanCommandTable();
+    await cleanCommandTable(syncId);
 
     callback(null, response(200, "DISCONNECTED"));
 
     logFunctionOut("disconnect", event);
-}
-
-const getAllActiveSyncIds = async () => {
-    logFunctionIn("getAllActiveSyncIds");
-
-    const params = {
-        TableName: Z0CONNECTION_TABLE,
-        ProjectionExpression: "syncId",
-    }
-
-    const syncIds = await ddbCall('scan', params);
-
-    console.log(`getAllActiveSyncIds: ${JSON.stringify(syncIds)}`);
-
-    const syncIdsArray = syncIds.Items.map(item => item.syncId.S);
-
-    logFunctionOut("getAllActiveSyncIds", syncIdsArray);
-
-    return syncIdsArray;
 }
 
 const deleteCommandEntry = async (syncId) => {
@@ -133,28 +117,16 @@ const deleteCommandEntry = async (syncId) => {
     logFunctionOut("deleteCommandEntry", {syncId});
 }
 
-const cleanCommandTable = async () => {
-    logFunctionIn("cleanCommandTable");
+const cleanCommandTable = async (syncId) => {
+    logFunctionIn("cleanCommandTable", {syncId});
 
-    const activeSyncIds = await getAllActiveSyncIds();
+    const connectionIds = await getConnectionIdsForSyncId(syncId);
 
-    const params = {
-        TableName: Z0COMMAND_TABLE,
-        ProjectionExpression: "syncId",
+    if(!(connectionIds.Items && connectionIds.Items.length > 0)) {
+        await deleteCommandEntry(syncId);
     }
 
-    const syncIds = await ddbCall('scan', params);
-
-    console.log(`cleanCommandTable: ${JSON.stringify(syncIds)}`);
-
-    await Promise.all(syncIds.Items.map(item => {
-        const syncId = item.syncId.S;
-        if(activeSyncIds.indexOf(syncId) < 0) {
-            deleteCommandEntry(syncId);
-        }
-    }));
-
-    logFunctionOut("cleanCommandTable");
+    logFunctionOut("cleanCommandTable", {syncId});
 }
 
 const register = async (event, context, callback) => {
