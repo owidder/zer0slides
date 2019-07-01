@@ -56,9 +56,11 @@ export const initSync = (): Promise<void> => {
     return Promise.resolve();
 }
 
-export const onMessage = (event: any) => {
-    console.log(event);
-    firstMessagePromise.resolve();
+export const onMessage = (event: {data: string}) => {
+    const {data} = event;
+    const command = JSON.parse(data);
+    console.log(command);
+    firstMessagePromise.resolve(command);
 }
 
 export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {

@@ -116,9 +116,9 @@ const register = async (event, context, callback) => {
     }
 
     const result = await ddbCall('getItem', params);
-    const lastCommand = (result && result.Item) ? result.Item.command.S : "";
+    const lastCommand = (result && result.Item) ? result.Item.command.S : "{}";
 
-    send(event, connectionIdFromEvent(event), lastCommand);
+    await send(event, connectionIdFromEvent(event), lastCommand);
 
     callback(null, response(200, "REGISTERED"));
 
@@ -198,17 +198,24 @@ const sendCommand = async (event, context, callback) => {
 
     await putIntoCommandTable(syncId, command);
 
-    await sendToAllConnections(event, connectionIdsResult.Items, command);
+    await sendToAllOtherConnections(event, connectionIdsResult.Items, command);
 
     callback(null, response(200, "COMMAND_SENT"));
 
     logFunctionOut("sendCommand", event);
 }
 
-const sendToAllConnections = (event, connectionIds, text) => {
+const sendToAllOtherConnections = (event, connectionIds, text) => {
+    const selfConnectionId = connectionIdFromEvent(event);
+    console.log(`sendToAllConnections (except [${selfConnectionId}]): ${JSON.stringify(connectionIds)}`);
     const sendPromises = connectionIds.map(async ({connectionId}) => {
         try {
-            return await send(event, connectionId.S, text);
+            if(connectionId.S != selfConnectionId) {
+                return await send(event, connectionId.S, text);
+
+            } else {
+                return Promise.resolve();
+            }
         } catch (err) {
             console.log(JSON.stringify(err));
             throw err;
@@ -219,7 +226,7 @@ const sendToAllConnections = (event, connectionIds, text) => {
 }
 
 const send = (event, connectionId, text) => {
-    console.log(`>>>>>> send to connectionId [${connectionId}]: ${text}`);
+    console.log(`>>>>>> send to connectionId [${connectionId}]: "${text}"`);
     const apigwManagementApi = new AWS.ApiGatewayManagementApi({
         apiVersion: "2018-11-29",
         endpoint: event.requestContext.domainName + "/" + event.requestContext.stage
