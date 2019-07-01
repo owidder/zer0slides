@@ -31,7 +31,7 @@ export const firstMessagePromise = new SimplePromise();
 
 const getSyncId = () => getParamValue("syncId");
 
-const isSynced = (syncId?: string) => {
+export const isSynced = (syncId?: string) => {
     const _syncId = syncId ? syncId : getSyncId();
     return (_syncId && _syncId.length > 0)
 }

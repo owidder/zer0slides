@@ -13,7 +13,7 @@ import {switchCurrentSlideToBlack} from "./zer0slides/showCode/controlShowCode";
 import {createControlElements} from "./zer0slides/html/controlElements";
 import {initTooltip} from "./zer0slides/tooltip/tooltip";
 import {openContentPage, openShortcutSlide, doShortcut} from "./zer0slides/shortcut/shortcut";
-import {initSync, firstMessagePromise} from "./zer0slides/sync/sync";
+import {initSync, firstMessagePromise, isSynced} from "./zer0slides/sync/sync";
 
 import "materialize-css/dist/css/materialize.css";
 import "prismjs/themes/prism.css";
@@ -91,13 +91,6 @@ const bindKeys = () => {
 initTooltip();
 init();
 initSync();
-firstMessagePromise.then((command: {slideNo?: number}) => {
-    if(command && command.slideNo) {
-        console.log(command);
-    } else {
-        slideCore.syncCurrentSlideNoAndStepNo();
-    }
-})
 
 
 const initName = getParamValue("init", true);
@@ -105,10 +98,25 @@ if(initName && initName.length > 0) {
     renderSlide({slide: new Slide(initName)});
 }
 
+const firstSlideViaSyncOrParams = (startSlideNo: number, firstStepNoViaParam: string) => {
+    if(isSynced()) {
+        firstMessagePromise.then((command: {slideNo?: number, stepNo?: number}) => {
+            if(command && command.slideNo) {
+                renderFirstSlide(command.slideNo, String(command.stepNo));
+            } else {
+                renderFirstSlide(startSlideNo, firstStepNoViaParam);
+                slideCore.syncCurrentSlideNoAndStepNo();
+            }
+        })
+    } else {
+        renderFirstSlide(startSlideNo, firstStepNoViaParam);
+    }
+}
+
 initReadyPromise.then((startIndex) => {
     const stepNo = getParamValue("step");
     slideCore.addSlide(SLIDE_NAME_CONTENT, "Content", SPECIAL_NAME_CONTENT);
-    renderFirstSlide(startIndex, stepNo);
+    firstSlideViaSyncOrParams(startIndex, stepNo);
     bindKeys();
     createControlElements();
 });
