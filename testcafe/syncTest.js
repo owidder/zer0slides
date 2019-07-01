@@ -8,7 +8,7 @@ const syncId = randomstring.generate(7);
 fixture `sync test`
     .page `http://localhost:9000/smoketest/start.html?syncId=${syncId}#slide=1&step=1`;
 
-test("git correct lastCommand after registering", async t => {
+test("get correct lastCommand after registering", async t => {
     await t
         .expect(Selector(".slideno.counter").innerText).eql("1")
         .expect(Selector(".protip-content").withText("b").with({visibilityCheck: true}).exists).ok()
