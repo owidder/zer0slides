@@ -44,6 +44,7 @@ export const initSync = (): Promise<void> => {
             const socket = new WebSocket(wse);
 
             socket.onopen = () => {
+                console.log(`do register: ${new Date().toString()}`)
                 register(socket, syncId);
                 resolve();
             }
@@ -55,7 +56,8 @@ export const initSync = (): Promise<void> => {
     return Promise.resolve();
 }
 
-export const onMessage = () => {
+export const onMessage = (event: any) => {
+    console.log(event);
     firstMessagePromise.resolve();
 }
 

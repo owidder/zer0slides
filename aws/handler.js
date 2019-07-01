@@ -192,11 +192,9 @@ const sendCommand = async (event, context, callback) => {
     console.log(`command: ${command}`);
 
     console.log(`syncId: ${syncId}`);
-    send(event, connectionIdFromEvent(event), syncId);
 
     const connectionIdsResult = await getConnectionIdsForSyncId(syncId);
     console.log(`connectionIds: ${JSON.stringify(connectionIdsResult)}`);
-    send(event, connectionIdFromEvent(event), JSON.stringify(connectionIdsResult));
 
     await putIntoCommandTable(syncId, command);
 
@@ -221,6 +219,7 @@ const sendToAllConnections = (event, connectionIds, text) => {
 }
 
 const send = (event, connectionId, text) => {
+    console.log(`>>>>>> send to connectionId [${connectionId}]: ${text}`);
     const apigwManagementApi = new AWS.ApiGatewayManagementApi({
         apiVersion: "2018-11-29",
         endpoint: event.requestContext.domainName + "/" + event.requestContext.stage
