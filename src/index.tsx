@@ -99,9 +99,12 @@ if(initName && initName.length > 0) {
 }
 
 const firstSlideViaSyncOrParams = (startSlideNo: number, firstStepNoViaParam: string) => {
+    console.log(`firstSlideViaSyncOrParams [${new Date().toString()}]`);
     return new Promise(resolve => {
         if(isSynced()) {
+            console.log("isSynced");
             firstMessagePromise.then((command: {slideNo?: number, stepNo?: number}) => {
+                console.log(JSON.stringify(command));
                 if(command && command.slideNo) {
                     renderFirstSlide(command.slideNo, String(command.stepNo));
                 } else {
@@ -118,6 +121,8 @@ const firstSlideViaSyncOrParams = (startSlideNo: number, firstStepNoViaParam: st
 }
 
 initReadyPromise.then(async (startIndex) => {
+    console.log("initReadyPromise");
+
     const stepNo = getParamValue("step");
     slideCore.addSlide(SLIDE_NAME_CONTENT, "Content", SPECIAL_NAME_CONTENT);
     await firstSlideViaSyncOrParams(startIndex, stepNo);

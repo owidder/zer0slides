@@ -6,31 +6,35 @@ const randomstring = require("randomstring");
 const syncId = randomstring.generate(7);
 
 fixture `sync test (non master)`
-    .page `http://localhost:9000/smoketest/start.html?syncId=${syncId}#slide=1&step=1`;
+    .page `http://localhost:9000/smoketest/start.html`;
 
-test("get correct lastCommand after registering", async t => {
+test("move to correct slideNo and stepNo at start up", async t => {
     await t
-        .expect(Selector(".slideno.counter").innerText).eql("1")
-        .expect(Selector(".protip-content").withText("b").with({visibilityCheck: true}).exists).ok()
+        .expect(Selector(".slideno.counter").innerText).eql("0")
 
     console.log(`syncId: ${syncId}`);
 
-    const message = await new Promise(resolve => {
+    await new Promise(resolve => {
         const ws = new WebSocket(endpoint.dev);
 
         ws.on("open", () => {
             ws.send(JSON.stringify({action: "register", syncId}))
         })
 
-        ws.on("message", (message) => {
-            console.log(message);
-            resolve(message);
+        ws.on("message", () => {
+            ws.send(JSON.stringify({action: "sendCommand", command: JSON.stringify({slideNo: 1, stepNo: 1})}));
+            resolve();
         })
     })
 
-    const command = JSON.parse(message);
+    await t
+        .navigateTo(`http://localhost:9000/smoketest/start.html?syncId=${syncId}`)
+
+    const {log} = await t.getBrowserConsoleMessages();
+
+    console.log(log);
 
     await t
-        .expect(command).eql({slideNo: 1, stepNo: 1});
+        .expect(Selector(".slideno.counter").innerText).eql("1")
+        .expect(Selector(".protip-content").withText("b").with({visibilityCheck: true}).exists).ok()
 })
-
