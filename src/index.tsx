@@ -99,24 +99,28 @@ if(initName && initName.length > 0) {
 }
 
 const firstSlideViaSyncOrParams = (startSlideNo: number, firstStepNoViaParam: string) => {
-    if(isSynced()) {
-        firstMessagePromise.then((command: {slideNo?: number, stepNo?: number}) => {
-            if(command && command.slideNo) {
-                renderFirstSlide(command.slideNo, String(command.stepNo));
-            } else {
-                renderFirstSlide(startSlideNo, firstStepNoViaParam);
-                slideCore.syncCurrentSlideNoAndStepNo();
-            }
-        })
-    } else {
-        renderFirstSlide(startSlideNo, firstStepNoViaParam);
-    }
+    return new Promise(resolve => {
+        if(isSynced()) {
+            firstMessagePromise.then((command: {slideNo?: number, stepNo?: number}) => {
+                if(command && command.slideNo) {
+                    renderFirstSlide(command.slideNo, String(command.stepNo));
+                } else {
+                    renderFirstSlide(startSlideNo, firstStepNoViaParam);
+                    slideCore.syncCurrentSlideNoAndStepNo();
+                }
+                resolve();
+            })
+        } else {
+            renderFirstSlide(startSlideNo, firstStepNoViaParam);
+            resolve();
+        }
+    })
 }
 
-initReadyPromise.then((startIndex) => {
+initReadyPromise.then(async (startIndex) => {
     const stepNo = getParamValue("step");
     slideCore.addSlide(SLIDE_NAME_CONTENT, "Content", SPECIAL_NAME_CONTENT);
-    firstSlideViaSyncOrParams(startIndex, stepNo);
+    await firstSlideViaSyncOrParams(startIndex, stepNo);
     bindKeys();
     createControlElements();
 });
