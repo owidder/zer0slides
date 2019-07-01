@@ -92,10 +92,69 @@ const disconnect = async (event, context, callback) => {
     };
 
     await ddbCall('deleteItem', deleteParams);
+    await cleanCommandTable();
 
     callback(null, response(200, "DISCONNECTED"));
 
     logFunctionOut("disconnect", event);
+}
+
+const getAllActiveSyncIds = async () => {
+    logFunctionIn("getAllActiveSyncIds");
+
+    const params = {
+        TableName: Z0CONNECTION_TABLE,
+        ProjectionExpression: "syncId",
+    }
+
+    const syncIds = await ddbCall('scan', params);
+
+    console.log(`getAllActiveSyncIds: ${JSON.stringify(syncIds)}`);
+
+    const syncIdsArray = syncIds.Items.map(item => item.syncId.S);
+
+    logFunctionOut("getAllActiveSyncIds", syncIdsArray);
+
+    return syncIdsArray;
+}
+
+const deleteCommandEntry = async (syncId) => {
+    logFunctionIn("deleteCommandEntry", {syncId});
+
+    const deleteParams = {
+        TableName: Z0COMMAND_TABLE,
+        Key: {
+            syncId: {S: syncId}
+        }
+    };
+
+    await ddbCall('deleteItem', deleteParams);
+
+    logFunctionOut("deleteCommandEntry", {syncId});
+}
+
+const cleanCommandTable = async () => {
+    logFunctionIn("cleanCommandTable");
+
+    const activeSyncIds = await getAllActiveSyncIds();
+
+    const params = {
+        TableName: Z0COMMAND_TABLE,
+        ProjectionExpression: "syncId",
+    }
+
+    const syncIds = await ddbCall('scan', params);
+
+    console.log(`cleanCommandTable: ${JSON.stringify(syncIds)}`);
+
+    await Promise.all(syncIds.Items.map(item => {
+        const syncId = item.syncId.S;
+        if(activeSyncIds.indexOf(syncId) < 0) {
+            deleteCommandEntry(syncId);
+        }
+    }));
+
+    logFunctionOut("cleanCommandTable");
 }
 
 const register = async (event, context, callback) => {
