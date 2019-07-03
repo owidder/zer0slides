@@ -6,9 +6,10 @@ const randomstring = require("randomstring");
 const syncId = randomstring.generate(7);
 
 fixture `sync test (non master)`
-    .page `http://localhost:9000/smoketest/start.html`;
+    .page `http://localhost:9000/smoketest/start.html?syncId=${syncId}`;
 
-test("move to correct slideNo and stepNo at start up", async t => {
+test("move to correct slideNo and stepNo after start up", async t => {
+
     await t
         .expect(Selector(".slideno.counter").innerText).eql("0")
 
@@ -22,7 +23,7 @@ test("move to correct slideNo and stepNo at start up", async t => {
         })
 
         ws.on("message", () => {
-            ws.send(JSON.stringify({action: "sendCommand", command: JSON.stringify({slideNo: 1, stepNo: 1})}));
+            ws.send(JSON.stringify({action: "sendCommand", command: JSON.stringify({slideNo: 1, stepNo: 2})}));
             resolve();
         })
 
@@ -31,14 +32,11 @@ test("move to correct slideNo and stepNo at start up", async t => {
         });
     })
 
-    await t
-        .navigateTo(`http://localhost:9000/smoketest/start.html?syncId=${syncId}`)
-
     const {log} = await t.getBrowserConsoleMessages();
 
     console.log(log);
 
     await t
         .expect(Selector(".slideno.counter").innerText).eql("1")
-        .expect(Selector(".protip-content").withText("b").with({visibilityCheck: true}).exists).ok()
+        .expect(Selector(".protip-content").withText("c").with({visibilityCheck: true}).exists).ok()
 })
