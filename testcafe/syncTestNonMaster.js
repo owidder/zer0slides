@@ -25,6 +25,10 @@ test("move to correct slideNo and stepNo at start up", async t => {
             ws.send(JSON.stringify({action: "sendCommand", command: JSON.stringify({slideNo: 1, stepNo: 1})}));
             resolve();
         })
+
+        ws.on("close", () => {
+            console.log("close");
+        });
     })
 
     await t

@@ -8,7 +8,7 @@ import {Slide, isSpecialSlideName} from "./zer0slides/core/Slide";
 import {bindKeyToFunction} from "./zer0slides/core/keys";
 import {renderSlide} from "./zer0slides/core/render";
 import {SPECIAL_NAME_CONTENT, SLIDE_NAME_CONTENT} from "./zer0slides/html/HtmlSlide";
-import {getParamValue} from "./zer0slides/url/queryUtil2";
+import {getParamValue, getParamValueWithDefault} from "./zer0slides/url/queryUtil2";
 import {switchCurrentSlideToBlack} from "./zer0slides/showCode/controlShowCode";
 import {createControlElements} from "./zer0slides/html/controlElements";
 import {initTooltip} from "./zer0slides/tooltip/tooltip";
@@ -23,19 +23,10 @@ import {number} from "prop-types";
 const version = require("../package.json").version;
 slideCore.version = version;
 
-const renderFirstSlide = (startIndex: number, gotoStepNo?: string) => {
-    const slideIndex = getParamValue("slide");
-    if (slideIndex != null && Number(slideIndex) > -1) {
-        slideCore.setCurrentSlideWithIndex(Number(slideIndex));
-        if(gotoStepNo != null && Number(gotoStepNo) > -1) {
-            slideCore.getCurrentSlide().currentStepNo = Number(gotoStepNo);
-        }
-        renderSlide({slide: slideCore.getCurrentSlide()});
-    }
-    else {
-        slideCore.setCurrentSlideWithIndex(startIndex)
-        renderSlide({slide: slideCore.getCurrentSlide()});
-    }
+const renderFirstSlide = (slideNo: number, stepNo: number) => {
+    slideCore.setCurrentSlideWithIndex(slideNo);
+    slideCore.getCurrentSlide().currentStepNo = stepNo;
+    renderSlide({slide: slideCore.getCurrentSlide()});
 }
 
 const nextStep = () => {
@@ -98,34 +89,35 @@ if(initName && initName.length > 0) {
     renderSlide({slide: new Slide(initName)});
 }
 
-const firstSlideViaSyncOrParams = (startSlideNo: number, firstStepNoViaParam: string) => {
+const firstSlideViaSyncOrParams = (slideNoViaParam: number, stepNoViaParam: number) => {
     console.log(`firstSlideViaSyncOrParams [${new Date().toString()}]`);
     return new Promise(resolve => {
         if(isSynced()) {
-            console.log("isSynced");
-            firstMessagePromise.then((command: {slideNo?: number, stepNo?: number}) => {
-                console.log(JSON.stringify(command));
-                if(command && command.slideNo) {
-                    renderFirstSlide(command.slideNo, String(command.stepNo));
+            console.log("is synced");
+            firstMessagePromise.then(({slideNo, stepNo}) => {
+                if(slideNo !== undefined && stepNo !== undefined) {
+                    renderFirstSlide(slideNo, stepNo);
                 } else {
-                    renderFirstSlide(startSlideNo, firstStepNoViaParam);
+                    renderFirstSlide(slideNoViaParam, stepNoViaParam);
                     slideCore.syncCurrentSlideNoAndStepNo();
                 }
                 resolve();
             })
         } else {
-            renderFirstSlide(startSlideNo, firstStepNoViaParam);
+            console.log("is not synced");
+            renderFirstSlide(slideNoViaParam, stepNoViaParam);
             resolve();
         }
     })
 }
 
-initReadyPromise.then(async (startIndex) => {
+initReadyPromise.then(async () => {
     console.log("initReadyPromise");
 
-    const stepNo = getParamValue("step");
+    const stepNo = getParamValueWithDefault("step", "-1");
+    const slideNo = getParamValueWithDefault("slide", "0");
     slideCore.addSlide(SLIDE_NAME_CONTENT, "Content", SPECIAL_NAME_CONTENT);
-    await firstSlideViaSyncOrParams(startIndex, stepNo);
+    await firstSlideViaSyncOrParams(Number(slideNo), Number(stepNo));
     bindKeys();
     createControlElements();
 });

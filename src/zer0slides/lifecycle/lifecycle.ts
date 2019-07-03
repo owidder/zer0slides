@@ -13,8 +13,8 @@ export const cleanAfterSlideFinished = () => {
 
 export const initReadyPromise = new SimplePromise<number>();
 
-const initReady = (startIndex = 0) => {
-    initReadyPromise.resolve(startIndex);
+const initReady = () => {
+    initReadyPromise.resolve();
 }
 
 const slideReadyPromises: {[key: string]: SimplePromise<void>} = {};
