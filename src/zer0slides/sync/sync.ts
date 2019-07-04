@@ -5,6 +5,11 @@ import {endpoint} from "./endpoint";
 
 const DEFAULT_STAGE = "dev";
 
+interface Command {
+    slideNo: number;
+    stepNo: number;
+}
+
 const getWebsocketEndpoint = () => {
     const wse = getParamValue("wse");
     if(wse && wse.length > 0) {
@@ -56,15 +61,24 @@ export const initSync = (): Promise<void> => {
     return Promise.resolve();
 }
 
+let lastCommand: Command;
+
 export const onMessage = (event: {data: string}) => {
     const {data} = event;
-    const command = JSON.parse(data);
+    const command: Command = JSON.parse(data);
     console.log(command);
-    firstMessagePromise.resolve(command);
+
+    if(lastCommand == undefined) {
+        firstMessagePromise.resolve(command);
+    } else {
+        slideCore.gotoSlideNoAndStepNo(command.slideNo, command.stepNo);
+    }
+
+    lastCommand = command;
 }
 
 export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {
-    if(isSynced()) {
+    if(isSynced() && (lastCommand.slideNo != slideNo || lastCommand.stepNo != stepNo)) {
         const command = JSON.stringify({slideNo, stepNo});
         firstMessagePromise.then(() => {
             slideCore.socketPromise.then((socket) => {

@@ -141,6 +141,18 @@ export class SlideCore {
         this.syncCurrentSlideNoAndStepNo();
     }
 
+    public gotoSlideNoAndStepNo(slideNo: number, stepNo: number, withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
+        if(this.getCurrentIndex() != slideNo) {
+            const oldSlide = this.processOldSlide();
+            this.setCurrentSlideWithIndex(slideNo);
+            this.getCurrentSlide().currentStepNo = stepNo;
+            this.callRenderSlide(oldSlide, withTransformation, transformInType, transformOutType, inOut);
+        } else if(this.getCurrentSlide().currentStepNo != stepNo) {
+            this.getCurrentSlide().currentStepNo = stepNo;
+            this.getCurrentSlide().performToCurrentStep();
+        }
+    }
+
     public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
         this.nextSlideCallback();
         const oldSlide = this.processOldSlide();
