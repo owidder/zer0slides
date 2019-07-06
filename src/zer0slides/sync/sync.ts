@@ -66,6 +66,7 @@ let lastCommand: Command;
 export const onMessage = (event: {data: string}) => {
     const {data} = event;
     const command: Command = JSON.parse(data);
+
     console.log(command);
 
     if(lastCommand == undefined) {
@@ -79,10 +80,13 @@ export const onMessage = (event: {data: string}) => {
 
 export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {
     if(isSynced() && (lastCommand.slideNo != slideNo || lastCommand.stepNo != stepNo)) {
-        const command = JSON.stringify({slideNo, stepNo});
+        const command = {slideNo: slideNo, stepNo: stepNo};
+        const commandStr = JSON.stringify(command);
         firstMessagePromise.then(() => {
             slideCore.socketPromise.then((socket) => {
-                socket.send(JSON.stringify({action: "sendCommand", command}));
+                console.log(`sending: ${commandStr}`);
+                socket.send(JSON.stringify({action: "sendCommand", command: commandStr}));
+                lastCommand = command;
             })
         })
     }
