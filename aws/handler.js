@@ -7,8 +7,7 @@ const {nowAsString} = require("./util/timeUtil");
 const {response, connectionIdFromEvent, bodyFromEvent} = require("./util/wsUtil");
 const {ddbCall, putItem} = require("./util/ddbUtil");
 const {getConnectionIdsForSyncId, getSyncIdForConnectionId, Z0CONNECTION_TABLE} = require("./connection");
-
-const Z0COMMAND_TABLE = process.env.Z0COMMAND_TABLE
+const {cleanCommandTable, Z0COMMAND_TABLE} = require("./command");
 
 const connect = async (event, context, callback) => {
     logFunctionIn("connect", event);
@@ -45,33 +44,6 @@ const disconnect = async (event, context, callback) => {
     logFunctionOut("disconnect", event);
 }
 
-const deleteCommandEntry = async (syncId) => {
-    logFunctionIn("deleteCommandEntry", {syncId});
-
-    const deleteParams = {
-        TableName: Z0COMMAND_TABLE,
-        Key: {
-            syncId: {S: syncId}
-        }
-    };
-
-    await ddbCall('deleteItem', deleteParams);
-
-    logFunctionOut("deleteCommandEntry", {syncId});
-}
-
-const cleanCommandTable = async (syncId) => {
-    logFunctionIn("cleanCommandTable", {syncId});
-
-    const connectionIds = await getConnectionIdsForSyncId(syncId);
-
-    if(!(connectionIds.Items && connectionIds.Items.length > 0)) {
-        await deleteCommandEntry(syncId);
-    }
-
-    logFunctionOut("cleanCommandTable", {syncId});
-}
-
 const register = async (event, context, callback) => {
     logFunctionIn("register", event);
 
@@ -102,45 +74,6 @@ const register = async (event, context, callback) => {
 const defaultMessage = (event, context, callback) => {
     callback(null);
 };
-
-const _getSyncIdForConnectionId = async (connectionId) => {
-    logFunctionIn("getSyncIdForConnectionId", {connectionId});
-
-    const params = {
-        Key: {connectionId: {S: connectionId}},
-        TableName: Z0CONNECTION_TABLE
-    }
-
-    const result = await ddbCall('getItem', params);
-    console.log(`result: ${JSON.stringify(result)}`);
-
-    logFunctionOut("getSyncIdForConnectionId", {connectionId});
-    if(result) {
-        return result.Item.syncId.S;
-    } else {
-        console.error(`Not found any syncId for connectionId: ${connectionId}`);
-        return "";
-    }
-}
-
-const _getConnectionIdsForSyncId = (syncId) => {
-    logFunctionIn("getConnectionIdsForSyncId", {syncId});
-
-    const params = {
-        TableName: Z0CONNECTION_TABLE,
-        ProjectionExpression: "connectionId",
-        FilterExpression: "syncId = :syncId",
-        ExpressionAttributeValues: {
-            ":syncId": {S: syncId}
-        }
-    }
-
-    const connectionIdsPromise = ddbCall('scan', params);
-
-    logFunctionOut("getConnectionIdsForSyncId", {syncId});
-
-    return connectionIdsPromise
-}
 
 const putIntoCommandTable = async (syncId, command) => {
     logFunctionIn("putIntoCommandTable", {syncId, command});
