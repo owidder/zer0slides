@@ -4,7 +4,7 @@ const {AWS, DDB} = require("./util/awsUtil");
 
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {nowAsString} = require("./util/timeUtil");
-const {response, connectionIdFromEvent, bodyFromEvent} = require("./util/wsUtil");
+const {response, connectionIdFromEvent, bodyFromEvent, send} = require("./util/wsUtil");
 const {ddbCall, putItem} = require("./util/ddbUtil");
 const {getConnectionIdsForSyncId, getSyncIdForConnectionId, Z0CONNECTION_TABLE} = require("./connection");
 const {cleanCommandTable, Z0COMMAND_TABLE, putIntoCommandTable} = require("./command");
@@ -118,17 +118,6 @@ const sendToAllOtherConnections = (event, connectionIds, text) => {
 
     return Promise.all(sendPromises);
 }
-
-const send = (event, connectionId, text) => {
-    console.log(`>>>>>> send to connectionId [${connectionId}]: "${text}"`);
-    const apigwManagementApi = new AWS.ApiGatewayManagementApi({
-        apiVersion: "2018-11-29",
-        endpoint: event.requestContext.domainName + "/" + event.requestContext.stage
-    });
-    return apigwManagementApi
-        .postToConnection({ConnectionId: connectionId, Data: text})
-        .promise();
-};
 
 module.exports = {
     connect,
