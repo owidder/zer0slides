@@ -7,7 +7,7 @@ const {nowAsString} = require("./util/timeUtil");
 const {response, connectionIdFromEvent, bodyFromEvent} = require("./util/wsUtil");
 const {ddbCall, putItem} = require("./util/ddbUtil");
 const {getConnectionIdsForSyncId, getSyncIdForConnectionId, Z0CONNECTION_TABLE} = require("./connection");
-const {cleanCommandTable, Z0COMMAND_TABLE} = require("./command");
+const {cleanCommandTable, Z0COMMAND_TABLE, putIntoCommandTable} = require("./command");
 
 const connect = async (event, context, callback) => {
     logFunctionIn("connect", event);
@@ -74,19 +74,6 @@ const register = async (event, context, callback) => {
 const defaultMessage = (event, context, callback) => {
     callback(null);
 };
-
-const putIntoCommandTable = async (syncId, command) => {
-    logFunctionIn("putIntoCommandTable", {syncId, command});
-
-    const promise =  putItem(Z0COMMAND_TABLE, {
-        syncId: {S: syncId},
-        command: {S: command}
-    });
-
-    logFunctionOut("putIntoCommandTable", {syncId, command});
-
-    return promise;
-}
 
 const sendCommand = async (event, context, callback) => {
     logFunctionIn("sendCommand", event);

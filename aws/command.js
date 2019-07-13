@@ -1,5 +1,5 @@
 const {logFunctionOut, logFunctionIn} = require("./util/logUtil");
-const {ddbCall} =  require("./util/ddbUtil");
+const {ddbCall, putItem} =  require("./util/ddbUtil");
 const {getConnectionIdsForSyncId} = require("./connection");
 
 const Z0COMMAND_TABLE = process.env.Z0COMMAND_TABLE
@@ -31,8 +31,22 @@ const cleanCommandTable = async (syncId) => {
     logFunctionOut("cleanCommandTable", {syncId});
 }
 
+const putIntoCommandTable = async (syncId, command) => {
+    logFunctionIn("putIntoCommandTable", {syncId, command});
+
+    const promise =  putItem(Z0COMMAND_TABLE, {
+        syncId: {S: syncId},
+        command: {S: command}
+    });
+
+    logFunctionOut("putIntoCommandTable", {syncId, command});
+
+    return promise;
+}
+
 module.exports = {
     deleteCommandEntry,
     cleanCommandTable,
-    Z0COMMAND_TABLE
+    Z0COMMAND_TABLE,
+    putIntoCommandTable
 }
