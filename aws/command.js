@@ -34,19 +34,34 @@ const cleanCommandTable = async (syncId) => {
 const putIntoCommandTable = async (syncId, command) => {
     logFunctionIn("putIntoCommandTable", {syncId, command});
 
-    const promise =  putItem(Z0COMMAND_TABLE, {
+    await putItem(Z0COMMAND_TABLE, {
         syncId: {S: syncId},
         command: {S: command}
     });
 
     logFunctionOut("putIntoCommandTable", {syncId, command});
+}
 
-    return promise;
+const getLastCommand = async (syncId) => {
+    logFunctionIn("getLastCommand", {syncId})
+
+    const params = {
+        Key: {syncId: {S: syncId}},
+        TableName: Z0COMMAND_TABLE
+    }
+
+    const result = await ddbCall('getItem', params);
+    const lastCommand = (result && result.Item) ? result.Item.command.S : "{}";
+
+    logFunctionOut("getLastCommand", {syncId, lastCommand});
+
+    return lastCommand
 }
 
 module.exports = {
     deleteCommandEntry,
     cleanCommandTable,
     Z0COMMAND_TABLE,
-    putIntoCommandTable
+    putIntoCommandTable,
+    getLastCommand,
 }

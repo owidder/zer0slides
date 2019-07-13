@@ -7,7 +7,7 @@ const {nowAsString} = require("./util/timeUtil");
 const {response, connectionIdFromEvent, bodyFromEvent, send, sendToAllOtherConnections} = require("./util/wsUtil");
 const {ddbCall, putItem} = require("./util/ddbUtil");
 const {getConnectionIdsForSyncId, getSyncIdForConnectionId, Z0CONNECTION_TABLE, putIntoConnectionTable} = require("./connection");
-const {cleanCommandTable, Z0COMMAND_TABLE, putIntoCommandTable} = require("./command");
+const {cleanCommandTable, Z0COMMAND_TABLE, putIntoCommandTable, getLastCommand} = require("./command");
 
 const connect = async (event, context, callback) => {
     logFunctionIn("connect", event);
@@ -51,16 +51,8 @@ const register = async (event, context, callback) => {
     const body = bodyFromEvent(event);
     console.log(`syncId: ${body.syncId}`)
 
-    putIntoConnectionTable(connectionIdFromEvent(event), body.syncId);
-
-    const params = {
-        Key: {syncId: {S: body.syncId}},
-        TableName: Z0COMMAND_TABLE
-    }
-
-    const result = await ddbCall('getItem', params);
-    const lastCommand = (result && result.Item) ? result.Item.command.S : "{}";
-
+    await putIntoConnectionTable(connectionIdFromEvent(event), body.syncId);
+    const lastCommand = await getLastCommand(body.syncId);
     await send(event, connectionIdFromEvent(event), lastCommand);
 
     callback(null, response(200, "REGISTERED"));
