@@ -54,6 +54,14 @@ const putIntoConnectionTable = async (connectionId, syncId) => {
     logFunctionOut("putIntoConnectionTable", {connectionId, syncId});
 }
 
+const createNewConnection = async (connectionId) => {
+    logFunctionIn("createNewConnection", {connectionId});
+
+    await putIntoConnectionTable(connectionId, "N/A");
+
+    logFunctionOut("createNewConnection", {connectionId});
+}
+
 const removeFromConnectionTable = async (connectionId) => {
     logFunctionIn("removeFromConnectionTable", {connectionId});
 
@@ -75,4 +83,5 @@ module.exports = {
     Z0CONNECTION_TABLE,
     putIntoConnectionTable,
     removeFromConnectionTable,
+    createNewConnection,
 }

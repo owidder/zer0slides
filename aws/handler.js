@@ -4,14 +4,14 @@ const {AWS, DDB} = require("./util/awsUtil");
 
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {response, connectionIdFromEvent, bodyFromEvent, send, sendToAllOtherConnections} = require("./util/wsUtil");
-const {getConnectionIdsForSyncId, getSyncIdForConnectionId, putIntoConnectionTable, removeFromConnectionTable} = require("./connection");
+const {getConnectionIdsForSyncId, getSyncIdForConnectionId, putIntoConnectionTable, removeFromConnectionTable, createNewConnection} = require("./connection");
 const {cleanCommandTable, putIntoCommandTable, getLastCommand} = require("./command");
 
 const connect = async (event, context, callback) => {
     logFunctionIn("connect", event);
 
     const connectionId = connectionIdFromEvent(event);
-    await putIntoConnectionTable(connectionId, "N/A");
+    await createNewConnection(connectionId);
 
     callback(null, response(200, "CONNECTED"));
 
