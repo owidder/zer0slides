@@ -4,7 +4,7 @@ const {AWS, DDB} = require("./util/awsUtil");
 
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {nowAsString} = require("./util/timeUtil");
-const {response, connectionIdFromEvent, bodyFromEvent, send} = require("./util/wsUtil");
+const {response, connectionIdFromEvent, bodyFromEvent, send, sendToAllOtherConnections} = require("./util/wsUtil");
 const {ddbCall, putItem} = require("./util/ddbUtil");
 const {getConnectionIdsForSyncId, getSyncIdForConnectionId, Z0CONNECTION_TABLE} = require("./connection");
 const {cleanCommandTable, Z0COMMAND_TABLE, putIntoCommandTable} = require("./command");
@@ -97,26 +97,6 @@ const sendCommand = async (event, context, callback) => {
     callback(null, response(200, "COMMAND_SENT"));
 
     logFunctionOut("sendCommand", event);
-}
-
-const sendToAllOtherConnections = (event, connectionIds, text) => {
-    const selfConnectionId = connectionIdFromEvent(event);
-    console.log(`sendToAllConnections (except [${selfConnectionId}]): ${JSON.stringify(connectionIds)}`);
-    const sendPromises = connectionIds.map(async ({connectionId}) => {
-        try {
-            if(connectionId.S != selfConnectionId) {
-                return await send(event, connectionId.S, text);
-
-            } else {
-                return Promise.resolve();
-            }
-        } catch (err) {
-            console.log(JSON.stringify(err));
-            throw err;
-        }
-    });
-
-    return Promise.all(sendPromises);
 }
 
 module.exports = {
