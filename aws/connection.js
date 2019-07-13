@@ -1,0 +1,49 @@
+const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
+const {ddbCall} = require("./util/ddbUtil");
+
+const Z0CONNECTION_TABLE = process.env.Z0CONNECTION_TABLE;
+
+const getConnectionIdsForSyncId = (syncId) => {
+    logFunctionIn("getConnectionIdsForSyncId", {syncId});
+
+    const params = {
+        TableName: Z0CONNECTION_TABLE,
+        ProjectionExpression: "connectionId",
+        FilterExpression: "syncId = :syncId",
+        ExpressionAttributeValues: {
+            ":syncId": {S: syncId}
+        }
+    }
+
+    const connectionIdsPromise = ddbCall('scan', params);
+
+    logFunctionOut("getConnectionIdsForSyncId", {syncId});
+
+    return connectionIdsPromise
+}
+
+const getSyncIdForConnectionId = async (connectionId) => {
+    logFunctionIn("getSyncIdForConnectionId", {connectionId});
+
+    const params = {
+        Key: {connectionId: {S: connectionId}},
+        TableName: Z0CONNECTION_TABLE
+    }
+
+    const result = await ddbCall('getItem', params);
+    console.log(`result: ${JSON.stringify(result)}`);
+
+    logFunctionOut("getSyncIdForConnectionId", {connectionId});
+    if(result) {
+        return result.Item.syncId.S;
+    } else {
+        console.error(`Not found any syncId for connectionId: ${connectionId}`);
+        return "";
+    }
+}
+
+module.exports = {
+    getConnectionIdsForSyncId,
+    getSyncIdForConnectionId,
+    Z0CONNECTION_TABLE,
+}

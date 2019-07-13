@@ -6,42 +6,9 @@ const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {nowAsString} = require("./util/timeUtil");
 const {response, connectionIdFromEvent, bodyFromEvent} = require("./util/wsUtil");
 const {ddbCall, putItem} = require("./util/ddbUtil");
+const {getConnectionIdsForSyncId, getSyncIdForConnectionId, Z0CONNECTION_TABLE} = require("./connection");
 
-const Z0CONNECTION_TABLE = process.env.Z0CONNECTION_TABLE
 const Z0COMMAND_TABLE = process.env.Z0COMMAND_TABLE
-
-const _ddbCall = (fct, params) => {
-    console.log(`ddbCall: '${fct}' with params: ${JSON.stringify(params)}`);
-
-    /*
-     * Use own promise, since the callback is sometimes called more than once
-     * (Do not ask why!)
-     */
-    return new Promise(resolve => {
-        DDB[fct](params, (err, data) => {
-            if(err) {
-                console.log(err);
-            }
-            console.log(">>> data");
-            console.log(data);
-            console.log("<<< data");
-            resolve(data);
-        });
-    })
-}
-
-const _putItem = (tableName, item) => {
-    const timestamp = nowAsString();
-    const itemWithTimestamp = {...item, timestamp: {S: timestamp}};
-    console.log(`putItem: ${JSON.stringify(itemWithTimestamp)}`);
-
-    const putParams = {
-        TableName: tableName,
-        Item: itemWithTimestamp
-    };
-
-    return ddbCall('putItem', putParams);
-}
 
 const connect = async (event, context, callback) => {
     logFunctionIn("connect", event);
@@ -136,7 +103,7 @@ const defaultMessage = (event, context, callback) => {
     callback(null);
 };
 
-const getSyncIdForConnectionId = async (connectionId) => {
+const _getSyncIdForConnectionId = async (connectionId) => {
     logFunctionIn("getSyncIdForConnectionId", {connectionId});
 
     const params = {
@@ -156,7 +123,7 @@ const getSyncIdForConnectionId = async (connectionId) => {
     }
 }
 
-const getConnectionIdsForSyncId = (syncId) => {
+const _getConnectionIdsForSyncId = (syncId) => {
     logFunctionIn("getConnectionIdsForSyncId", {syncId});
 
     const params = {
