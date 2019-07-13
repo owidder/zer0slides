@@ -43,21 +43,21 @@ const getSyncIdForConnectionId = async (connectionId) => {
     }
 }
 
-const putIntoConnectionTable = async (connectionId, syncId) => {
-    logFunctionIn("putIntoConnectionTable", {connectionId, syncId});
+const saveSyncId = async (connectionId, syncId) => {
+    logFunctionIn("saveSyncId", {connectionId, syncId});
 
     await putItem(Z0CONNECTION_TABLE, {
         connectionId: {S: connectionId},
         syncId: {S: syncId}
     });
 
-    logFunctionOut("putIntoConnectionTable", {connectionId, syncId});
+    logFunctionOut("saveSyncId", {connectionId, syncId});
 }
 
 const createNewConnection = async (connectionId) => {
     logFunctionIn("createNewConnection", {connectionId});
 
-    await putIntoConnectionTable(connectionId, "N/A");
+    await saveSyncId(connectionId, "N/A");
 
     logFunctionOut("createNewConnection", {connectionId});
 }
@@ -81,7 +81,7 @@ module.exports = {
     getConnectionIdsForSyncId,
     getSyncIdForConnectionId,
     Z0CONNECTION_TABLE,
-    putIntoConnectionTable,
+    saveSyncId,
     removeFromConnectionTable,
     createNewConnection,
 }
