@@ -6,7 +6,7 @@ const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {nowAsString} = require("./util/timeUtil");
 const {response, connectionIdFromEvent, bodyFromEvent, send, sendToAllOtherConnections} = require("./util/wsUtil");
 const {ddbCall, putItem} = require("./util/ddbUtil");
-const {getConnectionIdsForSyncId, getSyncIdForConnectionId, Z0CONNECTION_TABLE} = require("./connection");
+const {getConnectionIdsForSyncId, getSyncIdForConnectionId, Z0CONNECTION_TABLE, putIntoConnectionTable} = require("./connection");
 const {cleanCommandTable, Z0COMMAND_TABLE, putIntoCommandTable} = require("./command");
 
 const connect = async (event, context, callback) => {
@@ -51,10 +51,7 @@ const register = async (event, context, callback) => {
     const body = bodyFromEvent(event);
     console.log(`syncId: ${body.syncId}`)
 
-    await putItem(Z0CONNECTION_TABLE, {
-        connectionId: {S: connectionIdFromEvent(event)},
-        syncId: {S: body.syncId}
-    });
+    putIntoConnectionTable(connectionIdFromEvent(event), body.syncId);
 
     const params = {
         Key: {syncId: {S: body.syncId}},

@@ -1,5 +1,6 @@
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
-const {ddbCall} = require("./util/ddbUtil");
+const {ddbCall, putItem} = require("./util/ddbUtil");
+const {bodyFromEvent, connectionIdFromEvent} = require("./util/wsUtil");
 
 const Z0CONNECTION_TABLE = process.env.Z0CONNECTION_TABLE;
 
@@ -42,8 +43,20 @@ const getSyncIdForConnectionId = async (connectionId) => {
     }
 }
 
+const putIntoConnectionTable = async (connectionId, syncId) => {
+    logFunctionIn("putIntoConnectionTable", {connectionId, syncId});
+
+    await putItem(Z0CONNECTION_TABLE, {
+        connectionId: {S: connectionId},
+        syncId: {S: syncId}
+    });
+
+    logFunctionOut("putIntoConnectionTable", {connectionId, syncId});
+}
+
 module.exports = {
     getConnectionIdsForSyncId,
     getSyncIdForConnectionId,
     Z0CONNECTION_TABLE,
+    putIntoConnectionTable,
 }
