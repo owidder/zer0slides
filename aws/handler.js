@@ -5,11 +5,12 @@ const {AWS, DDB} = require("./util/awsUtil");
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {nowAsString} = require("./util/timeUtil");
 const {response, connectionIdFromEvent, bodyFromEvent} = require("./util/wsUtil");
+const {ddbCall, putItem} = require("./util/ddbUtil");
 
 const Z0CONNECTION_TABLE = process.env.Z0CONNECTION_TABLE
 const Z0COMMAND_TABLE = process.env.Z0COMMAND_TABLE
 
-const ddbCall = (fct, params) => {
+const _ddbCall = (fct, params) => {
     console.log(`ddbCall: '${fct}' with params: ${JSON.stringify(params)}`);
 
     /*
@@ -29,7 +30,7 @@ const ddbCall = (fct, params) => {
     })
 }
 
-const putItem = (tableName, item) => {
+const _putItem = (tableName, item) => {
     const timestamp = nowAsString();
     const itemWithTimestamp = {...item, timestamp: {S: timestamp}};
     console.log(`putItem: ${JSON.stringify(itemWithTimestamp)}`);
