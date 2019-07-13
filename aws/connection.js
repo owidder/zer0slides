@@ -54,9 +54,25 @@ const putIntoConnectionTable = async (connectionId, syncId) => {
     logFunctionOut("putIntoConnectionTable", {connectionId, syncId});
 }
 
+const removeFromConnectionTable = async (connectionId) => {
+    logFunctionIn("removeFromConnectionTable", {connectionId});
+
+    const deleteParams = {
+        TableName: Z0CONNECTION_TABLE,
+        Key: {
+            connectionId: {S: connectionId}
+        }
+    };
+
+    await ddbCall('deleteItem', deleteParams);
+
+    logFunctionOut("removeFromConnectionTable", {connectionId});
+}
+
 module.exports = {
     getConnectionIdsForSyncId,
     getSyncIdForConnectionId,
     Z0CONNECTION_TABLE,
     putIntoConnectionTable,
+    removeFromConnectionTable,
 }

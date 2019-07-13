@@ -6,7 +6,7 @@ const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {nowAsString} = require("./util/timeUtil");
 const {response, connectionIdFromEvent, bodyFromEvent, send, sendToAllOtherConnections} = require("./util/wsUtil");
 const {ddbCall, putItem} = require("./util/ddbUtil");
-const {getConnectionIdsForSyncId, getSyncIdForConnectionId, Z0CONNECTION_TABLE, putIntoConnectionTable} = require("./connection");
+const {getConnectionIdsForSyncId, getSyncIdForConnectionId, Z0CONNECTION_TABLE, putIntoConnectionTable, removeFromConnectionTable} = require("./connection");
 const {cleanCommandTable, Z0COMMAND_TABLE, putIntoCommandTable, getLastCommand} = require("./command");
 
 const connect = async (event, context, callback) => {
@@ -28,15 +28,7 @@ const disconnect = async (event, context, callback) => {
 
     const connectionId = connectionIdFromEvent(event);
     const syncId = await getSyncIdForConnectionId(connectionId);
-
-    const deleteParams = {
-        TableName: Z0CONNECTION_TABLE,
-        Key: {
-            connectionId: {S: connectionId}
-        }
-    };
-
-    await ddbCall('deleteItem', deleteParams);
+    await removeFromConnectionTable(connectionId);
     await cleanCommandTable(syncId);
 
     callback(null, response(200, "DISCONNECTED"));
