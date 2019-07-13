@@ -10,6 +10,8 @@ require("aws-sdk/clients/apigatewaymanagementapi");
 const fetch = require("node-fetch");
 fetch.Promise = Bluebird;
 
+const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
+
 const Z0CONNECTION_TABLE = process.env.Z0CONNECTION_TABLE
 const Z0COMMAND_TABLE = process.env.Z0COMMAND_TABLE
 
@@ -22,11 +24,11 @@ const response = (statusCode, body) => {
     return {statusCode, body}
 }
 
-const logFunctionIn = (functionName, obj) => {
+const _logFunctionIn = (functionName, obj) => {
     console.log(`>>>> ${functionName}: ${JSON.stringify(obj)}`);
 }
 
-const logFunctionOut = (functionName, obj) => {
+const _logFunctionOut = (functionName, obj) => {
     console.log(`<<<< ${functionName}: ${JSON.stringify(obj)}`);
 }
 
