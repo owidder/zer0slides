@@ -11,26 +11,11 @@ const fetch = require("node-fetch");
 fetch.Promise = Bluebird;
 
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
+const {nowAsString} = require("./util/timeUtil");
+const {response, connectionIdFromEvent, bodyFromEvent} = require("./util/wsUtil");
 
 const Z0CONNECTION_TABLE = process.env.Z0CONNECTION_TABLE
 const Z0COMMAND_TABLE = process.env.Z0COMMAND_TABLE
-
-const nowAsString = () => {
-    const now = new Date();
-    return now.toString() + " ms: " + String(now.getMilliseconds());
-}
-
-const response = (statusCode, body) => {
-    return {statusCode, body}
-}
-
-const _logFunctionIn = (functionName, obj) => {
-    console.log(`>>>> ${functionName}: ${JSON.stringify(obj)}`);
-}
-
-const _logFunctionOut = (functionName, obj) => {
-    console.log(`<<<< ${functionName}: ${JSON.stringify(obj)}`);
-}
 
 const ddbCall = (fct, params) => {
     console.log(`ddbCall: '${fct}' with params: ${JSON.stringify(params)}`);
@@ -51,10 +36,6 @@ const ddbCall = (fct, params) => {
         });
     })
 }
-
-const connectionIdFromEvent = event => event.requestContext.connectionId;
-
-const bodyFromEvent = event => JSON.parse(event.body);
 
 const putItem = (tableName, item) => {
     const timestamp = nowAsString();
