@@ -1,5 +1,4 @@
 import {getParamValue, getParamValueWithDefault} from "../url/queryUtil2";
-import {slideCore} from "../core/core";
 import {SimplePromise} from "../util/SimplePromise";
 import {endpoint} from "./endpoint";
 
@@ -9,6 +8,8 @@ export interface Command {
     slideNo: number;
     stepNo: number;
 }
+
+export const socketPromise: SimplePromise<WebSocket> = new SimplePromise();
 
 const getWebsocketEndpoint = () => {
     const wse = getParamValue("wse");
@@ -29,7 +30,7 @@ const register = (socket: WebSocket, syncId: string) => {
 
     socket.send(JSON.stringify(param));
 
-    slideCore.socketPromise.resolve(socket);
+    socketPromise.resolve(socket);
 }
 
 export const firstMessagePromise = new SimplePromise();
@@ -81,7 +82,7 @@ export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {
         const command = {slideNo: slideNo, stepNo: stepNo};
         const commandStr = JSON.stringify(command);
         firstMessagePromise.then(() => {
-            slideCore.socketPromise.then((socket) => {
+            socketPromise.then((socket) => {
                 console.log(`sending: ${commandStr}`);
                 socket.send(JSON.stringify({action: "sendCommand", command: commandStr}));
                 lastCommand = command;

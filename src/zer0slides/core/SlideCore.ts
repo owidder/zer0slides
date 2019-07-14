@@ -17,9 +17,6 @@ export class SlideCore {
 
     public _0;
 
-    public socket: WebSocket;
-    public socketPromise: SimplePromise<WebSocket> = new SimplePromise();
-
     public shortcutSlideIndex = 0
     public folderName: string;
     public autoStepIntervalInMs = -1;
