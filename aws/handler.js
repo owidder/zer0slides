@@ -4,7 +4,7 @@ const {AWS, DDB} = require("./util/awsUtil");
 
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {response, connectionIdFromEvent, bodyFromEvent, send, sendToAllOtherConnections} = require("./util/wsUtil");
-const {getConnectionIdsForSyncId, getSyncIdForConnectionId, saveSyncId, removeFromConnectionTable, createNewConnection} = require("./connection");
+const {getConnectionIdsForSyncId, getSyncIdForConnectionId, saveSyncId, removeFromConnectionTable, createNewConnection, saveCurrentPosition} = require("./connection");
 const {cleanCommandTable, putIntoCommandTable, getLastCommand} = require("./command");
 
 const connect = async (event, context, callback) => {
@@ -51,18 +51,27 @@ const defaultMessage = (event, context, callback) => {
     callback(null);
 };
 
+const sendCurrentPosition = async (event, context, callback) => {
+    logFunctionIn("sendCurrentPosition", event);
+
+    const connectionId = connectionIdFromEvent(event);
+    const body = bodyFromEvent(event);
+
+    await saveCurrentPosition(connectionId, body.currentPosition);
+
+    callback(null, response(200, "CURRENT POSITION SAVED"));
+
+    logFunctionOut("sendCurrentPosition", event);
+}
+
 const sendCommand = async (event, context, callback) => {
     logFunctionIn("sendCommand", event);
 
-    console.log(`event: ${JSON.stringify(event)}`);
     const syncId = await getSyncIdForConnectionId(connectionIdFromEvent(event));
+    console.log(`syncId: ${syncId}`);
 
     const body = bodyFromEvent(event);
     const command = body.command;
-    console.log(`command: ${command}`);
-
-    console.log(`syncId: ${syncId}`);
-
     const connectionIdsResult = await getConnectionIdsForSyncId(syncId);
     console.log(`connectionIds: ${JSON.stringify(connectionIdsResult)}`);
 
@@ -80,5 +89,6 @@ module.exports = {
     disconnect,
     sendCommand,
     defaultMessage,
-    register
+    register,
+    sendCurrentPosition,
 }

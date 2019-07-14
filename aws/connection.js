@@ -54,6 +54,17 @@ const saveSyncId = async (connectionId, syncId) => {
     logFunctionOut("saveSyncId", {connectionId, syncId});
 }
 
+const saveCurrentPosition = async (connectionId, currentPosition) => {
+    logFunctionIn("saveCurrentPosition", {currentPosition});
+
+    await putItem(Z0CONNECTION_TABLE, {
+        connectionId: {S: connectionId},
+        currentPosition: {S: currentPosition}
+    });
+
+    logFunctionOut("saveCurrentPosition", {currentPosition});
+}
+
 const createNewConnection = async (connectionId) => {
     logFunctionIn("createNewConnection", {connectionId});
 
@@ -84,4 +95,5 @@ module.exports = {
     saveSyncId,
     removeFromConnectionTable,
     createNewConnection,
+    saveCurrentPosition,
 }
