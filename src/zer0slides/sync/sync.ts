@@ -5,7 +5,7 @@ import {endpoint} from "./endpoint";
 
 const DEFAULT_STAGE = "dev";
 
-interface Command {
+export interface Command {
     slideNo: number;
     stepNo: number;
 }
@@ -41,7 +41,9 @@ export const isSynced = (syncId?: string) => {
     return (_syncId && _syncId.length > 0)
 }
 
-export const initSync = (): Promise<void> => {
+let lastCommand: Command;
+
+export const initSync = (commandCallback: (Command) => void): Promise<void> => {
     const syncId = getSyncId();
     if(isSynced(syncId)) {
         return new Promise(resolve => {
@@ -54,28 +56,24 @@ export const initSync = (): Promise<void> => {
                 resolve();
             }
 
-            socket.onmessage = onMessage;
+            socket.onmessage = (event: {data: string}) => {
+                const {data} = event;
+                const command: Command = JSON.parse(data);
+
+                console.log(command);
+
+                if(lastCommand == undefined) {
+                    firstMessagePromise.resolve(command);
+                } else {
+                    commandCallback(command);
+                }
+
+                lastCommand = command;
+            };
         })
     }
 
     return Promise.resolve();
-}
-
-let lastCommand: Command;
-
-export const onMessage = (event: {data: string}) => {
-    const {data} = event;
-    const command: Command = JSON.parse(data);
-
-    console.log(command);
-
-    if(lastCommand == undefined) {
-        firstMessagePromise.resolve(command);
-    } else {
-        slideCore.gotoSlideNoAndStepNo(command.slideNo, command.stepNo);
-    }
-
-    lastCommand = command;
 }
 
 export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {

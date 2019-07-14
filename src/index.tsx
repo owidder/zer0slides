@@ -13,7 +13,7 @@ import {switchCurrentSlideToBlack} from "./zer0slides/showCode/controlShowCode";
 import {createControlElements} from "./zer0slides/html/controlElements";
 import {initTooltip} from "./zer0slides/tooltip/tooltip";
 import {openContentPage, openShortcutSlide, doShortcut} from "./zer0slides/shortcut/shortcut";
-import {initSync, firstMessagePromise, isSynced} from "./zer0slides/sync/sync";
+import {initSync, firstMessagePromise, isSynced, Command} from "./zer0slides/sync/sync";
 
 import "materialize-css/dist/css/materialize.css";
 import "prismjs/themes/prism.css";
@@ -79,9 +79,13 @@ const bindKeys = () => {
     bindKeyToFunction("b", () => switchCurrentSlideToBlack());
 }
 
+const commandCallback = (command: Command) => {
+    slideCore.gotoSlideNoAndStepNo(command.slideNo, command.stepNo);
+}
+
 initTooltip();
 init();
-initSync();
+initSync(commandCallback);
 
 
 const initName = getParamValue("init", true);
