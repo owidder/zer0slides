@@ -99,6 +99,7 @@ const firstSlideViaSyncOrParams = (slideNoViaParam: number, stepNoViaParam: numb
         if(isSynced()) {
             console.log("is synced");
             firstMessagePromise.then(({slideNo, stepNo}) => {
+                console.log(`firstMessagePromise: ${slideNo} / ${stepNo}`)
                 if(slideNo !== undefined && stepNo !== undefined) {
                     renderFirstSlide(slideNo, stepNo);
                 } else {

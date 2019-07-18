@@ -4,9 +4,15 @@ import {endpoint} from "./endpoint";
 
 const DEFAULT_STAGE = "dev";
 
+const TYPE_COMMAND = "command";
+
 export interface Command {
     slideNo: number;
     stepNo: number;
+}
+
+export interface Typed {
+    type: string;
 }
 
 export const socketPromise: SimplePromise<WebSocket> = new SimplePromise();
@@ -42,6 +48,26 @@ export const isSynced = (syncId?: string) => {
     return (_syncId && _syncId.length > 0)
 }
 
+type Callback = (Typed) => void;
+
+const typeToCallback: {[index: string]: Callback} = {}
+
+export const registerCallbackForType = (type: string, callback: Callback) => {
+    typeToCallback[type] = callback;
+}
+
+const handleTyped = (dataObj: Typed) => {
+    if(dataObj.type) {
+        const callback = typeToCallback[dataObj.type];
+        if(callback) {
+            callback(dataObj);
+        }
+        else {
+            console.warn(`cannot handle: ${JSON.stringify(dataObj)}`);
+        }
+    }
+}
+
 let lastCommand: Command;
 
 export const initSync = (commandCallback: (Command) => void): Promise<void> => {
@@ -59,17 +85,24 @@ export const initSync = (commandCallback: (Command) => void): Promise<void> => {
 
             socket.onmessage = (event: {data: string}) => {
                 const {data} = event;
-                const command: Command = JSON.parse(data);
+                const typed: Typed = JSON.parse(data);
 
-                console.log(command);
+                if(!typed.type || typed.type == TYPE_COMMAND) {
+                    const command = typed as unknown as Command;
 
-                if(lastCommand == undefined) {
-                    firstMessagePromise.resolve(command);
+                    console.log(command);
+
+                    if(lastCommand == undefined) {
+                        firstMessagePromise.resolve(command);
+                    } else {
+                        commandCallback(command);
+                    }
+
+                    lastCommand = command;
                 } else {
-                    commandCallback(command);
+                    handleTyped(typed);
                 }
 
-                lastCommand = command;
             };
         })
     }
@@ -79,7 +112,7 @@ export const initSync = (commandCallback: (Command) => void): Promise<void> => {
 
 export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {
     if(isSynced() && (lastCommand.slideNo != slideNo || lastCommand.stepNo != stepNo)) {
-        const command = {slideNo: slideNo, stepNo: stepNo};
+        const command = {slideNo: slideNo, stepNo: stepNo, type: TYPE_COMMAND};
         const commandStr = JSON.stringify(command);
         firstMessagePromise.then(() => {
             socketPromise.then((socket) => {

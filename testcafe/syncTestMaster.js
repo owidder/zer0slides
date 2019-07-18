@@ -31,6 +31,6 @@ test("get correct lastCommand after registering", async t => {
     const command = JSON.parse(message);
 
     await t
-        .expect(command).eql({slideNo: 1, stepNo: 1});
+        .expect(command).eql({slideNo: 1, stepNo: 1, type: "command"});
 })
 
