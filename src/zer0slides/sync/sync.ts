@@ -1,4 +1,4 @@
-import {getParamValue, getParamValueWithDefault} from "../url/queryUtil2";
+import {getParamValue, getParamValueWithDefault, setHashValue} from "../url/queryUtil2";
 import {SimplePromise} from "../util/SimplePromise";
 import {endpoint} from "./endpoint";
 
@@ -13,6 +13,7 @@ export interface Command {
 
 export interface Typed {
     type: string;
+    myName?: string;
 }
 
 export const socketPromise: SimplePromise<WebSocket> = new SimplePromise();
@@ -28,10 +29,11 @@ const getWebsocketEndpoint = () => {
     return endpoint[stage];
 }
 
-const register = (socket: WebSocket, syncId: string) => {
+const register = (socket: WebSocket, syncId: string, myName?: string) => {
     const param = {
         action: "register",
-        syncId
+        syncId,
+        myName
     }
 
     socket.send(JSON.stringify(param));
@@ -42,6 +44,7 @@ const register = (socket: WebSocket, syncId: string) => {
 export const firstMessagePromise = new SimplePromise();
 
 const getSyncId = () => getParamValue("syncId");
+const getMyName = () => getParamValue("myName");
 
 export const isSynced = (syncId?: string) => {
     const _syncId = syncId ? syncId : getSyncId();
@@ -68,10 +71,17 @@ const handleTyped = (dataObj: Typed) => {
     }
 }
 
+const setMyName = (event: Typed) => {
+    if(event.myName) {
+        setHashValue("myName", event.myName)
+    }
+}
+
 let lastCommand: Command;
 
 export const initSync = (commandCallback: (Command) => void): Promise<void> => {
     const syncId = getSyncId();
+    const myName = getMyName();
     if(isSynced(syncId)) {
         return new Promise(resolve => {
             const wse = getWebsocketEndpoint();
@@ -79,13 +89,15 @@ export const initSync = (commandCallback: (Command) => void): Promise<void> => {
 
             socket.onopen = () => {
                 console.log(`do register: ${new Date().toString()}`)
-                register(socket, syncId);
+                register(socket, syncId, myName);
                 resolve();
             }
 
             socket.onmessage = (event: {data: string}) => {
                 const {data} = event;
                 const typed: Typed = JSON.parse(data);
+
+                setMyName(typed);
 
                 if(!typed.type || typed.type == TYPE_COMMAND) {
                     const command = typed as unknown as Command;
