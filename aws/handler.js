@@ -5,7 +5,7 @@ const {AWS, DDB} = require("./util/awsUtil");
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {response, connectionIdFromEvent, bodyFromEvent, send, sendToAllOtherConnections} = require("./util/wsUtil");
 const {getConnectionIdsForSyncId, getSyncIdForConnectionId, saveSyncId, removeFromConnectionTable, createNewConnection, saveCurrentPosition} = require("./connection");
-const {cleanCommandTable, updateCommand, getLastCommand, initSyncId} = require("./command");
+const {cleanCommandTable, updateCommand, getLastCommand, initSyncId, addAttributesToCommand} = require("./command");
 
 const connect = async (event, context, callback) => {
     logFunctionIn("connect", event);
@@ -36,14 +36,14 @@ const register = async (event, context, callback) => {
 
     const body = bodyFromEvent(event);
 
-    const {syncId} = body;
+    const {syncId, myName} = body;
     const connectionId = connectionIdFromEvent(event);
 
-    await initSyncId(syncId, connectionId);
+    const isAdmin = await initSyncId(syncId, myName ? myName : connectionId);
     await saveSyncId(connectionId, syncId);
     const lastCommand = await getLastCommand(body.syncId);
 
-    await send(event, connectionIdFromEvent(event), lastCommand);
+    await send(event, connectionId, (isAdmin && !myName) ? addAttributesToCommand(lastCommand, {myName: connectionId}) : lastCommand);
 
     callback(null, response(200, "REGISTERED"));
 

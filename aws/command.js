@@ -54,6 +54,44 @@ const updateCommand = async (syncId, command) => {
     logFunctionOut("updateCommand", {syncId, command});
 }
 
+const findRow = async (syncId) => {
+    logFunctionIn("findRow", {syncId})
+
+    const params = {
+        Key: {syncId: {S: syncId}},
+        TableName: Z0COMMAND_TABLE
+    }
+
+    const result = await ddbCall('getItem', params);
+    const row = result ? result.Itemm : undefined;
+
+    logFunctionOut("findRow", {syncId, result})
+
+    return row
+}
+
+const isAdmin = async (syncId, myName) => {
+    logFunctionIn("isAdmin", {syncId, myName})
+
+    const row = await findRow(syncId);
+    const isAdmin = row && row.admin && row.admin.S == myName;
+
+    logFunctionOut("isAdmin", {syncId, myName, row, isAdmin})
+
+    return isAdmin
+}
+
+const addAttributesToCommand = (commandAsString, attributes) => {
+    logFunctionIn("addAttributesToCommand", {commandAsString, attributes})
+
+    const command = JSON.parse(commandAsString);
+    const commandWithAddedAttributes = {...command, ...attributes};
+
+    logFunctionOut("addAttributesToCommand", {commandAsString, attributes, commandWithAddedAttributes})
+
+    return JSON.stringify(commandWithAddedAttributes)
+}
+
 const getLastCommand = async (syncId) => {
     logFunctionIn("getLastCommand", {syncId})
 
@@ -70,19 +108,25 @@ const getLastCommand = async (syncId) => {
     return lastCommand
 }
 
-const initSyncId = async (syncId, connectionId) => {
-    logFunctionIn("initSyncId", {syncId, connectionId});
+const initSyncId = async (syncId, myName) => {
+    logFunctionIn("initSyncId", {syncId, connectionId: myName});
+
+    let isAdmin = false;
 
     const numberOfConnections = await getNumberOfConnectionsWithSyncId(syncId);
     if(numberOfConnections == 0) {
         const item = {
             syncId: {S: syncId},
-            admin: {S: connectionId}
+            admin: {S: myName}
         }
         await putItem(Z0COMMAND_TABLE, item);
+
+        isAdmin = true;
     }
 
-    logFunctionOut("initSyncId", {syncId, connectionId, numberOfConnections});
+    logFunctionOut("initSyncId", {syncId, connectionId: myName, numberOfConnections});
+
+    return isAdmin
 }
 
 module.exports = {
@@ -92,4 +136,6 @@ module.exports = {
     updateCommand,
     getLastCommand,
     initSyncId,
+    addAttributesToCommand,
+    isAdmin,
 }
