@@ -73,12 +73,16 @@ const findRow = async (syncId) => {
 const isAdmin = async (syncId, myName) => {
     logFunctionIn("isAdmin", {syncId, myName})
 
-    const row = await findRow(syncId);
-    const isAdmin = row && row.admin && row.admin.S == myName;
+    let _isAdmin = false;
 
-    logFunctionOut("isAdmin", {syncId, myName, row, isAdmin})
+    if(myName && myName.length > 0) {
+        const row = await findRow(syncId);
+        _isAdmin = row && row.admin && row.admin.S == myName;
+    }
 
-    return isAdmin
+    logFunctionOut("isAdmin", {syncId, myName, row, isAdmin: _isAdmin})
+
+    return _isAdmin
 }
 
 const addAttributesToCommand = (commandAsString, attributes) => {

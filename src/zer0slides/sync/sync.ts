@@ -124,12 +124,13 @@ export const initSync = (commandCallback: (Command) => void): Promise<void> => {
 
 export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {
     if(isSynced() && (lastCommand.slideNo != slideNo || lastCommand.stepNo != stepNo)) {
+        const myName = getMyName();
         const command = {slideNo: slideNo, stepNo: stepNo, type: TYPE_COMMAND};
         const commandStr = JSON.stringify(command);
         firstMessagePromise.then(() => {
             socketPromise.then((socket) => {
                 console.log(`sending: ${commandStr}`);
-                socket.send(JSON.stringify({action: "sendCommand", command: commandStr}));
+                socket.send(JSON.stringify({action: "sendCommand", command: commandStr, myName}));
                 lastCommand = command;
             })
         })

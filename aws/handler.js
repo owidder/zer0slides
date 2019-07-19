@@ -5,7 +5,7 @@ const {AWS, DDB} = require("./util/awsUtil");
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {response, connectionIdFromEvent, bodyFromEvent, send, sendToAllOtherConnections} = require("./util/wsUtil");
 const {getConnectionIdsForSyncId, getSyncIdForConnectionId, saveSyncId, removeFromConnectionTable, createNewConnection, saveCurrentPosition} = require("./connection");
-const {cleanCommandTable, updateCommand, getLastCommand, initSyncId, addAttributesToCommand} = require("./command");
+const {cleanCommandTable, updateCommand, getLastCommand, initSyncId, addAttributesToCommand, isAdmin} = require("./command");
 
 const connect = async (event, context, callback) => {
     logFunctionIn("connect", event);
@@ -68,23 +68,27 @@ const sendCurrentPosition = async (event, context, callback) => {
 }
 
 const sendCommand = async (event, context, callback) => {
-    logFunctionIn("sendCommand", event);
+    logFunctionIn("sendCommand", {event});
 
     const syncId = await getSyncIdForConnectionId(connectionIdFromEvent(event));
     console.log(`syncId: ${syncId}`);
 
     const body = bodyFromEvent(event);
-    const command = body.command;
-    const connectionIdsResult = await getConnectionIdsForSyncId(syncId);
-    console.log(`connectionIds: ${JSON.stringify(connectionIdsResult)}`);
+    const myName = body.myName;
+    const _isAdmin = isAdmin(syncId, myName);
+    if(_isAdmin) {
+        const command = body.command;
+        const connectionIdsResult = await getConnectionIdsForSyncId(syncId);
+        console.log(`connectionIds: ${JSON.stringify(connectionIdsResult)}`);
 
-    await updateCommand(syncId, command);
+        await updateCommand(syncId, command);
 
-    await sendToAllOtherConnections(event, connectionIdsResult.Items, command);
+        await sendToAllOtherConnections(event, connectionIdsResult.Items, command);
+    }
 
     callback(null, response(200, "COMMAND_SENT"));
 
-    logFunctionOut("sendCommand", event);
+    logFunctionOut("sendCommand", {event, isAdmin: _isAdmin});
 }
 
 module.exports = {
