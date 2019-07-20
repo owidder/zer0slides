@@ -137,3 +137,7 @@ export const refreshSlide = (slide: Slide) => {
                                    newSlideActions(slide)
                                }}/>, root());
 }
+
+export const resetSlide = (slide: Slide) => {
+    ReactDOM.render(<HtmlSlide slide={slide} action="refresh"/>, root());
+}

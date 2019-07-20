@@ -1,5 +1,5 @@
 import {Slide, SlideConfig} from './Slide';
-import {renderSlide, refreshSlide, InOut} from './render';
+import {renderSlide, refreshSlide, InOut, resetSlide} from './render';
 import {setSlideNo} from '../html/controlElements';
 import {setHashValue} from '../url/queryUtil2';
 import {Transformation} from '../html/transformations/Transformation';
@@ -112,6 +112,10 @@ export class SlideCore {
         refreshSlide(this.getCurrentSlide());
     }
 
+    public resetSlide() {
+        resetSlide(this.getCurrentSlide());
+    }
+
     private processOldSlide(): Slide {
         const oldSlide = this.getCurrentSlide();
         oldSlide.aboutToBeRemoved();
@@ -146,7 +150,11 @@ export class SlideCore {
             this.callRenderSlide(oldSlide, withTransformation, transformInType, transformOutType, inOut);
         } else if(this.getCurrentSlide().currentStepNo != stepNo) {
             this.getCurrentSlide().currentStepNo = stepNo;
-            this.getCurrentSlide().performToCurrentStep();
+            if(stepNo > -1) {
+                this.getCurrentSlide().performToCurrentStep();
+            } else {
+                resetSlide(this.getCurrentSlide());
+            }
         }
     }
 
