@@ -63,7 +63,7 @@ const findRow = async (syncId) => {
     }
 
     const result = await ddbCall('getItem', params);
-    const row = result ? result.Itemm : undefined;
+    const row = result ? result.Item : undefined;
 
     logFunctionOut("findRow", {syncId, result})
 
@@ -77,10 +77,10 @@ const isAdmin = async (syncId, myName) => {
 
     if(myName && myName.length > 0) {
         const row = await findRow(syncId);
-        _isAdmin = row && row.admin && row.admin.S == myName;
+        _isAdmin = (row && row.admin && row.admin.S == myName);
     }
 
-    logFunctionOut("isAdmin", {syncId, myName, row, isAdmin: _isAdmin})
+    logFunctionOut("isAdmin", {syncId, myName, _isAdmin})
 
     return _isAdmin
 }

@@ -75,7 +75,7 @@ const sendCommand = async (event, context, callback) => {
 
     const body = bodyFromEvent(event);
     const myName = body.myName;
-    const _isAdmin = isAdmin(syncId, myName);
+    const _isAdmin = await isAdmin(syncId, myName);
     if(_isAdmin) {
         const command = body.command;
         const connectionIdsResult = await getConnectionIdsForSyncId(syncId);
