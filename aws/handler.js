@@ -38,12 +38,13 @@ const register = async (event, context, callback) => {
 
     const {syncId, myName} = body;
     const connectionId = connectionIdFromEvent(event);
+    const myNameOrConnectionId = myName ? myName : connectionId;
 
-    const isAdmin = await initSyncId(syncId, myName ? myName : connectionId);
-    await saveSyncId(connectionId, syncId);
+    await initSyncId(syncId, myNameOrConnectionId);
+    await saveSyncId(connectionId, syncId, myNameOrConnectionId);
     const lastCommand = await getLastCommand(body.syncId);
 
-    await send(event, connectionId, (isAdmin && !myName) ? addAttributesToCommand(lastCommand, {myName: connectionId}) : lastCommand);
+    await send(event, connectionId, myName ? lastCommand : addAttributesToCommand(lastCommand, {myName: connectionId}));
 
     callback(null, response(200, "REGISTERED"));
 

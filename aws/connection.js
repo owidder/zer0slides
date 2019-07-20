@@ -43,12 +43,13 @@ const getSyncIdForConnectionId = async (connectionId) => {
     }
 }
 
-const saveSyncId = async (connectionId, syncId) => {
+const saveSyncId = async (connectionId, syncId, name) => {
     logFunctionIn("saveSyncId", {connectionId, syncId});
 
     await putItem(Z0CONNECTION_TABLE, {
         connectionId: {S: connectionId},
-        syncId: {S: syncId}
+        syncId: {S: syncId},
+        name: {S: name}
     });
 
     logFunctionOut("saveSyncId", {connectionId, syncId});
