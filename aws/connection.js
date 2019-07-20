@@ -1,6 +1,5 @@
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
-const {ddbCall, putItem} = require("./util/ddbUtil");
-const {bodyFromEvent, connectionIdFromEvent} = require("./util/wsUtil");
+const {ddbCall, putItem, updateItem} = require("./util/ddbUtil");
 
 const Z0CONNECTION_TABLE = process.env.Z0CONNECTION_TABLE;
 
@@ -89,6 +88,14 @@ const removeFromConnectionTable = async (connectionId) => {
     logFunctionOut("removeFromConnectionTable", {connectionId});
 }
 
+const setCurrentPosition = async (connectionId, slideNo, stepNo) => {
+    logFunctionIn("setCurrentPosition", {connectionId, slideNo, stepNo})
+
+    await updateItem(Z0CONNECTION_TABLE, {connectionId: {S: connectionId}}, {slideNo, stepNo});
+
+    logFunctionOut("setCurrentPosition", {connectionId, slideNo, stepNo})
+}
+
 module.exports = {
     getConnectionIdsForSyncId,
     getSyncIdForConnectionId,
@@ -97,4 +104,5 @@ module.exports = {
     removeFromConnectionTable,
     createNewConnection,
     saveCurrentPosition,
+    setCurrentPosition,
 }

@@ -94,6 +94,8 @@ export const initSync = (commandCallback: (Command) => void): Promise<void> => {
             }
 
             socket.onmessage = (event: {data: string}) => {
+                console.log(event)
+
                 const {data} = event;
                 const typed: Typed = JSON.parse(data);
 

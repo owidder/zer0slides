@@ -4,7 +4,14 @@ const {AWS, DDB} = require("./util/awsUtil");
 
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {response, connectionIdFromEvent, bodyFromEvent, send, sendToAllOtherConnections} = require("./util/wsUtil");
-const {getConnectionIdsForSyncId, getSyncIdForConnectionId, saveSyncId, removeFromConnectionTable, createNewConnection, saveCurrentPosition} = require("./connection");
+const {
+    getConnectionIdsForSyncId,
+    getSyncIdForConnectionId,
+    saveSyncId,
+    removeFromConnectionTable,
+    createNewConnection,
+    saveCurrentPosition,
+    setCurrentPosition} = require("./connection");
 const {cleanCommandTable, updateCommand, getLastCommand, initSyncId, addAttributesToCommand, isAdmin} = require("./command");
 
 const connect = async (event, context, callback) => {
@@ -75,16 +82,21 @@ const sendCommand = async (event, context, callback) => {
     console.log(`syncId: ${syncId}`);
 
     const body = bodyFromEvent(event);
+    const commandStr = body.command;
+    const command = JSON.parse(commandStr);
+
+    setCurrentPosition(connectionIdFromEvent(event), String(command.slideNo), String(command.stepNo));
+
     const myName = body.myName;
     const _isAdmin = await isAdmin(syncId, myName);
+
     if(_isAdmin) {
-        const command = body.command;
         const connectionIdsResult = await getConnectionIdsForSyncId(syncId);
         console.log(`connectionIds: ${JSON.stringify(connectionIdsResult)}`);
 
-        await updateCommand(syncId, command);
+        await updateCommand(syncId, commandStr);
 
-        await sendToAllOtherConnections(event, connectionIdsResult.Items, command);
+        await sendToAllOtherConnections(event, connectionIdsResult.Items, commandStr);
     }
 
     callback(null, response(200, "COMMAND_SENT"));
