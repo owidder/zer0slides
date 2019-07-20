@@ -155,6 +155,7 @@ export class SlideCore {
             } else {
                 resetSlide(this.getCurrentSlide());
             }
+            this.syncCurrentSlideNoAndStepNo();
         }
     }
 
