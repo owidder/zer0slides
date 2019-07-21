@@ -70,14 +70,25 @@ const findRow = async (syncId) => {
     return row
 }
 
+const getAdminName = async (syncId) => {
+    logFunctionIn("getAdminConnectionId", {syncId})
+
+    const row = await findRow(syncId);
+    const adminName = row && row.admin ? row.admin.S : undefined;
+
+    logFunctionOut("getAdminConnectionId", {syncId, adminName})
+
+    return adminName
+}
+
 const isAdmin = async (syncId, myName) => {
     logFunctionIn("isAdmin", {syncId, myName})
 
     let _isAdmin = false;
 
     if(myName && myName.length > 0) {
-        const row = await findRow(syncId);
-        _isAdmin = (row && row.admin && row.admin.S == myName);
+        const adminName = getAdminName(syncId);
+        _isAdmin = (adminName == myName);
     }
 
     logFunctionOut("isAdmin", {syncId, myName, _isAdmin})
@@ -142,4 +153,5 @@ module.exports = {
     initSyncId,
     addAttributesToCommand,
     isAdmin,
+    getAdminName,
 }

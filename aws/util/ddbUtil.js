@@ -5,8 +5,6 @@ const {logFunctionIn, logFunctionOut} = require("./logUtil");
 const ddbCall = (fct, params) => {
     logFunctionIn("ddbCall", {fct, params})
 
-    console.log(`ddbCall: '${fct}' with params: ${JSON.stringify(params)}`);
-
     /*
      * Use own promise, since the callback is sometimes called more than once
      * (Do not ask why!)
@@ -16,9 +14,9 @@ const ddbCall = (fct, params) => {
             if(err) {
                 console.log(err);
             }
-            console.log(">>> data");
+            console.log(`>>> data: ${fct} / ${JSON.stringify(params)}`);
             console.log(data);
-            console.log("<<< data");
+            console.log(`<<< data: ${fct} / ${JSON.stringify(params)}`);
             resolve(data);
         });
     })

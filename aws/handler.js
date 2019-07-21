@@ -1,7 +1,5 @@
 "use strict";
 
-const {AWS, DDB} = require("./util/awsUtil");
-
 const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
 const {response, connectionIdFromEvent, bodyFromEvent, send, sendToAllOtherConnections} = require("./util/wsUtil");
 const {
@@ -12,7 +10,13 @@ const {
     createNewConnection,
     saveCurrentPosition,
     setCurrentPosition} = require("./connection");
-const {cleanCommandTable, updateCommand, getLastCommand, initSyncId, addAttributesToCommand, isAdmin} = require("./command");
+const {
+    cleanCommandTable,
+    updateCommand,
+    getLastCommand,
+    initSyncId,
+    addAttributesToCommand,
+    getAdminName} = require("./command");
 
 const connect = async (event, context, callback) => {
     logFunctionIn("connect", event);
@@ -85,12 +89,11 @@ const sendCommand = async (event, context, callback) => {
     const commandStr = body.command;
     const command = JSON.parse(commandStr);
 
-    setCurrentPosition(connectionIdFromEvent(event), String(command.slideNo), String(command.stepNo));
-
     const myName = body.myName;
-    const _isAdmin = await isAdmin(syncId, myName);
+    const adminName = await getAdminName(syncId);
+    setCurrentPosition(event, String(command.slideNo), String(command.stepNo), adminName, myName);
 
-    if(_isAdmin) {
+    if(adminName == myName) {
         const connectionIdsResult = await getConnectionIdsForSyncId(syncId);
         console.log(`connectionIds: ${JSON.stringify(connectionIdsResult)}`);
 
@@ -101,7 +104,7 @@ const sendCommand = async (event, context, callback) => {
 
     callback(null, response(200, "COMMAND_SENT"));
 
-    logFunctionOut("sendCommand", {event, isAdmin: _isAdmin});
+    logFunctionOut("sendCommand", {event, adminName});
 }
 
 module.exports = {
