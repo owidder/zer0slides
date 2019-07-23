@@ -1,6 +1,8 @@
 import {getParamValue, getParamValueWithDefault, setHashValue} from "../url/queryUtil2";
 import {SimplePromise} from "../util/SimplePromise";
 import {endpoint} from "./endpoint";
+import {addPosition, Position} from "./positions";
+import * as types from "./types";
 
 const DEFAULT_STAGE = "dev";
 
@@ -138,3 +140,8 @@ export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {
         })
     }
 }
+
+registerCallbackForType(types.POSITION, (typed: Typed) => {
+    const position = typed as unknown as Position;
+    addPosition(position);
+})

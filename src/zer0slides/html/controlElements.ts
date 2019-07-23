@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 
-import {slideCore, core} from '../core/core';
+import {slideCore} from '../core/core';
+import {renderPositions} from "../sync/renderPositions";
 
 const mojs = require('../effects/mojs');
 
@@ -53,6 +54,12 @@ const leftArrowClicked = () => {
     slideCore.prevSlide();
 }
 
+let positionsVisible = false;
+const showHidePositions = () => {
+    positionsVisible = !positionsVisible;
+    renderPositions(".sync");
+}
+
 const createCounter = (root: any) => {
     const counterDiv = root.append("div");
     counterDiv.append("span").attr("class", "stepctr counter").text("[0/0]");
@@ -79,6 +86,13 @@ const createControlElementsDefaultContainer = () => {
         .attr("class", "controlcontainer")
 
     d3.selectAll(".controlcontainer").raise();
+
+    body.selectAll(".positionscontainer")
+        .data([1])
+        .enter()
+        .append("div")
+        .attr("id", "positions-container")
+        .attr("class", "positionscontainer")
 }
 
 let effectInterval;
@@ -135,7 +149,7 @@ export const createControlElements = () => {
     createArrow(root, "right", rightArrowClicked, "arrow_forward");
     createArrow(root, "left", leftArrowClicked, "arrow_back");
     createArrow(root, "up", upArrowClicked, "arrow_upward");
-    createArrow(root, "down", downArrowClicked, "arrow_downward");
+    createArrow(root, "sync", showHidePositions, "sync");
 
 
     if(isMojs()) {
