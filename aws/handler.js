@@ -34,8 +34,11 @@ const disconnect = async (event, context, callback) => {
 
     const connectionId = connectionIdFromEvent(event);
     const syncId = await getSyncIdForConnectionId(connectionId);
-    await removeFromConnectionTable(connectionId);
-    await cleanCommandTable(syncId);
+
+    setTimeout(async () => {
+        await removeFromConnectionTable(connectionId);
+        cleanCommandTable(syncId);
+    }, 5000);
 
     callback(null, response(200, "DISCONNECTED"));
 

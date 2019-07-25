@@ -12,5 +12,6 @@ export interface Positions {
 export const positions: Positions = {};
 
 export const addPosition = (position: Position) => {
-    positions[position.connectionId] = position;
+    console.log(`add position: ${JSON.stringify(position)}`);
+    positions[position.userName] = position;
 }

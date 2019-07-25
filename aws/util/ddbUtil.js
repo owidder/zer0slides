@@ -15,7 +15,7 @@ const ddbCall = (fct, params) => {
                 console.log(err);
             }
             console.log(`>>> data: ${fct} / ${JSON.stringify(params)}`);
-            console.log(data);
+            console.log(`data: JSON.stringify(data)`);
             console.log(`<<< data: ${fct} / ${JSON.stringify(params)}`);
             resolve(data);
         });
