@@ -1,6 +1,7 @@
 const {logFunctionOut, logFunctionIn} = require("./util/logUtil");
 const {ddbCall, putItem, updateItem} =  require("./util/ddbUtil");
 const {getConnectionIdsForSyncId} = require("./connection");
+const {objectsEqual} = require("./util/compareUtil");
 
 const Z0COMMAND_TABLE = process.env.Z0COMMAND_TABLE
 
@@ -49,9 +50,20 @@ const cleanCommandTable = async (syncId) => {
 const updateCommand = async (syncId, command) => {
     logFunctionIn("updateCommand", {syncId, command});
 
-    await updateItem(Z0COMMAND_TABLE, {syncId: {S: syncId}}, {command})
+    const lastCommand = await getLastCommand(syncId);
+    let hasChanged = true;
+    if(lastCommand && lastCommand.length > 0) {
+        const lastCommandObj = JSON.parse(lastCommand);
+        const commandObj = JSON.parse(command);
+        hasChanged = !objectsEqual(lastCommandObj, commandObj);
+    }
+    if(hasChanged) {
+        await updateItem(Z0COMMAND_TABLE, {syncId: {S: syncId}}, {command})
+    }
 
-    logFunctionOut("updateCommand", {syncId, command});
+    logFunctionOut("updateCommand", {syncId, command, hasChanged});
+
+    return hasChanged;
 }
 
 const findRow = async (syncId) => {

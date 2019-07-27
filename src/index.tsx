@@ -104,8 +104,8 @@ const firstSlideViaSyncOrParams = (slideNoViaParam: number, stepNoViaParam: numb
                     renderFirstSlide(slideNo, stepNo);
                 } else {
                     renderFirstSlide(slideNoViaParam, stepNoViaParam);
-                    slideCore.syncCurrentSlideNoAndStepNo();
                 }
+                slideCore.syncCurrentSlideNoAndStepNo();
                 resolve();
             })
         } else {

@@ -157,8 +157,8 @@ export class SlideCore {
             } else {
                 resetSlide(this.getCurrentSlide());
             }
-            this.syncCurrentSlideNoAndStepNo();
         }
+        this.syncCurrentSlideNoAndStepNo();
     }
 
     public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {

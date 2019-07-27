@@ -110,9 +110,11 @@ const sendCommand = async (event, context, callback) => {
         const connectionIdsResult = await getConnectionIdsForSyncId(syncId);
         console.log(`connectionIds: ${JSON.stringify(connectionIdsResult)}`);
 
-        await updateCommand(syncId, commandStr);
+        const hasChanged = await updateCommand(syncId, commandStr);
 
-        await sendToAllOtherConnections(event, connectionIdsResult.Items, commandStr);
+        if(hasChanged) {
+            await sendToAllOtherConnections(event, connectionIdsResult.Items, commandStr);
+        }
     }
 
     callback(null, response(200, "COMMAND_SENT"));
