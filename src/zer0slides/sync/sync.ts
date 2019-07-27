@@ -2,6 +2,7 @@ import {getParamValue, getParamValueWithDefault, setHashValue} from "../url/quer
 import {SimplePromise} from "../util/SimplePromise";
 import {endpoint} from "./endpoint";
 import {addPosition, Position} from "./positions";
+import {logObject} from "../util/logUtil";
 import * as types from "./types";
 
 const DEFAULT_STAGE = "dev";
@@ -63,6 +64,7 @@ export const registerCallbackForType = (type: string, callback: Callback) => {
 
 const handleTyped = (dataObj: Typed) => {
     if(dataObj.type) {
+        logObject(dataObj, `new ${dataObj.type}`);
         const callback = typeToCallback[dataObj.type];
         if(callback) {
             callback(dataObj);
@@ -96,8 +98,6 @@ export const initSync = (commandCallback: (Command) => void): Promise<void> => {
             }
 
             socket.onmessage = (event: {data: string}) => {
-                console.log(event)
-
                 const {data} = event;
                 const typed: Typed = JSON.parse(data);
 
@@ -106,7 +106,7 @@ export const initSync = (commandCallback: (Command) => void): Promise<void> => {
                 if(!typed.type || typed.type == TYPE_COMMAND) {
                     const command = typed as unknown as Command;
 
-                    console.log(command);
+                    logObject(command, "new command");
 
                     if(lastCommand == undefined) {
                         firstMessagePromise.resolve(command);

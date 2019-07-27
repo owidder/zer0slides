@@ -87,7 +87,7 @@ const isAdmin = async (syncId, myName) => {
     let _isAdmin = false;
 
     if(myName && myName.length > 0) {
-        const adminName = getAdminName(syncId);
+        const adminName = await getAdminName(syncId);
         _isAdmin = (adminName == myName);
     }
 
@@ -126,8 +126,6 @@ const getLastCommand = async (syncId) => {
 const initSyncId = async (syncId, myName) => {
     logFunctionIn("initSyncId", {syncId, connectionId: myName});
 
-    let isAdmin = false;
-
     const numberOfConnections = await getNumberOfConnectionsWithSyncId(syncId);
     if(numberOfConnections == 0) {
         const item = {
@@ -135,13 +133,9 @@ const initSyncId = async (syncId, myName) => {
             admin: {S: myName}
         }
         await putItem(Z0COMMAND_TABLE, item);
-
-        isAdmin = true;
     }
 
     logFunctionOut("initSyncId", {syncId, connectionId: myName, numberOfConnections});
-
-    return isAdmin
 }
 
 module.exports = {

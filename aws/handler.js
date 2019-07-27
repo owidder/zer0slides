@@ -9,12 +9,15 @@ const {
     removeFromConnectionTable,
     createNewConnection,
     saveCurrentPosition,
-    setCurrentPosition} = require("./connection");
+    setCurrentPosition,
+    clearConnectionsForUserName,
+    sendAllPositions} = require("./connection");
 const {
     cleanCommandTable,
     updateCommand,
     getLastCommand,
     initSyncId,
+    isAdmin,
     addAttributesToCommand,
     getAdminName} = require("./command");
 
@@ -55,10 +58,17 @@ const register = async (event, context, callback) => {
     const myNameOrConnectionId = myName ? myName : connectionId;
 
     await initSyncId(syncId, myNameOrConnectionId);
+
+    await clearConnectionsForUserName(myNameOrConnectionId);
     await saveSyncId(connectionId, syncId, myNameOrConnectionId);
     const lastCommand = await getLastCommand(body.syncId);
 
     await send(event, connectionId, myName ? lastCommand : addAttributesToCommand(lastCommand, {myName: connectionId}));
+
+    const _isAdmin = await isAdmin(syncId, myNameOrConnectionId);
+    if(_isAdmin) {
+        sendAllPositions(event, myNameOrConnectionId);
+    }
 
     callback(null, response(200, "REGISTERED"));
 

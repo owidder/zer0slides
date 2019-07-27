@@ -143,6 +143,8 @@ export class SlideCore {
     }
 
     public gotoSlideNoAndStepNo(slideNo: number, stepNo: number, withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
+        console.log({currentIndex: this.getCurrentIndex(), slideNo});
+
         if(this.getCurrentIndex() != slideNo) {
             const oldSlide = this.processOldSlide();
             this.setCurrentSlideWithIndex(slideNo);

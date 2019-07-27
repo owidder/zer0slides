@@ -75,6 +75,33 @@ const createNewConnection = async (connectionId) => {
     logFunctionOut("createNewConnection", {connectionId});
 }
 
+const getConnectionIdsForUserName = (userName) => {
+    const params = {
+        TableName: Z0CONNECTION_TABLE,
+        ProjectionExpression: "connectionId",
+        FilterExpression: "userName = :userName",
+        ExpressionAttributeValues: {
+            ":userName": {S: userName}
+        }
+    }
+
+    return ddbCall('scan', params);
+}
+
+const clearConnectionsForUserName = async (userName) => {
+    logFunctionIn("clearConnectionsForUserName", {userName});
+
+    const connectionIdsObj = await getConnectionIdsForUserName(userName);
+
+    const promises = connectionIdsObj.Items.map(item => {
+        return removeFromConnectionTable(item.connectionId.S);
+    })
+
+    logFunctionOut("clearConnectionsForUserName", {userName});
+
+    return Promise.all(promises);
+}
+
 const removeFromConnectionTable = async (connectionId) => {
     logFunctionIn("removeFromConnectionTable", {connectionId});
 
@@ -88,6 +115,22 @@ const removeFromConnectionTable = async (connectionId) => {
     await ddbCall('deleteItem', deleteParams);
 
     logFunctionOut("removeFromConnectionTable", {connectionId});
+}
+
+const sendAllPositions = async (event, adminName) => {
+    logFunctionIn("sendAllPositions", {event, adminName});
+
+    const params = {
+        TableName: Z0CONNECTION_TABLE,
+        ProjectionExpression: "connectionId, userName, slideNo, stepNo",
+    }
+
+    const allPositions = await ddbCall('scan', params);
+
+    const adminConnectionId = await getConnectionIdForUserName(adminName);
+    await send(event, adminConnectionId, JSON.stringify({allPositions, type: types.ALL_POSITIONS}));
+
+    logFunctionOut("sendAllPositions", {event, adminName});
 }
 
 const setCurrentPosition = async (event, slideNo, stepNo, adminName, userName) => {
@@ -114,11 +157,12 @@ const getConnectionIdForUserName = async (userName) => {
         }
     }
 
-    const connectionIdObj = await ddbCall('scan', params);
+    const connectionIdsObj = await getConnectionIdsForUserName(userName);
 
-    const connectionId = connectionIdObj.Items[0].connectionId.S;
+    const connectionId = (connectionIdsObj && connectionIdsObj.Items && connectionIdsObj.Items.length > 0) ?
+        connectionIdsObj.Items[0].connectionId.S : undefined;
 
-    logFunctionOut("getConnectionIdForUserName", {userName, connectionIdObj, connectionId})
+    logFunctionOut("getConnectionIdForUserName", {userName, connectionIdObj: connectionIdsObj, connectionId})
 
     return connectionId
 }
@@ -132,4 +176,6 @@ module.exports = {
     createNewConnection,
     saveCurrentPosition,
     setCurrentPosition,
+    sendAllPositions,
+    clearConnectionsForUserName,
 }
