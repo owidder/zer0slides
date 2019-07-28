@@ -1,4 +1,4 @@
-const {logFunctionIn, logFunctionOut} = require("./util/logUtil");
+const {logFunctionIn, logFunctionOut, logObject} = require("./util/logUtil");
 const {ddbCall, putItem, updateItem} = require("./util/ddbUtil");
 const {connectionIdFromEvent,send} = require("./util/wsUtil");
 const types = require("./types");
@@ -117,6 +117,23 @@ const removeFromConnectionTable = async (connectionId) => {
     logFunctionOut("removeFromConnectionTable", {connectionId});
 }
 
+const formatAllPositions = (allPositions) => {
+    logFunctionIn("formatAllPositions", {allPositions});
+
+    let _formatted = [];
+    if(allPositions.Items) {
+        _formatted = allPositions.Items.map(position => {
+            return  Object.keys(position).reduce((formattedPositions, attributeName) => {
+                return {...formattedPositions, [attributeName]: position[attributeName].S}
+            }, {})
+        })
+    }
+
+    logFunctionOut("formatAllPositions", {allPositions, _formatted});
+
+    return _formatted;
+}
+
 const sendAllPositions = async (event, adminName) => {
     logFunctionIn("sendAllPositions", {event, adminName});
 
@@ -125,7 +142,8 @@ const sendAllPositions = async (event, adminName) => {
         ProjectionExpression: "connectionId, userName, slideNo, stepNo",
     }
 
-    const allPositions = await ddbCall('scan', params);
+    const allPositionsRaw = await ddbCall('scan', params);
+    const allPositions = formatAllPositions(allPositionsRaw);
 
     const adminConnectionId = await getConnectionIdForUserName(adminName);
     await send(event, adminConnectionId, JSON.stringify({allPositions, type: types.ALL_POSITIONS}));
