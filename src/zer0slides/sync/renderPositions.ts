@@ -26,7 +26,6 @@ const getTippyObject = (selector: string) => {
 
 export const renderPositions = (target: string) => {
     const tippyObject = getTippyObject(target);
-    console.log(tippyObject);
     tippyObject.setContent(`<div class='${ROOT_CLASS_NAME}'></div>`);
     if(!tippyObject.state.isShown) {
         tippyObject.show();
@@ -45,7 +44,7 @@ const createTable = () => {
 
 export const updatePositionTable = () => {
     createTable();
-    const userNames = Object.keys(positions);
+    const userNames = Object.keys(positions).sort();
     const tbody = d3.select(`.${ROOT_CLASS_NAME} tbody`);
     const data = tbody.selectAll("tr.position").data(userNames);
 

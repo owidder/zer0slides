@@ -134,12 +134,16 @@ const formatAllPositions = (allPositions) => {
     return _formatted;
 }
 
-const sendAllPositions = async (event, adminName) => {
+const sendAllPositions = async (event, adminName, syncId) => {
     logFunctionIn("sendAllPositions", {event, adminName});
 
     const params = {
         TableName: Z0CONNECTION_TABLE,
         ProjectionExpression: "connectionId, userName, slideNo, stepNo",
+        FilterExpression: "syncId = :syncId",
+        ExpressionAttributeValues: {
+            ":syncId": {S: syncId}
+        }
     }
 
     const allPositionsRaw = await ddbCall('scan', params);

@@ -40,7 +40,9 @@ const disconnect = async (event, context, callback) => {
 
     setTimeout(async () => {
         await removeFromConnectionTable(connectionId);
-        cleanCommandTable(syncId);
+        await cleanCommandTable(syncId);
+        const adminName = getAdminName(syncId);
+        sendAllPositions(event, adminName, syncId);
     }, 5000);
 
     callback(null, response(200, "DISCONNECTED"));
@@ -67,7 +69,7 @@ const register = async (event, context, callback) => {
 
     const _isAdmin = await isAdmin(syncId, myNameOrConnectionId);
     if(_isAdmin) {
-        sendAllPositions(event, myNameOrConnectionId);
+        sendAllPositions(event, myNameOrConnectionId, syncId);
     }
 
     callback(null, response(200, "REGISTERED"));
