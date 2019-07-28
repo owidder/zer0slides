@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 
 import {slideCore} from '../core/core';
-import {renderPositions, updatePositionTable} from "../sync/renderPositions";
+import {renderPositions} from "../sync/renderPositions";
 
 const mojs = require('../effects/mojs');
 
