@@ -27,16 +27,27 @@ const getTippyObject = (selector: string) => {
 export const renderPositions = (target: string) => {
     const tippyObject = getTippyObject(target);
     console.log(tippyObject);
-    tippyObject.setContent(`<table><thead><tr><th>name</th><th>slide#</th><th>step#</th></tr></thead><tbody class='${ROOT_CLASS_NAME}'></tbody></table>`);
+    tippyObject.setContent(`<div class='${ROOT_CLASS_NAME}'></div>`);
     if(!tippyObject.state.isShown) {
         tippyObject.show();
     }
 }
 
-export const updatePositionTable = () => {
-    const userNames = Object.keys(positions);
+const createTable = () => {
     const root = d3.select(`.${ROOT_CLASS_NAME}`);
-    const data = root.selectAll("tr.position").data(userNames);
+    const table = root.selectAll("table").data([1]).enter().append("table");
+    const tr = table.append("thead").append("tr");
+    tr.append("th").text("name");
+    tr.append("th").text("slide#");
+    tr.append("th").text("step#");
+    table.append("tbody")
+}
+
+export const updatePositionTable = () => {
+    createTable();
+    const userNames = Object.keys(positions);
+    const tbody = d3.select(`.${ROOT_CLASS_NAME} tbody`);
+    const data = tbody.selectAll("tr.position").data(userNames);
 
     const trEnter = data.enter()
         .append("tr")
@@ -52,13 +63,13 @@ export const updatePositionTable = () => {
         .attr("class", "position-stepno position")
 
 
-    root.selectAll("td.position-name")
+    tbody.selectAll("td.position-name")
         .text(d => d)
 
-    root.selectAll("td.position-slideno")
+    tbody.selectAll("td.position-slideno")
         .text(d => positions[d].slideNo)
 
-    root.selectAll("td.position-stepno")
+    tbody.selectAll("td.position-stepno")
             .text(d => positions[d].stepNo)
 
     data.exit().remove()

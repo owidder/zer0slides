@@ -83,12 +83,12 @@ const findRow = async (syncId) => {
 }
 
 const getAdminName = async (syncId) => {
-    logFunctionIn("getAdminConnectionId", {syncId})
+    logFunctionIn("getAdminName", {syncId})
 
     const row = await findRow(syncId);
     const adminName = row && row.admin ? row.admin.S : undefined;
 
-    logFunctionOut("getAdminConnectionId", {syncId, adminName})
+    logFunctionOut("getAdminName", {syncId, adminName})
 
     return adminName
 }
