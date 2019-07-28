@@ -1,7 +1,9 @@
 import tippy from "tippy.js";
 import * as d3 from "d3";
 
-import {positions} from "./positions";
+import {positions, registerPositionChangedCallback} from "./positions";
+
+const ROOT_CLASS_NAME = "positions";
 
 const getTippyObject = (selector: string) => {
     const tippyObject = () => (document.querySelector(selector) as any)._tippy;
@@ -10,7 +12,9 @@ const getTippyObject = (selector: string) => {
         document.querySelector(selector).setAttribute("data-tippy-content", "");
         tippy(selector, {
             trigger: "manual",
-            onMount: () => doRender("ol.positions")
+            onMount: () => {
+                registerPositionChangedCallback(() => updatePositionTable())
+            }
         });
     }
 
@@ -20,19 +24,22 @@ const getTippyObject = (selector: string) => {
 export const renderPositions = (target: string) => {
     const tippyObject = getTippyObject(target);
     console.log(tippyObject);
-    tippyObject.setContent("<ol class='positions'></ol>");
+    tippyObject.setContent(`<ol class='${ROOT_CLASS_NAME}'></ol>`);
     if(!tippyObject.state.isShown) {
         tippyObject.show();
     }
 }
 
-const doRender = (rootSelector: string) => {
+export const updatePositionTable = () => {
     const userNames = Object.keys(positions);
-    const root = d3.select(rootSelector);
-    root.selectAll("li.position")
-        .data(userNames)
-        .enter()
+    const root = d3.select(`.${ROOT_CLASS_NAME}`);
+    const data = root.selectAll("li.position").data(userNames);
+
+    data.enter()
         .append("li")
         .attr("class", "position")
-        .text(d => d)
+        .merge(data)
+        .text(d => `${d}: ${positions[d].slideNo} / ${positions[d].stepNo}`)
+
+    data.exit().remove()
 }
