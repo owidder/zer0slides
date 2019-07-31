@@ -1,0 +1,30 @@
+<style>
+    /* __0__ will be replaced by the id of the div of this slide */
+
+    #__0__ .code {
+        font-size: 6em;
+    }
+
+</style>
+
+<div class="code"></div>
+<h5>Use 'right'/'left' to change slides, 'down'/'up' to step forward/back.</h5>
+
+<script>
+
+    (function () {
+        _0.codeJs(".code",
+            "'AWS Lambda'\n" +
+            "Kein Server\n" +
+            "Keine Sorgen");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", "Einfach ...", "top"));
+        steps.push(_0.highlightLinesStep(".code", "2", " ... nur ...", "bottom-right-corner"));
+        steps.push(_0.highlightLinesStep(".code", "3", " ... Code"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

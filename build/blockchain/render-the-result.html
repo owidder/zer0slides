@@ -1,0 +1,62 @@
+<style>
+
+    #__0__ .code {
+        font-size: 1.2em;
+    }
+
+    #__0__ .code pre {
+        background-color: white;
+    }
+
+    #__0__ .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["Render the results",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "...\n" +
+            "export class HashStore extends React.Component {\n" +
+            "...\n" +
+            "    renderEntry() {\n" +
+            "        const {drizzleState, sourceKey, blockNumberKey, blockTimestampKey} = this.state;\n" +
+            "        const contract = drizzleState.contracts.HashStore;\n" +
+            "        const source = contract.getSourceFromHash[sourceKey];\n" +
+            "        const blockNumber = contract.getBlockNumberFromHash[blockNumberKey];\n" +
+            "        const blockTimestamp = contract.getBlockTimestampFromHash[blockTimestampKey];\n" +
+            "\n" +
+            "        return <Card>\n" +
+            "            <p>Source: {source ? source.value : \"\"}</p>\n" +
+            "            <p>Block number: {blockNumber ? blockNumber.value : \"\"}</p>\n" +
+            "            <p>Block timestamp: {blockTimestamp ? (new Date(Number(blockTimestamp.value) * 1000)).toDateString() : \"\"}</p>\n" +
+            "        </Card>\n" +
+            "    }\n" +
+            "...\n" +
+            "}\n"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "4-16", "Show account address, block number and timestamp", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "5", "Get the Drizzle state and the keys of the view method calls from the component state", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "6", "An array with the results"));
+        steps.push(_0.highlightLinesStep(codeSelector, "7-9", "Get the results of the view method calls"));
+        steps.push(_0.highlightLinesStep(codeSelector, "11-15", "Render the results"));
+        steps.push(_0.highlightLinesStep(codeSelector, "12", "Caution!", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "13", "Return values may be ...", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "14", " ... null"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

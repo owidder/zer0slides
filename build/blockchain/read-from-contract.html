@@ -1,0 +1,57 @@
+<style>
+
+    #__0__ .code {
+        font-size: 1.2em;
+    }
+
+    #__0__ .code pre {
+        background-color: white;
+    }
+
+    #__0__ .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["Read from contract",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "...\n" +
+            "export class HashStore extends React.Component {\n" +
+            "...\n" +
+            "    async getEntryFromHash() {\n" +
+            "        const contract = this.drizzle.contracts.HashStore;\n" +
+            "\n" +
+            "        const hashedText = await hashSHA256FromUtf8(this.text);\n" +
+            "\n" +
+            "        const sourceKey = contract.methods[\"getSourceFromHash\"].cacheCall(hashedText);\n" +
+            "        const blockNumberKey = contract.methods[\"getBlockNumberFromHash\"].cacheCall(hashedText);\n" +
+            "        const blockTimestampKey = contract.methods[\"getBlockTimestampFromHash\"].cacheCall(hashedText);\n" +
+            "\n" +
+            "        this.setState({sourceKey, blockNumberKey, blockTimestampKey, hashedText});\n" +
+            "    }\n" +
+            "...\n" +
+            "}\n"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "4-14", "Call the view methods of the contract"));
+        steps.push(_0.highlightLinesStep(codeSelector, "5", "Get the contract proxy", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "7", "Get hash value"));
+        steps.push(_0.highlightLinesStep(codeSelector, "9-11", "Call all three view methods and get a key for each"));
+        steps.push(_0.highlightLinesStep(codeSelector, "13", "Put the keys and the hash value into the component state"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

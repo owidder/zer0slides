@@ -1,0 +1,30 @@
+<style>
+
+    #__0__ .code {
+        font-size: 3em;
+    }
+
+</style>
+
+<div class="background"></div>
+<h1>How to create your zer0slides code slide show?</h1>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.codeJs(".code",
+            "Create a host page\n" +
+            "Create a small HTML file for each slide");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", "It's just a super small 'index.html' file", "top"));
+        steps.push(_0.highlightLinesStep(".code", "2", "Just plain old HTML/CSS/JavaScript"));
+
+        _0.setSteps(steps);
+
+        const BACKGROUND_SELECTOR = ".background";
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/gelaender.jpg", .15, 200);
+        ___();
+    })()
+</script>

@@ -1,0 +1,59 @@
+<style>
+
+    #__0__ .code {
+        font-size: 1.2em;
+    }
+
+    #__0__ .code pre {
+        background-color: white;
+    }
+
+    #__0__ .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["truffle.js",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "var HDWalletProvider = require(\"truffle-hdwallet-provider\");\n" +
+            "var mnemonic = \"season divert corn exchange harbor book boat allow vivid error apple process\";\n" +
+            "\n" +
+            "module.exports = {\n" +
+            "    networks: {\n" +
+            "        development: {\n" +
+            "            host: \"localhost\",\n" +
+            "            port: 8545,\n" +
+            "            network_id: \"*\" // Match any network id\n" +
+            "        },\n" +
+            "        infura: {\n" +
+            "            provider: function () {\n" +
+            "                return new HDWalletProvider(mnemonic, \"https://rinkeby.infura.io/v3/6b901e50131a4b69a46c6aad0294cb1d\")\n" +
+            "            },\n" +
+            "            network_id: 4,\n" +
+            "        },\n" +
+            "    },\n" +
+            "};\n",
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "2", "Caution! These are the keys to the kingdom!"));
+        steps.push(_0.highlightLinesStep(codeSelector, "1", "Used to deploy via a wallet", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "11-16", "Deploy via Infura"));
+        steps.push(_0.highlightLinesStep(codeSelector, "13", "Init with the mnenomics and the Infura-rinkeby-address (with API key)"));
+        steps.push(_0.highlightLinesStep(codeSelector, "15", "Rinkebys network ID is 4"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

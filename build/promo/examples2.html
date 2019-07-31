@@ -1,0 +1,72 @@
+<style>
+
+    #__0__ .container {
+        position: relative;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #__0__ .code {
+        font-size: 2.5em;
+    }
+
+</style>
+
+<div class="background"></div>
+<h1>Examples</h1>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        const BACKGROUND_SELECTOR = ".background";
+        _0.backgroundImage(BACKGROUND_SELECTOR, "./img/dog.jpeg", .2, 200);
+
+        _0.codeJs(".code",
+            "The slides of this promo\n" +
+            "Hello World example\n" +
+            "Slides of the Hello World example\n" +
+            "Presentation about building a JavaScript blockchain client...\n" +
+            "Slides of the blockchain presentation\n" +
+            "Sophisticated example for custom steps\n" +
+            "Slides of the custom steps example")
+
+        const steps = [];
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "1", "Press 'Enter' to see the slides of this promo", "top"),
+            _0.shortcutFunctionStep(function() {window.open("https://github.com/owidder/zer0slides/tree/master/public/promo", "_blank")})
+        ));
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "2", "Press 'Enter' to see a Hello World example"),
+            _0.shortcutFunctionStep(function() {window.open("https://owidder.github.io/zer0slides/build/helloworld/indexPublic.html", "_blank")})
+        ));
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "3", "Press 'Enter' to see the slides of the Hello World example", "top"),
+            _0.shortcutFunctionStep(function() {window.open("https://github.com/owidder/zer0slides/tree/gh-pages/build/helloworld", "_blank")})
+        ));
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "4", "Press 'Enter' to see a presentation how to build a JavaScript blockchain client"),
+            _0.shortcutFunctionStep(function() {window.open("https://owidder.github.io/zer0slides/build/blockchain/indexPublic.html", "_blank")})
+        ));
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "5", "Press 'Enter' to see the slides of the JavaScript/blockchain presentation"),
+            _0.shortcutFunctionStep(function() {window.open("https://github.com/owidder/zer0slides/tree/gh-pages/build/blockchain", "_blank")})
+        ));
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "6", "Press 'Enter' to see to see a gorgeous example for custom steps about stock price correlations", "top"),
+            _0.shortcutFunctionStep(function() {window.open("https://owidder.github.io/zer0slides/build/customSteps/indexPublic.html", "_blank")})
+        ));
+        steps.push(_0.combine(
+            _0.highlightLinesStep(".code", "7", "Press 'Enter' to see to see the slides of the custom steps example"),
+            _0.shortcutFunctionStep(function() {window.open("https://github.com/owidder/zer0slides/tree/gh-pages/build/customSteps", "_blank")})
+        ));
+        _0.setSteps(steps);
+
+        ___();
+    })()
+
+</script>

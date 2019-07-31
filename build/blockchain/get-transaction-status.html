@@ -1,0 +1,54 @@
+<style>
+
+    #__0__ .code {
+        font-size: 1.2em;
+    }
+
+    #__0__ .code pre {
+        background-color: white;
+    }
+
+    #__0__ .line-highlight {
+        border: solid black 2px;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["Get transaction status",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "...\n" +
+            "export class HashStore extends React.Component {\n" +
+            "...\n" +
+            "    renderTxStatus() {\n" +
+            "        const {transactions, transactionStack} = this.state.drizzleState;\n" +
+            "        const txIndex = transactionStack[this.state.txKey];\n" +
+            "\n" +
+            "        if (!txIndex) return null;\n" +
+            "\n" +
+            "        return `Transaction status: ${transactions[txIndex].status}`;\n" +
+            "    };\n" +
+            "...\n" +
+            "}\n"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "4-11", "Don't even try to get this", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "5", "Do this ..."));
+        steps.push(_0.highlightLinesStep(codeSelector, "6", " ... and this", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "8", "Check whether there is something there"));
+        steps.push(_0.highlightLinesStep(codeSelector, "10", "Return the state of the transaction", "top"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

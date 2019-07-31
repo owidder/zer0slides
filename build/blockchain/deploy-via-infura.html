@@ -1,0 +1,20 @@
+<style>
+
+    #__0__ .code {
+        font-size: 4em;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["Deploy via Infura",], "middle-large glow");
+        _0.codeBash(".code", "truffle migrate --network infura");
+        _0.setSteps([_0.highlightLinesStep(".code", "1", "Use the 'infura' network configuration from 'truffle.js'")]);
+        ___();
+    })()
+</script>

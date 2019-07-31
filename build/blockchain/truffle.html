@@ -1,0 +1,48 @@
+<style>
+
+    #__0__ .code {
+        font-size: 4em;
+    }
+
+    #__0__ .flex {
+        display: flex;
+        justify-content: center;
+    }
+
+    #__0__ .innerflex {
+        display: flex;
+        flex-direction: column;
+    }
+
+</style>
+
+<div class="flex">
+    <div class="innerflex">
+        <div class="title"></div>
+        <div>
+            <img src="./img/truffle.png">
+            <img src="./img/ganache.png">
+        </div>
+    </div>
+</div>
+
+<div class="code"></div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["Truffle + Ganache",], "middle-large glow");
+
+        _0.codeBash(".code",
+            "npm i -g truffle\n" +
+            "npm i -g ganache-cli"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", "Truffle: Deploy and test contracts", "top"));
+        steps.push(_0.highlightLinesStep(".code", "2", "Ganache: Local blockchain for testing purposes"));
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

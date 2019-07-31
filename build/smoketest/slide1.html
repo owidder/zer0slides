@@ -1,0 +1,29 @@
+<style>
+    #__0__ .code {
+        font-size: 6em;
+    }
+
+</style>
+
+<div class="code"></div>
+<h5>Use 'right'/'left' to change slides, 'down'/'up' to step forward/back.</h5>
+
+<script>
+
+    (function () {
+        _0.codeJs(".code",
+            "console.log(\"1\")\n" +
+            "console.log(\"2\")\n" +
+            "console.log(\"3\")\n" +
+            "console.log(\"End\")");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", "One", "top"));
+        steps.push(_0.highlightLinesStep(".code", "2", "Two", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "3", "Three"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
