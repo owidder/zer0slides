@@ -1,6 +1,6 @@
 const {logFunctionOut, logFunctionIn} = require("./util/logUtil");
 const {ddbCall, putItem, updateItem} =  require("./util/ddbUtil");
-const {getConnectionIdsForSyncId} = require("./connection");
+const {getConnectionIdsForSyncId, sendAllPositions} = require("./connection");
 const {objectsEqual} = require("./util/compareUtil");
 
 const Z0COMMAND_TABLE = process.env.Z0COMMAND_TABLE
@@ -33,6 +33,15 @@ const getNumberOfConnectionsWithSyncId = async (syncId) => {
     logFunctionOut("getNumberOfConnectionsWithSyncId", {syncId, count});
 
     return count;
+}
+
+const sendAllPositionsToAdmin = async (event, syncId) => {
+    logFunctionIn("sendAllPositionsToAdmin", {event, syncId});
+
+    const adminName = await getAdminName(syncId);
+    await sendAllPositions(event, adminName, syncId);
+
+    logFunctionOut("sendAllPositionsToAdmin", {event, syncId, adminName});
 }
 
 const cleanCommandTable = async (syncId) => {
@@ -160,4 +169,5 @@ module.exports = {
     addAttributesToCommand,
     isAdmin,
     getAdminName,
+    sendAllPositionsToAdmin,
 }

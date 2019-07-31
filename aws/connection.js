@@ -5,7 +5,7 @@ const types = require("./types");
 
 const Z0CONNECTION_TABLE = process.env.Z0CONNECTION_TABLE;
 
-const getConnectionIdsForSyncId = (syncId) => {
+const getConnectionIdsForSyncId = async (syncId) => {
     logFunctionIn("getConnectionIdsForSyncId", {syncId});
 
     const params = {
@@ -17,7 +17,7 @@ const getConnectionIdsForSyncId = (syncId) => {
         }
     }
 
-    const connectionIdsPromise = ddbCall('scan', params);
+    const connectionIdsPromise = await ddbCall('scan', params);
 
     logFunctionOut("getConnectionIdsForSyncId", {syncId});
 

@@ -43,10 +43,14 @@ const createTable = () => {
 }
 
 export const updatePositionTable = () => {
+    console.log(">>> updatePositionTable ");
+    console.log(positions);
+    console.log("<<< updatePositionTable ");
+
     createTable();
     const userNames = Object.keys(positions).sort();
     const tbody = d3.select(`.${ROOT_CLASS_NAME} tbody`);
-    const data = tbody.selectAll("tr.position").data(userNames);
+    const data = tbody.selectAll("tr.position").data(userNames, d => d);
 
     const trEnter = data.enter()
         .append("tr")

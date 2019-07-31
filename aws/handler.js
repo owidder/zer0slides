@@ -17,7 +17,7 @@ const {
     updateCommand,
     getLastCommand,
     initSyncId,
-    isAdmin,
+    sendAllPositionsToAdmin,
     addAttributesToCommand,
     getAdminName} = require("./command");
 
@@ -41,9 +41,8 @@ const disconnect = async (event, context, callback) => {
     setTimeout(async () => {
         await removeFromConnectionTable(connectionId);
         await cleanCommandTable(syncId);
-        const adminName = getAdminName(syncId);
-        sendAllPositions(event, adminName, syncId);
-    }, 5000);
+        await sendAllPositionsToAdmin(event, syncId);
+    }, 10000);
 
     callback(null, response(200, "DISCONNECTED"));
 
@@ -67,10 +66,7 @@ const register = async (event, context, callback) => {
 
     await send(event, connectionId, myName ? lastCommand : addAttributesToCommand(lastCommand, {myName: connectionId}));
 
-    const _isAdmin = await isAdmin(syncId, myNameOrConnectionId);
-    if(_isAdmin) {
-        sendAllPositions(event, myNameOrConnectionId, syncId);
-    }
+    await sendAllPositionsToAdmin(event, syncId);
 
     callback(null, response(200, "REGISTERED"));
 
