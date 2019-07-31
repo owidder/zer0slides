@@ -1,8 +1,10 @@
 import {Slide, SlideConfig} from './Slide';
-import {renderSlide, refreshSlide, InOut} from './render';
+import {renderSlide, refreshSlide, InOut, resetSlide} from './render';
 import {setSlideNo} from '../html/controlElements';
-import {setHashValue} from '../url/queryUtil';
+import {setHashValue} from '../url/queryUtil2';
 import {Transformation} from '../html/transformations/Transformation';
+import {SimplePromise} from "./SimplePromise";
+import {sendSlideNoAndStepNo} from "../sync/sync";
 
 export class SlideCore {
 
@@ -110,28 +112,24 @@ export class SlideCore {
         refreshSlide(this.getCurrentSlide());
     }
 
-    private doWithOldSlide(oldSlide: Slide) {
-        oldSlide.aboutToBeRemoved();
+    public resetSlide() {
+        resetSlide(this.getCurrentSlide());
     }
 
-    private doWithNewSlide(newSlide: Slide) {
-        if(this.autoStepIntervalInMs > -1) {
-            newSlide.autoStepOn(this.autoStepIntervalInMs)
-        }
-    }
-
-    public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
-        this.nextSlideCallback();
+    private processOldSlide(): Slide {
         const oldSlide = this.getCurrentSlide();
-        this.doWithOldSlide(oldSlide);
+        oldSlide.aboutToBeRemoved();
 
-        const currentIndex = this.getCurrentIndex();
-        if(currentIndex < (this.slideNames.length - 1)) {
-            this.setCurrentSlideWithIndex(currentIndex + 1);
-        }
-        else {
-            this.setCurrentSlideWithIndex(0);
-        }
+        return oldSlide;
+    }
+
+    public syncCurrentSlideNoAndStepNo() {
+        const slideNo = this.getCurrentIndex();
+        const stepNo = this.getCurrentSlide().currentStepNo;
+        sendSlideNoAndStepNo(slideNo, stepNo);
+    }
+
+    private callRenderSlide = (oldSlide: Slide, withTransformation, transformInType: Transformation, transformOutType: Transformation, inOut: InOut) => {
         const slide = this.getCurrentSlide();
         renderSlide({
             slide,
@@ -141,11 +139,45 @@ export class SlideCore {
             transformOutType: transformOutType === "Slide" ? oldSlide.transformationOutNext : transformOutType
         });
         this.showCurrentIndex();
+        this.syncCurrentSlideNoAndStepNo();
+    }
+
+    public gotoSlideNoAndStepNo(slideNo: number, stepNo: number, withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
+        console.log({currentIndex: this.getCurrentIndex(), slideNo});
+
+        if(this.getCurrentIndex() != slideNo) {
+            const oldSlide = this.processOldSlide();
+            this.setCurrentSlideWithIndex(slideNo);
+            this.getCurrentSlide().currentStepNo = stepNo;
+            this.callRenderSlide(oldSlide, withTransformation, transformInType, transformOutType, inOut);
+        } else if(this.getCurrentSlide().currentStepNo != stepNo) {
+            this.getCurrentSlide().currentStepNo = stepNo;
+            if(stepNo > -1) {
+                this.getCurrentSlide().performToCurrentStep();
+            } else {
+                resetSlide(this.getCurrentSlide());
+            }
+        }
+        this.syncCurrentSlideNoAndStepNo();
+    }
+
+    public nextSlide(withTransformation = true, transformInType: Transformation = "Left", transformOutType: Transformation = "Right", inOut: InOut = "outAndInAtOnce") {
+        this.nextSlideCallback();
+        const oldSlide = this.processOldSlide();
+
+        const currentIndex = this.getCurrentIndex();
+        if(currentIndex < (this.slideNames.length - 1)) {
+            this.setCurrentSlideWithIndex(currentIndex + 1);
+        }
+        else {
+            this.setCurrentSlideWithIndex(0);
+        }
+
+        this.callRenderSlide(oldSlide, withTransformation, transformInType, transformOutType, inOut);
     }
 
     public prevSlide(withTransformation = true, transformInType: Transformation = "Right", transformOutType: Transformation = "Left", inOut: InOut = "outAndInAtOnce") {
-        const oldSlide = this.getCurrentSlide();
-        oldSlide.aboutToBeRemoved();
+        const oldSlide = this.processOldSlide();
 
         const currentIndex = this.getCurrentIndex();
         if(currentIndex > 0) {
@@ -154,14 +186,7 @@ export class SlideCore {
         else {
             this.setCurrentSlideWithIndex(this.slideNames.length - 1);
         }
-        const slide = this.getCurrentSlide();
-        renderSlide({
-            slide,
-            oldSlide: withTransformation ? oldSlide : undefined,
-            inOut,
-            transformInType: transformInType === "Slide" ? slide.transformationInPrev : transformInType,
-            transformOutType: transformOutType === "Slide" ? oldSlide.transformationOutPrev : transformOutType
-        });
-        this.showCurrentIndex();
+
+        this.callRenderSlide(oldSlide, withTransformation, transformInType, transformOutType, inOut);
     }
 }

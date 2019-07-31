@@ -110,7 +110,7 @@ export class Slide {
 
     public async nextStep(roundRobin = false) {
         if(!slideCore.blockSteps) {
-            if(!(this.currentStepNo > 0)) {
+            if(this.currentStepNo < 0) {
                 slideCore.firstStepCallback();
             }
             if(this.currentStepNo >= this.steps.length - 1) {
@@ -131,7 +131,8 @@ export class Slide {
 
             this.currentStepNo++;
             this.steps[this.currentStepNo] && this.steps[this.currentStepNo].perform();
-            this.showStepCtr()
+            this.showStepCtr();
+            slideCore.syncCurrentSlideNoAndStepNo();
         }
     }
 
@@ -152,6 +153,7 @@ export class Slide {
             }
             this.currentStepNo--;
             this.showStepCtr();
+            slideCore.syncCurrentSlideNoAndStepNo();
         }
     }
 

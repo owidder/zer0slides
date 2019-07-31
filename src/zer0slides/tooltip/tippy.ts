@@ -5,7 +5,7 @@ import {Step} from '../core/Step';
 import {Tooltip, createTooltipSelector} from "./_tooltip";
 
 import '../less/tippy.less';
-import {q} from "../selector/selector";
+import {q, selector} from "../selector/selector";
 import {addCleanFunction} from "../lifecycle/lifecycle";
 import {slideCore} from "../core/core";
 
@@ -46,7 +46,7 @@ export const createTooltip = (tooltip: Tooltip) => {
     instance.show();
 }
 
-export const addTooltipToDomNode = (selector: string, text: string, position: string, placement: string): Tooltip | undefined => {
+export const addTooltipToDomNode = (selector: string, text: string, position?: string, placement?: string): Tooltip | undefined => {
     const _sel = q(selector);
     const old = getData(_sel);
     const tooltip = {selector, text, position, placement};
@@ -106,6 +106,10 @@ export const removeTooltipFromDomNodeStep = (selector: string): Step => {
     }
 
     return new Step(f, b);
+}
+
+export const initElementForTippy = (selector: string) => {
+    d3.selectAll(selector).attr("data-tippy-content", "init")
 }
 
 export const createTooltips = (tooltips: Tooltip[]) => {

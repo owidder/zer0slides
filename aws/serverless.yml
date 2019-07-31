@@ -1,0 +1,108 @@
+service: z0-sync
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stackName: ${self:service}-${self:provider.stage}
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'eu-central-1'}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "execute-api:ManageConnections"
+      Resource:
+        - "arn:aws:execute-api:*:*:**/@connections/*"
+    - Effect: Allow
+      Action:
+        - "dynamodb:PutItem"
+        - "dynamodb:GetItem"
+        - "dynamodb:UpdateItem"
+        - "dynamodb:DeleteItem"
+        - "dynamodb:Query"
+        - "dynamodb:Scan"
+      Resource:
+        - Fn::GetAtt: [Z0ConnectionTable, Arn]
+        - Fn::Join:
+            - "/"
+            - - Fn::GetAtt: [Z0ConnectionTable, Arn]
+              - "*"
+    - Effect: Allow
+      Action:
+        - "dynamodb:PutItem"
+        - "dynamodb:GetItem"
+        - "dynamodb:UpdateItem"
+        - "dynamodb:DeleteItem"
+        - "dynamodb:Query"
+        - "dynamodb:Scan"
+      Resource:
+        - Fn::GetAtt: [Z0CommandTable, Arn]
+        - Fn::Join:
+            - "/"
+            - - Fn::GetAtt: [Z0CommandTable, Arn]
+              - "*"
+  environment:
+    Z0CONNECTION_TABLE:
+      Ref: Z0ConnectionTable
+    Z0COMMAND_TABLE:
+      Ref: Z0CommandTable
+
+  websocketApiName: z0-sync-${self:provider.stage}
+  websocketApiRouteSelectionExpression: $request.body.action
+
+functions:
+  connect:
+    handler: handler.connect
+    events:
+      - websocket:
+          route: $connect
+  disconnect:
+    handler: handler.disconnect
+    events:
+      - websocket:
+          route: $disconnect
+  defaultMessages:
+    handler: handler.defaultMessage
+    events:
+      - websocket:
+          route: $default
+  sendCommand:
+    handler: handler.sendCommand
+    events:
+      - websocket:
+          route: sendCommand
+  sendCurrentPosition:
+    handler: handler.sendCurrentPosition
+    events:
+      - websocket:
+          route: sendCurrentPosition
+  register:
+    handler: handler.register
+    events:
+      - websocket:
+          route: register
+resources:
+  Resources:
+    Z0ConnectionTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: connectionId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: connectionId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    Z0CommandTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: syncId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: syncId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5

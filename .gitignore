@@ -2,6 +2,9 @@
 
 # dependencies
 /node_modules
+**/node_modules
+
+**/.serverless
 
 # testing
 /coverage
@@ -18,3 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea/
+build/
+
+**/set-credentials.sh
