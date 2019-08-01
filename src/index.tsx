@@ -14,11 +14,11 @@ import {createControlElements} from "./zer0slides/html/controlElements";
 import {initTooltip} from "./zer0slides/tooltip/tooltip";
 import {openContentPage, openShortcutSlide, doShortcut} from "./zer0slides/shortcut/shortcut";
 import {initSync, firstMessagePromise, isSynced, Command} from "./zer0slides/sync/sync";
+import {startFitToScreenPage} from "./zer0slides/responsive/fitToScreen";
 
 import "materialize-css/dist/css/materialize.css";
 import "prismjs/themes/prism.css";
 import "./zer0slides.less";
-import {number} from "prop-types";
 
 const version = require("../package.json").version;
 slideCore.version = version;
@@ -125,5 +125,6 @@ initReadyPromise.then(async () => {
     await firstSlideViaSyncOrParams(Number(slideNo), Number(stepNo));
     bindKeys();
     createControlElements();
+    startFitToScreenPage();
 });
 
