@@ -1,0 +1,30 @@
+<style>
+
+</style>
+
+<div class="flexcontainer center">
+    <div class="code responsive small"></div>
+</div>
+
+<script>
+
+    (function () {
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "const register = (event) => {\n" +
+            "    const body = JSON.parse(event.body);\n" +
+            "    const {syncId, myName} = body;\n" +
+            "\n" +
+            "    ...\n" +
+            "}\n",
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "1-8", "Lambda Function"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
