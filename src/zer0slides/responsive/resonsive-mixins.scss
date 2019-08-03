@@ -1,0 +1,28 @@
+$min-width-s: 350px;
+$min-width-m: 400px;
+$min-width-l: 1000px;
+$min-width-xl: 1400px;
+
+@mixin s {
+  @media (min-width: $min-width-s) and (max-width: $min-width-m - 1px) {
+    @content;
+  }
+}
+
+@mixin m {
+  @media (min-width: $min-width-m) and (max-width: $min-width-l - 1px) {
+    @content;
+  }
+}
+
+@mixin l {
+  @media (min-width: $min-width-l) and (max-width: $min-width-xl - 1px) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (min-width: $min-width-xl) {
+    @content;
+  }
+}

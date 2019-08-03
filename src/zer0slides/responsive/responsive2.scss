@@ -1,0 +1,16 @@
+@import "~include-media/dist/include-media";
+@import "./flex";
+
+.responsive {
+  &.code {
+    font-size: 1.5em;
+
+    @include media(">=tablet", "<desktop") {
+      font-size: 4em;
+    }
+
+    @include media(">=desktop") {
+      font-size: 6em;
+    }
+  }
+}

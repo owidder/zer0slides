@@ -21,6 +21,7 @@ import {metamaskLogo} from "./zer0slides/etc/metamaskLogo";
 import {cast} from "./zer0slides/specials/cast";
 import {shortcut} from "./zer0slides/shortcut/shortcut";
 import {background} from "./zer0slides/background/background";
+import {fitToScreen} from "./zer0slides/responsive/fitToScreen";
 
 const createRoot = () => {
     const body = d3.select("body");
@@ -51,6 +52,7 @@ export const init = () => {
         createCube: cube.create,
         d3select: selector.d3select,
         doNotUseTippy: tooltip.doNotUseTippy,
+        fitToScreen: fitToScreen,
         glowText: glowText.create,
         highlightLines: showCode.highlightLines,
         highlightLinesStep: showCode.highlightLinesStep,
