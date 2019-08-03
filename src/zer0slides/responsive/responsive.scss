@@ -1,0 +1,26 @@
+@import "./resonsive-mixins";
+@import "./flex";
+
+.responsive {
+  &.code {
+    font-size: 1em;
+  }
+
+  @include s {
+    .code {
+      font-size: 1.5em;
+    }
+  }
+
+  @include m {
+    font-size: 3em;
+  }
+
+  @include l {
+    font-size: 4em;
+  }
+
+  @include xl {
+    font-size: 6em;
+  }
+}
