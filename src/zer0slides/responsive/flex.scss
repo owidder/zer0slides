@@ -8,4 +8,10 @@
     justify-content: space-around;
     align-items: center;
   }
+
+  &.start {
+    margin-top: 10%;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
 }
