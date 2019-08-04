@@ -2,12 +2,6 @@
 @import "./flex";
 
 .responsive {
-  &._slide {
-    width: 100vw;
-    height: 100vh;
-    overflow: scroll;
-  }
-
   &.code {
     font-size: 1.5em;
 
