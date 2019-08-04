@@ -14,14 +14,37 @@
         _0.codeJs(codeSelector,
             "const register = (event) => {\n" +
             "    const body = JSON.parse(event.body);\n" +
-            "    const {syncId, myName} = body;\n" +
+            "    const {syncId, userName} = body;\n" +
+            "    const {connectionId} = event.requestContext;\n" +
             "\n" +
-            "    ...\n" +
+            "    const putItemParams = {\n" +
+            "        TableName: Z0CONNECTION_TABLE,\n" +
+            "        Item: {\n" +
+            "           connectionId: {S: connectionId},\n" +
+            "           syncId: {S: syncId},\n" +
+            "           userName: {S: userName}\n" +
+            "        }\n" +
+            "    }\n" +
+            "\n" +
+            "    await new Promise(resolve => {\n" +
+            "        DDB.putItem(putItemParams, (err, data) => {\n" +
+            "            if(err) {\n" +
+            "                console.log(err);\n" +
+            "            }\n" +
+            "            resolve(data);\n" +
+            "        });\n" +
+            "    })\n" +
+            "\n" +
+            "    sendAllPositionsToMaster(event, syncId);\n" +
             "}\n",
         );
 
         const steps = [];
-        steps.push(_0.highlightLinesStep(codeSelector, "1-8", "Lambda Function"));
+        steps.push(_0.highlightLinesStep(codeSelector, "1", "Lambda Function"));
+        steps.push(_0.highlightLinesStep(codeSelector, "2", "Get event body"));
+        steps.push(_0.highlightLinesStep(codeSelector, "3", "Get properties from body"));
+        steps.push(_0.highlightLinesStep(codeSelector, "4", "Get connectionId from event"));
+        steps.push(_0.highlightLinesStep(codeSelector, "6-13", "Parameter for putting item in DynamoDB"));
 
         _0.setSteps(steps);
 
