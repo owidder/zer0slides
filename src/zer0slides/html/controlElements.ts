@@ -1,7 +1,9 @@
 import * as d3 from 'd3';
+import * as $ from "jquery";
 
 import {slideCore} from '../core/core';
 import {renderPositions} from "../sync/renderPositions";
+import {addErrorCallback, errorTypes} from "../core/errorHandling";
 
 const mojs = require('../effects/mojs');
 
@@ -66,14 +68,23 @@ const createCounter = (root: any) => {
     counterDiv.append("span").attr("class", "slideno counter").text("0");
 }
 
-const createArrow = (root: any, className: string, onClick: () => void, text: string) => {
+const createArrow = (root: any, className: string, onClick: () => void, text: string, markOnErrorTypes?: string[]) => {
     root.append("a")
         .attr("class", `${isMojs() ? "" : "controlButton"} ${className}`)
         .style("cursor", "pointer")
         .on("click", onClick)
         .append("i")
         .attr("class", "material-icons icon-" + className)
-        .text(text)
+        .text(text);
+
+    if(markOnErrorTypes && markOnErrorTypes.length > 0) {
+        markOnErrorTypes.forEach(markOnErrorType => {
+            addErrorCallback(markOnErrorType, (message) => {
+                console.error(markOnErrorType);
+                $(`i.icon-${className}`).css("color", "red");
+            })
+        })
+    }
 }
 
 const createControlElementsDefaultContainer = () => {
@@ -149,8 +160,7 @@ export const createControlElements = () => {
     createArrow(root, "right", rightArrowClicked, "arrow_forward");
     createArrow(root, "left", leftArrowClicked, "arrow_back");
     createArrow(root, "up", upArrowClicked, "arrow_upward");
-    createArrow(root, "sync", showHidePositions, "sync");
-
+    createArrow(root, "sync", showHidePositions, "sync", [errorTypes.UNKNOWN_MESSAGE]);
 
     if(isMojs()) {
         slideCore.newSlideCallback = startEffect;

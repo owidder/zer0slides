@@ -2,6 +2,7 @@ import {getParamValue, getParamValueWithDefault, setHashValue} from "../url/quer
 import {SimplePromise} from "../util/SimplePromise";
 import {endpoint} from "./endpoint";
 import {addPosition, AllPositions, Position, setAllPositions} from "./positions";
+import {handleError, errorTypes} from "../core/errorHandling";
 import {logObject} from "../util/logUtil";
 import * as types from "./types";
 
@@ -104,6 +105,11 @@ export const initSync = (commandCallback: (Command) => void): Promise<void> => {
                 setMyName(typed);
 
                 if(!typed.type || typed.type == TYPE_COMMAND) {
+                    if((typed as any).message) {
+                        console.error((typed as any).message);
+                        handleError(errorTypes.UNKNOWN_MESSAGE, (typed as any).message);
+                    }
+
                     const command = typed as unknown as Command;
 
                     logObject(command, "new command");
