@@ -11,6 +11,7 @@
     "build:local": "cross-env INDEX=indexLocal npm run build:dev",
     "test": "jest",
     "start": "cross-env NODE_ENV=development webpack-dev-server",
+    "start:lambda": "cross-env NODE_ENV=development webpack-dev-server --env=lambda",
     "readme": "node replaceVersionInReadme.js",
     "copyhtml": "cpx 'public/**/*.html' build",
     "copyhtml:watch": "cpx 'public/**/*.html' build --watch",

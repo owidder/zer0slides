@@ -22,9 +22,10 @@ const folders = foldersToBuild(PUBLIC_PATH, INDEX);
 console.log(`version = ${VERSION}`);
 console.log(`mode = ${process.env.NODE_ENV}`)
 console.log(`index = ${INDEX}`)
-console.log(folders);
 
-const htmlWebpackPlugins = (name) => {
+const htmlWebpackPlugins = (name, folder) => {
+    const _folders = folder ? [folder] : folders;
+    console.log(`build: ${JSON.stringify(_folders)}`)
     return folders.map(folder => {
         return new HtmlWebpackPlugin({
             filename: `${folder}/${name}.html`,
@@ -139,32 +140,36 @@ const common = {
     },
 }
 
-const withHash = {
+const withHash = env => {
+    return {
     ...common,
-    output: {
-        ...common.output,
-        filename: 'static/js/[name].[contenthash:8].js',
+        output: {
+    ...common.output,
+            filename: 'static/js/[name].[contenthash:8].js',
     },
-    plugins: [
-        ...common.plugins,
-        ...htmlWebpackPlugins("start"),
-        new MiniCssExtractPlugin({
-            filename: "static/css/[name].[contenthash:8].css",}),
-    ]
+        plugins: [
+            ...common.plugins,
+            ...htmlWebpackPlugins("start", env),
+            new MiniCssExtractPlugin({
+                filename: "static/css/[name].[contenthash:8].css",}),
+        ]
+    }
 }
 
-const withoutHash = {
+const withoutHash = env => {
+    return {
     ...common,
-    output: {
-        ...common.output,
-        filename: `static/js/z0.${VERSION}.js`,
+        output: {
+    ...common.output,
+            filename: `static/js/z0.${VERSION}.js`,
     },
-    plugins: [
-        ...common.plugins,
-        ...htmlWebpackPlugins("indexPublic"),
-        new MiniCssExtractPlugin({
-            filename: `static/css/z0.${VERSION}.css`,}),
-    ]
+        plugins: [
+            ...common.plugins,
+            ...htmlWebpackPlugins("indexPublic", env),
+            new MiniCssExtractPlugin({
+                filename: `static/css/z0.${VERSION}.css`,}),
+        ]
+    }
 }
 
 if(process.env.NODE_ENV === "production") {
