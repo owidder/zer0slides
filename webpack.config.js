@@ -173,7 +173,7 @@ const withoutHash = env => {
 }
 
 if(process.env.NODE_ENV === "production") {
-    withoutHash.plugins.push(
+    withoutHash().plugins.push(
         new ZipPlugin({
             path: "zip",
             filename: `z0.${VERSION}`,
