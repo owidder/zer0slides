@@ -160,6 +160,7 @@ export const createControlElements = () => {
     createArrow(root, "right", rightArrowClicked, "arrow_forward");
     createArrow(root, "left", leftArrowClicked, "arrow_back");
     createArrow(root, "up", upArrowClicked, "arrow_upward");
+    createArrow(root, "down", downArrowClicked, "arrow_downward");
     createArrow(root, "sync", showHidePositions, "sync", [errorTypes.UNKNOWN_MESSAGE]);
 
     if(isMojs()) {
