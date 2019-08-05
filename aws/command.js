@@ -148,12 +148,15 @@ const initSyncId = async (syncId, myName) => {
     logFunctionIn("initSyncId", {syncId, connectionId: myName});
 
     const numberOfConnections = await getNumberOfConnectionsWithSyncId(syncId);
-    if(numberOfConnections == 0) {
+    const commandRow = await findRow(syncId);
+    if(numberOfConnections == 0 || !commandRow) {
         const item = {
             syncId: {S: syncId},
             admin: {S: myName}
         }
         await putItem(Z0COMMAND_TABLE, item);
+    } else if(myName.indexOf(`__frc__${syncId}`) == 0 && syncId.indexOf("@@") == 0) {
+        await updateItem(Z0COMMAND_TABLE, {syncId: {S: syncId}}, {admin: myName});
     }
 
     logFunctionOut("initSyncId", {syncId, connectionId: myName, numberOfConnections});
