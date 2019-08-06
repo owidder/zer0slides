@@ -70,10 +70,10 @@ export const updatePositionTable = () => {
         .text(d => d)
 
     tbody.selectAll("td.position-slideno")
-        .text(d => positions[d].slideNo)
+        .text(d => positions[d] ? positions[d].slideNo : "")
 
     tbody.selectAll("td.position-stepno")
-            .text(d => positions[d].stepNo)
+            .text(d => positions[d] ? positions[d].stepNo : "")
 
     data.exit().remove()
 }
