@@ -1,0 +1,64 @@
+<style>
+
+</style>
+
+<div class="title"></div>
+<div class="flexcontainer start">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["Deploy it",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "> serverless deploy\n" +
+            "\n" +
+            "Serverless: Packaging service...\n" +
+            "Serverless: Excluding development dependencies...\n" +
+            "Serverless: Uploading CloudFormation file to S3...\n" +
+            "Serverless: Uploading artifacts...\n" +
+            "Serverless: Uploading service z0-sync.zip file to S3 (7.31 MB)...\n" +
+            "Serverless: Validating template...\n" +
+            "Serverless: Updating Stack...\n" +
+            "Serverless: Checking Stack update progress...\n" +
+            "..............................................\n" +
+            "Serverless: Stack update finished...\n" +
+            "Service Information\n" +
+            "service: z0-sync\n" +
+            "stage: dev\n" +
+            "region: eu-central-1\n" +
+            "stack: z0-sync-dev\n" +
+            "resources: 43\n" +
+            "api keys:\n" +
+            "  None\n" +
+            "endpoints:\n" +
+            "  wss://0lw31ottub.execute-api.eu-central-1.amazonaws.com/dev\n" +
+            "functions:\n" +
+            "  connect: z0-sync-dev-connect\n" +
+            "  disconnect: z0-sync-dev-disconnect\n" +
+            "  defaultMessages: z0-sync-dev-defaultMessages\n" +
+            "  sendCommand: z0-sync-dev-sendCommand\n" +
+            "  sendCurrentPosition: z0-sync-dev-sendCurrentPosition\n" +
+            "  register: z0-sync-dev-register\n" +
+            "layers:\n" +
+            "  None\n" +
+            "Serverless: Removing old service artifacts from S3...\n" +
+            "Serverless: Run the \"serverless\" command to setup monitoring, troubleshooting and testing.",
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "1", "Deploy configuration and code"));
+        steps.push(_0.highlightLinesStep(codeSelector, "5", "Use Amazon's CloudFormation service"));
+        steps.push(_0.highlightLinesStep(codeSelector, "7", "Upload the code"));
+        steps.push(_0.highlightLinesStep(codeSelector, "22", "Websocket end point"));
+        steps.push(_0.highlightLinesStep(codeSelector, "23-29", "Lambda functions"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

@@ -11,13 +11,12 @@ const {
     saveCurrentPosition,
     setCurrentPosition,
     clearConnectionsForUserName,
-    sendAllPositions} = require("./connection");
+    sendAllPositionsToAllConnections} = require("./connection");
 const {
     cleanCommandTable,
     updateCommand,
     getLastCommand,
     initSyncId,
-    sendAllPositionsToAdmin,
     addAttributesToCommand,
     getAdminName} = require("./command");
 
@@ -41,7 +40,7 @@ const disconnect = async (event, context, callback) => {
     setTimeout(async () => {
         await removeFromConnectionTable(connectionId);
         await cleanCommandTable(syncId);
-        sendAllPositionsToAdmin(event, syncId);
+        sendAllPositionsToAllConnections(event, syncId);
     }, 5000);
 
     callback(null, response(200, "DISCONNECTED"));
@@ -66,7 +65,7 @@ const register = async (event, context, callback) => {
 
     await send(event, connectionId, myName ? lastCommand : addAttributesToCommand(lastCommand, {myName: connectionId}));
 
-    await sendAllPositionsToAdmin(event, syncId);
+    await sendAllPositionsToAllConnections(event, syncId);
 
     callback(null, response(200, "REGISTERED"));
 

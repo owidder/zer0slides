@@ -25,16 +25,22 @@ const send = (event, connectionId, text) => {
     return promise;
 };
 
-const sendToAllOtherConnections = (event, connectionIds, text) => {
+const sendToAllOtherConnections = async (event, connectionIds, text) => {
     logFunctionIn("sendToAllOtherConnections", {event, connectionIds, text});
 
     const selfConnectionId = connectionIdFromEvent(event);
-    console.log(`sendToAllConnections (except [${selfConnectionId}]): ${JSON.stringify(connectionIds)}`);
+    await sendToAllConnections(event, connectionIds, text, [selfConnectionId]);
+
+    logFunctionOut("sendToAllOtherConnections", {event, connectionIds, text});
+}
+
+const sendToAllConnections = (event, connectionIds, text, connectionsToExclude) => {
+    logFunctionIn("sendToAllConnections", {event, connectionIds, text, connectionsToExclude});
+
     const sendPromises = connectionIds.map(async ({connectionId}) => {
         try {
-            if(connectionId.S != selfConnectionId) {
+            if(!connectionsToExclude || !connectionsToExclude.includes(connectionId)) {
                 return await send(event, connectionId.S, text);
-
             } else {
                 return Promise.resolve();
             }
@@ -44,7 +50,7 @@ const sendToAllOtherConnections = (event, connectionIds, text) => {
         }
     });
 
-    logFunctionOut("sendToAllOtherConnections", {event, connectionIds, text});
+    logFunctionOut("sendToAllConnections", {event, connectionIds, text, connectionsToExclude});
 
     return Promise.all(sendPromises);
 }
@@ -55,4 +61,5 @@ module.exports = {
     bodyFromEvent,
     send,
     sendToAllOtherConnections,
+    sendToAllConnections,
 }

@@ -1,6 +1,6 @@
 const {logFunctionIn, logFunctionOut, logObject} = require("./util/logUtil");
 const {ddbCall, putItem, updateItem} = require("./util/ddbUtil");
-const {connectionIdFromEvent,send} = require("./util/wsUtil");
+const {connectionIdFromEvent,send, sendToAllConnections} = require("./util/wsUtil");
 const types = require("./types");
 
 const Z0CONNECTION_TABLE = process.env.Z0CONNECTION_TABLE;
@@ -134,9 +134,7 @@ const formatAllPositions = (allPositions) => {
     return _formatted;
 }
 
-const sendAllPositions = async (event, adminName, syncId) => {
-    logFunctionIn("sendAllPositions", {event, adminName});
-
+const getAllPositions = async (syncId) => {
     const params = {
         TableName: Z0CONNECTION_TABLE,
         ProjectionExpression: "connectionId, userName, slideNo, stepNo",
@@ -147,12 +145,28 @@ const sendAllPositions = async (event, adminName, syncId) => {
     }
 
     const allPositionsRaw = await ddbCall('scan', params);
-    const allPositions = formatAllPositions(allPositionsRaw);
+    return formatAllPositions(allPositionsRaw);
+}
+
+const sendAllPositionsToAllConnections = async (event, syncId) => {
+    logFunctionIn("sendAllPositionsToAllConnections", {event, syncId});
+
+    const allPositions = await getAllPositions(syncId);
+    const connectionIdsResult = await getConnectionIdsForSyncId(syncId);
+    await sendToAllConnections(event, connectionIdsResult.Items, JSON.stringify({allPositions, type: types.ALL_POSITIONS}));
+
+    logFunctionOut("sendAllPositionsToAllConnections", {event, syncId});
+}
+
+const sendAllPositions = async (event, adminName, syncId) => {
+    logFunctionIn("sendAllPositions", {event, adminName, syncId});
+
+    const allPositions = await getAllPositions(syncId);
 
     const adminConnectionId = await getConnectionIdForUserName(adminName);
     await send(event, adminConnectionId, JSON.stringify({allPositions, type: types.ALL_POSITIONS}));
 
-    logFunctionOut("sendAllPositions", {event, adminName});
+    logFunctionOut("sendAllPositions", {event, adminName, syncId});
 }
 
 const setCurrentPosition = async (event, slideNo, stepNo, adminName, userName) => {
@@ -200,4 +214,5 @@ module.exports = {
     setCurrentPosition,
     sendAllPositions,
     clearConnectionsForUserName,
+    sendAllPositionsToAllConnections,
 }

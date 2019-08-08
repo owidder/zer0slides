@@ -2,6 +2,7 @@
 
 </style>
 
+<div class="title"></div>
 <div class="flexcontainer start">
     <div class="code responsive small"></div>
 </div>
@@ -9,6 +10,8 @@
 <script>
 
     (function () {
+        _0.glowText(".title", ["Function 'register'",], "small glow");
+
         const codeSelector = ".code";
 
         _0.codeJs(codeSelector,
@@ -35,7 +38,7 @@
             "        });\n" +
             "    })\n" +
             "\n" +
-            "    sendAllPositionsToMaster(event, syncId);\n" +
+            "    sendAllPositionsToAllConnections(event, syncId);\n" +
             "}\n",
         );
 
@@ -45,6 +48,8 @@
         steps.push(_0.highlightLinesStep(codeSelector, "3", "Get properties from body"));
         steps.push(_0.highlightLinesStep(codeSelector, "4", "Get connectionId from event"));
         steps.push(_0.highlightLinesStep(codeSelector, "6-13", "Parameter for putting item in DynamoDB"));
+        steps.push(_0.highlightLinesStep(codeSelector, "15-22", "Write to DynamoDB"));
+        steps.push(_0.highlightLinesStep(codeSelector, "24", "Notify all"));
 
         _0.setSteps(steps);
 
