@@ -1,0 +1,159 @@
+<style>
+
+</style>
+
+<div class="title"></div>
+<div class="flexcontainer start">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["handler.js",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "\"use strict\";\n" +
+            "\n" +
+            "const {logFunctionIn, logFunctionOut} = require(\"./util/logUtil\");\n" +
+            "const {response, connectionIdFromEvent, bodyFromEvent, send, sendToAllOtherConnections} = require(\"./util/wsUtil\");\n" +
+            "const {\n" +
+            "    getConnectionIdsForSyncId,\n" +
+            "    getSyncIdForConnectionId,\n" +
+            "    saveSyncId,\n" +
+            "    removeFromConnectionTable,\n" +
+            "    createNewConnection,\n" +
+            "    saveCurrentPosition,\n" +
+            "    setCurrentPosition,\n" +
+            "    clearConnectionsForUserName,\n" +
+            "    sendAllPositionsToAllConnections} = require(\"./connection\");\n" +
+            "const {\n" +
+            "    cleanCommandTable,\n" +
+            "    updateCommand,\n" +
+            "    getLastCommand,\n" +
+            "    initSyncId,\n" +
+            "    addAttributesToCommand,\n" +
+            "    getAdminName} = require(\"./command\");\n" +
+            "\n" +
+            "const connect = async (event, context, callback) => {\n" +
+            "    logFunctionIn(\"connect\", event);\n" +
+            "\n" +
+            "    const connectionId = connectionIdFromEvent(event);\n" +
+            "    await createNewConnection(connectionId);\n" +
+            "\n" +
+            "    callback(null, response(200, \"CONNECTED\"));\n" +
+            "\n" +
+            "    logFunctionOut(\"connect\", event);\n" +
+            "}\n" +
+            "\n" +
+            "const disconnect = async (event, context, callback) => {\n" +
+            "    logFunctionIn(\"disconnect\", event);\n" +
+            "\n" +
+            "    const connectionId = connectionIdFromEvent(event);\n" +
+            "    const syncId = await getSyncIdForConnectionId(connectionId);\n" +
+            "\n" +
+            "    setTimeout(async () => {\n" +
+            "        await removeFromConnectionTable(connectionId);\n" +
+            "        await cleanCommandTable(syncId);\n" +
+            "        sendAllPositionsToAllConnections(event, syncId);\n" +
+            "    }, 5000);\n" +
+            "\n" +
+            "    callback(null, response(200, \"DISCONNECTED\"));\n" +
+            "\n" +
+            "    logFunctionOut(\"disconnect\", event);\n" +
+            "}\n" +
+            "\n" +
+            "const register = async (event, context, callback) => {\n" +
+            "    logFunctionIn(\"register\", event);\n" +
+            "\n" +
+            "    const body = bodyFromEvent(event);\n" +
+            "\n" +
+            "    const {syncId, myName} = body;\n" +
+            "    const connectionId = connectionIdFromEvent(event);\n" +
+            "    const myNameOrConnectionId = myName ? myName : connectionId;\n" +
+            "\n" +
+            "    await initSyncId(syncId, myNameOrConnectionId);\n" +
+            "\n" +
+            "    await clearConnectionsForUserName(myNameOrConnectionId);\n" +
+            "    await saveSyncId(connectionId, syncId, myNameOrConnectionId);\n" +
+            "    const lastCommand = await getLastCommand(body.syncId);\n" +
+            "\n" +
+            "    await send(event, connectionId, myName ? lastCommand : addAttributesToCommand(lastCommand, {myName: connectionId}));\n" +
+            "\n" +
+            "    await sendAllPositionsToAllConnections(event, syncId);\n" +
+            "\n" +
+            "    callback(null, response(200, \"REGISTERED\"));\n" +
+            "\n" +
+            "    logFunctionOut(\"register\", event);\n" +
+            "}\n" +
+            "\n" +
+            "const defaultMessage = (event, context, callback) => {\n" +
+            "    callback(null);\n" +
+            "};\n" +
+            "\n" +
+            "const sendCurrentPosition = async (event, context, callback) => {\n" +
+            "    logFunctionIn(\"sendCurrentPosition\", event);\n" +
+            "\n" +
+            "    const connectionId = connectionIdFromEvent(event);\n" +
+            "    const body = bodyFromEvent(event);\n" +
+            "\n" +
+            "    await saveCurrentPosition(connectionId, body.currentPosition);\n" +
+            "\n" +
+            "    callback(null, response(200, \"CURRENT POSITION SAVED\"));\n" +
+            "\n" +
+            "    logFunctionOut(\"sendCurrentPosition\", event);\n" +
+            "}\n" +
+            "\n" +
+            "const sendCommand = async (event, context, callback) => {\n" +
+            "    logFunctionIn(\"sendCommand\", {event});\n" +
+            "\n" +
+            "    const syncId = await getSyncIdForConnectionId(connectionIdFromEvent(event));\n" +
+            "    console.log(`syncId: ${syncId}`);\n" +
+            "\n" +
+            "    const body = bodyFromEvent(event);\n" +
+            "    const commandStr = body.command;\n" +
+            "    const command = JSON.parse(commandStr);\n" +
+            "\n" +
+            "    const myName = body.myName;\n" +
+            "    const adminName = await getAdminName(syncId);\n" +
+            "    setCurrentPosition(event, String(command.slideNo), String(command.stepNo), adminName, myName);\n" +
+            "\n" +
+            "    if(adminName == myName) {\n" +
+            "        const connectionIdsResult = await getConnectionIdsForSyncId(syncId);\n" +
+            "        console.log(`connectionIds: ${JSON.stringify(connectionIdsResult)}`);\n" +
+            "\n" +
+            "        const hasChanged = await updateCommand(syncId, commandStr);\n" +
+            "\n" +
+            "        if(hasChanged) {\n" +
+            "            await sendToAllOtherConnections(event, connectionIdsResult.Items, commandStr);\n" +
+            "        }\n" +
+            "    }\n" +
+            "\n" +
+            "    callback(null, response(200, \"COMMAND_SENT\"));\n" +
+            "\n" +
+            "    logFunctionOut(\"sendCommand\", {event, adminName});\n" +
+            "}\n" +
+            "\n" +
+            "module.exports = {\n" +
+            "    connect,\n" +
+            "    disconnect,\n" +
+            "    sendCommand,\n" +
+            "    defaultMessage,\n" +
+            "    register,\n" +
+            "    sendCurrentPosition,\n" +
+            "}\n",
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "23-32", "Called on websocket connection"));
+        steps.push(_0.highlightLinesStep(codeSelector, "34-49", "Called on websocket disconnection"));
+        steps.push(_0.highlightLinesStep(codeSelector, "51-73", "Register a synced slide show"));
+        steps.push(_0.highlightLinesStep(codeSelector, "92-115", "Send slide-No. and step-No."));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

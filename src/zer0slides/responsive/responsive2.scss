@@ -25,4 +25,16 @@
       font-size: 2.5em;
     }
   }
+
+  &.code.smaller {
+    font-size: .4em;
+
+    @include media(">=tablet", "<desktop") {
+      font-size: 1em;
+    }
+
+    @include media(">=desktop") {
+      font-size: 1.25em;
+    }
+  }
 }
