@@ -12,6 +12,7 @@
     "test": "jest",
     "start": "cross-env NODE_ENV=development webpack-dev-server",
     "start:lambda": "cross-env NODE_ENV=development webpack-dev-server --env=lambda",
+    "start:microfrontends": "cross-env NODE_ENV=development webpack-dev-server --env=microfrontends",
     "readme": "node replaceVersionInReadme.js",
     "copyhtml": "cpx 'public/**/*.html' build",
     "copyhtml:watch": "cpx 'public/**/*.html' build --watch",
