@@ -1,0 +1,138 @@
+<style>
+
+</style>
+
+<div class="title"></div>
+<div class="flexcontainer start">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["serverless.yml",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "service: z0-sync\n" +
+            "\n" +
+            "provider:\n" +
+            "  name: aws\n" +
+            "  runtime: nodejs8.10\n" +
+            "  stackName: ${self:service}-${self:provider.stage}\n" +
+            "  stage: ${opt:stage, 'dev'}\n" +
+            "  region: ${opt:region, 'eu-central-1'}\n" +
+            "  iamRoleStatements:\n" +
+            "    - Effect: Allow\n" +
+            "      Action:\n" +
+            "        - \"execute-api:ManageConnections\"\n" +
+            "      Resource:\n" +
+            "        - \"arn:aws:execute-api:*:*:**/@connections/*\"\n" +
+            "    - Effect: Allow\n" +
+            "      Action:\n" +
+            "        - \"dynamodb:PutItem\"\n" +
+            "        - \"dynamodb:GetItem\"\n" +
+            "        - \"dynamodb:UpdateItem\"\n" +
+            "        - \"dynamodb:DeleteItem\"\n" +
+            "        - \"dynamodb:Query\"\n" +
+            "        - \"dynamodb:Scan\"\n" +
+            "      Resource:\n" +
+            "        - Fn::GetAtt: [Z0ConnectionTable, Arn]\n" +
+            "        - Fn::Join:\n" +
+            "            - \"/\"\n" +
+            "            - - Fn::GetAtt: [Z0ConnectionTable, Arn]\n" +
+            "              - \"*\"\n" +
+            "    - Effect: Allow\n" +
+            "      Action:\n" +
+            "        - \"dynamodb:PutItem\"\n" +
+            "        - \"dynamodb:GetItem\"\n" +
+            "        - \"dynamodb:UpdateItem\"\n" +
+            "        - \"dynamodb:DeleteItem\"\n" +
+            "        - \"dynamodb:Query\"\n" +
+            "        - \"dynamodb:Scan\"\n" +
+            "      Resource:\n" +
+            "        - Fn::GetAtt: [Z0CommandTable, Arn]\n" +
+            "        - Fn::Join:\n" +
+            "            - \"/\"\n" +
+            "            - - Fn::GetAtt: [Z0CommandTable, Arn]\n" +
+            "              - \"*\"\n" +
+            "  environment:\n" +
+            "    Z0CONNECTION_TABLE:\n" +
+            "      Ref: Z0ConnectionTable\n" +
+            "    Z0COMMAND_TABLE:\n" +
+            "      Ref: Z0CommandTable\n" +
+            "\n" +
+            "  websocketApiName: z0-sync-${self:provider.stage}\n" +
+            "  websocketApiRouteSelectionExpression: $request.body.action\n" +
+            "\n" +
+            "functions:\n" +
+            "  connect:\n" +
+            "    handler: handler.connect\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: $connect\n" +
+            "  disconnect:\n" +
+            "    handler: handler.disconnect\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: $disconnect\n" +
+            "  defaultMessages:\n" +
+            "    handler: handler.defaultMessage\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: $default\n" +
+            "  sendCommand:\n" +
+            "    handler: handler.sendCommand\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: sendCommand\n" +
+            "  sendCurrentPosition:\n" +
+            "    handler: handler.sendCurrentPosition\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: sendCurrentPosition\n" +
+            "  register:\n" +
+            "    handler: handler.register\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: register\n" +
+            "resources:\n" +
+            "  Resources:\n" +
+            "    Z0ConnectionTable:\n" +
+            "      Type: AWS::DynamoDB::Table\n" +
+            "      Properties:\n" +
+            "        AttributeDefinitions:\n" +
+            "          - AttributeName: connectionId\n" +
+            "            AttributeType: S\n" +
+            "        KeySchema:\n" +
+            "          - AttributeName: connectionId\n" +
+            "            KeyType: HASH\n" +
+            "        ProvisionedThroughput:\n" +
+            "          ReadCapacityUnits: 5\n" +
+            "          WriteCapacityUnits: 5\n" +
+            "    Z0CommandTable:\n" +
+            "      Type: AWS::DynamoDB::Table\n" +
+            "      Properties:\n" +
+            "        AttributeDefinitions:\n" +
+            "          - AttributeName: syncId\n" +
+            "            AttributeType: S\n" +
+            "        KeySchema:\n" +
+            "          - AttributeName: syncId\n" +
+            "            KeyType: HASH\n" +
+            "        ProvisionedThroughput:\n" +
+            "          ReadCapacityUnits: 5\n" +
+            "          WriteCapacityUnits: 5\n",
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "52-82", "Lambda functions"));
+        steps.push(_0.highlightLinesStep(codeSelector, "68-72", "Function 'sendCommand'"));
+        steps.push(_0.highlightLinesStep(codeSelector, "69", "Where to find the code?"));
+        steps.push(_0.highlightLinesStep(codeSelector, "70-72", "How to invoke it"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
