@@ -1,0 +1,67 @@
+<style>
+
+</style>
+
+<div class="title"></div>
+<div class="flexcontainer start">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["company-correlation",], "small glow");
+
+        const codeSelector = ".code";
+
+        const lt = "<"
+
+        _0.codeJs(codeSelector,
+            "import * as React from \"react\";\n" +
+            "import * as ReactDOM from \"react-dom\";\n" +
+            "\n" +
+            "import {CompanyCorrelation} from \"./CompanyCorrelation\";\n" +
+            "\n" +
+            "const scriptPath = document.currentScript.getAttribute(\"src\");\n" +
+            "const parts = scriptPath.split(\"/\");\n" +
+            "const basedir = parts.slice(0, parts.length-1).join(\"/\");\n" +
+            "\n" +
+            "class CompanyCorrelationElement extends HTMLElement {\n" +
+            "\n" +
+            "    static get observedAttributes() {\n" +
+            "        return [\"short-x\", \"short-y\"];\n" +
+            "    }\n" +
+            "\n" +
+            "    drawReactComponent() {\n" +
+            "        ReactDOM.render(" + lt +
+            "CompanyCorrelation\n" +
+            "            basedir={basedir}\n" +
+            "            shortX={this.getAttribute(\"short-x\")}\n" +
+            "            shortY={this.getAttribute(\"short-y\")}/>, this);\n" +
+            "    }\n" +
+            "\n" +
+            "    attributeChangedCallback() {\n" +
+            "        this.drawReactComponent();\n" +
+            "    }\n" +
+            "\n" +
+            "    connectedCallback() {\n" +
+            "        this.drawReactComponent();\n" +
+            "    }\n" +
+            "}\n" +
+            "\n" +
+            "customElements.define(\"company-correlation\", CompanyCorrelationElement);"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "10-30", "Custom Element"));
+        steps.push(_0.highlightLinesStep(codeSelector, "27-29", "Lifycycle: Element ist im DOM"));
+        steps.push(_0.highlightLinesStep(codeSelector, "12-14", "Attribute, über deren Änderung man informiert werden möchte"));
+        steps.push(_0.highlightLinesStep(codeSelector, "23-25", "Lifycycle: Attribute haben sich geändert"));
+        steps.push(_0.highlightLinesStep(codeSelector, "16-21", "Rendering des Contents"));
+        steps.push(_0.highlightLinesStep(codeSelector, "32", "Custom Element beim Browser anmelden", "top"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
