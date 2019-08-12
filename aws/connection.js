@@ -158,15 +158,15 @@ const sendAllPositionsToAllConnections = async (event, syncId) => {
     logFunctionOut("sendAllPositionsToAllConnections", {event, syncId});
 }
 
-const sendAllPositions = async (event, adminName, syncId) => {
-    logFunctionIn("sendAllPositions", {event, adminName, syncId});
+const sendAllPositionsToUserName = async (event, userName, syncId) => {
+    logFunctionIn("sendAllPositionsToUserName", {event, adminName: userName, syncId});
 
     const allPositions = await getAllPositions(syncId);
 
-    const adminConnectionId = await getConnectionIdForUserName(adminName);
+    const adminConnectionId = await getConnectionIdForUserName(userName);
     await send(event, adminConnectionId, JSON.stringify({allPositions, type: types.ALL_POSITIONS}));
 
-    logFunctionOut("sendAllPositions", {event, adminName, syncId});
+    logFunctionOut("sendAllPositionsToUserName", {event, adminName: userName, syncId});
 }
 
 const setCurrentPosition = async (event, slideNo, stepNo, adminName, userName) => {
@@ -212,7 +212,7 @@ module.exports = {
     createNewConnection,
     saveCurrentPosition,
     setCurrentPosition,
-    sendAllPositions,
+    sendAllPositionsToUserName,
     clearConnectionsForUserName,
     sendAllPositionsToAllConnections,
 }

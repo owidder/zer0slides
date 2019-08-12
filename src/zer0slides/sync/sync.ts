@@ -10,6 +10,12 @@ const DEFAULT_STAGE = "dev";
 
 const TYPE_COMMAND = "command";
 
+let isAdminFlag = false;
+
+export const isAdmin = () => {
+    return isAdminFlag;
+}
+
 export interface Command {
     slideNo: number;
     stepNo: number;
@@ -18,6 +24,7 @@ export interface Command {
 export interface Typed {
     type: string;
     myName?: string;
+    isAdmin?: boolean;
 }
 
 export const socketPromise: SimplePromise<WebSocket> = new SimplePromise();
@@ -103,6 +110,10 @@ export const initSync = (commandCallback: (Command) => void): Promise<void> => {
                 const typed: Typed = JSON.parse(data);
 
                 setMyName(typed);
+                if(typed.isAdmin !== undefined) {
+                    isAdminFlag = typed.isAdmin;
+                    console.log(`isAdmin: ${typed.isAdmin}`);
+                }
 
                 if(!typed.type || typed.type == TYPE_COMMAND) {
                     if((typed as any).message) {
@@ -133,7 +144,7 @@ export const initSync = (commandCallback: (Command) => void): Promise<void> => {
 }
 
 export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {
-    if(isSynced()) {
+    if(isSynced() && isAdmin()) {
         const myName = getMyName();
         const command = {slideNo: slideNo, stepNo: stepNo, type: TYPE_COMMAND};
         const commandStr = JSON.stringify(command);
