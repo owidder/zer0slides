@@ -3,6 +3,7 @@ import * as $ from "jquery";
 
 import {slideCore} from '../core/core';
 import {renderPositions} from "../sync/renderPositions";
+import {isAdmin} from "../sync/sync";
 import {addErrorCallback, errorTypes} from "../core/errorHandling";
 
 const mojs = require('../effects/mojs');
@@ -60,6 +61,14 @@ let positionsVisible = false;
 const showHidePositions = () => {
     positionsVisible = !positionsVisible;
     renderPositions(".sync");
+}
+
+const clickOnSync = () => {
+    if(isAdmin()) {
+        showHidePositions();
+    } else {
+        window.location.reload();
+    }
 }
 
 const createCounter = (root: any) => {
@@ -161,7 +170,7 @@ export const createControlElements = () => {
     createArrow(root, "left", leftArrowClicked, "arrow_back");
     createArrow(root, "up", upArrowClicked, "arrow_upward");
     createArrow(root, "down", downArrowClicked, "arrow_downward");
-    createArrow(root, "sync", showHidePositions, "sync", [errorTypes.UNKNOWN_MESSAGE]);
+    createArrow(root, "sync", clickOnSync, "sync", [errorTypes.UNKNOWN_MESSAGE]);
 
     if(isMojs()) {
         slideCore.newSlideCallback = startEffect;
