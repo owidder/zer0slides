@@ -37,8 +37,10 @@ const createTable = () => {
     const table = root.selectAll("table").data([1]).enter().append("table");
     const tr = table.append("thead").append("tr");
     tr.append("th").text("name");
+/*
     tr.append("th").text("slide#");
     tr.append("th").text("step#");
+*/
     table.append("tbody")
 }
 
@@ -59,21 +61,25 @@ export const updatePositionTable = () => {
     trEnter.append("td")
         .attr("class", "position-name position")
 
+/*
     trEnter.append("td")
         .attr("class", "position-slideno position")
 
     trEnter.append("td")
         .attr("class", "position-stepno position")
+*/
 
 
     tbody.selectAll("td.position-name")
         .text(d => d)
 
+/*
     tbody.selectAll("td.position-slideno")
         .text(d => positions[d] ? positions[d].slideNo : "")
 
     tbody.selectAll("td.position-stepno")
             .text(d => positions[d] ? positions[d].stepNo : "")
+*/
 
     data.exit().remove()
 }
