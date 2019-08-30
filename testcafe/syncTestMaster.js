@@ -15,7 +15,7 @@ test("get correct lastCommand after registering", async t => {
 
     console.log(`syncId: ${syncId}`);
 
-    const message = await new Promise(resolve => {
+    const command = await new Promise(resolve => {
         const ws = new WebSocket(endpoint.dev);
 
         ws.on("open", () => {
@@ -24,11 +24,12 @@ test("get correct lastCommand after registering", async t => {
 
         ws.on("message", (message) => {
             console.log(message);
-            resolve(message);
+            const command = JSON.parse(message);
+            if(command.slideNo > -1) {
+                resolve(command);
+            }
         })
     })
-
-    const command = JSON.parse(message);
 
     await t
         .expect(command).eql({slideNo: 1, stepNo: 1, type: "command"});
