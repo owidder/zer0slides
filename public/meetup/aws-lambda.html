@@ -1,0 +1,29 @@
+<style>
+
+    #__0__ .canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+</style>
+
+<div class="svgcontainer">
+    <svg class="canvas"></svg>
+</div>
+
+<script>
+
+    (function () {
+        const svgElement = document.querySelector("#__0__ .canvas");
+        const sketch = _0.createSketch(svgElement);
+        console.log("rough")
+
+        const node = sketch.r.rectangle(10, 10, 200, 200, {fill: "pink", fillStyle: "solid"});
+        sketch.add(node, "lambda");
+
+        ___()
+    })()
+</script>

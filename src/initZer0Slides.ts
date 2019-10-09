@@ -22,6 +22,11 @@ import {cast} from "./zer0slides/specials/cast";
 import {shortcut} from "./zer0slides/shortcut/shortcut";
 import {background} from "./zer0slides/background/background";
 import {fitToScreen} from "./zer0slides/responsive/fitToScreen";
+import {createSketch} from "./zer0slides/sketch/Sketch";
+
+import * as vivus from "vivus";
+
+const rough = require("roughjs/dist/rough.umd");
 
 const createRoot = () => {
     const body = d3.select("body");
@@ -84,14 +89,17 @@ export const init = () => {
         tooltipStep: tooltip.addTooltipToDomNodeStep,
         useTippy: tooltip.useTippy,
         controlElements,
+        createSketch,
+        d3,
         metamaskLogo,
+        rough,
         shortcut,
         slideCore,
         steps,
-        d3,
         tippy,
+        vivus,
         $,
-        _
+        _,
     };
 
     slideCore._0 = _0;
