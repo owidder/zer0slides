@@ -18,19 +18,22 @@ class Sketch {
         this.r = rough.svg(svgElement);
     }
 
-    add(node: HTMLElement, id: string, duration = 300, type = "sync") {
+    add(node: HTMLElement, id: string, duration = 50, type = "sync") {
         const qid = `${slideName()}-${id}`;
         node.setAttribute("id", qid);
         this.svgElement.appendChild(node);
 
-        new Vivus(qid, {duration, type});
-
-        return qid;
+        return new Promise((resolve) => {
+            new Vivus(qid, {duration, type});
+            setTimeout(() => {
+                resolve(qid)
+            }, duration)
+        })
     }
 
-    rect(id: string, upperLeftX: number, upperLeftY: number, width: number, height: number, text?: string, fill = "pink", fillStyle?: string) {
+    async rect(id: string, upperLeftX: number, upperLeftY: number, width: number, height: number, text?: string, fill = "pink", fillStyle?: string) {
         const node = this.r.rectangle(upperLeftX, upperLeftY, width, height, {fill, fillStyle, roghness: 3});
-        const qid = this.add(node, id);
+        const qid = await this.add(node, id);
 
         if(text) {
             d3.select(`#${qid}`)

@@ -20,7 +20,7 @@
 
 <script>
 
-    (function () {
+    setTimeout(() => {
         const svgElement = document.querySelector("#__0__ .canvas");
         const sketch = _0.createSketch(svgElement);
         console.log("rough")
@@ -28,5 +28,5 @@
         sketch.rect("lambda", 10, 10, 200, 200, "AWS Lambda");
 
         ___()
-    })()
+    }, 1000)
 </script>
