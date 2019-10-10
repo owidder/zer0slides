@@ -8,6 +8,10 @@
         height: 100vh;
     }
 
+    #__0__ .rect-text {
+        font-size: 2em;
+    }
+
 </style>
 
 <div class="svgcontainer">
@@ -21,8 +25,7 @@
         const sketch = _0.createSketch(svgElement);
         console.log("rough")
 
-        const node = sketch.r.rectangle(10, 10, 200, 200, {fill: "pink", fillStyle: "solid"});
-        sketch.add(node, "lambda");
+        sketch.rect("lambda", 10, 10, 200, 200, "AWS Lambda");
 
         ___()
     })()

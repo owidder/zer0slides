@@ -1,6 +1,8 @@
 import * as Vivus from "vivus";
+import * as d3 from "d3";
 
 import {slideName} from '../core/core';
+import {q} from "../selector/selector";
 
 const rough = require("roughjs/dist/rough.umd");
 
@@ -11,6 +13,7 @@ class Sketch {
     r: any;
 
     constructor(svgElement: SVGElement) {
+        console.log("Sketch");
         this.svgElement = svgElement;
         this.r = rough.svg(svgElement);
     }
@@ -21,10 +24,23 @@ class Sketch {
         this.svgElement.appendChild(node);
 
         new Vivus(qid, {duration, type});
+
+        return qid;
     }
 
-    rect(upperLeftX: number, upperLeftY: number, width: number, height: number, text: string, color = "red", fillStyle = "solid") {
-        
+    rect(id: string, upperLeftX: number, upperLeftY: number, width: number, height: number, text?: string, fill = "pink", fillStyle?: string) {
+        const node = this.r.rectangle(upperLeftX, upperLeftY, width, height, {fill, fillStyle, roghness: 3});
+        const qid = this.add(node, id);
+
+        if(text) {
+            d3.select(`#${qid}`)
+                .append("text")
+                .attr("class", "rect-text")
+                .attr("font-family", "Mansalva")
+                .attr("x", 20)
+                .attr("y", 50)
+                .text(text);
+        }
     }
 }
 
