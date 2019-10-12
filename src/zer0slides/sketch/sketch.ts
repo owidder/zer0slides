@@ -20,7 +20,8 @@ interface Rect {
 interface Options {
     fill?: string,
     fillStyle?: string,
-    roughness?: number
+    roughness?: number,
+    ctr?: string
 }
 
 class Sketch {
@@ -28,7 +29,6 @@ class Sketch {
     private svgElement: SVGElement;
 
     r: any;
-    currentContainer: HTMLElement;
 
     constructor(svgElement: SVGElement) {
         console.log("Sketch");
@@ -36,20 +36,17 @@ class Sketch {
         this.r = rough.svg(svgElement);
     }
 
-    setContainer(selector: string) {
-        this.currentContainer = (selector && selector.length > 0) ? document.querySelector(q(selector)) : undefined;
-    }
-
     qid(id: string): string {
         return `${slideName()}-${id}`;
     }
 
-    add(node: HTMLElement, id: string, duration = 50, type = "sync") {
+    add(node: HTMLElement, id: string, ctrSelector?: string, duration = 50, type = "sync") {
         const qid = this.qid(id);
         node.setAttribute("id", qid);
 
-        if(this.currentContainer) {
-            this.currentContainer.appendChild(node);
+        if(ctrSelector) {
+            const ctrElement = document.querySelector(q(ctrSelector))
+            ctrElement.appendChild(node);
         } else {
             this.svgElement.appendChild(node);
         }
@@ -75,9 +72,9 @@ class Sketch {
         return {upperLeftX, upperLeftY, width, height}
     }
 
-    createRect(id: string, rect: Rect, text: string, {fill = "pink", fillStyle = "solid", roughness = 3}: Options) {
+    createRect(id: string, rect: Rect, text: string, {fill = "pink", fillStyle = "solid", roughness = 3, ctr}: Options) {
         const node = this.r.rectangle(rect.upperLeftX, rect.upperLeftY, rect.width, rect.height, {fill, fillStyle, roughness});
-        this.add(node, id);
+        this.add(node, id, ctr);
 
         if (text) {
             d3.select(`#${this.qid(id)}`)

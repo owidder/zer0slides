@@ -4,12 +4,12 @@ import {Step} from '../core/Step';
 
 const translateY = (selector: string, tlY: number) => {
     d3.select(q(selector))
-        .attribute("transform", `translateY(${tlY})`)
+        .attr("transform", `translateY(${tlY})`)
 }
 
 const cancelAll = (selector: string) => {
     d3.select(q(selector))
-        .attribute("transform", null)
+        .attr("transform", null)
 }
 
 export const yStep = (selector: string, tlY: number) => {
