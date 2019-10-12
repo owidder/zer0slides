@@ -1,14 +1,24 @@
 import anime from "animejs/lib/anime.es";
-import * as d3 from "d3";
 
 import {q, selector} from "../selector/selector";
 import {Step} from '../core/Step';
+
+const screenWidth = window.innerWidth;
+const screenHeight = window.innerHeight;
+
+const getAbsX = (x: number) => {
+    return Math.abs(x) < 1 ? screenWidth * x : x;
+}
+
+const getAbsY = (y: number) => {
+    return Math.abs(y) < 1 ? screenHeight * y : y;
+}
 
 const moveY = (selector: string, translateY: number) => {
     return new Promise(resolve => {
         anime({
             targets: q(selector),
-            translateY,
+            translateY: getAbsY(translateY),
             complete: resolve
         })
     })

@@ -73,7 +73,7 @@ class Sketch {
     }
 
     createRect(id: string, rect: Rect, text: string, options: Options) {
-        const {fill = "pink", fillStyle = "solid", roughness = 3, container} = options;
+        const {fill = "pink", fillStyle = "solid", roughness = 1, container} = options;
         const node = this.r.rectangle(rect.upperLeftX, rect.upperLeftY, rect.width, rect.height, {...options, fill, fillStyle, roughness});
         this.add(node, id, container);
 

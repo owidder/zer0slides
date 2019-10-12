@@ -16,6 +16,10 @@
         font-size: x-large;
     }
 
+    .usertable {
+        width: 1000px;
+    }
+
 </style>
 
 <div class="svgcontainer">
@@ -52,9 +56,10 @@
             _0.tooltipStep(updateUserDetailsId, "JavaScript", "top")
         ))
 
-        _0.addStep(_0.anime.moveYStep(".glambda", -200));
+        _0.addStep(_0.anime.moveYStep(".glambda", -.2));
 
-        const dynamoDbRect = sketch.rectProz(.4, .7, .3, .2);
+        const dynamoDbRect = sketch.rectProz(.4, .8, .3, .15);
+        const dynamoDbId = `#${sketch.qid("dynamoDb")}`;
         _0.addStep(_0.combine(
             _0.removeTooltipStep(getUserDetailsId),
             _0.removeTooltipStep(updateUserDetailsId),
@@ -68,8 +73,13 @@
                 })
         ))
 
-        _0.addStep(_0.anime.scaleStep(".aws", .8));
-        _0.addStep(_0.anime.moveYStep(".aws", 100));
+        _0.addStep(_0.tooltipStep(dynamoDbId, "<img class='usertable' src='./img/usertable.png'>", "top"));
+
+        const apiGatewayRect = sketch.rectProz(.2, .15, .6, .1)
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(dynamoDbId),
+            sketch.createRectStep("apigateway", apiGatewayRect, "API Gateway")
+        ))
 
         ___()
     })()
