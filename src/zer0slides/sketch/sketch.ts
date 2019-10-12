@@ -82,8 +82,8 @@ class Sketch {
                 .append("text")
                 .attr("class", "rect-text")
                 .attr("font-family", "Mansalva")
-                .attr("x", rect.upperLeftX + 20)
-                .attr("y", rect.upperLeftY + 50)
+                .attr("x", rect.upperLeftX + 10)
+                .attr("y", rect.upperLeftY + 30)
                 .text(text);
         }
     }
