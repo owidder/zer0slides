@@ -23,6 +23,8 @@ import {shortcut} from "./zer0slides/shortcut/shortcut";
 import {background} from "./zer0slides/background/background";
 import {fitToScreen} from "./zer0slides/responsive/fitToScreen";
 import {createSketch} from "./zer0slides/sketch/Sketch";
+import * as anime from "./zer0slides/transform/anime";
+import * as transform from "./zer0slides/transform/transform";
 
 import * as vivus from "vivus";
 
@@ -85,9 +87,11 @@ export const init = () => {
         startStopCube: cube.startStopAnimation,
         step: steps.createStep,
         switchBetweenClasses: classUtil.switchBetweenClasses,
+        t: transform,
         tooltip: tooltip.addTooltipToDomNode,
         tooltipStep: tooltip.addTooltipToDomNodeStep,
         useTippy: tooltip.useTippy,
+        anime,
         controlElements,
         createSketch,
         d3,
