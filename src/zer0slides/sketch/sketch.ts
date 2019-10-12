@@ -88,6 +88,35 @@ class Sketch {
         }
     }
 
+    getCenter = (selector: string): {x: number, y: number} => {
+        const el = document.querySelector(q(selector));
+        const boundingRect = el.getBoundingClientRect();
+        const x = boundingRect.left + boundingRect.width/2;
+        const y = boundingRect.top + boundingRect.height/2;
+
+        return {x, y}
+    }
+
+    createLine(id: string, fromSelector: string, toSelector: string, options: Options) {
+        const fromCenter = this.getCenter(fromSelector);
+        const toCenter = this.getCenter(toSelector);
+
+        const node = this.r.line(fromCenter.x, fromCenter.y, toCenter.x, toCenter.y, options);
+        this.add(node, id, options.container);
+    }
+
+    createLineStep(id: string, fromSelector: string, toSelector: string, options: Options = {}) {
+        const f = () => {
+            this.createLine(id, fromSelector, toSelector, options);
+        }
+
+        const b = () => {
+            d3.select(`#${this.qid(id)}`).remove();
+        }
+
+        return new Step(f, b)
+    }
+
     createRectStep(id: string, rect: Rect, text: string, options: Options = {}) {
         const f = () => {
             this.createRect(id, rect, text, options);

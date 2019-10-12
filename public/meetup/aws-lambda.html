@@ -29,6 +29,8 @@
 <div class="svgcontainer">
     <svg class="canvas">
         <g class="aws">
+            <g class="browser"></g>
+            <g class="cognito"></g>
             <g class="gapi"></g>
             <g class="glambda"></g>
             <g class="gdynamoDb"></g>
@@ -84,13 +86,27 @@
         const apiGatewayId = `#${sketch.qid("apigateway")}`;
         _0.addStep(_0.combine(
             _0.removeTooltipStep(dynamoDbId),
-            sketch.createRectStep("apigateway", apiGatewayRect, "API Gateway", {container: ".gapi"})
+            sketch.createRectStep("apigateway", apiGatewayRect, "API Gateway", {container: ".gapi", fill: "lightblue", fillStyle: "hachure"})
         ))
 
         _0.addStep(_0.combine(
             _0.anime.moveYStep(".gapi", -.2),
             _0.tooltipStep(apiGatewayId, "<img class='apigateway' src='./img/apigateway.png'>", "bottom")
         ))
+
+        const browserRect = sketch.rectProz(.2, .2, .25, .1);
+        const browserId = `#${sketch.qid("browser")}`;
+        _0.addStep(_0.combine(
+            _0.anime.moveYStep(".gapi", 0),
+            _0.removeTooltipStep(apiGatewayId),
+            sketch.createRectStep("browser", browserRect, "Browser", {container: ".browser", fill: "lightgreen", fillStyle: "hachure"})
+        ))
+
+        const cognitoRect = sketch.rectProz(.55, .2, .25, .1);
+        const cognitoId = `#${sketch.qid("cognito")}`;
+        _0.addStep(sketch.createRectStep("cognito", cognitoRect, "AWS Cognito", {container: ".cognito", fill: "lightyellow"}));
+
+        _0.addStep(sketch.createLineStep("browser-cognito", browserId, cognitoId));
 
         ___()
     })()
