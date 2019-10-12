@@ -20,8 +20,10 @@
 
 <div class="svgcontainer">
     <svg class="canvas">
-        <g class="glambda"></g>
-        <g class="gdynamoDb"></g>
+        <g class="aws">
+            <g class="glambda"></g>
+            <g class="gdynamoDb"></g>
+        </g>
     </svg>
 </div>
 
@@ -58,6 +60,9 @@
             _0.removeTooltipStep(updateUserDetailsId),
             sketch.createRectStep("dynamoDb", dynamoDbRect, "DynamoDB", {ctr: ".gdynamoDb"})
         ))
+
+        _0.addStep(_0.anime.scaleStep(".aws", .8));
+        _0.addStep(_0.anime.moveYStep(".aws", 100));
 
         ___()
     })()
