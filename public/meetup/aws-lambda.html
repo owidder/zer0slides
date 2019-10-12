@@ -12,22 +12,40 @@
         font-size: 2em;
     }
 
+    .tippy-content {
+        font-size: x-large;
+    }
+
 </style>
 
 <div class="svgcontainer">
-    <svg class="canvas"></svg>
+    <svg class="canvas">
+        <g class="glambda"></g>
+    </svg>
 </div>
 
 <script>
 
     (function () {
+        console.log("#__0__")
+
         const svgElement = document.querySelector("#__0__ .canvas");
         const sketch = _0.createSketch(svgElement);
-        console.log("rough")
 
-        const lambdaRect = sketch.rectProz("lambda", .2, .5, .6, .4, "AWS Lambda");
-        sketch.rectProzFromRect(lambdaRect, "getUserDetails", .25, .1, .3, .8, "getUserDetails", {fill: "cyan"});
-        sketch.rectProzFromRect(lambdaRect, "updateUserDetails", .6, .1, .3, .8, "updateUserDetails", {fill: "cyan"});
+        _0.useTippy("transparent");
+
+        sketch.setContainer(".glambda");
+
+        const lambdaRect = sketch.rectProz(.2, .5, .6, .4);
+        _0.addStep(sketch.createRectStep("lambda", lambdaRect, "AWS Lambda"));
+
+        const getUserDetailsRect = sketch.rectProzFromRect(lambdaRect, .25, .1, .3, .8);
+        _0.addStep(sketch.createRectStep("getUserDetails", getUserDetailsRect, "getUserDetails()", {fill: "cyan"}))
+        _0.addStep(_0.tooltipStep(`#${sketch.qid("getUserDetails")}`, "JavaScript", "top"));
+
+        const updateUserDetailsRect = sketch.rectProzFromRect(lambdaRect, .6, .1, .3, .8);
+        _0.addStep(sketch.createRectStep("updateUserDetails", updateUserDetailsRect, "updateUserDetails()", {fill: "cyan"}));
+        _0.addStep(_0.tooltipStep(`#${sketch.qid("updateUserDetails")}`, "JavaScript", "top"));
 
         ___()
     })()

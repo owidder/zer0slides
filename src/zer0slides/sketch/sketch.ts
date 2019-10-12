@@ -2,6 +2,8 @@ import * as Vivus from "vivus";
 import * as d3 from "d3";
 
 import {slideName} from '../core/core';
+import {Step} from '../core/Step';
+import {q} from "../selector/selector";
 
 const rough = require("roughjs/dist/rough.umd");
 
@@ -26,6 +28,7 @@ class Sketch {
     private svgElement: SVGElement;
 
     r: any;
+    currentContainer: HTMLElement;
 
     constructor(svgElement: SVGElement) {
         console.log("Sketch");
@@ -33,55 +36,70 @@ class Sketch {
         this.r = rough.svg(svgElement);
     }
 
-    add(node: HTMLElement, id: string, duration = 50, type = "sync") {
-        const qid = `${slideName()}-${id}`;
-        node.setAttribute("id", qid);
-        this.svgElement.appendChild(node);
-
-        return new Promise((resolve) => {
-            new Vivus(qid, {duration, type});
-            setTimeout(() => {
-                resolve(qid)
-            }, duration)
-        })
+    setContainer(selector: string) {
+        this.currentContainer = (selector && selector.length > 0) ? document.querySelector(q(selector)) : undefined;
     }
 
-    rectProzFromRect(rect: Rect, id: string, upperLeftXProz: number, upperLeftYProz: number, widthProz: number, heightProz: number, text?: string, options: Options = {}): Rect {
+    qid(id: string): string {
+        return `${slideName()}-${id}`;
+    }
+
+    add(node: HTMLElement, id: string, duration = 50, type = "sync") {
+        const qid = this.qid(id);
+        node.setAttribute("id", qid);
+
+        if(this.currentContainer) {
+            this.currentContainer.appendChild(node);
+        } else {
+            this.svgElement.appendChild(node);
+        }
+
+        new Vivus(qid, {duration, type});
+    }
+
+    rectProzFromRect(rect: Rect, upperLeftXProz: number, upperLeftYProz: number, widthProz: number, heightProz: number): Rect {
         const upperLeftX = rect.width * upperLeftXProz + rect.upperLeftX;
         const upperLeftY = rect.height * upperLeftYProz + rect.upperLeftY;
         const width = rect.width * widthProz;
         const height = rect.height * heightProz;
 
-        this.rect(id, upperLeftX, upperLeftY, width, height, text, options);
-
         return {upperLeftX, upperLeftY, width, height}
     }
 
-    rectProz(id: string, upperLeftXProz: number, upperLeftYProz: number, widthProz: number, heightProz: number, text?: string, options: Options = {}): Rect {
+    rectProz(upperLeftXProz: number, upperLeftYProz: number, widthProz: number, heightProz: number): Rect {
         const upperLeftX = screenWidth * upperLeftXProz;
         const upperLeftY = screenHeight * upperLeftYProz;
         const width = screenWidth * widthProz;
         const height = screenHeight * heightProz;
 
-        this.rect(id, upperLeftX, upperLeftY, width, height, text, options);
-
         return {upperLeftX, upperLeftY, width, height}
     }
 
-    async rect(id: string, upperLeftX: number, upperLeftY: number, width: number, height: number, text: string,
-               {fill = "pink", fillStyle = "solid", roughness = 3}: Options) {
-        const node = this.r.rectangle(upperLeftX, upperLeftY, width, height, {fill, fillStyle, roughness});
-        const qid = await this.add(node, id);
+    createRect(id: string, rect: Rect, text: string, {fill = "pink", fillStyle = "solid", roughness = 3}: Options) {
+        const node = this.r.rectangle(rect.upperLeftX, rect.upperLeftY, rect.width, rect.height, {fill, fillStyle, roughness});
+        this.add(node, id);
 
         if (text) {
-            d3.select(`#${qid}`)
+            d3.select(`#${this.qid(id)}`)
                 .append("text")
                 .attr("class", "rect-text")
                 .attr("font-family", "Mansalva")
-                .attr("x", upperLeftX + 20)
-                .attr("y", upperLeftY + 50)
+                .attr("x", rect.upperLeftX + 20)
+                .attr("y", rect.upperLeftY + 50)
                 .text(text);
         }
+    }
+
+    createRectStep(id: string, rect: Rect, text: string, options: Options = {}) {
+        const f = () => {
+            this.createRect(id, rect, text, options);
+        }
+
+        const b = () => {
+            d3.select(`#${this.qid(id)}`).remove();
+        }
+
+        return new Step(f, b)
     }
 }
 
