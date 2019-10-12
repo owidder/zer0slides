@@ -21,7 +21,7 @@ interface Options {
     fill?: string,
     fillStyle?: string,
     roughness?: number,
-    ctr?: string
+    container?: string
 }
 
 class Sketch {
@@ -40,13 +40,13 @@ class Sketch {
         return `${slideName()}-${id}`;
     }
 
-    add(node: HTMLElement, id: string, ctrSelector?: string, duration = 50, type = "sync") {
+    add(node: HTMLElement, id: string, containerSelector?: string, duration = 50, type = "sync") {
         const qid = this.qid(id);
         node.setAttribute("id", qid);
 
-        if(ctrSelector) {
-            const ctrElement = document.querySelector(q(ctrSelector))
-            ctrElement.appendChild(node);
+        if(containerSelector) {
+            const containerElement = document.querySelector(q(containerSelector))
+            containerElement.appendChild(node);
         } else {
             this.svgElement.appendChild(node);
         }
@@ -72,9 +72,10 @@ class Sketch {
         return {upperLeftX, upperLeftY, width, height}
     }
 
-    createRect(id: string, rect: Rect, text: string, {fill = "pink", fillStyle = "solid", roughness = 3, ctr}: Options) {
-        const node = this.r.rectangle(rect.upperLeftX, rect.upperLeftY, rect.width, rect.height, {fill, fillStyle, roughness});
-        this.add(node, id, ctr);
+    createRect(id: string, rect: Rect, text: string, options: Options) {
+        const {fill = "pink", fillStyle = "solid", roughness = 3, container} = options;
+        const node = this.r.rectangle(rect.upperLeftX, rect.upperLeftY, rect.width, rect.height, {...options, fill, fillStyle, roughness});
+        this.add(node, id, container);
 
         if (text) {
             d3.select(`#${this.qid(id)}`)

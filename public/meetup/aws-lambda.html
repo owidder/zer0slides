@@ -38,17 +38,17 @@
         _0.useTippy("transparent");
 
         const lambdaRect = sketch.rectProz(.2, .5, .6, .4);
-        _0.addStep(sketch.createRectStep("lambda", lambdaRect, "AWS Lambda", {ctr: ".glambda"}));
+        _0.addStep(sketch.createRectStep("lambda", lambdaRect, "AWS Lambda", {container: ".glambda"}));
 
         const getUserDetailsRect = sketch.rectProzFromRect(lambdaRect, .25, .1, .3, .8);
         const getUserDetailsId = `#${sketch.qid("getUserDetails")}`;
-        _0.addStep(sketch.createRectStep("getUserDetails", getUserDetailsRect, "getUserDetails()", {fill: "cyan", ctr: ".glambda"}))
+        _0.addStep(sketch.createRectStep("getUserDetails", getUserDetailsRect, "getUserDetails()", {fill: "cyan", container: ".glambda"}))
         _0.addStep(_0.tooltipStep(getUserDetailsId, "JavaScript", "top"));
 
         const updateUserDetailsRect = sketch.rectProzFromRect(lambdaRect, .6, .1, .3, .8);
         const updateUserDetailsId = `#${sketch.qid("updateUserDetails")}`;
         _0.addStep(_0.combine(
-            sketch.createRectStep("updateUserDetails", updateUserDetailsRect, "updateUserDetails()", {fill: "cyan", ctr: ".glambda"}),
+            sketch.createRectStep("updateUserDetails", updateUserDetailsRect, "updateUserDetails()", {fill: "cyan", container: ".glambda"}),
             _0.tooltipStep(updateUserDetailsId, "JavaScript", "top")
         ))
 
@@ -58,7 +58,14 @@
         _0.addStep(_0.combine(
             _0.removeTooltipStep(getUserDetailsId),
             _0.removeTooltipStep(updateUserDetailsId),
-            sketch.createRectStep("dynamoDb", dynamoDbRect, "DynamoDB", {ctr: ".gdynamoDb"})
+            sketch.createRectStep("dynamoDb", dynamoDbRect, "DynamoDB",
+                {
+                    container: ".gdynamoDb",
+                    bowing: 3,
+                    strokeWidth: 3,
+                    fill: "lightgrey",
+                    stroke: "green"
+                })
         ))
 
         _0.addStep(_0.anime.scaleStep(".aws", .8));
