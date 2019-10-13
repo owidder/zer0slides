@@ -21,7 +21,10 @@ interface Options {
     fill?: string,
     fillStyle?: string,
     roughness?: number,
-    container?: string
+    container?: string,
+    strokeWidth?: number,
+    stroke?: string,
+    bowing?: number
 }
 
 class Sketch {
@@ -106,8 +109,9 @@ class Sketch {
     }
 
     createLineStep(id: string, fromSelector: string, toSelector: string, options: Options = {}) {
+        const {strokeWidth = 2, bowing = 4, stroke = "blue"} = options;
         const f = () => {
-            this.createLine(id, fromSelector, toSelector, options);
+            this.createLine(id, fromSelector, toSelector, {...options, strokeWidth, bowing, stroke});
         }
 
         const b = () => {
