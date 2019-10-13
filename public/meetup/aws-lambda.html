@@ -178,10 +178,8 @@
 
         const apiGatewayRect = sketch.rectProz(.2, .35, .6, .08)
         const apiGatewayId = `#${sketch.qid("apigateway")}`;
-        _0.addStep(_0.combine(
-            _0.removeTooltipStep(dynamoDbId),
-            sketch.createRectStep("apigateway", apiGatewayRect, "API Gateway", {container: ".gapi", fill: "lightblue", fillStyle: "hachure"})
-        ))
+        _0.addStep(_0.removeTooltipStep(dynamoDbId));
+        _0.addStep(sketch.createRectStep("apigateway", apiGatewayRect, "API Gateway", {container: ".gapi", fill: "lightblue", fillStyle: "hachure"}));
 
         _0.addStep(_0.combine(
             _0.anime.moveYStep(".gapi", -.2),
@@ -192,9 +190,10 @@
         const browserId = `#${sketch.qid("browser")}`;
         _0.addStep(_0.combine(
             _0.anime.moveYStep(".gapi", 0),
-            _0.removeTooltipStep(apiGatewayId),
-            sketch.createRectStep("browser", browserRect, "Browser", {container: ".browser", fill: "lightgreen", fillStyle: "hachure"})
-        ))
+            _0.removeTooltipStep(apiGatewayId)
+        ));
+
+        _0.addStep(sketch.createRectStep("browser", browserRect, "Browser", {container: ".browser", fill: "lightgreen", fillStyle: "hachure"}));
 
         const cognitoRect = sketch.rectProz(.55, .2, .25, .1);
         const cognitoId = `#${sketch.qid("cognito")}`;

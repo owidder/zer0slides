@@ -1,0 +1,67 @@
+<style>
+</style>
+
+<div class="title"></div>
+<div class="flexcontainer start">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.useTippy("transparent");
+
+        _0.glowText(".title", ["Gitlab Runner Config (Server)",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "image: node:10.16.3-alpine\n" +
+            "\n" +
+            "variables:\n" +
+            "  AWS_REGION: eu-central-1\n" +
+            "\n" +
+            "stages:\n" +
+            "  - Deploy Dev\n" +
+            "  - Deploy Prod\n" +
+            "\n" +
+            ".configure: &configure\n" +
+            "  before_script:\n" +
+            "    - echo \"Installing Serverless ...\"\n" +
+            "    - npm install -g serverless\n" +
+            "    - echo \"Installing AWS CLI ...\"\n" +
+            "    - apk add --no-cache curl jq python py-pip\n" +
+            "    - pip install awscli\n" +
+            "    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID\n" +
+            "    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY\n" +
+            "    - aws configure set region $AWS_REGION\n" +
+            "\n" +
+            "deploy-to-dev:\n" +
+            "  <<: *configure\n" +
+            "  stage: Deploy Dev\n" +
+            "  script:\n" +
+            "    - cd aws\n" +
+            "    - npm install\n" +
+            "    - serverless deploy --stage dev\n" +
+            " \n" +
+            "deploy-to-prod:\n" +
+            "  <<: *configure\n" +
+            "  stage: Deploy Prod\n" +
+            "  only:\n" +
+            "    - master\n" +
+            "  when: manual\n" +
+            "  script:\n" +
+            "    - cd aws\n" +
+            "    - npm install\n" +
+            "    - serverless deploy --stage prod\n",
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "26-27", "Deploy to stage 'dev'"));
+        steps.push(_0.highlightLinesStep(codeSelector, "37-38", "Deploy to stage 'prod'", "top"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
