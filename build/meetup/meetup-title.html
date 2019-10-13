@@ -1,0 +1,25 @@
+<style>
+</style>
+
+<div class="flexcontainer start">
+    <div class="code responsive"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.useTippy("transparent");
+
+        _0.codeJs(".code",
+            "Genosse\n" +
+            "Serverless");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", "More Dev..."));
+        steps.push(_0.highlightLinesStep(".code", "2", " ... less Ops", "top"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

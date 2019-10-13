@@ -3,13 +3,22 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Mansalva&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
-    <script src="./steps.js"></script>
+    <style>
+        .tippy-content {
+            font-size: x-large;
+        }
+    </style>
 <link href="../static/css/z0.1.10.0.css" rel="stylesheet"></head>
 <body>
 <script>
     window.onload = function () {
-        _0.addSlideWithConfig("cube", "Cube", {doPerformToCurrentStep: false, centerCurrentLine: true, useTippyAsDefault: true, afterStepDelay: 100});
+        _0.addSlide("meetup-title", "Title");
+        _0.addSlide("aws-lambda", "The Server");
+        _0.addSlide("awsAmplify", "AWS Amplify");
+        _0.addSlide("serverlessyml", "serverless.yml");
+        _0.addSlide("qr", "Danke");
 
         _0.initReady();
     }

@@ -1,0 +1,51 @@
+<style>
+</style>
+
+<div class="title"></div>
+<div class="flexcontainer start">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.useTippy("transparent");
+
+        _0.glowText(".title", ["AWS Amplify",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "import * as React from \"react\";\n" +
+            "import Amplify, { Auth } from \"aws-amplify\";\n" +
+            "import {withAuthenticator} from \"aws-amplify-react\";\n" +
+            "import aws_exports from \"./config\";\n" +
+            "import { CognitoAccessToken } from 'amazon-cognito-identity-js';\n" +
+            "\n" +
+            "Amplify.configure({...aws_exports,\n" +
+            "    Analytics: {\n" +
+            "        disabled: true\n" +
+            "    }});\n" +
+            "\n" +
+            "export const getAccessToken = async (): Promise<CognitoAccessToken> => {\n" +
+            "    const session = await Auth.currentSession();\n" +
+            "    return session.getAccessToken();\n" +
+            "};\n" +
+            "\n" +
+            "export const wrap = (element: React.ComponentType) => {\n" +
+            "    return withAuthenticator(element, {includeGreetings: true, signUpConfig: {\n" +
+            "            hiddenDefaults: [\"phone_number\", \"email\"],\n" +
+            "        }}, false);\n" +
+            "};\n",
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "3", "'withAuthenticator' from AWS Amplify"));
+        steps.push(_0.highlightLinesStep(codeSelector, "4,7-10", "Configuration", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "17-21", "That's all"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
