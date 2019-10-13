@@ -22,6 +22,14 @@ import {cast} from "./zer0slides/specials/cast";
 import {shortcut} from "./zer0slides/shortcut/shortcut";
 import {background} from "./zer0slides/background/background";
 import {fitToScreen} from "./zer0slides/responsive/fitToScreen";
+import {createSketch} from "./zer0slides/sketch/Sketch";
+import * as anime from "./zer0slides/transform/anime";
+import * as transform from "./zer0slides/transform/transform";
+import * as elements from "./zer0slides/dom/elements";
+
+import * as vivus from "vivus";
+
+const rough = require("roughjs/dist/rough.umd");
 
 const createRoot = () => {
     const body = d3.select("body");
@@ -52,6 +60,7 @@ export const init = () => {
         createCube: cube.create,
         d3select: selector.d3select,
         doNotUseTippy: tooltip.doNotUseTippy,
+        el: elements,
         fitToScreen: fitToScreen,
         glowText: glowText.create,
         highlightLines: showCode.highlightLines,
@@ -80,18 +89,23 @@ export const init = () => {
         startStopCube: cube.startStopAnimation,
         step: steps.createStep,
         switchBetweenClasses: classUtil.switchBetweenClasses,
+        t: transform,
         tooltip: tooltip.addTooltipToDomNode,
         tooltipStep: tooltip.addTooltipToDomNodeStep,
         useTippy: tooltip.useTippy,
+        anime,
         controlElements,
+        createSketch,
+        d3,
         metamaskLogo,
+        rough,
         shortcut,
         slideCore,
         steps,
-        d3,
         tippy,
+        vivus,
         $,
-        _
+        _,
     };
 
     slideCore._0 = _0;

@@ -1,12 +1,13 @@
 {
   "name": "zer0slides",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf build",
     "build": "npm run clean && cross-env NODE_ENV=production webpack",
     "build:dev": "npm run clean && cross-env NODE_ENV=development webpack",
+    "build:dev:meetup": "npm run clean && cross-env NODE_ENV=development webpack --env=meetup",
     "build:dev:watch": "npm run clean && cross-env NODE_ENV=development webpack --watch",
     "build:local": "cross-env INDEX=indexLocal npm run build:dev",
     "test": "jest",
@@ -69,7 +70,7 @@
     "zip-webpack-plugin": "^3.0.0"
   },
   "dependencies": {
-    "animejs": "^3.0.1",
+    "animejs": "^3.1.0",
     "d3": "^5.9.0",
     "include-media": "^1.4.9",
     "jquery": "^3.4.0",
@@ -84,9 +85,11 @@
     "query-string": "^6.2.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
+    "roughjs": "^3.1.0",
     "simple-statistics": "^7.0.2",
     "sprintf-js": "^1.1.2",
-    "tippy.js": "^4.2.0"
+    "tippy.js": "^4.2.0",
+    "vivus": "^0.4.5"
   },
   "homepage": "https://owidder.github.io/zer0slides/build",
   "jest": {
