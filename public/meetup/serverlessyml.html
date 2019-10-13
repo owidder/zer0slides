@@ -1,0 +1,164 @@
+<style>
+
+</style>
+
+<div class="title"></div>
+<div class="flexcontainer start">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["serverless.yml",], "small glow");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "service: mitgliederverwaltung\n" +
+            "\n" +
+            "provider:\n" +
+            "  name: aws\n" +
+            "  runtime: nodejs8.10\n" +
+            "  stackName: ${self:service}-${self:provider.stage}\n" +
+            "  stage: ${opt:stage, 'dev'}\n" +
+            "  region: ${opt:region, 'eu-central-1'}\n" +
+            "  iamRoleStatements:\n" +
+            "    - Effect: Allow\n" +
+            "      Action:\n" +
+            "        - \"execute-api:ManageConnections\"\n" +
+            "      Resource:\n" +
+            "        - \"arn:aws:execute-api:*:*:**/@connections/*\"\n" +
+            "    - Effect: Allow\n" +
+            "      Action:\n" +
+            "        - \"dynamodb:PutItem\"\n" +
+            "        - \"dynamodb:GetItem\"\n" +
+            "        - \"dynamodb:UpdateItem\"\n" +
+            "        - \"dynamodb:DeleteItem\"\n" +
+            "        - \"dynamodb:Query\"\n" +
+            "        - \"dynamodb:Scan\"\n" +
+            "      Resource:\n" +
+            "        - Fn::GetAtt: [UserTable, Arn]\n" +
+            "        - Fn::GetAtt: [UserDataApprovalTable, Arn]\n" +
+            "    - Effect: Allow\n" +
+            "      Action:\n" +
+            "        - \"cognito-idp:AdminGetUser\"\n" +
+            "      Resource:\n" +
+            "        - \"arn:aws:cognito-idp:eu-central-1:574236439438:userpool/*\"\n" +
+            "\n" +
+            "  environment:\n" +
+            "    USER_TABLE:\n" +
+            "      Ref: UserTable\n" +
+            "    USER_DATA_APPROVAL_TABLE:\n" +
+            "      Ref: UserDataApprovalTable\n" +
+            "\n" +
+            "  websocketApiName: mitgliederverwaltung-${self:provider.stage}\n" +
+            "  websocketApiRouteSelectionExpression: $request.body.action\n" +
+            "\n" +
+            "functions:\n" +
+            "  connect:\n" +
+            "    handler: handler.connect\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: $connect\n" +
+            "  disconnect:\n" +
+            "    handler: handler.disconnect\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: $disconnect\n" +
+            "  defaultMessages:\n" +
+            "    handler: handler.defaultMessage\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: $default\n" +
+            "  updateUserDetails:\n" +
+            "    handler: handler.updateUserDetails\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: updateUserDetails\n" +
+            "  uploadUsers:\n" +
+            "    handler: handler.uploadUsers\n" +
+            "    timeout: 60\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: uploadUsers\n" +
+            "  getUserDetails:\n" +
+            "    handler: handler.getUserDetails\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: getUserDetails\n" +
+            "  getAllUserEmails:\n" +
+            "    handler: handler.getAllUserEmails\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: getAllUserEmails\n" +
+            "  getAllUserBuHaData:\n" +
+            "    handler: handler.getAllUserBuHaData\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: getAllUserBuHaData\n" +
+            "  getVersionNo:\n" +
+            "    handler: handler.getVersionNo\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: getVersionNo\n" +
+            "  getUsersCount:\n" +
+            "    handler: handler.getUsersCount\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: getUsersCount\n" +
+            "  getUserDataApproval:\n" +
+            "    handler: handler.getUserDataApproval\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: getUserDataApproval\n" +
+            "  updateUserDataApproval:\n" +
+            "    handler: handler.updateUserDataApproval\n" +
+            "    events:\n" +
+            "      - websocket:\n" +
+            "          route: updateUserDataApproval \n" +
+            "\n" +
+            "resources:\n" +
+            "  Resources:\n" +
+            "    UserTable:\n" +
+            "      Type: AWS::DynamoDB::Table\n" +
+            "      Properties:\n" +
+            "        AttributeDefinitions:\n" +
+            "          - AttributeName: userId\n" +
+            "            AttributeType: S\n" +
+            "        KeySchema:\n" +
+            "          - AttributeName: userId\n" +
+            "            KeyType: HASH\n" +
+            "        ProvisionedThroughput:\n" +
+            "          ReadCapacityUnits: 5\n" +
+            "          WriteCapacityUnits: 5\n" +
+            "\n" +
+            "    UserDataApprovalTable:\n" +
+            "      Type: AWS::DynamoDB::Table\n" +
+            "      Properties:\n" +
+            "        AttributeDefinitions:\n" +
+            "          - AttributeName: userId\n" +
+            "            AttributeType: S\n" +
+            "          - AttributeName: createdAt\n" +
+            "            AttributeType: S\n" +
+            "        KeySchema:\n" +
+            "          - AttributeName: userId\n" +
+            "            KeyType: HASH\n" +
+            "          - AttributeName: createdAt\n" +
+            "            KeyType: RANGE\n" +
+            "        ProvisionedThroughput:\n" +
+            "          ReadCapacityUnits: 5\n" +
+            "          WriteCapacityUnits: 5\n",
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "41-102", "Lambda functions"));
+        steps.push(_0.highlightLinesStep(codeSelector, "68-72", "Function 'getUserDetails'"));
+        steps.push(_0.highlightLinesStep(codeSelector, "69", "Where to find the code?"));
+        steps.push(_0.highlightLinesStep(codeSelector, "70-72", "How to invoke it"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
