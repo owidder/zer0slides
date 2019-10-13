@@ -33,6 +33,7 @@ export const createTooltip = (tooltip: Tooltip) => {
         theme,
         animateFill: false,
         arrow: true,
+        maxWidth: "none",
         placement: (tooltip.position ? tooltip.position : "bottom") as Placement
     }
 
