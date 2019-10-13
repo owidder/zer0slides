@@ -28,6 +28,10 @@
         height: 400px;
     }
 
+    img.jwt {
+        width: 1000px;
+    }
+
 </style>
 
 <div class="svgcontainer">
@@ -110,18 +114,52 @@
         const cognitoId = `#${sketch.qid("cognito")}`;
         _0.addStep(sketch.createRectStep("cognito", cognitoRect, "AWS Cognito", {container: ".cognito", fill: "lightyellow"}));
 
-        _0.addStep(sketch.createLineStep("browser-cognito", browserId, cognitoId));
+        browserCognitoStep = sketch.createLineStep("browser-cognito", browserId, cognitoId);
+        _0.addStep(browserCognitoStep);
 
         const browserCognitoId = `#${sketch.qid("browser-cognito")}`;
         _0.addStep(_0.tooltipStep(browserCognitoId, "<img class='login' src='./img/login.png'>"))
 
-        _0.addStep(_0.combine(
+        const browserApiStep = sketch.createLineStep("browser-api", browserId, apiGatewayId);
+            _0.addStep(_0.combine(
             _0.removeTooltipStep(browserCognitoId),
-            sketch.createLineStep("browser-api", browserId, apiGatewayId)
+            _0.reverse(browserCognitoStep),
+            browserApiStep
         ))
 
         const browserApiId = `#${sketch.qid("browser-api")}`;
-        _0.addStep(_0.tooltipStep(browserApiId, "<img class='login' src='./img/websocket.png'>"))
+        _0.addStep(_0.tooltipStep(browserApiId, "<img class='websocket' src='./img/websocket.png'>"))
+
+        const apiGetUserDetailsStep = sketch.createLineStep("api-getUserDetails", apiGatewayId, getUserDetailsId);
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(browserApiId),
+            _0.reverse(browserApiStep),
+            apiGetUserDetailsStep
+        ))
+
+        const getUserDetailsCognitoStep = sketch.createLineStep("getUserDetails-cognito", getUserDetailsId, cognitoId);
+        _0.addStep(_0.combine(
+            _0.reverse(apiGetUserDetailsStep),
+            getUserDetailsCognitoStep
+        ))
+
+        const getUserDetailsCognitoId = `#${sketch.qid("getUserDetails-cognito")}`;
+        _0.addStep(_0.tooltipStep(getUserDetailsCognitoId, "<img class='jwt' src='./img/jwt.png'>", "left"))
+
+        const getUserDetailsDynamoDbStep = sketch.createLineStep("getUserDetails-dynamoDb", getUserDetailsId, dynamoDbId);
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(getUserDetailsCognitoId),
+            _0.reverse(getUserDetailsCognitoStep),
+            getUserDetailsDynamoDbStep
+        ))
+
+        const getUserDetailsDynamoDbId = `#${sketch.qid("getUserDetails-dynamoDb")}`;
+        _0.addStep(_0.tooltipStep(getUserDetailsDynamoDbId, "<img class='usertable' src='./img/usertable.png'>"))
+
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(getUserDetailsDynamoDbId),
+            _0.reverse(getUserDetailsDynamoDbStep)
+        ))
 
         ___()
     })()
