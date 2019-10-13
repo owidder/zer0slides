@@ -32,6 +32,28 @@
         width: 1000px;
     }
 
+    img.cloudfront {
+        position: absolute;
+        top: 100px;
+        left: 500px;
+        opacity: .8;
+    }
+
+    img.terraform {
+        position: absolute;
+        top: 400px;
+        left: 300px;
+        opacity: .8;
+    }
+
+    img.gitlab {
+        position: absolute;
+        top: 600px;
+        left: 500px;
+        width: 300px;
+        opacity: .8;
+    }
+
 </style>
 
 <div class="svgcontainer">
@@ -45,6 +67,8 @@
         </g>
     </svg>
 </div>
+
+<div class="imagecontainer"></div>
 
 <script>
 
@@ -161,7 +185,11 @@
             _0.reverse(getUserDetailsDynamoDbStep)
         ))
 
-        _0.addStep(_0.anime.scaleStep(".aws", .5))
+        _0.addStep(_0.anime.scaleStep(".aws", .5));
+
+        _0.addStep(_0.el.addImageStep(".imagecontainer", "cloudfront", "./img/cloudfront.png"))
+        _0.addStep(_0.el.addImageStep(".imagecontainer", "terraform", "./img/terraform.png"))
+        _0.addStep(_0.el.addImageStep(".imagecontainer", "gitlab", "./img/gitlab.png"))
 
         ___()
     })()

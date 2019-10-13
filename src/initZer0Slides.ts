@@ -25,6 +25,7 @@ import {fitToScreen} from "./zer0slides/responsive/fitToScreen";
 import {createSketch} from "./zer0slides/sketch/Sketch";
 import * as anime from "./zer0slides/transform/anime";
 import * as transform from "./zer0slides/transform/transform";
+import * as elements from "./zer0slides/dom/elements";
 
 import * as vivus from "vivus";
 
@@ -59,6 +60,7 @@ export const init = () => {
         createCube: cube.create,
         d3select: selector.d3select,
         doNotUseTippy: tooltip.doNotUseTippy,
+        el: elements,
         fitToScreen: fitToScreen,
         glowText: glowText.create,
         highlightLines: showCode.highlightLines,
