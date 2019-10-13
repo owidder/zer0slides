@@ -17,7 +17,7 @@
     }
 
     img.apigateway {
-        height: 390px;
+        width: 800px;
     }
 
     img.login {
@@ -66,8 +66,55 @@
         width: 600px;
     }
 
+    @keyframes __0__-graph-animate-cube {
+        33% {transform: rotateX(360deg) rotateY(0deg) rotateZ(0deg)}
+        66% {transform: rotateX(360deg) rotateY(360deg) rotateZ(0deg)}
+        66% {transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg)}
+    }
+
+    #__0__ .animate-cube {
+        animation: __0__-graph-animate-cube 100s infinite ease-in-out;
+    }
+
+    #__0__ .cube-cloudfront {
+        background-image: url("./img/cloudfront.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-terraform {
+        background-image: url("./img/terraform.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-gitlab {
+        background-image: url("./img/gitlab.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-awsAmplify {
+        background-image: url("./img/awsAmplify.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-serverless {
+        background-image: url("./img/serverless.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-nurdemteam {
+        background-image: url("./img/nurdemteam.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
 </style>
 
+<div class="title"></div>
 <div class="svgcontainer">
     <svg class="canvas">
         <g class="aws">
@@ -81,11 +128,14 @@
 </div>
 
 <div class="imagecontainer"></div>
+<div class="cubecontainer"></div>
 
 <script>
 
     (function () {
         console.log("#__0__")
+
+        _0.glowText(".title", ["Mitgliederverwaltung",], "small glow");
 
         const svgElement = document.querySelector("#__0__ .canvas");
         const sketch = _0.createSketch(svgElement);
@@ -199,11 +249,23 @@
 
         _0.addStep(_0.anime.scaleStep(".aws", .5));
 
-        _0.addStep(_0.el.addImageStep(".imagecontainer", "cloudfront", "./img/cloudfront.png"))
-        _0.addStep(_0.el.addImageStep(".imagecontainer", "terraform", "./img/terraform.png"))
-        _0.addStep(_0.el.addImageStep(".imagecontainer", "gitlab", "./img/gitlab.png"))
-        _0.addStep(_0.el.addImageStep(".imagecontainer", "awsAmplify", "./img/awsAmplify.png"))
-        _0.addStep(_0.el.addImageStep(".imagecontainer", "serverless", "./img/serverless.png"))
+        const createCubeStep = _0.step(
+            () => {
+                _0.createCube(".cubecontainer", 350);
+                _0.setClass(".cube-top", "cube-nurdemteam");
+                _0.setClass(".cube-bottom", "cube-terraform");
+                _0.setClass(".cube-right", "cube-gitlab");
+                _0.setClass(".cube-back", "cube-awsAmplify")
+                _0.setClass(".cube-left", "cube-serverless")
+                _0.setClass(".cube-front", "cube-cloudfront")
+                _0.startStopCube(true);
+            },
+            () => {
+                _0.removeCube(".cubecontainer")
+            }
+        )
+
+        _0.addStep(createCubeStep);
 
         ___()
     })()
