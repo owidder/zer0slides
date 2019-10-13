@@ -136,6 +136,7 @@ export const startStopAnimationStepWithReverse = () => {
 
 export const cube = {
     create,
+    remove,
     createWithCanvas,
     createWithCanvasStep,
     startStopAnimation,

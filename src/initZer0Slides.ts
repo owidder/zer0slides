@@ -72,6 +72,7 @@ export const init = () => {
         qrCurrentAddress: qrUtil.qrCurrentAddress,
         removeClassStep: classUtil.removeClassStep,
         readFile: file.read,
+        removeCube: cube.remove,
         removeTooltip: tooltip.removeTooltipFromDomNode,
         removeTooltipStep: tooltip.removeTooltipFromDomNodeStep,
         reverse: steps.reverse,
