@@ -119,7 +119,10 @@
     <svg class="canvas">
         <g class="system">
             <g class="gbrowser"></g>
-            <g class="gapp"></g>
+            <g class="gkuberapp">
+                <g class="gkubernetes"></g>
+                <g class="gapp"></g>
+            </g>
             <g class="gkafka"></g>
         </g>
     </svg>
@@ -161,13 +164,52 @@
             sketch.createRectStep("appx3", appx3Rect, "...", {container: ".gapp", fill: "lightgrey"}),
         ));
 
-        _0.addStep(_0.anime.moveYStep(".gapp", -.2));
+        const kubernetesRect = sketch.rectProz(.15, .65, .8, .3);
+        _0.addStep(sketch.createRectStep("kubernetes", kubernetesRect, "Kubernetes", {container: ".gkubernetes", fill: "yellow", fillStyle: "hachure"}));
+
+        const app1Id = `#${sketch.qid("app1")}`;
+        _0.addStep(_0.tooltipStep(app1Id, "Spring Boot (Java) im Docker Container", "top"))
+
+        const app2Id = `#${sketch.qid("app2")}`;
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(app1Id),
+            _0.tooltipStep(app2Id, "Spring Boot (Kotlin) im Docker Container", "top")
+        ))
+
+        const app3Id = `#${sketch.qid("app3")}`;
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(app2Id),
+            _0.tooltipStep(app3Id, "Keycloak im Docker Container", "top")
+        ))
+
+        const kubernetesId = `#${sketch.qid("kubernetes")}`;
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(app3Id),
+            _0.tooltipStep(kubernetesId, "Unabhängig entwickeln und deployen", "top")
+        ))
+
+        _0.addStep(_0.anime.moveYStep(".gkuberapp", -.2));
 
         const kafkaRect = sketch.rectProz(.2, .77, .74, .1);
         _0.addStep(sketch.createRectStep("kafka", kafkaRect, "Apache Kafka", {container: ".gkafka", fill: "lightgreen", fillStyle: "hachure"}));
 
         const browserRect = sketch.rectProz(.2, .1, .74, .3);
-        _0.addStep(sketch.createRectStep("browser", browserRect, "Browser", {container: ".gbrowser", fill: "lightblue", fillStyle: "hachure"}));
+        _0.addStep(_0.combine(
+            _0.removeTooltipStep(kubernetesId),
+            sketch.createRectStep("browser", browserRect, "Browser", {container: ".gbrowser", fill: "lightblue", fillStyle: "hachure"})
+        ));
+
+        const app1UiRect = sketch.rectProzFromRect(browserRect, .1, .5, .2, .3);
+        _0.addStep(sketch.createRectStep("app1Ui", app1UiRect, "UI von App1"));
+
+        const app1UiId = `#${sketch.qid("app1Ui")}`;
+        _0.addStep(sketch.createLineStep("app1Ui-app1", app1UiId, app1Id));
+
+        const app2UiRect = sketch.rectProzFromRect(browserRect, .5, .1, .3, .8);
+        _0.addStep(sketch.createRectStep("app2Ui", app2UiRect, "UI von App2"));
+
+        const app2UiId = `#${sketch.qid("app2Ui")}`;
+        _0.addStep(sketch.createLineStep("app2Ui-app2", app2UiId, app2Id));
 
         _0.addStep(_0.anime.scaleStep(".system", .5));
 
