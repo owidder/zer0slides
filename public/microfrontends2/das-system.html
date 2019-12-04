@@ -1,0 +1,195 @@
+<style>
+
+    #__0__ .canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #__0__ .rect-text {
+        font-size: 2em;
+    }
+
+    img.usertable {
+        height: 400px;
+    }
+
+    img.apigateway {
+        width: 800px;
+    }
+
+    img.login {
+        height: 400px;
+    }
+
+    img.jwt {
+        width: 1000px;
+    }
+
+    img.cloudfront {
+        position: absolute;
+        top: 100px;
+        left: 500px;
+        opacity: .8;
+    }
+
+    img.terraform {
+        position: absolute;
+        top: 400px;
+        left: 300px;
+        opacity: .8;
+    }
+
+    img.gitlab {
+        position: absolute;
+        top: 600px;
+        left: 500px;
+        width: 300px;
+        opacity: .8;
+    }
+
+    img.awsAmplify {
+        position: absolute;
+        top: 300px;
+        left: 200px;
+        opacity: .8;
+        width: 800px;
+    }
+
+    img.serverless {
+        position: absolute;
+        top: 400px;
+        left: 500px;
+        opacity: .8;
+        width: 600px;
+    }
+
+    @keyframes __0__-graph-animate-cube {
+        33% {transform: rotateX(360deg) rotateY(0deg) rotateZ(0deg)}
+        66% {transform: rotateX(360deg) rotateY(360deg) rotateZ(0deg)}
+        66% {transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg)}
+    }
+
+    #__0__ .animate-cube {
+        animation: __0__-graph-animate-cube 100s infinite ease-in-out;
+    }
+
+    #__0__ .cube-cloudfront {
+        background-image: url("./img/cloudfront.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-terraform {
+        background-image: url("./img/terraform.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-gitlab {
+        background-image: url("./img/gitlab.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-awsAmplify {
+        background-image: url("./img/awsAmplify.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-serverless {
+        background-image: url("./img/serverless.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-nurdemteam {
+        background-image: url("./img/nurdemteam.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+</style>
+
+<div class="title"></div>
+<div class="svgcontainer">
+    <svg class="canvas">
+        <g class="system">
+            <g class="gbrowser"></g>
+            <g class="gapp"></g>
+            <g class="gkafka"></g>
+        </g>
+    </svg>
+</div>
+
+<div class="imagecontainer"></div>
+<div class="cubecontainer"></div>
+
+<script>
+
+    (function () {
+        console.log("#__0__")
+
+        _0.glowText(".title", ["Das Gesamt-System",], "small glow");
+
+        const svgElement = document.querySelector("#__0__ .canvas");
+        const sketch = _0.createSketch(svgElement);
+
+        _0.useTippy("transparent");
+
+        const app1Rect = sketch.rectProz(.2, .7, .1, .2);
+        _0.addStep(sketch.createRectStep("app1", app1Rect, "App 1", {container: ".gapp"}));
+
+        const app2Rect = sketch.rectProz(.35, .7, .1, .2);
+        _0.addStep(sketch.createRectStep("app2", app2Rect, "App 2", {container: ".gapp"}));
+
+        const app3Rect = sketch.rectProz(.5, .7, .1, .2);
+        _0.addStep(sketch.createRectStep("app3", app3Rect, "App 3", {container: ".gapp"}));
+
+        const app4Rect = sketch.rectProz(.65, .7, .1, .2);
+        _0.addStep(sketch.createRectStep("app4", app4Rect, "App 4", {container: ".gapp"}));
+
+        const appx1Rect = sketch.rectProz(.8, .7, .1, .2);
+        const appx2Rect = sketch.rectProz(.82, .7, .1, .2);
+        const appx3Rect = sketch.rectProz(.84, .7, .1, .2);
+        _0.addStep(_0.combine(
+            sketch.createRectStep("appx1", appx1Rect, "...", {container: ".gapp", fill: "lightgrey"}),
+            sketch.createRectStep("appx2", appx2Rect, "...", {container: ".gapp", fill: "lightgrey"}),
+            sketch.createRectStep("appx3", appx3Rect, "...", {container: ".gapp", fill: "lightgrey"}),
+        ));
+
+        _0.addStep(_0.anime.moveYStep(".gapp", -.2));
+
+        const kafkaRect = sketch.rectProz(.2, .77, .74, .1);
+        _0.addStep(sketch.createRectStep("kafka", kafkaRect, "Apache Kafka", {container: ".gkafka", fill: "lightgreen", fillStyle: "hachure"}));
+
+        const browserRect = sketch.rectProz(.2, .1, .74, .3);
+        _0.addStep(sketch.createRectStep("browser", browserRect, "Browser", {container: ".gbrowser", fill: "lightblue", fillStyle: "hachure"}));
+
+        _0.addStep(_0.anime.scaleStep(".system", .5));
+
+        const createCubeStep = _0.step(
+            () => {
+                _0.createCube(".cubecontainer", 350);
+                _0.setClass(".cube-top", "cube-nurdemteam");
+                _0.setClass(".cube-bottom", "cube-terraform");
+                _0.setClass(".cube-right", "cube-gitlab");
+                _0.setClass(".cube-back", "cube-awsAmplify")
+                _0.setClass(".cube-left", "cube-serverless")
+                _0.setClass(".cube-front", "cube-cloudfront")
+                _0.startStopCube(true);
+            },
+            () => {
+                _0.removeCube(".cubecontainer")
+            }
+        )
+
+        _0.addStep(createCubeStep);
+
+        ___()
+    })()
+
+</script>
