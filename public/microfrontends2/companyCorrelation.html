@@ -1,0 +1,45 @@
+<style>
+
+    #__0__ img {
+        width: 80%;
+        height: 80%;
+    }
+
+    #__0__ .qr {
+        position: absolute;
+        bottom: 4em;
+        left: 2em;
+    }
+
+    #__0__ .link {
+        position: absolute;
+        bottom: 5em;
+        right: 2em;
+        text-anchor: end;
+    }
+
+</style>
+
+<div class="title"></div>
+
+<div class="imgcontainer screen">
+    <img class="_95" src="./img/appCompanyCorrelations.png">
+</div>
+<div class="qr">
+    <canvas></canvas>
+</div>
+<div class="link">
+    <h5><a target="_blank"></a></h5>
+</div>
+
+<script>
+    (function () {
+        _0.glowText(".title", ["Korrelationen von Aktienkursen"], "small glow");
+        const address = "https://owidder.github.io/stockPriceCorrelation/index.html#shortX=FB&shortY=AAPL";
+        const shortAddress = "http://bit.ly/stockprice-page";
+        _0.qr(".qr canvas", address, 4);
+        _0.showText(".link h5 a", shortAddress);
+        _0.setAttribute(".link h5 a", "href", shortAddress);
+        ___()
+    })()
+</script>
