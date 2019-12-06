@@ -1,10 +1,5 @@
 <style>
 
-    #__0__ img {
-        width: 80%;
-        height: 80%;
-    }
-
     #__0__ .qr {
         position: absolute;
         bottom: 4em;
@@ -23,7 +18,7 @@
 <div class="title"></div>
 
 <div class="imgcontainer screen">
-    <img class="_95" src="./img/appCompanyCorrelations.png">
+    <img class="_95" src="./img/selectCompany.png">
 </div>
 <div class="qr">
     <canvas></canvas>
@@ -34,9 +29,9 @@
 
 <script>
     (function () {
-        _0.glowText(".title", ["Korrelationen von Aktienkursen"], "small glow");
-        const address = "https://owidder.github.io/stockPriceCorrelation/index.html#shortX=FB&shortY=AAPL";
-        const shortAddress = "http://bit.ly/stockprice-page";
+        _0.glowText(".title", ["Micro Frontend des Self Contained System 'Company'"], "small glow");
+        const address = "https://owidder.github.io/stockPriceCorrelation/company/build/company.html";
+        const shortAddress = "http://bit.ly/stockprice-company";
         _0.qr(".qr canvas", address, 4);
         _0.showText(".link h5 a", shortAddress);
         _0.setAttribute(".link h5 a", "href", shortAddress);
