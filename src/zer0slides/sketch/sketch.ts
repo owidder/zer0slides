@@ -27,6 +27,27 @@ interface Options {
     bowing?: number
 }
 
+const _rectFromElementRecursive = (element: Element, counter: number, resolve: (rect: Rect) => void) => {
+    const boundingClientRext = element.getBoundingClientRect();
+    const rect: Rect = {
+        upperLeftX: boundingClientRext.left,
+        upperLeftY:boundingClientRext.top,
+        height: boundingClientRext.height,
+        width: boundingClientRext.width
+    }
+    if(boundingClientRext.width > 0 && boundingClientRext.height > 0) {
+        resolve(rect)
+    } else {
+        if(counter > 0) {
+            setTimeout(() => {
+                _rectFromElementRecursive(element, counter-1, resolve)
+            })
+        } else {
+            resolve(rect)
+        }
+    }
+}
+
 class Sketch {
 
     private svgElement: SVGElement;
@@ -89,6 +110,13 @@ class Sketch {
                 .attr("y", rect.upperLeftY + 30)
                 .text(text);
         }
+    }
+
+    rectFromElement(selector: string): Promise<Rect> {
+        return new Promise<Rect>(resolve => {
+            const element = document.querySelector(q(selector));
+            _rectFromElementRecursive(element, 10, resolve)
+        })
     }
 
     getCenter = (selector: string): {x: number, y: number} => {
