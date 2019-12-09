@@ -29,27 +29,6 @@ interface Options {
     bowing?: number
 }
 
-const _rectFromElementRecursive = (element: Element, counter: number, resolve: (rect: Rect) => void) => {
-    const boundingClientRext = element.getBoundingClientRect();
-    const rect: Rect = {
-        upperLeftX: boundingClientRext.left,
-        upperLeftY:boundingClientRext.top,
-        height: boundingClientRext.height,
-        width: boundingClientRext.width
-    }
-    if(rect.width > 0 && rect.height > 0) {
-        resolve(rect)
-    } else {
-        if(counter > 0) {
-            setTimeout(() => {
-                _rectFromElementRecursive(element, counter-1, resolve)
-            })
-        } else {
-            resolve(rect)
-        }
-    }
-}
-
 class Sketch {
 
     private svgElement: SVGElement;
@@ -90,7 +69,7 @@ class Sketch {
     }
 
     rectProzFromElement(selector: string, upperLeftXProz: number, upperLeftYProz: number, widthProz: number, heightProz: number): Rect {
-        const rect = this.rectFromElementSync(selector);
+        const rect = this.rectFromElement(selector);
         const upperLeftX = rect.width * upperLeftXProz + rect.upperLeftX;
         const upperLeftY = rect.height * upperLeftYProz + rect.upperLeftY;
         const width = rect.width * widthProz;
@@ -126,14 +105,7 @@ class Sketch {
         }
     }
 
-    rectFromElement(selector: string): Promise<Rect> {
-        return new Promise<Rect>(resolve => {
-            const element = document.querySelector(q(selector));
-            _rectFromElementRecursive(element, 10, resolve)
-        })
-    }
-
-    rectFromElementSync(selector: string): Rect {
+    rectFromElement(selector: string): Rect {
         const element = document.querySelector(q(selector));
         const boundingClientRext = element.getBoundingClientRect();
         return {
