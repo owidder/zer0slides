@@ -55,31 +55,28 @@
 
         _0.useTippy("transparent");
 
-        sketch.rectFromElement(".phone").then(phoneRect => {
-            const rects = [];
-            rects.push(sketch.rectProzFromRect(phoneRect, .1, .1, .2, .1))
-            rects.push(sketch.rectProzFromRect(phoneRect, .31, .1, .15, .2))
-            rects.push(sketch.rectProzFromRect(phoneRect, .48, .1, .45, .4))
-            rects.push(sketch.rectProzFromRect(phoneRect, .1, .22, .2, .6))
-            rects.push(sketch.rectProzFromRect(phoneRect, .31, .31, .15, .3))
-            rects.push(sketch.rectProzFromRect(phoneRect, .48, .51, .45, .1))
-            rects.push(sketch.rectProzFromRect(phoneRect, .31, .62, .62, .2))
-            rects.push(sketch.rectProzFromRect(phoneRect, .1, .83, .82, .1))
-            _0.addStep(_0.combine(
-                ...rects.map((rect, index) => {
-                    return sketch.createRectStep("mf" + index, rect, "ui", {container: ".microfrontends"})
-                })
-            ));
+        const rectFuncs = [];
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .1, .1, .2, .1))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .31, .1, .15, .2))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .48, .1, .45, .4))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .1, .22, .2, .6))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .31, .31, .15, .3))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .48, .51, .45, .1))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .31, .62, .62, .2))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .1, .83, .82, .1))
+        _0.addStep(_0.combine(
+            ...rectFuncs.map((rectFunc, index) => {
+                return sketch.createRectStep("mf" + index, rectFunc, "ui", {container: ".microfrontends"})
+            })
+        ));
 
-            _0.addStep(_0.combine(
-                ...rects.map((rect, index) => {
-                    return sketch.createLineStep("mfLine" + index, `#${sketch.qid("mf" + index)}`, ".cloud i")
-                })
-            ))
+        _0.addStep(_0.combine(
+            ...rectFuncs.map((_dummy_, index) => {
+                return sketch.createLineStep("mfLine" + index, `#${sketch.qid("mf" + index)}`, ".cloud i")
+            })
+        ))
 
-            _0.addStep(_0.tooltipStep(".cloud i", "Jedes Custom Element muss geladen werden und macht seinen eigenen XHR-Call"))
-        })
-
+        _0.addStep(_0.tooltipStep(".cloud i", "Jedes Custom Element muss geladen werden und macht seinen eigenen XHR-Call"))
 
         ___()
     })()

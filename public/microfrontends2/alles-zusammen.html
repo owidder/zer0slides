@@ -1,0 +1,43 @@
+<style>
+
+</style>
+
+<div class="title"></div>
+<div class="flexcontainer start">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.glowText(".title", ["Alles zusammen",], "small glow");
+
+        const codeSelector = ".code";
+
+        const lt = "<"
+
+        _0.codeJs(codeSelector,
+            "<select-company id=\"selectCompany1\"/>\n" +
+            "<select-company id=\"selectCompany2\"/>\n" +
+            "<company-correlation id=\"companyCorrelation\"/>\n" +
+            "\n" +
+            "...\n" +
+            "\n" +
+            "document.getElementById(\"selectCompany1\").onChangeCompany = company => {\n" +
+            "    document.getElementById(\"companyCorrelation\").setAttribute(\"short-y\", company.short);\n" +
+            "}\n" +
+            "\n" +
+            "document.getElementById(\"selectCompany2\").onChangeCompany = company => {\n" +
+            "    document.getElementById(\"companyCorrelation\").setAttribute(\"short-x\", company.short)\n" +
+            "}"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "1-3", "Micro Frontends anzeigen", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "7-9,11-13", "Micro Frontends zusammenschalten", "top"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

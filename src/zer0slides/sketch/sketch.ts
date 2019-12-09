@@ -17,6 +17,8 @@ interface Rect {
     height: number
 }
 
+type RectOrFunc = Rect | (() => Rect);
+
 interface Options {
     fill?: string,
     fillStyle?: string,
@@ -35,7 +37,7 @@ const _rectFromElementRecursive = (element: Element, counter: number, resolve: (
         height: boundingClientRext.height,
         width: boundingClientRext.width
     }
-    if(boundingClientRext.width > 0 && boundingClientRext.height > 0) {
+    if(rect.width > 0 && rect.height > 0) {
         resolve(rect)
     } else {
         if(counter > 0) {
@@ -87,6 +89,16 @@ class Sketch {
         return {upperLeftX, upperLeftY, width, height}
     }
 
+    rectProzFromElement(selector: string, upperLeftXProz: number, upperLeftYProz: number, widthProz: number, heightProz: number): Rect {
+        const rect = this.rectFromElementSync(selector);
+        const upperLeftX = rect.width * upperLeftXProz + rect.upperLeftX;
+        const upperLeftY = rect.height * upperLeftYProz + rect.upperLeftY;
+        const width = rect.width * widthProz;
+        const height = rect.height * heightProz;
+
+        return {upperLeftX, upperLeftY, width, height}
+    }
+
     rectProz(upperLeftXProz: number, upperLeftYProz: number, widthProz: number, heightProz: number): Rect {
         const upperLeftX = screenWidth * upperLeftXProz;
         const upperLeftY = screenHeight * upperLeftYProz;
@@ -96,7 +108,9 @@ class Sketch {
         return {upperLeftX, upperLeftY, width, height}
     }
 
-    createRect(id: string, rect: Rect, text: string, options: Options) {
+    createRect(id: string, rectOrFunc: RectOrFunc, text: string, options: Options) {
+        const rect = rectOrFunc instanceof Function ? rectOrFunc() : rectOrFunc;
+
         const {fill = "pink", fillStyle = "solid", roughness = 1, container} = options;
         const node = this.r.rectangle(rect.upperLeftX, rect.upperLeftY, rect.width, rect.height, {...options, fill, fillStyle, roughness});
         this.add(node, id, container);
@@ -117,6 +131,17 @@ class Sketch {
             const element = document.querySelector(q(selector));
             _rectFromElementRecursive(element, 10, resolve)
         })
+    }
+
+    rectFromElementSync(selector: string): Rect {
+        const element = document.querySelector(q(selector));
+        const boundingClientRext = element.getBoundingClientRect();
+        return {
+            upperLeftX: boundingClientRext.left,
+            upperLeftY:boundingClientRext.top,
+            height: boundingClientRext.height,
+            width: boundingClientRext.width
+        }
     }
 
     getCenter = (selector: string): {x: number, y: number} => {
@@ -149,9 +174,9 @@ class Sketch {
         return new Step(f, b)
     }
 
-    createRectStep(id: string, rect: Rect, text: string, options: Options = {}) {
+    createRectStep(id: string, rectOrFunc: RectOrFunc, text: string, options: Options = {}) {
         const f = () => {
-            this.createRect(id, rect, text, options);
+            this.createRect(id, rectOrFunc, text, options);
         }
 
         const b = () => {
