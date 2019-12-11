@@ -12,7 +12,7 @@
     (function () {
         _0.doNotUseTippy();
 
-        _0.glowText(".title", ["Einbindung des Micro Frontend", "des Self Contained System 'Company'"], "small glow");
+        _0.glowText(".title", ["Einbindung des Micro Frontend", "des Self Contained System 'StockHistory'"], "small glow");
 
         const codeSelector = ".code";
 
@@ -21,14 +21,13 @@
 
         _0.codeJs(codeSelector,
             "<script type=\"text/javascript\"\n" +
-            "        src=\"https://owidder.github.io/stockPriceCorrelation/company/build/dist/js/selectCompanyElement.js\">" + lt + "/script>\n" +
+            "        src=\"https://owidder.github.io/stockPriceCorrelation/stockHistory/build/dist/js/companyCorrelationElement.js\">" + lt + "/script>\n" +
             "...\n" +
-            lt + "select-company initial" + dash + "short=\"AAPL\"/>\n"
+            lt + "company-correlation short" + dash + "x=\"FB\" short" + dash + "y=\"AAPL\"/>\n"
         );
 
         const steps = [];
         steps.push(_0.highlightLinesStep(codeSelector, "1-2", "JavaScript File mit Code für Custom Element importieren", "top"));
-        steps.push(_0.highlightLinesStep(codeSelector, "1-2", "Ohne Hash-Wert oder Versionsnummer", "bottom"));
         steps.push(_0.highlightLinesStep(codeSelector, "4", "Custom Element verwenden"));
 
         _0.setSteps(steps);

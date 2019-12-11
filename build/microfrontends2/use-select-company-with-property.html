@@ -20,20 +20,19 @@
         const dash = "-"
 
         _0.codeJs(codeSelector,
-            "<select-company/>\n" +
+            lt + "select-company/>\n" +
             "<div id=\"company\"></div>\n" +
             "<script>\n" +
             "var element = document.querySelector(\"select-company\");\n" +
             "element.onChangeCompany = function (company) {\n" +
             "\tvar companyDiv = document.querySelector(\"div#company\");\n" +
-            "\tcompanyDiv.innerHTML = \"Company = \" + company.full + \n" +
-            "\t\t\" [\" + company.short + \"]\";\n" +
+            "\tcompanyDiv.innerHTML = \"Company = \" + company.full + \" [\" + company.short + \"]\";\n" +
             "}\n" +
             lt + "/script>"
         );
 
         const steps = [];
-        steps.push(_0.highlightLinesStep(codeSelector, "5-9", "Callback Function, die die gewählte Company übergeben bekommt", "bottom"));
+        steps.push(_0.highlightLinesStep(codeSelector, "5-8", "Callback Function, die die gewählte Company übergeben bekommt", "bottom"));
 
         _0.setSteps(steps);
 
