@@ -23,9 +23,9 @@
             lt + "select-company/>\n" +
             "<div id=\"company\"></div>\n" +
             "<script>\n" +
-            "var element = document.querySelector(\"select-company\");\n" +
+            "const element = document.querySelector(\"select-company\");\n" +
             "element.onChangeCompany = function (company) {\n" +
-            "\tvar companyDiv = document.querySelector(\"div#company\");\n" +
+            "\tconst companyDiv = document.querySelector(\"div#company\");\n" +
             "\tcompanyDiv.innerHTML = \"Company = \" + company.full + \" [\" + company.short + \"]\";\n" +
             "}\n" +
             lt + "/script>"
