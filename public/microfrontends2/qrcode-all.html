@@ -1,0 +1,83 @@
+<style>
+
+    #__0__ .small-a {
+        font-size: 1em;
+    }
+
+    #__0__ .bold-a {
+        font-weight: bolder;
+    }
+
+    #__0__ .small-img {
+        height: 7em;
+    }
+
+    #__0__ .middle-part {
+        margin-top: 3%;
+    }
+
+</style>
+
+<div class="authorcontainer">
+    <div class="author">
+        oliver.widder@iteratec.com
+    </div>
+</div>
+
+<div class="row screenwidth">
+    <div class="col s6">
+        <div class="centerflexcol">
+            <div class="title1"></div>
+            <div class="middle-part qrcode1"><canvas></canvas></div>
+            <a class="small-a" target="_blank" href="https://owidder.github.io/zer0slides/build/microfrontends2/indexPublic.html">https://owidder.github.io/zer0slides/build/microfrontends2/indexPublic.html</a>
+            <h5><a class="bold-a" class="bold-a" target="_blank" href="http://bit.ly/mf-wc-slides">http://bit.ly/mf-wc-slides</a></h5>
+        </div>
+    </div>
+    <div class="col s6">
+        <div class="centerflexcol">
+            <div class="title2"></div>
+            <div class="middle-part qrcode2"><canvas></canvas></div>
+            <a class="small-a" target="_blank" href="https://owidder.github.io/codetalks2018/client/build/index.html">https://owidder.github.io/codetalks2018/client/build/index.html</a>
+            <h5><a class="bold-a" target="_blank" href="http://bit.ly/stockprice-page">http://bit.ly/stockprice-page</a></h5>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col s6">
+        <div class="centerflexcol">
+            <div class="title3"></div>
+            <img class="small-img middle-part" src="./img/geek-and-poke.png">
+            <h5><a class="bold-a" target="_blank" href="http://geek-and-poke.com">geek-and-poke.com</a></h5>
+        </div>
+    </div>
+    <div class="col s6">
+        <div class="centerflexcol">
+            <div class="title4"></div>
+            <img class="small-img middle-part" src="./img/iteratec.png">
+            <h5><a class="bold-a" target="_blank" href="https://www.iteratec.com/">iteratec.com</a></h5>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <a class="bold-a" class="bold-a" target="_blank" href="http://bit.ly/zeroslides">Powered by zer0slides (http://bit.ly/zeroslides)</a>
+    </div>
+</div>
+
+<script>
+
+    (function () {
+        const address1 = "https://owidder.github.io/zer0slides/build/microfrontends2/indexPublic.html";
+        _0.qr(".qrcode1 canvas", address1, 5);
+
+        const address2 = "https://owidder.github.io/stockPriceCorrelation/index.html#shortX=FB&shortY=AAPL";
+        _0.qr(".qrcode2 canvas", address2, 5);
+
+        _0.glowText(".title1", ["Die Folien",], "small glow");
+        _0.glowText(".title2", ["Die Beispielanwendung",], "small glow");
+        _0.glowText(".title3", ["Mein Blog",], "small glow");
+        _0.glowText(".title4", ["... und da arbeite ich",], "small glow");
+
+        ___();
+    })()
+</script>
