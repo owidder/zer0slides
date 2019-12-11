@@ -10,11 +10,11 @@
 <script>
 
     (function () {
-        _0.glowText(".title", ["Implementierung des Custom Elements",], "small glow");
+        const lt = "<"
+
+        _0.glowText(".title", ["Implementierung des Custom Elements", lt + "company-correlation/>"], "small glow");
 
         const codeSelector = ".code";
-
-        const lt = "<"
 
         _0.codeJs(codeSelector,
             "import * as React from \"react\";\n" +

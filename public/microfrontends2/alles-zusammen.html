@@ -17,17 +17,17 @@
         const lt = "<"
 
         _0.codeJs(codeSelector,
-            "<select-company id=\"selectCompany1\"/>\n" +
-            "<select-company id=\"selectCompany2\"/>\n" +
-            "<company-correlation id=\"companyCorrelation\"/>\n" +
+            lt + "select-company id=\"selectCompanyY\"/>\n" +
+            lt + "select-company id=\"selectCompanyX\"/>\n" +
+            lt + "company-correlation id=\"companyCorrelation\"/>\n" +
             "\n" +
             "...\n" +
             "\n" +
-            "document.getElementById(\"selectCompany1\").onChangeCompany = company => {\n" +
+            "document.getElementById(\"selectCompanyY\").onChangeCompany = company => {\n" +
             "    document.getElementById(\"companyCorrelation\").setAttribute(\"short-y\", company.short);\n" +
             "}\n" +
             "\n" +
-            "document.getElementById(\"selectCompany2\").onChangeCompany = company => {\n" +
+            "document.getElementById(\"selectCompanyX\").onChangeCompany = company => {\n" +
             "    document.getElementById(\"companyCorrelation\").setAttribute(\"short-x\", company.short)\n" +
             "}"
         );

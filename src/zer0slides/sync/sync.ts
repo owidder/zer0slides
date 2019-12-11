@@ -144,9 +144,9 @@ export const initSync = (commandCallback: (Command) => void): Promise<void> => {
 }
 
 export const sendSlideNoAndStepNo = (slideNo: number, stepNo = -1) => {
-    console.log(`sendSlideNoAndStepNo: ${JSON.stringify({slideNo, stepNo})}`)
-    
     if(isSynced() && isAdmin()) {
+        console.log(`sendSlideNoAndStepNo: ${JSON.stringify({slideNo, stepNo})}`)
+
         const myName = getMyName();
         const command = {slideNo: slideNo, stepNo: stepNo, type: TYPE_COMMAND};
         const commandStr = JSON.stringify(command);
