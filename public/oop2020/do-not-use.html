@@ -1,0 +1,83 @@
+<style>
+
+    #__0__ img {
+        position: absolute;
+        top: 1%;
+        left: 30%;
+        transform: scale(.7);
+        transform-origin: top left;
+    }
+
+    #__0__ .cloud {
+        position: absolute;
+        bottom: 20%;
+        left: 35%;
+    }
+
+    #__0__ .material-icons {
+        font-size: 100px;
+    }
+
+    #__0__ .canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+</style>
+
+<div class="title"></div>
+
+<div class="imgcontainer screen">
+    <img class="_95 phone" src="./img/iphone11-1.png">
+</div>
+
+<div class="cloud">
+    <i class="material-icons">
+        cloud_queue
+    </i>
+</div>
+
+<div class="svgcontainer">
+    <svg class="canvas">
+        <g class="microfrontends"></g>
+    </svg>
+</div>
+
+<script>
+    (function () {
+        _0.glowText(".title", ["Achtung!!!"], "small glow");
+
+        const svgElement = document.querySelector("#__0__ .canvas");
+        const sketch = _0.createSketch(svgElement);
+
+        _0.useTippy("transparent");
+
+        const rectFuncs = [];
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .1, .1, .2, .1))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .31, .1, .15, .2))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .48, .1, .45, .4))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .1, .22, .2, .6))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .31, .31, .15, .3))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .48, .51, .45, .1))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .31, .62, .62, .2))
+        rectFuncs.push(() => sketch.rectProzFromElement(".phone", .1, .83, .82, .1))
+        _0.addStep(_0.combine(
+            ...rectFuncs.map((rectFunc, index) => {
+                return sketch.createRectStep("mf" + index, rectFunc, "ui", {container: ".microfrontends"})
+            })
+        ));
+
+        _0.addStep(_0.combine(
+            ...rectFuncs.map((_dummy_, index) => {
+                return sketch.createLineStep("mfLine" + index, `#${sketch.qid("mf" + index)}`, ".cloud i")
+            })
+        ))
+
+        _0.addStep(_0.tooltipStep(".cloud i", "Jedes Custom Element muss geladen werden und macht seinen eigenen XHR-Call"))
+
+        ___()
+    })()
+</script>

@@ -9,6 +9,7 @@
     "build:dev": "npm run clean && cross-env NODE_ENV=development webpack",
     "build:dev:meetup": "npm run clean && cross-env NODE_ENV=development webpack --env=meetup",
     "build:dev:microfrontends2": "npm run clean && cross-env NODE_ENV=development webpack --env=microfrontends2",
+    "build:dev:oop2020": "npm run clean && cross-env NODE_ENV=development webpack --env=oop2020",
     "build:dev:watch": "npm run clean && cross-env NODE_ENV=development webpack --watch",
     "build:local": "cross-env INDEX=indexLocal npm run build:dev",
     "test": "jest",
