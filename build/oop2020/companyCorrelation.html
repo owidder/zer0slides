@@ -1,0 +1,72 @@
+<style>
+
+    #__0__ img {
+        width: 80%;
+        height: 80%;
+    }
+
+    #__0__ .qr {
+        position: absolute;
+        bottom: 4em;
+        left: 2em;
+    }
+
+    #__0__ .link {
+        position: absolute;
+        bottom: 5em;
+        right: 2em;
+        text-anchor: end;
+    }
+
+    #__0__ .svgcontainer .canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #__0__ .microfrontends {
+        opacity: .7;
+    }
+
+</style>
+
+<div class="title"></div>
+
+<div class="imgcontainer screen">
+    <img class="_95 appui" src="./img/appCompanyCorrelations.png">
+</div>
+
+<div class="svgcontainer">
+    <svg class="canvas">
+        <g class="microfrontends"></g>
+    </svg>
+</div>
+
+<div class="qr">
+    <canvas></canvas>
+</div>
+<div class="link">
+    <h5><a target="_blank"></a></h5>
+</div>
+
+<script>
+    (function () {
+        _0.glowText(".title", ["Korrelationen von Aktienkursen"], "small glow");
+        const address = "https://owidder.github.io/stockPriceCorrelation/index.html#shortX=FB&shortY=AAPL";
+        const shortAddress = "http://bit.ly/stockprice-page";
+        _0.qr(".qr canvas", address, 4);
+        _0.showText(".link h5 a", shortAddress);
+        _0.setAttribute(".link h5 a", "href", shortAddress);
+
+        const svgElement = document.querySelector("#__0__ .svgcontainer .canvas");
+        const sketch = _0.createSketch(svgElement);
+
+        _0.addStep(sketch.createRectStep("mf1", () => sketch.rectProzFromElement(".appui", 0, 0.03, .2, .07), "Micro Frontend", {container: ".microfrontends"}))
+        _0.addStep(sketch.createRectStep("mf2", () => sketch.rectProzFromElement(".appui", 0.8, 0.03, .2, .07), "Micro Frontend", {container: ".microfrontends"}))
+        _0.addStep(sketch.createRectStep("mf3", () => sketch.rectProzFromElement(".appui", 0, 0.12, 1, .9), "Micro Frontend", {container: ".microfrontends"}))
+
+        ___()
+    })()
+</script>

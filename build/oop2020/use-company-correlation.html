@@ -1,0 +1,37 @@
+<style>
+
+</style>
+
+<div class="title"></div>
+<div class="flexcontainer start">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.doNotUseTippy();
+
+        _0.glowText(".title", ["Einbindung des Micro Frontend", "des Self Contained System 'StockHistory'"], "small glow");
+
+        const codeSelector = ".code";
+
+        const lt = "<"
+        const dash = "-"
+
+        _0.codeJs(codeSelector,
+            "<script type=\"text/javascript\"\n" +
+            "        src=\"https://owidder.github.io/stockPriceCorrelation/stockHistory/build/dist/js/companyCorrelationElement.js\">" + lt + "/script>\n" +
+            "...\n" +
+            lt + "company-correlation short" + dash + "x=\"FB\" short" + dash + "y=\"AAPL\"/>\n"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "1-2", "JavaScript File mit Code für Custom Element importieren", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "4", "Custom Element verwenden"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
