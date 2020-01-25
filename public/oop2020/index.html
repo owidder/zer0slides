@@ -9,9 +9,29 @@
         .tippy-content {
             font-size: x-large;
         }
+
+        .logos {
+            position: absolute;
+            right: 1em;
+            bottom: 1em;
+            z-index: 100000;
+        }
+
+        .logos .eos {
+            width: 2.5em;
+            margin-right: 1em;
+        }
+
+        .logos .iteratec {
+            width: 5.5em;
+        }
     </style>
 </head>
 <body>
+<div class="logos">
+    <img class="eos" src="img/eoslogo.svg">
+    <img class="iteratec" src="img/iteratec.png">
+</div>
 <script>
     window.onload = function () {
         _0.addSlide("title", "Title");
