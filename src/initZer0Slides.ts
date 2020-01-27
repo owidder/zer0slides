@@ -83,6 +83,7 @@ export const init = () => {
         setClassStep: classUtil.setClassStep,
         setSteps: steps.setSteps,
         setTippyTheme: tooltip.setTippyTheme,
+        setTheme: tooltip.setTheme,
         shortcutFunctionStep: shortcut.setShortcutFunctionStep,
         showText: text.showText,
         slideReady: lifecycle.slideReady,
