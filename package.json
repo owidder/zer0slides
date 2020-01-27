@@ -22,7 +22,7 @@
     "copyhtml": "cpx 'public/**/*.html' build",
     "copyhtml:watch": "cpx 'public/**/*.html' build --watch",
     "copyjs:watch": "cpx 'public/**/*.js' build --watch",
-    "copyfiles:watch": "cpx 'public/**/*.{js,html}' build --watch",
+    "copyfiles:watch": "cpx 'public/**/*.{js,html,png}' build --watch",
     "debug": "testcafe $NODE_DEBUG_OPTION chrome",
     "server": "node server.js"
   },
