@@ -1,0 +1,49 @@
+<style>
+
+    #__0__ .fulltext {
+        background: #7A7B79;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+
+    #__0__ .item {
+        font-size: 5em;
+        margin-left: 1em;
+        margin-right: 1em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    #__0__ .subitem {
+        font-size: 3em;
+        margin-left: 5em;
+        margin-right: 1em;
+        margin-bottom: 1em;
+    }
+
+    #__0__ .subitem i {
+        font-size: 1em;
+    }
+
+    #__0__ .subitem a {
+        color: white;
+        text-decoration: underline;
+    }
+
+</style>
+
+<div class="screen fulltext">
+    <div class="item">Vielen Dank</div>
+    <div class="subitem"><i class="material-icons">arrow_right</i>r.gilliar@eos-ts.com</div>
+    <div class="subitem"><i class="material-icons">arrow_right</i>oliver.widder@iteratec.com</div>
+    <div class="subitem"><div class="slideqr"><canvas></canvas></div>Diese Folien: <a target="_blank" href="http://bit.ly/webcomp-oop">bit.ly/webcomp-oop</a></div>
+</div>
+
+<script>
+    (function () {
+        _0.qr(".slideqr canvas", "https://owidder.github.io/zer0slides/build/oop2020/indexPublic.html", 5);
+        ___()
+    })()
+</script>

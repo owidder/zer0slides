@@ -15,6 +15,7 @@ import {Tooltip, createTooltipSelector} from "./_tooltip";
 require('protip/main');
 
 let tippyEnabled = false;
+let theme = "pink";
 export const useTippy = (_tippy: boolean | string = true) => {
     tippyEnabled = !!_tippy;
     if(typeof _tippy == "string") {
@@ -24,6 +25,14 @@ export const useTippy = (_tippy: boolean | string = true) => {
 
 const setTippyTheme = (theme: string) => {
     tippy.setTheme(theme);
+}
+
+const setTheme = (_theme: string) => {
+    if(isTippyEnabled()) {
+        setTippyTheme(_theme);
+    } else {
+        theme = _theme;
+    }
 }
 
 export const doNotUseTippy = () => {
@@ -72,7 +81,7 @@ const _createTooltip = (tooltip: Tooltip) => {
         .classed("protip", true)
         .attr("data-pt-title", tooltip.text.startsWith('.') ? q(tooltip.text) : tooltip.text)
         .attr("data-pt-gravity", false)
-        .attr("data-pt-scheme", "pink")
+        .attr("data-pt-scheme", theme)
         .attr("data-pt-position", tooltip.position ? tooltip.position : "bottom")
         .attr("data-pt-trigger", "sticky")
         .attr("data-pt-auto-show", true)
@@ -182,4 +191,5 @@ export const tooltip = {
     useTippy,
     doNotUseTippy,
     setTippyTheme,
+    setTheme,
 }
