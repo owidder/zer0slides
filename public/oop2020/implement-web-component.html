@@ -35,11 +35,11 @@
             "import {MbQuickView} from \"./MbQuickView\";\n" +
             "\n" +
             "class MbQuickViewElement extends HTMLElement {\n" +
-            "    static get observedAttributes() {return [\"vp-uuid\"];}\n" +
+            "    static get observedAttributes() {return [\"verpflichtung\"];}\n" +
             "\n" +
             "    drawReactComponent() {\n" +
             "        ReactDOM.render(" + lt +
-            "MbQuickView vpUUid={this.getAttribute(\"vp-uuid\")}/>, this);\n" +
+            "MbQuickView vpUUid={this.getAttribute(\"verpflichtung\")}/>, this);\n" +
             "    }\n" +
             "\n" +
             "    attributeChangedCallback() {this.drawReactComponent();}\n" +
