@@ -9,26 +9,48 @@
         .tippy-content {
             font-size: x-large;
         }
+
+        .logos {
+            position: absolute;
+            right: 1em;
+            bottom: 1em;
+            z-index: 100000;
+        }
+
+        .logos .eos {
+            width: 2.5em;
+            margin-right: 1em;
+        }
+
+        .logos .iteratec {
+            width: 5.5em;
+        }
     </style>
 </head>
 <body>
+<div class="logos">
+    <img class="eos" src="img/eoslogo.svg">
+    <img class="iteratec" src="img/iteratec.png">
+</div>
 <script>
     window.onload = function () {
         _0.addSlide("title", "Title");
         _0.addSlide("motivation", "Motivation");
-        _0.addSlide("self-contained-systems", "Self Contained Systems");
-        _0.addSlide("companyCorrelation", "Korrelationen von Aktienkursen");
-        _0.addSlide("app-stock-price", "Die Anwendung 'Stock Price Correlations'");
-        _0.addSlide("app-company", "Das Self Contained System 'Company'");
-        _0.addSlide("selectCompanyUi", "Micro Frontend des Self Contained System 'Company'");
-        _0.addSlide("company-request", "Micro Frontend ruft einen Service des Contained System 'Company'");
-        _0.addSlide("use-select-company", "Einbindung des Micro Frontend des Self Contained System 'Company'");
-        _0.addSlide("use-select-company-with-property", "Kommunikation über Properties");
-        _0.addSlide("use-company-correlation", "Einbindung des Micro Frontend des Self Contained System 'StockHistory'");
-        _0.addSlide("alles-zusammen", "Alles zusammen");
-        _0.addSlide("companyCorrelationCode", "Implementierung des Custom Elements");
+        _0.addSlide("micro-frontends", "Micro Frontends");
+        _0.addSlide("patterns", "Patterns");
+        _0.addSlide("build-time-integration", "Build Time Integration");
+        _0.addSlide("monorepo", "Monorepo");
+        _0.addSlide("polyrepo", "Polyrepo");
+        _0.addSlide("server-side-integration", "Server Side Integration");
+        _0.addSlide("server-side-integration-2", "Server Side Integration (2)");
+        _0.addSlide("client-side-integration", "Client Side Integration");
+        _0.addSlide("client-side-integration-2", "Client Side Integration (2)");
+        _0.addSlide("web-components-standard", "Der Web Components Standard");
+        _0.addSlide("embed-web-component", "Einbinden einer Web Component");
+        _0.addSlide("implement-web-component", "Implementierung einer Web Component");
         _0.addSlide("do-not-use", "Achtung!!!");
-        _0.addSlide("qrcode-all", "Vielen Dank!");
+        _0.addSlide("fragen", "Fragen?");
+        _0.addSlide("vielen-dank", "Vielen Dank!");
 
         _0.initReady();
     }
