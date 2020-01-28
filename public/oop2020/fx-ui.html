@@ -1,0 +1,63 @@
+<style>
+
+    #__0__ img {
+        width: 80%;
+        height: 80%;
+        margin-top: 7%;
+    }
+
+    #__0__ .qr {
+        position: absolute;
+        bottom: 4em;
+        left: 2em;
+    }
+
+    #__0__ .link {
+        position: absolute;
+        bottom: 5em;
+        right: 2em;
+        text-anchor: end;
+    }
+
+    #__0__ .svgcontainer .canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #__0__ .microfrontends {
+        opacity: .7;
+    }
+
+</style>
+
+<div class="slidetitle">Die UI von FX und ihre Micro-Frontends</div>
+<div class="imgcontainer screen">
+    <img class="fx-ui" src="./img/fx-screenshot.png">
+</div>
+
+<div class="svgcontainer">
+    <svg class="canvas">
+        <g class="microfrontends"></g>
+    </svg>
+</div>
+
+<script>
+    (function () {
+        _0.useTippy("transparent");
+
+        const svgElement = document.querySelector("#__0__ .svgcontainer .canvas");
+        const sketch = _0.createSketch(svgElement);
+
+        _0.addStep(sketch.createRectStep("mf1", () => sketch.rectProzFromElement(".fx-ui", .076, .162, .013, .04), "", {container: ".microfrontends"}))
+        _0.addStep(sketch.createRectStep("mf2", () => sketch.rectProzFromElement(".fx-ui", .089, .162, .013, .04), "", {container: ".microfrontends"}))
+        _0.addStep(sketch.createRectStep("mf3", () => sketch.rectProzFromElement(".fx-ui", .25, .05, .23, .16), "", {container: ".microfrontends"}))
+
+        const mf1Id = `#${sketch.qid("mf1")}`;
+        _0.addStep(_0.tooltipStep(mf1Id, "<code>&lt;mb-quick-view vp-uuid='3696b58a-2e16-479d-aae4-21219faef7af'/&gt;</code>", "top"));
+
+        ___()
+    })()
+</script>
