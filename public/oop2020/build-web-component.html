@@ -1,0 +1,61 @@
+<style>
+
+    #__0__ .codecontainer {
+        height: 80vh;
+        margin-left: 1em;
+    }
+
+    #__0__ .codecontainer .code {
+        font-size: 1.5em;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        height: 100%;
+    }
+
+</style>
+
+<div class="slidetitle small">Bauen einer Web Component mit Webpack</div>
+<div class="flexcontainer start codecontainer">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.doNotUseTippy();
+        _0.setTheme("blue");
+        const lt = "<"
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "module.exports = {\n" +
+            "    entry: {\n" +
+            "        mbQuickViewElement: \"./src/MbQuickViewElement.tsx\",\n" +
+            "        testPage: \"./src/testPage.ts\",\n" +
+            "    },\n" +
+            "    output: {\n" +
+            "        filename: \"build/[name].js\",\n" +
+            "    },\n" +
+            "    plugins: [\n" +
+            "        new HtmlWebpackPlugin({\n" +
+            "            filename: \"mbQuickViewTestPage.html\",\n" +
+            "            inject: \"body\",\n" +
+            "            chunks: [\"mbQuickViewElememnt\", \"testPage\"],\n" +
+            "        }),\n" +
+            "    ]\n" +
+            "}\n"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "3", "Entry Point für Code des Custom Elements"));
+        steps.push(_0.highlightLinesStep(codeSelector, "4", "Entry Point für Code der Test Page"));
+        steps.push(_0.highlightLinesStep(codeSelector, "7", "Output ohne Hash", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "10-14", "HTML-File für Test Page erstellen"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
