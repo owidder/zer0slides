@@ -3,6 +3,7 @@
     #__0__ .codecontainer {
         height: 80vh;
         margin-left: 1em;
+        margin-top: 20%;
     }
 
     #__0__ .codecontainer .code {
@@ -15,7 +16,7 @@
 
 </style>
 
-<div class="slidetitle small">Bauen einer Web Component mit Webpack</div>
+<div class="slidetitle">Bauen einer Web Component mit Webpack</div>
 <div class="flexcontainer start codecontainer">
     <div class="code responsive smaller"></div>
 </div>
@@ -43,6 +44,7 @@
             "            filename: \"mbQuickViewTestPage.html\",\n" +
             "            inject: \"body\",\n" +
             "            chunks: [\"mbQuickViewElememnt\", \"testPage\"],\n" +
+            "            html: <div id=\"container\"></div>\n" +
             "        }),\n" +
             "    ]\n" +
             "}\n"
@@ -52,7 +54,8 @@
         steps.push(_0.highlightLinesStep(codeSelector, "3", "Entry Point für Code des Custom Elements"));
         steps.push(_0.highlightLinesStep(codeSelector, "4", "Entry Point für Code der Test Page"));
         steps.push(_0.highlightLinesStep(codeSelector, "7", "Output ohne Hash", "top"));
-        steps.push(_0.highlightLinesStep(codeSelector, "10-14", "HTML-File für Test Page erstellen"));
+        steps.push(_0.highlightLinesStep(codeSelector, "10-15", "HTML-File für Test Page erstellen"));
+        steps.push(_0.highlightLinesStep(codeSelector, "14", "Hier wird das Custom Element eingefügt"));
 
         _0.setSteps(steps);
 
