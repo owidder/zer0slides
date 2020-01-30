@@ -2,7 +2,7 @@
 
     #__0__ img {
         position: absolute;
-        top: 1%;
+        top: 10%;
         left: 30%;
         transform: scale(.7);
         transform-origin: top left;
@@ -10,7 +10,7 @@
 
     #__0__ .cloud {
         position: absolute;
-        bottom: 20%;
+        bottom: 5%;
         left: 35%;
     }
 
@@ -28,7 +28,7 @@
 
 </style>
 
-<div class="title"></div>
+<div class="slidetitle small">Grenzen der client-seitigen Integration:<br>Anzahl der Requests</div>
 
 <div class="imgcontainer screen">
     <img class="_95 phone" src="./img/iphone11-1.png">
@@ -72,7 +72,7 @@
 
         _0.addStep(_0.combine(
             ...rectFuncs.map((_dummy_, index) => {
-                return sketch.createLineStep("mfLine" + index, `#${sketch.qid("mf" + index)}`, ".cloud i")
+                return sketch.createLineStep("mfLine" + index, `#${sketch.qid("mf" + index)}`, ".cloud i", {roughness: 0, bowing: 0})
             })
         ))
 
