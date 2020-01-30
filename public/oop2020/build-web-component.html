@@ -24,7 +24,7 @@
 <script>
 
     (function () {
-        _0.doNotUseTippy();
+        _0.useTippy();
         _0.setTheme("blue");
         const lt = "<"
 
@@ -43,7 +43,7 @@
             "        new HtmlWebpackPlugin({\n" +
             "            filename: \"mbQuickViewTestPage.html\",\n" +
             "            inject: \"body\",\n" +
-            "            chunks: [\"mbQuickViewElememnt\", \"testPage\"],\n" +
+            "            chunks: [\"testPage\", \"mbQuickViewElement\"],\n" +
             "            html: <div id=\"container\"></div>\n" +
             "        }),\n" +
             "    ]\n" +
@@ -55,6 +55,7 @@
         steps.push(_0.highlightLinesStep(codeSelector, "4", "Entry Point für Code der Test Page"));
         steps.push(_0.highlightLinesStep(codeSelector, "7", "Output ohne Hash", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "10-15", "HTML-File für Test Page erstellen"));
+        steps.push(_0.highlightLinesStep(codeSelector, "13", "Erzeugt Script-Tags für <code>mbQuickViewElement</code>-Bundle und <code>testPage</code>-Bundle"));
         steps.push(_0.highlightLinesStep(codeSelector, "14", "Hier wird das Custom Element eingefügt"));
 
         _0.setSteps(steps);
