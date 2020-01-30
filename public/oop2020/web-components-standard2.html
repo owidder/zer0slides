@@ -23,7 +23,7 @@
 <script>
 
     (function () {
-        _0.doNotUseTippy();
+        _0.useTippy();
         _0.setTheme("blue");
 
         const codeSelector = ".code";
@@ -32,16 +32,16 @@
         const dash = "-"
 
         _0.codeJs(codeSelector,
-            "Custom Elements: Definition eigener DOM-Elemente (<my-element/>)\n" +
+            "Custom Elements: Definition eigener DOM-Elemente ()\n" +
             "Shadow DOM: Teile des DOMs kapseln\n" +
             "ES Modules: JS Code dynamisch laden\n" +
             "HTML Templates: HTML-Fragmente laden und mehrfach verwenden"
         );
 
         const steps = [];
-        steps.push(_0.highlightLinesStep(codeSelector, "4", "@deprecated", "bottom"));
+        steps.push(_0.highlightLinesStep(codeSelector, "4", "<code>@deprecated</code>", "bottom"));
         steps.push(_0.highlightLinesStep(codeSelector, "2-3", "Haben wir nicht verwendet", "bottom"));
-        steps.push(_0.highlightLinesStep(codeSelector, "1", "Micro Frontends", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "1", "<code>&lt;my-element my-attribute='123'/&gt;</code>", "top"));
 
         _0.setSteps(steps);
 
