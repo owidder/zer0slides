@@ -34,6 +34,7 @@ export const createTooltip = (tooltip: Tooltip) => {
         animateFill: false,
         arrow: true,
         maxWidth: "none",
+        boundary: "window" as const,
         placement: (tooltip.position ? tooltip.position : "bottom") as Placement
     }
 
