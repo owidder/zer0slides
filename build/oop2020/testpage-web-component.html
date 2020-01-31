@@ -24,6 +24,7 @@
 
     (function () {
         _0.useTippy();
+        _0.setTheme("blue");
         const lt = "<"
 
         const codeSelector = ".code";
@@ -38,6 +39,7 @@
         );
 
         const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "1-6", "<code>testPage.ts</code>", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "1", "Attribut des Custom Elements wird der Test-Seite als Query-Parameter übergeben<br>" +
             "<code><b>http://localhost:9000/mbQuickViewTestPage.html?verpflichtung=AAAA009901A</b></code>", "bottom"));
         steps.push(_0.highlightLinesStep(codeSelector, "3-4", "Custom Element erzeugen und Attribut setzen", "top"));
