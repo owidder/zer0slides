@@ -52,6 +52,10 @@ export const css = (selector: string, cssString: string, options: ShowCodeOption
     return render(selector, "css", cssString, options);
 }
 
+export const html = (selector: string, cssString: string, options: ShowCodeOptions = {}) => {
+    return render(selector, "html", cssString, options);
+}
+
 export const js = (selector: string, jsString: string, options: ShowCodeOptions = {}) => {
     return render(selector, "javascript", jsString, options);
 }
@@ -204,6 +208,7 @@ export const showCode = {
     all: bash,
     css,
     js,
+    html,
     bash,
     remove,
     cssStep,

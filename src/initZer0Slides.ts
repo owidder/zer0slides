@@ -54,6 +54,7 @@ export const init = () => {
         click: click.setClickHandler,
         codeBash: showCode.bash,
         codeCss: showCode.css,
+        codeHtml: showCode.html,
         codeJs: showCode.js,
         combine: steps.combineSteps,
         createCast: cast.create,
