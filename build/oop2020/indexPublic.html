@@ -17,6 +17,22 @@
             z-index: 100000;
         }
 
+        #__presentator {
+            position: fixed;
+            right: .3em;
+            top: .3em;
+            z-index: 100000;
+            width: 2em;
+            height: 2em;
+            border-radius: 50%;
+            font-size: 1em;
+            font-weight: bolder;
+            color: #fff;
+            line-height: 2em;
+            text-align: center;
+            background: gray;
+        }
+
         .logos .eos {
             width: 2.5em;
             margin-right: 1em;
@@ -32,6 +48,9 @@
     <img class="eos" src="img/eoslogo.svg">
     <img class="iteratec" src="img/iteratec.png">
 </div>
+
+<div id="__presentator">X</div>
+
 <script>
     window.onload = function () {
         _0.addSlide("title", "Title");
