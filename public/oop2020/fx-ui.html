@@ -61,17 +61,12 @@
         const mf3Id = `#${sketch.qid("mf3")}`;
         _0.addStep(_0.tooltipStep(mf3Id, "<img src='./img/mf-personenverwaltung.png'>", "bottom"))
         _0.addStep(_0.removeTooltipStep(mf3Id));
-        _0.addStep(sketch.createRectStep("mf2", () => sketch.rectProzFromElement(".fx-ui", .089, .162, .013, .04), "", {container: ".microfrontends"}));
+        _0.addStep(sketch.createRectStep("mf2", () => sketch.rectProzFromElement(".fx-ui", .05, .167, .026, .04), "", {container: ".microfrontends"}));
 
         const mf2Id = `#${sketch.qid("mf2")}`;
-        _0.addStep(_0.tooltipStep(mf2Id, "<img src='./img/mf-vollstreckungsbescheid.png'>", "bottom"))
-        _0.addStep(_0.removeTooltipStep(mf2Id));
-        _0.addStep(sketch.createRectStep("mf1", () => sketch.rectProzFromElement(".fx-ui", .076, .162, .013, .04), "", {container: ".microfrontends"}));
+        _0.addStep(_0.tooltipStep(mf2Id, "<img src='./img/mf-ratenvereinbarung.png'>", "bottom"))
 
-        const mf1Id = `#${sketch.qid("mf1")}`;
-        _0.addStep(_0.tooltipStep(mf1Id, "<img src='./img/mf-mahnbescheid.png'>", "bottom"))
-
-        _0.addStep(_0.tooltipStep(mf1Id, "<code>&lt;mb-quick-view verpflichtung='AAAA009901A'/&gt;</code>", "top"))
+        _0.addStep(_0.tooltipStep(mf2Id, "<code>&lt;rave-mini verpflichtung='AAAA009901A'/&gt;</code>", "top"))
 
         ___()
     })()
