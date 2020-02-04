@@ -90,7 +90,7 @@ class Sketch {
     createRect(id: string, rectOrFunc: RectOrFunc, text: string, options: Options) {
         const rect = rectOrFunc instanceof Function ? rectOrFunc() : rectOrFunc;
 
-        const {fill = "pink", fillStyle = "solid", roughness = 1, container} = options;
+        const {fill = "pink", fillStyle = "solid", roughness = .4, container} = options;
         const node = this.r.rectangle(rect.upperLeftX, rect.upperLeftY, rect.width, rect.height, {...options, fill, fillStyle, roughness});
         this.add(node, id, container);
 
@@ -134,7 +134,7 @@ class Sketch {
     }
 
     createLineStep(id: string, fromSelector: string, toSelector: string, options: Options = {}) {
-        const {strokeWidth = 2, bowing = 4, stroke = "blue"} = options;
+        const {strokeWidth = 2, bowing = 0, stroke = "blue"} = options;
         const f = () => {
             this.createLine(id, fromSelector, toSelector, {...options, strokeWidth, bowing, stroke});
         }

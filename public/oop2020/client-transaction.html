@@ -1,0 +1,113 @@
+<style>
+
+    #__0__ .canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    @keyframes __0__-graph-animate-cube {
+        33% {transform: rotateX(360deg) rotateY(0deg) rotateZ(0deg)}
+        66% {transform: rotateX(360deg) rotateY(360deg) rotateZ(0deg)}
+        66% {transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg)}
+    }
+
+    #__0__ .animate-cube {
+        animation: __0__-graph-animate-cube 100s infinite ease-in-out;
+    }
+
+    #__0__ .cube-css3 {
+        background-image: url("./img/css3.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-html5 {
+        background-image: url("./img/html5.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-javascript {
+        background-image: url("./img/javascript.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-react {
+        background-image: url("./img/react.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-typescript {
+        background-image: url("./img/typescript.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+    #__0__ .cube-webcomponents {
+        background-image: url("./img/webcomponents.png");
+        background-size: contain;
+        background-position: left top;
+    }
+
+</style>
+
+<div class="slidetitle small">Client Transactions</div>
+<div class="svgcontainer">
+    <svg class="canvas">
+        <g class="gbrowser"></g>
+    </svg>
+</div>
+
+<div class="cubecontainer"></div>
+
+<script>
+
+    (function () {
+        _0.showText("#__presentator", "O")
+
+        const svgElement = document.querySelector("#__0__ .canvas");
+        const sketch = _0.createSketch(svgElement);
+
+        _0.useTippy("transparent");
+
+        const ratenvereinbarungPageRect = sketch.rectProz(.1, .1, .8, .6);
+        _0.addStep(sketch.createRectStep("ratenvereinbarungPage", ratenvereinbarungPageRect, "Ratenvereinbarung", {container: ".gbrowser"}));
+
+        const ratenvereinbarungRect = sketch.rectProz(.2, .8, .1, .1);
+        _0.addStep(sketch.createRectStep("ratenvereinbarung", ratenvereinbarungRect, "Ratenvereinbarung", {container: ".gbrowser"}));
+
+        const ratenvereinbarungPageId = `#${sketch.qid("ratenvereinbarungPage")}`;
+        const ratenvereinbarungId = `#${sketch.qid("ratenvereinbarung")}`;
+        const rvLineStep = sketch.createLineStep("rvPage-rv", ratenvereinbarungPageId, ratenvereinbarungId);
+        _0.addStep(rvLineStep);
+
+        const zvRect = sketch.rectProzFromRect(ratenvereinbarungPageRect, .2, .2, .2, .2);
+        _0.addStep(sketch.createRectStep("zvRect", zvRect, "Micro Frontend Zahlungsverkehr", {container: ".gbrowser", fill: "lightgrey"}));
+
+        const zvInput = sketch.rectProzFromRect(zvRect, .4, .4, .4, .4);
+        _0.addStep(sketch.createRectStep("zvInput", zvInput, "Eingabe", {container: ".gbrowser", fill: "yellow"}));
+
+        const asRect = sketch.rectProzFromRect(ratenvereinbarungPageRect, .7, .2, .2, .2);
+        _0.addStep(sketch.createRectStep("asRect", asRect, "Micro Frontend Ablaufsteuerung", {container: ".gbrowser", fill: "lightgrey"}));
+
+        const asInput = sketch.rectProzFromRect(asRect, .4, .4, .4, .4);
+        _0.addStep(sketch.createRectStep("asInput", asInput, "Eingabe", {container: ".gbrowser", fill: "yellow"}));
+
+        const hostInput = sketch.rectProzFromRect(ratenvereinbarungPageRect, .2, .5, .2, .1);
+        _0.addStep(sketch.createRectStep("hostInput", hostInput, "Eingabe", {container: ".gbrowser", fill: "yellow"}));
+
+        const ok = sketch.rectProzFromRect(ratenvereinbarungPageRect, .8, .8, .1, .1);
+        _0.addStep(sketch.createRectStep("ok", ok, "OK", {container: ".gbrowser", fill: "lightgreen"}));
+
+        const okId = `#${sketch.qid("ok")}`;
+        _0.addStep(_0.tooltipStep(okId, "Transaction in den Micro Frontends auslösen", "top"));
+
+        ___()
+    })()
+
+</script>
