@@ -83,16 +83,16 @@
         _0.useTippy("transparent");
 
         const app1Rect = sketch.rectProz(.2, .7, .1, .2);
-        _0.addStep(sketch.createRectStep("app1", app1Rect, "App 1", {container: ".gapp"}));
+        _0.addStep(sketch.createRectStep("app1", app1Rect, "Zahlungszuordnung", {container: ".gapp"}));
 
         const app2Rect = sketch.rectProz(.35, .7, .1, .2);
-        _0.addStep(sketch.createRectStep("app2", app2Rect, "App 2", {container: ".gapp"}));
+        _0.addStep(sketch.createRectStep("app2", app2Rect, "Buchhaltung", {container: ".gapp"}));
 
         const app3Rect = sketch.rectProz(.5, .7, .1, .2);
-        _0.addStep(sketch.createRectStep("app3", app3Rect, "App 3", {container: ".gapp"}));
+        _0.addStep(sketch.createRectStep("app3", app3Rect, "Ablaufsteuerung", {container: ".gapp"}));
 
         const app4Rect = sketch.rectProz(.65, .7, .1, .2);
-        _0.addStep(sketch.createRectStep("app4", app4Rect, "App 4", {container: ".gapp"}));
+        _0.addStep(sketch.createRectStep("app4", app4Rect, "Abrechnung", {container: ".gapp"}));
 
         const appx1Rect = sketch.rectProz(.8, .7, .1, .2);
         const appx2Rect = sketch.rectProz(.82, .7, .1, .2);
@@ -142,19 +142,19 @@
         _0.addStep(_0.tooltipStep(browserId, "Webseite mit Inhalten aus mehreren Apps", "top"));
 
         const app1UiRect = sketch.rectProzFromRect(browserRect, .1, .5, .2, .3);
-        _0.addStep(sketch.createRectStep("app1Ui", app1UiRect, "Inhalte von App1", {container: ".gbrowser"}));
+        _0.addStep(sketch.createRectStep("app1Ui", app1UiRect, "Inhalte Zahlungszuordnung", {container: ".gbrowser"}));
         const app1UiId = `#${sketch.qid("app1Ui")}`;
         const app1Ui2app1Step = sketch.createLineStep("app1Ui-app1", app1UiId, app1Id);
         _0.addStep(app1Ui2app1Step);
 
         const app2UiRect = sketch.rectProzFromRect(browserRect, .4, .1, .3, .8);
-        _0.addStep(sketch.createRectStep("app2Ui", app2UiRect, "Inhalte von App2", {container: ".gbrowser"}));
+        _0.addStep(sketch.createRectStep("app2Ui", app2UiRect, "Inhalte Buchhaltung", {container: ".gbrowser"}));
         const app2UiId = `#${sketch.qid("app2Ui")}`;
         const app2Ui2app2Step = sketch.createLineStep("app2Ui-app2", app2UiId, app2Id);
         _0.addStep(app2Ui2app2Step);
 
         const app4UiRect = sketch.rectProzFromRect(browserRect, .8, .2, .15, .4);
-        _0.addStep(sketch.createRectStep("app4Ui", app4UiRect, "Inhalte von App4", {container: ".gbrowser"}));
+        _0.addStep(sketch.createRectStep("app4Ui", app4UiRect, "Inhalte Abrechnung", {container: ".gbrowser"}));
         const app4UiId = `#${sketch.qid("app4Ui")}`;
         const app4Id = `#${sketch.qid("app4")}`;
         const app4Ui2App4Step = sketch.createLineStep("app4Ui-app4", app4UiId, app4Id);

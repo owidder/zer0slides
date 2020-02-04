@@ -33,29 +33,29 @@
         _0.codeJs(codeSelector,
             "import * as React from \"react\";\n" +
             "import * as ReactDOM from \"react-dom\";\n" +
-            "import {MbQuickView} from \"./MbQuickView\";\n" +
+            "import {RaveMini} from \"./RaveMini\";\n" +
             "\n" +
-            "class MbQuickViewElement extends HTMLElement {\n" +
+            "class RaveMiniElement extends HTMLElement {\n" +
             "    static get observedAttributes() {return [\"verpflichtung\"];}\n" +
             "\n" +
             "    drawReactComponent() {\n" +
             "        ReactDOM.render(" + lt +
-            "MbQuickView vpUuid={this.getAttribute(\"verpflichtung\")}/>, this);\n" +
+            "RaveMini verpflichtung={this.getAttribute(\"verpflichtung\")}/>, this);\n" +
             "    }\n" +
             "\n" +
             "    attributeChangedCallback() {this.drawReactComponent();}\n" +
             "    connectedCallback() {this.drawReactComponent();}\n" +
             "}\n" +
             "\n" +
-            "customElements.define(\"mb-quick-view\", MbQuickViewElement);"
+            "customElements.define(\"rave-mini\", RaveMiniElement);"
         );
 
         const steps = [];
         steps.push(_0.highlightLinesStep(codeSelector, "5-14", "Custom Element"));
+        steps.push(_0.highlightLinesStep(codeSelector, "8-10", "Rendering des Contents", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "13", "Lifycycle: Element ist im DOM"));
         steps.push(_0.highlightLinesStep(codeSelector, "6", "Attribute, über deren Änderung man informiert werden möchte", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "12", "Lifycycle: Attribute haben sich geändert"));
-        steps.push(_0.highlightLinesStep(codeSelector, "8-10", "Rendering des Contents", "top"));
         steps.push(_0.highlightLinesStep(codeSelector, "16", "Custom Element beim Browser anmelden", "top"));
 
         _0.setSteps(steps);
