@@ -1,0 +1,51 @@
+<style>
+
+    #__0__ .codecontainer {
+        height: 80vh;
+        margin-left: 1em;
+    }
+
+    #__0__ .codecontainer .code {
+        font-size: 1.75em;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        height: 100%;
+    }
+
+</style>
+
+<div class="slidetitle small">single-spa</div>
+<div class="flexcontainer start codecontainer">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.showText("#__presentator", "R");
+
+        _0.useTippy();
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "import {registerApplication, start} from 'single-spa'\n" +
+            "\n" +
+            "registerApplication(\n" +
+            "  // Name of our single-spa application\n" +
+            "  'home',\n" +
+            "  // Our loading function\n" +
+            "  () => import('./src/home/home.app.js'),\n" +
+            "  // Our activity function\n" +
+            "  () => location.pathname === \"\" || \n" +
+            "    location.pathname === \"/\" || \n" +
+            "    location.pathname.startsWith('/home')\n" +
+            ");\n" +
+            "\n" +
+            "start()"
+        );
+
+        ___();
+    })()
+</script>
