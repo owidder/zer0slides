@@ -1,0 +1,43 @@
+<style>
+
+    #__0__ .codecontainer {
+        height: 80vh;
+        margin-left: 1em;
+    }
+
+    #__0__ .codecontainer .code {
+        font-size: 3.5em;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        height: 100%;
+    }
+
+</style>
+
+<div class="slidetitle small">Welche Auswirkungen haben Micro Frontends auf den Entwicklungsprozess?</div>
+<div class="flexcontainer start codecontainer">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.showText("#__presentator", "R");
+
+        _0.useTippy();
+        _0.setTheme("blue");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "Deployment\n" +
+            "Schnittstellen\n" +
+            "Layout des UI\n" +
+            "Testen\n" +
+            "..."
+        );
+
+        ___();
+    })()
+</script>

@@ -76,36 +76,42 @@
         _0.useTippy("transparent");
 
         const ratenvereinbarungPageRect = sketch.rectProz(.1, .1, .8, .6);
-        _0.addStep(sketch.createRectStep("ratenvereinbarungPage", ratenvereinbarungPageRect, "Ratenvereinbarung", {container: ".gbrowser"}));
+        _0.addStep(sketch.createRectStep("ratenvereinbarungPage", ratenvereinbarungPageRect, "Frontend Ratenvereinbarung", {container: ".gbrowser"}));
 
-        const ratenvereinbarungRect = sketch.rectProz(.2, .8, .1, .1);
-        _0.addStep(sketch.createRectStep("ratenvereinbarung", ratenvereinbarungRect, "Ratenvereinbarung", {container: ".gbrowser"}));
+        const ratenvereinbarungRect = sketch.rectProz(.2, .8, .15, .1);
+        _0.addStep(sketch.createRectStep("ratenvereinbarung", ratenvereinbarungRect, "Backend Ratenvereinbarung", {container: ".gbrowser", fill: "cyan"}));
 
-        const ratenvereinbarungPageId = `#${sketch.qid("ratenvereinbarungPage")}`;
+        const ratenvereinbarungInput = sketch.rectProzFromRect(ratenvereinbarungPageRect, .2, .5, .2, .1);
+        _0.addStep(sketch.createRectStep("ratenvereinbarungInput", ratenvereinbarungInput, "Eingabe", {container: ".gbrowser", fill: "yellow"}));
+
+        const ratenvereinbarungInputId = `#${sketch.qid("ratenvereinbarungInput")}`;
         const ratenvereinbarungId = `#${sketch.qid("ratenvereinbarung")}`;
-        const rvLineStep = sketch.createLineStep("rvPage-rv", ratenvereinbarungPageId, ratenvereinbarungId);
+        const rvLineStep = sketch.createLineStep("rvPage-rv", ratenvereinbarungInputId, ratenvereinbarungId);
         _0.addStep(rvLineStep);
 
-        const zvRect = sketch.rectProzFromRect(ratenvereinbarungPageRect, .2, .2, .2, .2);
-        _0.addStep(sketch.createRectStep("zvRect", zvRect, "Micro Frontend Zahlungsverkehr", {container: ".gbrowser", fill: "lightgrey"}));
+        _0.addStep(_0.tooltipStep(ratenvereinbarungInputId, "Wann wird die Transaktion ausgelöst?"));
 
-        const zvInput = sketch.rectProzFromRect(zvRect, .4, .4, .4, .4);
-        _0.addStep(sketch.createRectStep("zvInput", zvInput, "Eingabe", {container: ".gbrowser", fill: "yellow"}));
+        const okRect = sketch.rectProzFromRect(ratenvereinbarungPageRect, .88, .88, .1, .1);
+        _0.addStep(sketch.createRectStep("okButton", okRect, "OK", {container: ".gbrowser", fill: "lightgreen"}));
 
-        const asRect = sketch.rectProzFromRect(ratenvereinbarungPageRect, .7, .2, .2, .2);
-        _0.addStep(sketch.createRectStep("asRect", asRect, "Micro Frontend Ablaufsteuerung", {container: ".gbrowser", fill: "lightgrey"}));
+        const buchhaltungRect = sketch.rectProz(.4, .8, .15, .1);
+        _0.addStep(sketch.createRectStep("buchhaltung", buchhaltungRect, "Buchhaltung ", {container: ".gbrowser", fill: "cyan"}));
 
-        const asInput = sketch.rectProzFromRect(asRect, .4, .4, .4, .4);
-        _0.addStep(sketch.createRectStep("asInput", asInput, "Eingabe", {container: ".gbrowser", fill: "yellow"}));
+        const buchhaltungMfRect = sketch.rectProzFromRect(ratenvereinbarungPageRect, .6, .5, .2, .2);
+        _0.addStep(sketch.createRectStep("buchhaltungMfRect", buchhaltungMfRect, "Micro Frontend Buchhaltung", {container: ".gbrowser", fill: "lightgrey"}));
+        const buchhaltungInput = sketch.rectProzFromRect(buchhaltungMfRect, .55, .5, .4, .4);
+        _0.addStep(sketch.createRectStep("buchhaltungInput", buchhaltungInput, "Eingabe", {container: ".gbrowser", fill: "yellow"}));
 
-        const hostInput = sketch.rectProzFromRect(ratenvereinbarungPageRect, .2, .5, .2, .1);
-        _0.addStep(sketch.createRectStep("hostInput", hostInput, "Eingabe", {container: ".gbrowser", fill: "yellow"}));
+        const buchhaltungId = `#${sketch.qid("buchhaltung")}`;
+        const buchhaltungInputId = `#${sketch.qid("buchhaltungInput")}`;
+        const buchhaltungLineStep = sketch.createLineStep("buchhaltungRect-buchhaltungInput", buchhaltungInputId, buchhaltungId);
+        _0.addStep(buchhaltungLineStep);
 
-        const ok = sketch.rectProzFromRect(ratenvereinbarungPageRect, .8, .8, .1, .1);
-        _0.addStep(sketch.createRectStep("ok", ok, "OK", {container: ".gbrowser", fill: "lightgreen"}));
+        const buchhaltungMfRectId = `#${sketch.qid("buchhaltungMfRect")}`;
+        _0.addStep(_0.tooltipStep(buchhaltungMfRectId, "Wann wird die Transaktion ausgelöst?"));
 
-        const okId = `#${sketch.qid("ok")}`;
-        _0.addStep(_0.tooltipStep(okId, "Transaction in den Micro Frontends auslösen", "top"));
+        const okButtonId = `#${sketch.qid("okButton")}`;
+        _0.addStep(_0.tooltipStep(okButtonId, "Wie teilt man dem Micro Frontend mit,<br>dass jemand auf den OK-Button gedrückt hat?"));
 
         ___()
     })()
