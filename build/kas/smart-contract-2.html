@@ -1,0 +1,74 @@
+<style>
+
+    #__0__ .codecontainer {
+        height: 80vh;
+        margin-left: 1em;
+    }
+
+    #__0__ .codecontainer .code {
+        font-size: 1.3em;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+    }
+
+</style>
+
+<div class="slidetitle small">Der Smart Contract "Lotterie"</div>
+<div class="flexcontainer start codecontainer">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.showText("#__presentator", "O");
+
+        _0.useTippy();
+        const lt = "<"
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "contract Lotterie {\n" +
+            "    address[] public tickets;\n" +
+            "    address public winner;\n" +
+            "    uint public ticketingCloses;\n" +
+            "    \n" +
+            "    constructor () public {\n" +
+            "        ticketingCloses = now + (3600 * 24 * 365); \n" +
+            "    }\n" +
+            "    function buy () public payable { \n" +
+            "        require(msg.value == 1e16);\n" +
+            "        require(now < ticketingCloses);\n" +
+            "        tickets.push(msg.sender);\n" +
+            "    }\n" +
+            "    function drawWinner () public {\n" +
+            "        require(now > ticketingCloses + 5 minutes);\n" +
+            "        require(winner == address(0));\n" +
+            "        bytes32 rand = keccak256(toBytes(blockhash(block.number-1)));\n" +
+            "        winner = tickets[uint(rand) % tickets.length];\n" +
+            "    }\n" +
+            "    function withdraw () public {\n" +
+            "        require(msg.sender == winner);\n" +
+            "        msg.sender.transfer(address(this).balance);\n" +
+            "    }\n" +
+            "}"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "1", "Dieser Smart Contract ist eine automatisierte Lotterie:<br>" +
+            " -> Loskauf<br>" +
+            " -> Ziehen des Gewinners (nach Beendigung der Lotterie)<br>" +
+            " -> Einzug des Geldes durch den Gewinner"));
+
+        steps.push(_0.highlightLinesStep(codeSelector, "6-8", "Die Lotterie endet ein Jahr nach der Erstellung des Smart Contract"))
+        steps.push(_0.highlightLinesStep(codeSelector, "9-13", "Jeder Account, der dem Contract 0.01 Ether sendet, nimmt an der Lotterie teil"))
+        steps.push(_0.highlightLinesStep(codeSelector, "14-19", "5 Minuten nach Beendigung der Lotterie wird der Gewinner gezogen"))
+        steps.push(_0.highlightLinesStep(codeSelector, "20-23", "Der Gewinner kann sich das Geld abholen", "top"))
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
