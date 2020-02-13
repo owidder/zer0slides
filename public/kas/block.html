@@ -8,19 +8,62 @@
 
     #__0__ img {
         height: 85vh;
+        margin-top: 7%;
     }
+
+    #__0__ .svgcontainer .canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #__0__ .blocklink {
+        position: fixed;
+        top: 95vh;
+        left: 1em;
+        z-index: 1000000;
+    }
+
 </style>
 
-<div class="slidetitle medium">Ein Bitcoin-Block</div>
-<div class="flex">
+<div class="slidetitle small">Ein Bitcoin-Block</div>
+<div class="imgcontainer screen">
     <div>
-        <img src="./img/block.png">
+        <img class="blockimg" src="./img/block.png">
     </div>
+</div>
+<a class="blocklink" target="_blank" href="https://www.blockchain.com/btc/block/00000000000000000000135f2186ffbe9bdb45922c250625a1e9cb23b3fcd5d8">https://www.blockchain.com/btc/block/00000000000000000000135f2186ffbe9bdb45922c250625a1e9cb23b3fcd5d8</a>
+<div class="svgcontainer">
+    <svg class="canvas">
+        <g class="block"></g>
+    </svg>
 </div>
 
 <script>
 
     (function () {
+        _0.useTippy("transparent");
+        _0.setTheme("blue");
+
+        const svgElement = document.querySelector("#__0__ .svgcontainer .canvas");
+        const sketch = _0.createSketch(svgElement);
+
+        _0.addStep(sketch.createRectStep("nonce", () => sketch.rectProzFromElement(".blockimg", .01, .8, .5, .08), "",
+            {container: ".block", fill: "none"}))
+        _0.addStep(sketch.createRectStep("hash", () => sketch.rectProzFromElement(".blockimg", .01, .1, .95, .075), "",
+            {container: ".block", fill: "none"}))
+        const nonceId = `#${sketch.qid("nonce")}`;
+        _0.addStep(_0.tooltipStep(nonceId, "Der \"<code>Nonce</code>\" (hier <code>1394953018</code>)" +
+            "<br>ist eine Zahl, die man dem Block hinzufügt," +
+            "<br>so dass der Hash Wert...", "top"))
+
+        const hashId = `#${sketch.qid("hash")}`;
+        _0.addStep(_0.tooltipStep(hashId, "... kleiner wird als ein gesetzter Zielwert" +
+            "<br><code>Ziel: 000000000000000000121ad40000000000000000000000000000000000000000</code>" +
+            "<br><code>Hash: 00000000000000000000135f2186ffbe9bdb45922c250625a1e9cb23b3fcd5d8</code>", "bottom"))
+
         ___();
     })()
 </script>
