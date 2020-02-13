@@ -25,6 +25,7 @@
         _0.showText("#__presentator", "O");
 
         _0.useTippy();
+        _0.setTheme("blue");
         const lt = "<"
 
         const codeSelector = ".code";
@@ -62,10 +63,16 @@
             " -> Ziehen des Gewinners (nach Beendigung der Lotterie)<br>" +
             " -> Einzug des Geldes durch den Gewinner"));
 
-        steps.push(_0.highlightLinesStep(codeSelector, "6-8", "Die Lotterie endet ein Jahr nach der Erstellung des Smart Contract"))
-        steps.push(_0.highlightLinesStep(codeSelector, "9-13", "Jeder Account, der dem Contract 0.01 Ether sendet, nimmt an der Lotterie teil"))
-        steps.push(_0.highlightLinesStep(codeSelector, "14-19", "5 Minuten nach Beendigung der Lotterie wird der Gewinner gezogen"))
-        steps.push(_0.highlightLinesStep(codeSelector, "20-23", "Der Gewinner kann sich das Geld abholen", "top"))
+        steps.push(_0.highlightLinesStep(codeSelector, "7", "Die Lotterie endet ein Jahr nach der Erstellung des Smart Contract"))
+        steps.push(_0.highlightLinesStep(codeSelector, "9", "Jeder kann dem Contract Crypto-Geld senden (und damit ein Los kaufen)"))
+        steps.push(_0.highlightLinesStep(codeSelector, "10", "Ein Los kostet <code>10.000.000.000.000.000 Wei = 0,01 Ether</code>", "bottom"))
+        steps.push(_0.highlightLinesStep(codeSelector, "11", "Lose dürfen nur vor dem Ende der Lotterie gekauft werden", "top"))
+        steps.push(_0.highlightLinesStep(codeSelector, "12", "Der Sender des Crypto-Geldes wird in die Liste der Loskäufer eingetragen", "bottom"))
+        steps.push(_0.highlightLinesStep(codeSelector, "14", "Jeder kann den Contract auffordern, den Gewinner zu ziehen..."))
+        steps.push(_0.highlightLinesStep(codeSelector, "15", " ... aber erst frühestens 5 Minuten nach Beendigung des Lotterie...", "bottom"))
+        steps.push(_0.highlightLinesStep(codeSelector, "16", " ... und auch nur, wenn noch kein Gewinner gezogen worden ist", "top"))
+        steps.push(_0.highlightLinesStep(codeSelector, "20", "Jeder kann sich das Geld abholen...", "top"))
+        steps.push(_0.highlightLinesStep(codeSelector, "21", " ... aber nur, wenn man auch gewonnen hat", "top"))
 
         _0.setSteps(steps);
 
