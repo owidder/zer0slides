@@ -1,0 +1,95 @@
+<style>
+    #__0__ .flex {
+        display: flex;
+        justify-content: center;
+        margin-top: 4em;
+        margin-left: 20em;
+    }
+
+    #__0__ img {
+        height: 85vh;
+    }
+
+    #__0__ .attribution {
+        position: fixed;
+        top: 97vh;
+        left: 1em;
+        font-size: x-small;
+    }
+
+    #__0__ .op01 {
+        opacity: .1;
+    }
+
+    #__0__ .codecontainer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 80vh;
+        padding-left: 20%;
+    }
+
+    #__0__ .codecontainer .code {
+        font-size: 2.5em;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+    }
+
+    #__0__ .hide {
+        opacity: 0;
+    }
+
+    #__0__ .show {
+        opacity: 1;
+    }
+
+</style>
+
+<div class="slidetitle small">e-Voting</div>
+<div class="flex">
+    <div>
+        <img src="./img/wahllokal.jpg">
+    </div>
+</div>
+<div class="attribution">Foto: Bernd Schwabe in Hannover [CC BY-SA (<a target="_blank" href="https://creativecommons.org/licenses/by-sa/3.0">https://creativecommons.org/licenses/by-sa/3.0</a>)]</div>
+<div class="codecontainer hide">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+
+        _0.useTippy();
+        _0.setTheme("blue");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "Authenticity\n" +
+            "Singularity\n" +
+            "Anonymity\n" +
+            "Integrity\n" +
+            "Uncoercability\n" +
+            "Verifiability\n" +
+            "Auditability and Certifiability\n" +
+            "Mobility\n" +
+            "Transparency\n" +
+            "Availability\n" +
+            "Accessibility and Convenience\n" +
+            "Detectability and Recoverability")
+
+        _0.addStep(_0.combine(
+            _0.setClassStep(".flex img", "op01"),
+            _0.removeClassStep(".codecontainer", "hide"),
+            _0.setClassStep(".codecontainer", "show")
+        ))
+
+        _0.addStep(_0.highlightLinesStep(codeSelector, "1", "<div style='background-color: green; color: white'>Nur wahlberechtigte dürfen wählen</div>", "right"))
+        _0.addStep(_0.highlightLinesStep(codeSelector, "2", "<div style='background-color: green; color: white'>Man darf nur einmal wählen</div>", "right"))
+        _0.addStep(_0.highlightLinesStep(codeSelector, "3", "<div style='background-color: red; color: white'>Es gilt das Wahlgeheimnis</div>", "right"))
+
+        ___();
+    })()
+</script>
