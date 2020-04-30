@@ -76,7 +76,7 @@
     "animejs": "^3.1.0",
     "d3": "^5.9.0",
     "include-media": "^1.4.9",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "keyboardjs": "^2.5.1",
     "lodash": "^4.17.15",
     "materialize-css": "^1.0.0",
