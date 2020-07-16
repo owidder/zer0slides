@@ -78,7 +78,7 @@
     "include-media": "^1.4.9",
     "jquery": "^3.4.0",
     "keyboardjs": "^2.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "materialize-css": "^1.0.0",
     "metamask-logo": "^2.2.0",
     "mo-js": "^0.288.2",
