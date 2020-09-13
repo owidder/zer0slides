@@ -24,7 +24,6 @@
     (function () {
         _0.showText("#__presentator", "O");
 
-        _0.useTippy();
         _0.setTheme("blue");
         const lt = "<"
 
@@ -59,9 +58,9 @@
 
         const steps = [];
         steps.push(_0.highlightLinesStep(codeSelector, "1", "Dieser Smart Contract ist eine automatisierte Lotterie:<br>" +
-            " -> Loskauf<br>" +
-            " -> Ziehen des Gewinners (nach Beendigung der Lotterie)<br>" +
-            " -> Einzug des Geldes durch den Gewinner"));
+            " - Loskauf<br>" +
+            " - Ziehen des Gewinners (nach Beendigung der Lotterie)<br>" +
+            " - Einzug des Geldes durch den Gewinner"));
 
         steps.push(_0.highlightLinesStep(codeSelector, "7", "Die Lotterie endet ein Jahr nach der Erstellung des Smart Contract"))
         steps.push(_0.highlightLinesStep(codeSelector, "9", "Jeder kann dem Contract Crypto-Geld senden (und damit ein Los kaufen)"))
