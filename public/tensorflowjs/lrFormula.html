@@ -1,0 +1,27 @@
+<style>
+    .tippy-content {
+        font-size: 2em;
+    }
+
+</style>
+
+<div class="flexcontainer start">
+    <div class="code responsive"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.useTippy("transparent");
+        _0.codeJs(".code",
+            "b + a * FACEBOOK_KURS = \n" +
+            "APPLE_KURS");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1-2", "Suche <span style='font-size: 2em'>a</span> und <span style='font-size: 2em'>b</span>, so dass der Abstand der Geraden von den Punkten möglichst klein ist", "top"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

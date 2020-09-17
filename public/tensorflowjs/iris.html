@@ -1,0 +1,43 @@
+<style>
+
+    .tippy-content {
+        font-size: 2em;
+    }
+
+    #__0__ img {
+        width: 80%;
+        height: 80%;
+        margin: 5em;
+        border-radius: 10px;
+        box-shadow: 10px 10px 5px lightgrey;
+    }
+
+    #__0__ a {
+        margin-left: 3em;
+    }
+
+</style>
+
+<div class="title"></div>
+
+<div class="imgcontainer">
+    <img id="setosa" src="./img/iris-setosa.png">
+    <img id="virginica" src="./img/iris-virginica.png">
+    <img id="versicolor" src="./img/iris-versicolor.png">
+</div>
+
+<a target="_blank" href="https://codelabs.developers.google.com/codelabs/neural-tensorflow-js/index.html#0">Quelle: https://codelabs.developers.google.com/</a>
+
+<script>
+    (function () {
+        _0.useTippy("transparent");
+
+        _0.glowText(".title", ["Die Blume Iris"], "small glow");
+
+        _0.addStep(_0.tooltipStep("#setosa", "Iris setosa", "bottom"));
+        _0.addStep(_0.tooltipStep("#virginica", "Iris virginica", "bottom"));
+        _0.addStep(_0.tooltipStep("#versicolor", "Iris versicolor", "bottom"));
+
+        ___()
+    })()
+</script>
