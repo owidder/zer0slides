@@ -1,6 +1,6 @@
 <style>
     .tippy-content {
-        font-size: 5em;
+        font-size: 2em;
     }
 
     #__0__ .code {
@@ -8,6 +8,8 @@
     }
 
 </style>
+
+<div class="title"></div>
 
 <div class="flexcontainer start">
     <div class="code responsive"></div>
@@ -17,20 +19,22 @@
 
     (function () {
         _0.useTippy("transparent");
+        _0.glowText(".title", ["1. Versuch: Linearer Zusammenhang"], "small glow");
         _0.codeJs(".code",
             "a + x1 * sepal_length + x2 * sepal_width + x3 * petal_length + x4 * petal_width = P[setosa] \n" +
             "b + y1 * sepal_length + y2 * sepal_width + y3 * petal_length + y4 * petal_width = P[virginica] \n" +
             "c + z1 * sepal_length + z2 * sepal_width + z3 * petal_length + z4 * petal_width = P[setosa]");
 
         const steps = [];
-        steps.push(_0.highlightLinesStep(".code", "1-4", "Ja und? Was bringt das?", "top"));
-        steps.push(_0.highlightLinesStep(".code", "1-4", "Erkenntnis", "bottom"));
-        steps.push(_0.highlightLinesStep(".code", "2", "Z.B.: y >> 0 bedeutet: je mehr Mails desto besser", "top"));
-        steps.push(_0.highlightLinesStep(".code", "3", "Oder: z ~ 0 bedeutet: SMS spielen keine Rolle", "top"));
-        steps.push(_0.highlightLinesStep(".code", "1-4", "<span style='font-size: 1.5em'>Aber!!!</span>", "top"));
-        steps.push(_0.highlightLinesStep(".code", "1-4", "Was ist, wenn es gar keine lineare Abhängigkeit gibt?", "bottom"));
-        steps.push(_0.highlightLinesStep(".code", "2", "Wenn es z.B. von ANZAHL_MAIL<sup>2</sup> abhängt...", "top"));
-        steps.push(_0.highlightLinesStep(".code", "1,3", "<span style='font-size: .7em'> ... oder wenn ALTER_VP und ANZAHL_SMS voneinder abhängig sind</span>", "top"));
+        steps.push(_0.highlightLinesStep(".code", "1", "Bestimme die Konstante <code>a</code> und die " +
+            "Gewichte <code>x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>, x<sub>4</sub></code> so, <br/>dass" +
+            " <code>P[setosa]</code> bei Datensätzen mit Label <code>setosa</code> möglichst nahe 1 ist, ansonsten möglichst nahe 0", "top"));
+        steps.push(_0.highlightLinesStep(".code", "2", "Bestimme die Konstante <code>b</code> und die " +
+            "Gewichte <code>y<sub>1</sub>, y<sub>2</sub>, y<sub>3</sub>, y<sub>4</sub></code> so, <br/>dass" +
+            " <code>P[virginica]</code> bei Datensätzen mit Label <code>virginica</code> möglichst nahe 1 ist, ansonsten möglichst nahe 0", "top"));
+        steps.push(_0.highlightLinesStep(".code", "3", "Bestimme die Konstante <code>c</code> und die " +
+            "Gewichte <code>z<sub>1</sub>, z<sub>2</sub>, z<sub>3</sub>, z<sub>4</sub></code> so, <br/>dass" +
+            " <code>P[versicolor]</code> bei Datensätzen mit Label <code>versicolor</code> möglichst nahe 1 ist, ansonsten möglichst nahe 0", "bottom"));
 
         _0.setSteps(steps);
 
