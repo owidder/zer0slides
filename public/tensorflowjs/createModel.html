@@ -1,0 +1,66 @@
+<style>
+    .tippy-content {
+        font-size: 2em;
+    }
+
+    #__0__ .code {
+        font-size: 1.5em;
+    }
+
+</style>
+
+<div class="title"></div>
+
+<div class="flexcontainer start">
+    <div class="code responsive"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.useTippy("transparent");
+        _0.glowText(".title", ["Ein Modell erzeugen"], "small glow");
+        _0.codeJs(".code",
+            "import * as tf from \"@tensorflow/tfjs\";\n" +
+            "import { Sequential } from \"@tensorflow/tfjs-layers/dist/models\";\n" +
+            "import { DenseLayerArgs } from \"@tensorflow/tfjs-layers/dist/layers/core\";\n" +
+            "\n" +
+            "export const createModel = (numberOfInputs: number, networkShape: number[], activations: string[]) => {\n" +
+            "    const model = tf.sequential();\n" +
+            "\n" +
+            "    networkShape.forEach((numberOfNeuronsInLayer, layerIndex) => {\n" +
+            "        const config: DenseLayerArgs = {\n" +
+            "            units: numberOfNeuronsInLayer,\n" +
+            "            activation: activations[layerIndex] as ActivationIdentifier,\n" +
+            "            inputShape: layerIndex == 0 ? [numberOfInputs] : undefined\n" +
+            "        }\n" +
+            "        model.add(tf.layers.dense(config))\n" +
+            "    })\n" +
+            "\n" +
+            "    return model\n" +
+            "}\n");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1-3", "Tensorflow und benötigte Interfaces / Types importieren", "top"));
+        steps.push(_0.highlightLinesStep(".code", "2-3", "Interfaces / Types kann man sich auch sparen. <code>any</code> reicht auch", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "5-18", "Function zum Erzeugen eines Modells", "top"));
+        steps.push(_0.highlightLinesStep(".code", "5", "<code>numberOfInputs</code> ist die Anzahl der Eingangsvariablen (Features)", "top"));
+        steps.push(_0.highlightLinesStep(".code", "5", "<code>networkShape</code> ist ein Array mit den Anzahlen der Neuronen in jedem Layer", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "5", "<code>activations</code> ist ein Array mit den Namen der Activation Functions für jeden Layer", "top"));
+        steps.push(_0.highlightLinesStep(".code", "6", "Neues Modell erzeugen", "top"));
+        steps.push(_0.highlightLinesStep(".code", "8-15", "Layers erzeugen", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "9-13", "Konfiguration eines Layers", "top"));
+        steps.push(_0.highlightLinesStep(".code", "10", "Anzahl der Neuronen in dem Layer", "top"));
+        steps.push(_0.highlightLinesStep(".code", "11", "Name der Activation Function", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "12", "Anzahl der Eingangsvariablen (wird nur im ersten Layer benötigt)", "top"));
+        steps.push(_0.highlightLinesStep(".code", "14", "Layer erzeugen und hinzufügen", "top"));
+        steps.push(_0.highlightLinesStep(".code", "14", "Wir arbeiten hier mit Dense Layers " +
+            "(d.h. jedes Neuron eines Layers ist mit jedem Neuron des nächsten Layers verbunden)." +
+            " Es gibt noch andere Arten." +
+            " Z.B. benötigt man für Bilderkennung Convolutional Layers", "bottom"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
