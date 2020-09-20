@@ -34,6 +34,7 @@
 
         const templatesDiv = document.querySelector("#__0__ .templates");
         _0.slideCore.getSlideNames().forEach(function(slideName, i) {
+            debugger
             const url = _0.slideCore.getSlideUrl(slideName);
 
             const divNode = document.createElement("div");
@@ -42,6 +43,7 @@
             const aNode = document.createElement("a");
             aNode.setAttribute("target", "_blank");
             aNode.setAttribute("href", url);
+            console.log(`url: ${url}`);
             const textNode = document.createTextNode("Open in new tab");
             aNode.appendChild(textNode);
 
