@@ -1,0 +1,53 @@
+<style>
+    .tippy-content {
+        font-size: 3em;
+    }
+
+    #__0__ .code {
+        font-size: 1.5em;
+    }
+
+</style>
+
+<div class="title"></div>
+
+<div class="flexcontainer start">
+    <div class="code responsive"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.useTippy("transparent");
+        _0.glowText(".title", ["Das Training beginnt"], "small glow");
+        _0.codeJs(".code",
+            "type DataPoint = {\n" +
+            "   [key: string]: number;\n" +
+            "   label: string;\n" +
+            "};\n" +
+            "\n" +
+            "public fitStep = async (trainDataPoints: DataPoint[], \n" +
+            "                           epochs: number, batchSize: number, onEpochEnd: (epoch: number, logs: {[key: string]: number})) => {\n" +
+            "   const input: number[][] = transformInput(trainDataPoints);\n" +
+            "   const output: number[][] = transformOutput(trainDataPoints);\n" +
+            "\n" +
+            "   const history = await this._sequential.fit(tf.tensor2d(input), tf.tensor2d(output), {\n" +
+            "       callbacks: { onEpochEnd }, epochs, batchSize \n" +
+            "   });\n" +
+            "\n" +
+            "}\n");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", "<code>url</code>: Quelle für die Daten", "top"));
+        steps.push(_0.highlightLinesStep(".code", "1", "<code>testRatio</code>: Anteil der Testdaten an allen Daten", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "2-3", "Daten laden", "top"));
+        steps.push(_0.highlightLinesStep(".code", "5-6", "Anzahlen der Test- und Trainingsdaten berechnen", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "8-9", "Test- und Trainingsdaten zurechtschneiden", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "11", " ... und zurückgeben", "top"));
+        steps.push(_0.highlightLinesStep(".code", "1-12", "Hier ausgelassen: Daten durchmischen", "bottom"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
