@@ -1,7 +1,7 @@
 import {Slide, SlideConfig} from './Slide';
 import {renderSlide, refreshSlide, InOut, resetSlide} from './render';
 import {setSlideNo} from '../html/controlElements';
-import {setHashValue} from '../url/queryUtil2';
+import {setHashValue, removeHashValue} from '../url/queryUtil2';
 import {Transformation} from '../html/transformations/Transformation';
 import {SimplePromise} from "./SimplePromise";
 import {sendSlideNoAndStepNo} from "../sync/sync";
@@ -40,7 +40,7 @@ export class SlideCore {
 
     public static getSlideUrlWithIndex(index: number) {
         const currentUrl = window.location.href;
-        return currentUrl.replace(/slide=\d+/,"slide=" + index);
+        return currentUrl.replace(/slide=\d+/,"slide=" + index).replace(/step=\d+/,"");
     }
 
     public getShortCutSlideUrl() {
@@ -87,6 +87,7 @@ export class SlideCore {
 
     public setCurrentSlideWithIndex(index: number) {
         setHashValue("slide", index);
+        removeHashValue("step");
         this.setCurrentSlideWithName(this.slideNames[index]);
     }
 

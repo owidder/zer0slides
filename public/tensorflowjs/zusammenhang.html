@@ -1,0 +1,32 @@
+<style>
+    .tippy-content {
+        font-size: 2em;
+    }
+
+    #__0__ .code {
+        font-size: 4em;
+    }
+</style>
+
+<div class="flexcontainer start">
+    <div class="code responsive"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.useTippy("transparent");
+        _0.codeJs(".code",
+            "Gibt es einen Zusammenhang zwischen \n" +
+            "Länge und Breite des Sepal und des Petal \n" +
+            "und der Zugehörigkeit zu einer der 3 Arten?");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", "Und wenn ja ...", "top"));
+        steps.push(_0.highlightLinesStep(".code", "1-3", " ... wie kann man ihn berechnen?", "bottom"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
