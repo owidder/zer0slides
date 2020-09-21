@@ -1,6 +1,6 @@
 <style>
     .tippy-content {
-        font-size: 3em;
+        font-size: 2em;
     }
 
     #__0__ .code {
@@ -27,24 +27,27 @@
             "};\n" +
             "\n" +
             "public fitStep = async (trainDataPoints: DataPoint[], \n" +
-            "                           epochs: number, batchSize: number, onEpochEnd: (epoch: number, logs: {[key: string]: number})) => {\n" +
+            "                           epochs: number, \n" +
+            "                           batchSize: number, \n" +
+            "                           onEpochEnd: (epoch: number, logs: {[key: string]: number})) => {\n" +
+            "\n" +
             "   const input: number[][] = transformInput(trainDataPoints);\n" +
             "   const output: number[][] = transformOutput(trainDataPoints);\n" +
             "\n" +
             "   const history = await this._sequential.fit(tf.tensor2d(input), tf.tensor2d(output), {\n" +
             "       callbacks: { onEpochEnd }, epochs, batchSize \n" +
             "   });\n" +
-            "\n" +
             "}\n");
 
         const steps = [];
-        steps.push(_0.highlightLinesStep(".code", "1", "<code>url</code>: Quelle für die Daten", "top"));
-        steps.push(_0.highlightLinesStep(".code", "1", "<code>testRatio</code>: Anteil der Testdaten an allen Daten", "bottom"));
-        steps.push(_0.highlightLinesStep(".code", "2-3", "Daten laden", "top"));
-        steps.push(_0.highlightLinesStep(".code", "5-6", "Anzahlen der Test- und Trainingsdaten berechnen", "bottom"));
-        steps.push(_0.highlightLinesStep(".code", "8-9", "Test- und Trainingsdaten zurechtschneiden", "bottom"));
-        steps.push(_0.highlightLinesStep(".code", "11", " ... und zurückgeben", "top"));
-        steps.push(_0.highlightLinesStep(".code", "1-12", "Hier ausgelassen: Daten durchmischen", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "1-4", "In dem Format liegen die Daten vor", "top"));
+        steps.push(_0.highlightLinesStep(".code", "6", "Nur mit den Trainingsdaten wird trainiert", "top"));
+        steps.push(_0.highlightLinesStep(".code", "7", "Eine Epoche ist eine Runde der Optimierung, in der alle Trainingsdaten einmal durchgegangen werden", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "8", "Wie viele Daten werden gleichzeitig betrachtet. Je größer, desto schneller. Aber Achtung wg. Overfitting", "top"));
+        steps.push(_0.highlightLinesStep(".code", "8", "<img src='./img/overfitting.png'/><br><span style='font-size: .5em'>Quelle: https://towardsdatascience.com/epoch-vs-iterations-vs-batch-size-4dfb9c7ce9c9</a>", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "9", "Callback wird nach Ende einer Epoche aufgerufen. Wird hier verwendet, um die UI / Charts zu aktualisieren", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "11-12", "Transformation der Daten in das Tensorflow-Format (Code hier ausgelassen)", "top"));
+        steps.push(_0.highlightLinesStep(".code", "14-16", "Let's do it!!!", "bottom"));
 
         _0.setSteps(steps);
 
