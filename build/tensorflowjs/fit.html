@@ -34,7 +34,7 @@
             "   const input: number[][] = transformInput(trainDataPoints);\n" +
             "   const output: number[][] = transformOutput(trainDataPoints);\n" +
             "\n" +
-            "   const history = await this._sequential.fit(tf.tensor2d(input), tf.tensor2d(output), {\n" +
+            "   const history = await model.fit(tf.tensor2d(input), tf.tensor2d(output), {\n" +
             "       callbacks: { onEpochEnd }, epochs, batchSize \n" +
             "   });\n" +
             "}\n");
