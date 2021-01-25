@@ -1,0 +1,73 @@
+<style>
+
+    #__0__ img {
+        width: 80%;
+        height: 80%;
+        margin-top: 7%;
+    }
+
+    #__0__ .qr {
+        position: absolute;
+        bottom: 4em;
+        left: 2em;
+    }
+
+    #__0__ .link {
+        position: absolute;
+        bottom: 5em;
+        right: 2em;
+        text-anchor: end;
+    }
+
+    #__0__ .svgcontainer .canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #__0__ .microfrontends {
+        opacity: .7;
+    }
+
+</style>
+
+<div class="slidetitle middle">Micro Frontends in der UI einer Business Anwendung</div>
+<div class="imgcontainer screen">
+    <img id="__0__-fx-ui" class="fx-ui" src="./img/fx-screenshot.png">
+</div>
+
+<div class="svgcontainer">
+    <svg class="canvas">
+        <g class="microfrontends"></g>
+    </svg>
+</div>
+
+<script>
+    (function () {
+        _0.showText("#__presentator", "O");
+
+        _0.useTippy("transparent");
+        _0.setTheme("blue");
+
+        const svgElement = document.querySelector("#__0__ .svgcontainer .canvas");
+        const sketch = _0.createSketch(svgElement);
+
+        _0.addStep(_0.tooltipStep("#__0__-fx-ui", "<img src='./img/fe-forderungsverwaltung.png'>", "top"))
+        _0.addStep(_0.removeTooltipStep("#__0__-fx-ui"))
+
+        _0.addStep(sketch.createRectStep("mf3", () => sketch.rectProzFromElement(".fx-ui", .25, .05, .23, .16), "", {container: ".microfrontends"}))
+        const mf3Id = `#${sketch.qid("mf3")}`;
+        _0.addStep(_0.tooltipStep(mf3Id, "<img src='./img/mf-personenverwaltung.png'>", "bottom"))
+        _0.addStep(_0.removeTooltipStep(mf3Id));
+        _0.addStep(sketch.createRectStep("mf2", () => sketch.rectProzFromElement(".fx-ui", .05, .167, .026, .04), "", {container: ".microfrontends"}));
+
+        const mf2Id = `#${sketch.qid("mf2")}`;
+        _0.addStep(_0.tooltipStep(mf2Id, "<img src='./img/mf-ratenvereinbarung.png'>", "bottom"))
+
+        _0.addStep(_0.tooltipStep(mf2Id, "<code>&lt;rave-mini verpflichtung='AAAA009901A'/&gt;</code>", "top"))
+
+        ___()
+    })()
+</script>

@@ -1,0 +1,52 @@
+<style>
+
+    #__0__ .codecontainer {
+        height: 80vh;
+        margin-left: 1em;
+    }
+
+    #__0__ .codecontainer .code {
+        font-size: 2.5em;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        height: 100%;
+    }
+
+</style>
+
+<div class="slidetitle">Der Web Components Standard</div>
+<div class="flexcontainer start codecontainer">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.showText("#__presentator", "O");
+
+        _0.useTippy();
+        _0.setTheme("blue");
+
+        const codeSelector = ".code";
+
+        const lt = "<"
+        const dash = "-"
+
+        _0.codeJs(codeSelector,
+            "Custom Elements: Definition eigener DOM-Elemente\n" +
+            "Shadow DOM: Teile des DOMs kapseln\n" +
+            "ES Modules: JS Code dynamisch laden\n" +
+            "HTML Templates: HTML-Fragmente laden und mehrfach verwenden"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "4", "Haben wir über HTML Imports verwendet, die sind aber <code>@deprecated</code>", "bottom"));
+        steps.push(_0.highlightLinesStep(codeSelector, "2-3", "Haben wir nicht verwendet", "bottom"));
+        steps.push(_0.highlightLinesStep(codeSelector, "1", "<code>&lt;my-element my-attribute='123'/&gt;</code>", "top"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
