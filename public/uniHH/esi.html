@@ -1,0 +1,46 @@
+<style>
+
+    #__0__ .codecontainer {
+        height: 80vh;
+        margin-left: 1em;
+        margin-top: 5em;
+    }
+
+    #__0__ .codecontainer .code {
+        font-size: 3em;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        height: 100%;
+    }
+
+</style>
+
+<div class="slidetitle middle">Edge Side Include</div>
+<div class="flexcontainer start codecontainer">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.showText("#__presentator", "R");
+
+        _0.useTippy();
+
+        const codeSelector = ".code";
+
+        const lt = "<"
+        const dash = "-"
+
+        _0.codeHtml(codeSelector,
+            lt + "esi:include\n" +
+            "   src=\"http://example.com/1.html\"\n" +
+            "   alt=\"http://bak.example.com/2.html\"\n" +
+            "   onerror=\"continue\"\n" +
+            "/>"
+        );
+
+        ___();
+    })()
+</script>

@@ -14,6 +14,7 @@ const foldersToBuild = (publicFolderPath, indexName = "index") => {
         }
     })
 
+    console.log(`folders: ${foldersWithIndexHtml}`);
     return foldersWithIndexHtml;
 }
 
