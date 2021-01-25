@@ -1,0 +1,43 @@
+<style>
+
+    #__0__ .codecontainer {
+        height: 80vh;
+        margin-left: 1em;
+    }
+
+    #__0__ .codecontainer .code {
+        font-size: 1.75em;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        height: 100%;
+    }
+
+</style>
+
+<div class="slidetitle medium">IFrame</div>
+<div class="flexcontainer start codecontainer">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.showText("#__presentator", "R");
+
+        _0.useTippy();
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "<iframe\n" +
+            "   width=\"560\"\n" +
+            "   height=\"315\"\n" +
+            "   src=\"https://www.youtube.com/embed/owsfdh4gxyc\"\n" +
+            "   allowfullscreen>\n" +
+            "</iframe>"
+        );
+
+        ___();
+    })()
+</script>

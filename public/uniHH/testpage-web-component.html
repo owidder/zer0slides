@@ -1,0 +1,54 @@
+<style>
+
+    #__0__ .codecontainer {
+        height: 80vh;
+        margin-left: 1em;
+    }
+
+    #__0__ .codecontainer .code {
+        font-size: 1.5em;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        height: 100%;
+    }
+
+</style>
+
+<div class="slidetitle middle">Test-Seite für die Web Component</div>
+<div class="flexcontainer start codecontainer">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.showText("#__presentator", "O");
+
+        _0.useTippy();
+        _0.setTheme("blue");
+        const lt = "<"
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "const {verpflichtung} = require(\"query-string\").parse(window.location.search);\n" +
+            "\n" +
+            "const vbQuickViewElement = document.createElement(\"vb-quick-view\");\n" +
+            "vbQuickViewElement.setAttribute(\"verpflichtung\", verpflichtung);\n" +
+            "\n" +
+            "document.getElementById(\"container\").appendChild(vbQuickViewElement);"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "1-6", "<code>testPage.ts</code>", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "1", "Attribut des Custom Elements wird der Test-Seite als Query-Parameter übergeben<br>" +
+            "<code><b>http://localhost:9000/raveMiniTestPage.html?verpflichtung=AAAA009901A</b></code>", "bottom"));
+        steps.push(_0.highlightLinesStep(codeSelector, "3-4", "Custom Element erzeugen und Attribut setzen", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "6", "Custom Element im DOM-Tree einfügen", "bottom"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

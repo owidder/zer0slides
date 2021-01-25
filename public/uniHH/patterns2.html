@@ -1,0 +1,49 @@
+<style>
+
+    #__0__ .codecontainer {
+        height: 80vh;
+        margin-left: 1em;
+    }
+
+    #__0__ .codecontainer .code {
+        font-size: 5em;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        height: 100%;
+    }
+
+</style>
+
+<div class="slidetitle">Micro Frontend Patterns</div>
+<div class="flexcontainer start codecontainer">
+    <div class="code responsive smaller"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.showText("#__presentator", "R");
+
+        _0.useTippy();
+        _0.setTheme("blue");
+
+        const codeSelector = ".code";
+
+        _0.codeJs(codeSelector,
+            "Build Time Integration\n" +
+            "Server Side Integration\n" +
+            "Client Side Integration"
+        );
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(codeSelector, "1", "Micro Frontends werden im Build-Prozess zu einem Frontend integriert", "top"));
+        steps.push(_0.highlightLinesStep(codeSelector, "2", "Micro Frontends werden durch eine Server-Komponente integriert<br>" +
+            "und als ein Frontend an den Browser ausgeliefert", "bottom"));
+        steps.push(_0.highlightLinesStep(codeSelector, "3", "Micro Frontends werden erst im Browser integriert", "bottom"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
