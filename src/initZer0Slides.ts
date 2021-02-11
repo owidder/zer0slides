@@ -22,14 +22,13 @@ import {cast} from "./zer0slides/specials/cast";
 import {shortcut} from "./zer0slides/shortcut/shortcut";
 import {background} from "./zer0slides/background/background";
 import {fitToScreen} from "./zer0slides/responsive/fitToScreen";
-import {createSketch} from "./zer0slides/sketch/Sketch";
+import {createSketch} from "./zer0slides/sketch/sketch";
 import * as anime from "./zer0slides/transform/anime";
 import * as transform from "./zer0slides/transform/transform";
 import * as elements from "./zer0slides/dom/elements";
+import rough from "roughjs";
 
 import * as vivus from "vivus";
-
-const rough = require("roughjs/dist/rough.umd");
 
 const createRoot = () => {
     const body = d3.select("body");

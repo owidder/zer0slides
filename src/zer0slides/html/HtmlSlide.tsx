@@ -67,7 +67,7 @@ const clean = (container: OneOrTwo) => {
 }
 
 const startDelayed = (delay, fct: () => Promise<any>) => {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         setTimeout(async () => {
             await fct();
             resolve();
@@ -134,7 +134,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
     private transformOut(container: OneOrTwo, slide: Slide, transformType: Transformation | undefined) {
         const _transformType = transformType || "Z";
-        return new Promise(async resolve => {
+        return new Promise<void>(async resolve => {
             const transformClassName = createTransformClassName(_transformType, "Out");
 
             await this.show(container, slide);
@@ -149,7 +149,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
 
     private transformIn(container: OneOrTwo, slide: Slide, transformType: Transformation| undefined) {
         const _transformType = transformType || "Left";
-        return new Promise(async resolve => {
+        return new Promise<void>(async resolve => {
             const transformClassName = createTransformClassName(_transformType, "In");
             const tramsformInitClassName = createTransformInitClassName(_transformType, "In");
 
@@ -186,7 +186,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
             return Promise.resolve();
         }
 
-        return new Promise(resolve => {
+        return new Promise<void>(resolve => {
             resetSlideReadyPromise(slide.name);
 
             clean(container);
@@ -220,7 +220,7 @@ export class HtmlSlide extends React.Component<HtmlSlideProps> {
     }
 
     private twinMove(transformType: Transformation) {
-        return new Promise(async resolve => {
+        return new Promise<void>(async resolve => {
             const {slide, slideOut, transformReadyCallback} = this.props;
 
             const twinInInitClassName = `twinIn${transformType}Init`;

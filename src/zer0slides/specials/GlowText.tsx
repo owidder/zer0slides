@@ -42,7 +42,7 @@ const _waitForSelectorRecursive = (selector: string, resolve: () => void) => {
 }
 
 const waitForSelector = (selector: string) => {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         _waitForSelectorRecursive(selector, resolve);
     })
 }

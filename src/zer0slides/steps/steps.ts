@@ -62,7 +62,7 @@ const _callFunctionsRecursive = (fcts: Array<StepFunction>, resolve: () => void,
 }
 
 const _callFunctions = (fcts: Array<StepFunction>) => {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         _callFunctionsRecursive(fcts, resolve, 0);
     })
 }

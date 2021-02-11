@@ -20,7 +20,7 @@ export interface RenderOptions {
 }
 
 const firstOutThenIn = (options: RenderOptions) => {
-    const transformOutReady = new Promise(resolve => {
+    const transformOutReady = new Promise<void>(resolve => {
         ReactDOM.render(<HtmlSlide slide={options.oldSlide}
                                    action="transform-out"
                                    transformReadyCallback={resolve}
@@ -28,7 +28,7 @@ const firstOutThenIn = (options: RenderOptions) => {
         />, document.getElementById('root') as HTMLElement);
     })
 
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         transformOutReady.then(() => {
             ReactDOM.render(<HtmlSlide slide={options.slide}
                                        action="transform-in"
@@ -40,7 +40,7 @@ const firstOutThenIn = (options: RenderOptions) => {
 }
 
 const outAndInAtOnce = (options: RenderOptions) => {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         ReactDOM.render(<HtmlSlide slideOut={options.oldSlide} slide={options.slide}
                                    action="transform-in-out"
                                    transformReadyCallback={resolve}
@@ -52,7 +52,7 @@ const outAndInAtOnce = (options: RenderOptions) => {
 }
 
 const twin = (options: RenderOptions) => {
-    const twinReady = new Promise(resolve => {
+    const twinReady = new Promise<void>(resolve => {
         ReactDOM.render(<HtmlSlide slideOut={options.oldSlide} slide={options.slide}
                                    action="twinMove"
                                    transformReadyCallback={resolve}
@@ -60,7 +60,7 @@ const twin = (options: RenderOptions) => {
         />, document.getElementById('root') as HTMLElement);
     })
 
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         twinReady.then(() => {
             ReactDOM.render(<HtmlSlide slide={options.slide}
                                        transformReadyCallback={resolve}

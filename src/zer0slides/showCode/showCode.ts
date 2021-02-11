@@ -32,7 +32,7 @@ interface HighlightLinesOptions {
 }
 
 const refresh = () => {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         setTimeout(() => {
             prism.highlightAll();
             resolve();
