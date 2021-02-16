@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import tippy, {Instance, Placement} from 'tippy.js';
+import tippy, {Instance, Placement, sticky} from 'tippy.js';
 import {getData, setData, resetData} from '../core/data';
 import {Step} from '../core/Step';
 import {Tooltip, createTooltipSelector} from "./_tooltip";
@@ -9,7 +9,9 @@ import {q, selector} from "../selector/selector";
 import {addCleanFunction} from "../lifecycle/lifecycle";
 import {slideCore} from "../core/core";
 
-let theme = "transparent";
+import "tippy.js/dist/tippy.css";
+
+let theme = "translucent";
 export const setTheme = (_theme: string) => {
     theme = _theme;
 }
@@ -19,7 +21,7 @@ export const initTooltip = () => {
 }
 
 const cleanAfterSlideFinished = () => {
-    d3.selectAll(".tippy-popper").remove();
+    d3.selectAll("div[data-tippy-root]").remove();
 }
 
 export const createTooltip = (tooltip: Tooltip) => {
@@ -31,11 +33,10 @@ export const createTooltip = (tooltip: Tooltip) => {
         hideOnClick: false,
         trigger: "manual",
         theme,
-        animateFill: false,
         arrow: true,
         maxWidth: "none",
-        boundary: "window" as const,
-        placement: (tooltip.position ? tooltip.position : "bottom") as Placement
+        placement: (tooltip.position ? tooltip.position : "bottom") as Placement,
+        plugins: [sticky],
     }
 
     let instance = (document.querySelector(selector) as any)._tippy;

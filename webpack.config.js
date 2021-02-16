@@ -45,7 +45,7 @@ const common = {
     },
     devtool: 'source-map',
     devServer: {
-        contentBase: path.join(__dirname, "public"),
+        contentBase: path.join(__dirname, "build"),
         compress: true,
     },
     module: {
@@ -137,11 +137,11 @@ const common = {
 
 const withHash = env => {
     return {
+        ...common,
         devServer: {
             ...common.devServer,
             port: 9000
         },
-        ...common,
         output: {
             ...common.output,
             filename: 'static/js/[name].[contenthash:8].js',
@@ -158,11 +158,11 @@ const withHash = env => {
 
 const withoutHash = env => {
     return {
+        ...common,
         devServer: {
             ...common.devServer,
             port: 9010
         },
-        ...common,
         output: {
             ...common.output,
             filename: `static/js/z0.${VERSION}.js`,
@@ -188,4 +188,5 @@ if (process.env.NODE_ENV === "production") {
     )
 }
 
-module.exports = [withHash, withoutHash]
+//module.exports = [withHash, withoutHash]
+module.exports = withoutHash

@@ -1,6 +1,6 @@
 import * as Vivus from "vivus";
 import * as d3 from "d3";
-import rough from "roughjs";
+import rough from "roughjs/bundled/rough.cjs";
 
 import {slideName} from '../core/core';
 import {Step} from '../core/Step';
@@ -34,10 +34,11 @@ class Sketch {
 
     r: any;
 
-    constructor(svgElement: SVGSVGElement) {
+    constructor(svgElement: SVGSVGElement ) {
         console.log("Sketch");
         this.svgElement = svgElement;
-        this.r = rough.svg(svgElement);
+        const rgh = rough;
+        this.r = rgh.svg(svgElement);
     }
 
     qid(id: string): string {
