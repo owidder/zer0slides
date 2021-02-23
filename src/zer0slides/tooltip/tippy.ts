@@ -37,11 +37,12 @@ export const createTooltip = (tooltip: Tooltip) => {
         maxWidth: "none",
         placement: (tooltip.position ? tooltip.position : "bottom") as Placement,
         plugins: [sticky],
+        allowHTML: true,
     }
 
     let instance = (document.querySelector(selector) as any)._tippy;
     if(instance) {
-        instance.set(options);
+        instance.setProps(options);
     } else {
         instance = tippy(selector, options)[0];
     }
