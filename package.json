@@ -94,7 +94,7 @@
     "roughjs": "^4.3.1",
     "simple-statistics": "^7.4.0",
     "sprintf-js": "^1.1.2",
-    "tippy.js": "^6.2.7",
+    "tippy.js": "^5.2.1",
     "vivus": "^0.4.5"
   },
   "homepage": "https://owidder.github.io/zer0slides/build",

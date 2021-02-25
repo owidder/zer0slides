@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import tippy, {Instance, Placement, sticky} from 'tippy.js';
+import tippy, {Placement, sticky} from 'tippy.js';
 import {getData, setData, resetData} from '../core/data';
 import {Step} from '../core/Step';
 import {Tooltip, createTooltipSelector} from "./_tooltip";
@@ -21,7 +21,8 @@ export const initTooltip = () => {
 }
 
 const cleanAfterSlideFinished = () => {
-    d3.selectAll("div[data-tippy-root]").remove();
+    d3.selectAll(".tippy-popper ").remove(); // v5
+    d3.selectAll("div[data-tippy-root]").remove(); // v6
 }
 
 export const createTooltip = (tooltip: Tooltip) => {
