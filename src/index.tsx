@@ -95,7 +95,7 @@ if(initName && initName.length > 0) {
 
 const firstSlideViaSyncOrParams = (slideNoViaParam: number, stepNoViaParam: number) => {
     console.log(`firstSlideViaSyncOrParams [${new Date().toString()}]`);
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         if(isSynced()) {
             console.log("is synced");
             firstMessagePromise.then(({slideNo, stepNo}) => {

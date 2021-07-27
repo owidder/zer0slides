@@ -1,11 +1,10 @@
 import * as Vivus from "vivus";
 import * as d3 from "d3";
+import rough from "roughjs/bundled/rough.cjs";
 
 import {slideName} from '../core/core';
 import {Step} from '../core/Step';
 import {q} from "../selector/selector";
-
-const rough = require("roughjs/dist/rough.umd");
 
 const screenWidth = window.innerWidth;
 const screenHeight = window.innerHeight;
@@ -35,10 +34,11 @@ class Sketch {
 
     r: any;
 
-    constructor(svgElement: SVGElement) {
+    constructor(svgElement: SVGSVGElement ) {
         console.log("Sketch");
         this.svgElement = svgElement;
-        this.r = rough.svg(svgElement);
+        const rgh = rough;
+        this.r = rgh.svg(svgElement);
     }
 
     qid(id: string): string {
@@ -159,6 +159,6 @@ class Sketch {
     }
 }
 
-export const createSketch = (svgElement: SVGElement) => {
+export const createSketch = (svgElement: SVGSVGElement) => {
     return new Sketch(svgElement);
 }

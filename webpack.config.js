@@ -45,9 +45,8 @@ const common = {
     },
     devtool: 'source-map',
     devServer: {
-        contentBase: path.join(__dirname, "public"),
+        contentBase: path.join(__dirname, "build"),
         compress: true,
-        port: 9000
     },
     module: {
         strictExportPresence: true,
@@ -128,12 +127,8 @@ const common = {
         ],
     },
     plugins: [
-        new ForkTsCheckerWebpackPlugin({
-            async: false,
-            watch: "src",
-            tsconfig: "tsconfig.json"
-        }),
-        new CopyWebpackPlugin(["public"])
+        new ForkTsCheckerWebpackPlugin(),
+        new CopyWebpackPlugin({patterns: [{from: "public"}]})
     ],
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
@@ -142,45 +137,56 @@ const common = {
 
 const withHash = env => {
     return {
-    ...common,
+        ...common,
+        devServer: {
+            ...common.devServer,
+            port: 9000
+        },
         output: {
-    ...common.output,
+            ...common.output,
             filename: 'static/js/[name].[contenthash:8].js',
-    },
+        },
         plugins: [
             ...common.plugins,
             ...htmlWebpackPlugins("start", env),
             new MiniCssExtractPlugin({
-                filename: "static/css/[name].[contenthash:8].css",}),
+                filename: "static/css/[name].[contenthash:8].css",
+            }),
         ]
     }
 }
 
 const withoutHash = env => {
     return {
-    ...common,
+        ...common,
+        devServer: {
+            ...common.devServer,
+            port: 9010
+        },
         output: {
-    ...common.output,
+            ...common.output,
             filename: `static/js/z0.${VERSION}.js`,
-    },
+        },
         plugins: [
             ...common.plugins,
             ...htmlWebpackPlugins("indexPublic", env),
             new MiniCssExtractPlugin({
-                filename: `static/css/z0.${VERSION}.css`,}),
+                filename: `static/css/z0.${VERSION}.css`,
+            }),
         ]
     }
 }
 
-if(process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production") {
     withoutHash().plugins.push(
         new ZipPlugin({
             path: "zip",
             filename: `z0.${VERSION}`,
-            include: [/z0\.\d\.\d\.\d\.js/,/z0\.\d\.\d\.\d\.css/,],
+            include: [/z0\.\d\.\d\.\d\.js/, /z0\.\d\.\d\.\d\.css/,],
             pathMapper: (assetPath) => path.join('z0', path.basename(assetPath))
         }),
     )
 }
 
-module.exports = [withHash, withoutHash]
+//module.exports = [withHash, withoutHash]
+module.exports = withoutHash
