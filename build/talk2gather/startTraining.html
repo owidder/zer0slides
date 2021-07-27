@@ -1,0 +1,50 @@
+<style>
+    .tippy-content {
+        font-size: 3em;
+    }
+
+    #__0__ .code {
+        font-size: 1.5em;
+    }
+
+</style>
+
+<div class="title"></div>
+
+<div class="flexcontainer start">
+    <div class="code responsive"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.useTippy("transparent");
+        _0.glowText(".title", ["Das Training beginnt"], "small glow");
+        _0.codeJs(".code",
+            "export const createTrainAndTestData = async (url: string, testRatio: number) => {\n" +
+            "    const response = await fetch(url);\n" +
+            "    const dataPoints = await response.json();\n" +
+            "\n" +
+            "    const testSize = Math.floor(dataPoints.length * testRatio);\n" +
+            "    const trainSize = dataPoints.length - testSize;\n" +
+            "\n" +
+            "    const train = dataPoints.slice(0, trainSize);\n" +
+            "    const test = dataPoints.slice(trainSize);\n" +
+            "\n" +
+            "    return { train, test }\n" +
+            "}\n");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", "<code>url</code>: Quelle für die Daten", "top"));
+        steps.push(_0.highlightLinesStep(".code", "1", "<code>testRatio</code>: Anteil der Testdaten an allen Daten", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "2-3", "Daten laden", "top"));
+        steps.push(_0.highlightLinesStep(".code", "5-6", "Anzahlen der Test- und Trainingsdaten berechnen", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "8-9", "Test- und Trainingsdaten zurechtschneiden", "bottom"));
+        steps.push(_0.highlightLinesStep(".code", "11", " ... und zurückgeben", "top"));
+        steps.push(_0.highlightLinesStep(".code", "1-12", "Hier ausgelassen: Daten durchmischen", "bottom"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

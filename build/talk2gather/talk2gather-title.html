@@ -1,0 +1,29 @@
+<style>
+
+    .tippy-content {
+        font-size: 2em;
+    }
+
+</style>
+
+<div class="flexcontainer start">
+    <div class="code responsive"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.useTippy("transparent");
+        _0.codeJs(".code",
+            "Deep Neural Networks (DNN)\n" +
+            "in 15 Minuten");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1", " Mehr muss man nicht wissen, ...", "top"));
+        steps.push(_0.highlightLinesStep(".code", "2", " ..., um kompetent zu scheinen", "bottom"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>
