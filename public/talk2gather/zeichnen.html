@@ -1,0 +1,31 @@
+<style>
+    .tippy-content {
+        font-size: 5em;
+    }
+
+    #__0__ .code {
+        font-size: 4em;
+    }
+</style>
+
+<div class="flexcontainer start">
+    <div class="code responsive"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.useTippy("transparent");
+        _0.codeJs(".code",
+            "Jetzt wollen wir diese Gleichungen \n" +
+            "mal zeichnen");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1-2", " <a target='_blank' href='https://owidder.github.io/playground/dist-dnn/index.html'>" +
+            "Hier geht's zur Zeichnung</a>", "top"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

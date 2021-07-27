@@ -1,0 +1,50 @@
+<style>
+    .tippy-content {
+        font-size: 2em;
+    }
+
+    #__0__ .code {
+        font-size: 2.5em;
+    }
+
+    #__0__ a {
+        margin-bottom: 3em;
+        margin-left: 3em;
+    }
+</style>
+
+<div class="title"></div>
+
+<div class="flexcontainer start">
+    <div class="code responsive"></div>
+</div>
+
+<script>
+
+    (function () {
+        _0.useTippy("transparent");
+        _0.glowText(".title", ["Tensorflow benötigt die Daten in einem anderen Format"], "small glow");
+        _0.codeJs(".code",
+            "const input: number[][] = [\n" +
+            "   [5.1, 3.5, 1.4, 0.2],\n" +
+            "   [6, 2.2, 4, 1],\n" +
+            "   ...\n" +
+            "   [5.8, 2.8, 5.1, 2.4]\n" +
+            "]\n" +
+            "\n" +
+            "const output: number[][] = [\n" +
+            "   [1, 0, 0],\n" +
+            "   [0, 1, 0],\n" +
+            "   ...\n" +
+            "   [0, 0, 1]\n" +
+            "]");
+
+        const steps = [];
+        steps.push(_0.highlightLinesStep(".code", "1-6", "Features als Number-Array", "top"));
+        steps.push(_0.highlightLinesStep(".code", "8-13", "Labels als One-Hot-Encoding", "bottom"));
+
+        _0.setSteps(steps);
+
+        ___();
+    })()
+</script>

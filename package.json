@@ -21,6 +21,7 @@
     "start:microfrontends": "cross-env NODE_ENV=development webpack-dev-server --env=microfrontends",
     "start:oops2020": "cross-env NODE_ENV=development webpack-dev-server --env=oops2020",
     "start:uniHH": "cross-env NODE_ENV=development webpack-dev-server --env=uniHH",
+    "start:talk2gather": "cross-env NODE_ENV=development webpack-dev-server --env=talk2gather",
     "readme": "node replaceVersionInReadme.js",
     "copyhtml": "cpx 'public/**/*.html' build",
     "copyhtml:watch": "cpx 'public/**/*.html' build --watch",
