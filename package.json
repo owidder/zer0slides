@@ -78,7 +78,7 @@
   },
   "dependencies": {
     "animejs": "^3.2.1",
-    "d3": "^6.5.0",
+    "d3": "^7.6.1",
     "include-media": "^1.4.9",
     "jquery": "^3.5.1",
     "keyboardjs": "^2.6.4",
